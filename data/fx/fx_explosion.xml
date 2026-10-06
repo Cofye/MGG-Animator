@@ -1,0 +1,43 @@
+<Sprite id="fx_explosion" bitmap="fx/a_d_hit01.png" cache="17">
+    <Composite>
+      <Sprite cache="8" framerate="2">
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="112" dstX="-130.603561" dstY="-146.544388" width="263" height="309" />
+          </Sprite>
+          <Key frame="0" x="6.816568" y="-54.2840233" />
+          <Key frame="1" x="12" y="-66" scaleX="1.32439566" scaleY="1.32439566" alpha="0.5" />
+          <Key frame="5" x="-5" y="-46" scaleX="1.88739932" scaleY="1.88739932" alpha="0.08333334" />
+          <Key frame="6" x="15" y="-52" scaleX="2" scaleY="2" alpha="0" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="265" srcY="112" dstX="-157.157272" dstY="-142.3653" width="253" height="257" a="1.10401011" d="1.10401011" />
+          </Sprite>
+          <Key frame="1" x="18" y="-18" />
+          <Key frame="5" x="25" y="-26" scaleX="1.58357763" scaleY="1.78823531" alpha="0" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="872" dstX="-117" dstY="-121" width="253" height="250" />
+          </Sprite>
+          <Key frame="2" x="-8" y="-21" />
+          <Key frame="12" x="-9" y="-21" angle="7.189355" scaleX="1.72893059" scaleY="1.68806255" alpha="0" visible="false" />
+        </Composite>
+        <Frame>
+          <Image srcX="1" srcY="112" dstX="-123.786987" dstY="-200.828415" width="263" height="309" />
+        </Frame>
+        <Frame rep="10" />
+        <Frame delay="100" />
+      </Sprite>
+      <Key frame="0" x="-1" y="4" scaleX="-0.233942" scaleY="0.0713025" />
+      <Key frame="5" x="-1" y="4" scaleX="-0.191023335" scaleY="0.14646332" />
+      <Key frame="9" x="-1" y="4" scaleX="-0.7120194" scaleY="0.6070535" />
+    </Composite>
+    <Frame>
+      <Tag key="sound" value="ui_daily_bonus_explosion" />
+    </Frame>
+    <Frame rep="10" />
+    <Frame delay="100" />
+  </Sprite>
+  

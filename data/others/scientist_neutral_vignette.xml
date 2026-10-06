@@ -1,0 +1,38 @@
+<Sprite id="scientist_neutral_vignette" bitmap="pnj/scientist_neutral.png" cache="11">
+    <Composite>
+      <Sprite cache="6">
+        <Image srcX="33" srcY="118" dstX="0" dstY="-65" width="130" height="66" />
+        <Image srcX="55" srcY="1" dstX="22" dstY="-181" width="140" height="116" />
+      </Sprite>
+      <Key frame="0" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="377" dstX="-16" dstY="-22" width="62" height="41" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="65" y="-103" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" framerate="5">
+        <Frame>
+          <Image srcX="64" srcY="377" dstX="-22" dstY="-122" width="57" height="40" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="615" dstX="-22" dstY="-130" width="58" height="49" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="615" dstX="-22" dstY="-130" width="58" height="49" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="67" y="36" />
+      <Key frame="91" x="67" y="36" visible="false" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="999999" />
+  </Sprite>
+  

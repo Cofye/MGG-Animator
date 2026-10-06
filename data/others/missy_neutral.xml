@@ -1,0 +1,28 @@
+<Sprite id="missy_neutral" bitmap="pnj/presenter_happy.png" cache="13">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-213.709991" dstY="-291.21" width="315" height="340" />
+      </Sprite>
+      <Key frame="0" x="-2.29000854" y="23.2099915" scaleX="-0.995723665" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="3" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="342" dstX="-32" dstY="-19" width="64" height="38" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="342" dstX="-32" dstY="-19" width="64" height="38" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="342" dstX="-32" dstY="-19" width="64" height="38" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="63" y="-206" scaleX="-1" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

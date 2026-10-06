@@ -1,0 +1,18 @@
+<AttackFX specimen="Specimen_CA_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CA_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CA_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="7A4196" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CA_01" attack="2p">
+	<FX type="flash" name="7A4196" duration="1.3" applyOn="allclip+background-target-self" moment="plasma" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+</AttackFX>

@@ -1,0 +1,37 @@
+<Sprite id="jackpot_cash_machine_screen" bitmap="hud/jackpot/cash_machine.png" cache="32">
+    <Composite>
+      <Sprite cache="2" rndDelay="200">
+        <Composite>
+          <Sprite>
+            <Composite>
+              <Sprite>
+                <Image srcX="776" srcY="219" dstX="-52" dstY="-45" width="104" height="90" />
+              </Sprite>
+              <Key frame="0" x="0.5" y="-0.5" />
+              <Key frame="3" x="0.5" y="-0.5" />
+            </Composite>
+            <Composite>
+              <Sprite>
+                <Image srcX="776" srcY="219" dstX="-52" dstY="-45" width="104" height="90" />
+              </Sprite>
+              <Key frame="0" x="0.5" y="-0.5" />
+              <Key frame="3" x="0.5" y="-0.5" alpha="0.3" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+            </Composite>
+            <Frame rep="5" />
+          </Sprite>
+          <Key frame="0" x="1" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="807" srcY="186" dstX="-15.5" dstY="-0.5" width="33" height="2" />
+          </Sprite>
+          <Key frame="1" x="-1" y="-48" scaleX="3.27387571" />
+          <Key frame="16" x="-1" y="48" scaleX="3.27387571" />
+        </Composite>
+        <Frame rep="16" />
+      </Sprite>
+      <Key frame="0" x="-6" y="-6" scaleX="2" scaleY="2" />
+    </Composite>
+    <Frame />
+  </Sprite>
+  

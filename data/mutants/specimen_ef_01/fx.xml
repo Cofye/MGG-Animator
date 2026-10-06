@@ -1,0 +1,32 @@
+<AttackFX specimen="Specimen_EF_01" attack="1">
+	<FX type="fade" name="284474" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_01" attack="1p">
+	<FX type="fade" name="284474" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_impact_stargate" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="2.0" scaleMax="2.0" randomX="false" />
+		<spawn number="3" scatterX="0" scatterY="0" targetDelay="0.3" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_01" attack="2">
+	<FX type="flash" name="34496e" duration="0.8" applyOn="allclip+background-target-self" moment="flash" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_force" blendmode="add" applyOn="self" position="bottom" moment="fx">
+		<tranform scaleMin="1.0" scaleMax="1.0" mirrorX="true" />
+		<iteration delay="0.05" amount="5" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="fx" amplitude="5" frequency="20" duration="0.4" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_01" attack="2p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="36e6f7" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background+target" moment="shake" amplitude="5" frequency="30" duration="0.9" />
+</AttackFX>

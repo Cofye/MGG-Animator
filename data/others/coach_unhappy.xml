@@ -1,0 +1,65 @@
+<Sprite id="coach_unhappy" bitmap="pnj/coach_unhappy.png" cache="8">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-83" dstY="-336" width="183" height="358" />
+      </Sprite>
+      <Key frame="0" x="-28" y="26" />
+    </Composite>
+    <Composite>
+      <Sprite cache="4" framerate="5">
+        <Frame>
+          <Image srcX="1" srcY="360" dstX="-35" dstY="-29" width="63" height="44" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="405" dstX="-35" dstY="-30" width="63" height="45" />
+        </Frame>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="-30" y="-201" />
+      <Key frame="93" x="-30" y="-201" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="4" autoLoop="true" minDelay="60" rndDelay="100">
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="451" dstX="-61.03279" dstY="-155.08197" width="80" height="163" />
+          </Sprite>
+          <Key frame="0" x="118.032791" y="135.08197" />
+          <Key frame="20" x="118.032791" y="134.08197" />
+          <Key frame="52" x="118.032791" y="133.72197" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="82" srcY="451" dstX="-7" dstY="-40" width="16" height="46" />
+          </Sprite>
+          <Key frame="0" x="37" y="-20" />
+          <Key frame="20" x="37" y="-22" angle="-14.3959856" />
+          <Key frame="25" x="37" y="-21.8" angle="-2.35110831" />
+          <Key frame="31" x="37" y="-21.56" angle="-10.2204943" />
+          <Key frame="37" x="37" y="-21.2799988" angle="-1.86063933" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="615" dstX="-14" dstY="-50" width="184" height="180" />
+          </Sprite>
+          <Key frame="0" x="-1" y="2" />
+          <Key frame="20" x="-1" />
+        </Composite>
+        <Frame rep="69" />
+      </Sprite>
+      <Key frame="0" x="-105" y="-158" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="65" srcY="360" dstX="-11.3138733" dstY="-17.7372131" width="64" height="28" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-54" y="-235" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="9999999" />
+  </Sprite>
+  

@@ -1,0 +1,42 @@
+<AttackFX specimen="Specimen_CE_07" attack="1">
+	<FX type="flash" name="ffbe60" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffbe60" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.3" />
+	<FX type="sprite" name="fx_fire_03" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="target">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_07" attack="1p">
+	<FX type="fade" name="890f0f" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffbe60" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffbe60" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.5" />
+	<FX type="sprite" name="fx_fire_03" blendmode="normal" applyOn="target" position="center" moment="fx" zOrder="target">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_07" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="flash" name="a2a6dd" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="a2a6dd" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_samus2" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_07" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="212cc1" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="a2a6dd" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="a2a6dd" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_samus2" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+	<FX type="sprite" name="fx_samus" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+</AttackFX>

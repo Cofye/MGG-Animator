@@ -1,0 +1,12 @@
+<Sprite id="jackpot_play-now" bitmap="hud/jackpot/play_now.png" cache="1" autoLoop="true">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-65" dstY="-39.5" width="131" height="80" />
+      </Sprite>
+      <Key frame="0" x="2" />
+      <Key frame="21" x="2" alpha="0.3" />
+      <Key frame="26" x="2" alpha="0.3" />
+    </Composite>
+    <Frame rep="45" />
+  </Sprite>
+  

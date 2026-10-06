@@ -1,0 +1,37 @@
+<Sprite id="fx_balloons_loris" bitmap="character/d_d_07.png" cache="51">
+    <Composite>
+      <Sprite>
+        <Image srcX="437" srcY="72" dstX="-50" dstY="-64" width="104" height="163" />
+      </Sprite>
+      <Key frame="0" x="-348" y="102" angle="99.18637" alpha="0.5" />
+      <Key frame="13" x="-150" y="70" angle="84.48814" alpha="0.7241379" />
+      <Key frame="19" x="-105" y="46" angle="47.1855965" alpha="0.8275862" />
+      <Key frame="29" x="-16" y="-39" angle="36.9346848" scaleX="2.58401084" scaleY="1.047923" rAdd="1" gAdd="0.5019608" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="254" srcY="367" dstX="-48" dstY="-67" width="96" height="166" />
+      </Sprite>
+      <Key frame="0" x="-462" y="90" angle="111.560539" alpha="0.5" />
+      <Key frame="13" x="-277" y="114" angle="99.25753" alpha="0.7241379" />
+      <Key frame="19" x="-214" y="62" angle="50.03433" alpha="0.8275862" />
+      <Key frame="29" x="-91" y="-41" angle="39.41426" scaleX="2.92525935" scaleY="1.10745835" gAdd="1" bAdd="1" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="366" srcY="453" dstX="-42" dstY="-56" width="89" height="131" />
+      </Sprite>
+      <Key frame="0" x="-507" y="127" angle="99.25364" alpha="0.5" />
+      <Key frame="13" x="-199" y="161" angle="103.720444" alpha="0.7241379" />
+      <Key frame="19" x="-146" y="138" angle="56.95387" alpha="0.8275862" />
+      <Key frame="29" x="-61" y="46" angle="50.9407272" scaleX="2.95306659" scaleY="1.208852" gAdd="1" visible="false" />
+    </Composite>
+    <Frame rep="29" />
+    <Frame delay="100" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <DataPoint name="DataPoint001" x="498" y="-243" />
+  </Sprite>
+  

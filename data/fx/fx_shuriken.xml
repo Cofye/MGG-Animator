@@ -1,0 +1,48 @@
+<Sprite id="fx_shuriken" bitmap="character/e_a.png" cache="48">
+    <Composite>
+      <Sprite framerate="2">
+        <Frame>
+          <Image srcX="1" srcY="1" dstX="-56.636364" dstY="-60.76367" width="119" height="119" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="1" dstX="17.2160416" dstY="-84.17632" width="119" height="119" a="0.5761365" b="0.8173534" c="-0.8173534" d="0.5761365" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="1" dstX="85.36306" dstY="15.2997246" width="119" height="119" a="-0.8324606" b="0.554084241" c="-0.5540843" d="-0.8324606" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-84" y="-1254" scaleX="2.110478" scaleY="2.110478" />
+      <Key frame="6" x="49" y="-80" scaleX="2.110478" scaleY="2.110478" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="121" dstX="-37" dstY="-44.5" width="79" height="85" />
+      </Sprite>
+      <Key frame="7" x="65" y="-26" angle="21.46711" scaleX="5.88067" scaleY="5.88067" />
+      <Key frame="9" x="65" y="-26" angle="21.32531" scaleX="5.88067" scaleY="5.88067" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="207" dstX="-34" dstY="-33.5" width="68" height="68" />
+      </Sprite>
+      <Key frame="10" x="70" y="-22" angle="-33.0279655" scaleX="8.11963" scaleY="8.11963" />
+      <Key frame="12" x="70" y="-22" angle="-33.0279655" scaleX="8.11963" scaleY="8.11963" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="121" srcY="1" dstX="-39" dstY="-41.5" width="78" height="84" />
+      </Sprite>
+      <Key frame="13" x="75" y="-9" angle="36.7174873" scaleX="5.143152" scaleY="5.143152" />
+      <Key frame="15" x="75" y="-9" angle="36.7174873" scaleX="5.143152" scaleY="5.143152" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="81" srcY="121" dstX="-19" dstY="-18.5" width="38" height="38" />
+      </Sprite>
+      <Key frame="16" x="74" y="-16" scaleX="4.240089" scaleY="4.03156" />
+      <Key frame="18" x="74" y="-16" scaleX="4.240089" scaleY="4.03156" visible="false" />
+    </Composite>
+    <Frame rep="18" />
+    <Frame delay="10000" />
+  </Sprite>
+  

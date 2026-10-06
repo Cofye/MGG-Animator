@@ -1,0 +1,19 @@
+<Sprite id="fx_CC_09_1" bitmap="fx/c_f_explosion.png" cache="6">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-106.50573" dstY="-91.51727" width="215" height="184" />
+      </Sprite>
+      <Key frame="0" x="-2" y="-146" scaleX="0.8326764" scaleY="0.8326764" alpha="2" gAdd="1" bAdd="1" />
+      <Key frame="9" x="-2.94117641" y="-175.647064" scaleX="2.89041877" scaleY="2.89041877" alpha="0.8" gAdd="1" bAdd="1" />
+      <Key frame="17" x="-4" y="-209" scaleX="4.97806263" scaleY="4.97806263" alpha="0" gAdd="1" bAdd="1" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="217" srcY="1" dstX="-86.49423" dstY="-83.16095" width="144" height="133" a="1.2456584" d="1.2456584" />
+      </Sprite>
+      <Key frame="0" x="-5" y="-143" scaleX="1.07351875" scaleY="1.07351875" gAdd="1" bAdd="1" />
+      <Key frame="4" x="-5" y="-143" scaleX="1.27536392" scaleY="1.27536392" alpha="0" gAdd="1" bAdd="1" visible="false" />
+    </Composite>
+    <Frame rep="17" />
+  </Sprite>
+  

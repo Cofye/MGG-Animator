@@ -1,0 +1,22 @@
+<AttackFX specimen="Specimen_DA_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="518761" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="AD880E" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="bottom" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="12" duration="0.8" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_01" attack="2p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="AD880E" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="bottom" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="12" duration="0.8" />
+</AttackFX>

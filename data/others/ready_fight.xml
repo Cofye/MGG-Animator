@@ -1,0 +1,28 @@
+<Sprite id="ready_fight" bitmap="hud/fight_ui/ready_fight.png" cache="4">
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-268" dstY="-105" width="512" height="189" />
+      </Sprite>
+      <Key frame="1" x="5" y="-18" scaleX="2.810345" scaleY="0.857142866" alpha="0.5" rAdd="1" gAdd="1" bAdd="1" />
+      <Key frame="4" x="6" y="-18" scaleX="0.953513741" scaleY="0.9775015" />
+      <Key frame="6" x="5.968254" y="-18" />
+      <Key frame="61" x="5" y="-18" />
+      <Key frame="65" x="5" y="-18" scaleX="2.79266977" scaleY="0.857142866" alpha="0.4" rAdd="1" gAdd="1" bAdd="1" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="36" srcY="198" dstX="-218" dstY="-108" width="432" height="189" />
+      </Sprite>
+      <Key frame="61" x="-13" y="-13" scaleX="3.647619" scaleY="0.7083333" alpha="0.4" rAdd="1" gAdd="1" bAdd="1" />
+      <Key frame="65" x="-13" y="-13" scaleX="0.939623" scaleY="0.9581377" />
+      <Key frame="67" x="-13" y="-13" />
+      <Key frame="101" x="-13" y="-13" />
+      <Key frame="104" x="-13" y="-13" scaleX="4.05882359" scaleY="0.714285731" alpha="0.4" rAdd="1" gAdd="1" bAdd="1" visible="false" />
+    </Composite>
+    <Frame />
+    <Frame>
+      <Tag key="sound" value="ui_readyfight" />
+    </Frame>
+    <Frame rep="103" />
+  </Sprite>
+  

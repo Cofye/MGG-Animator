@@ -1,0 +1,37 @@
+<AttackFX specimen="Specimen_EE_02" attack="1">
+	<FX type="flash" name="FA7720" duration="0.6" applyOn="target" moment="impact" />
+	<FX type="fade" name="C9B885" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_02" attack="1p">
+	<FX type="flash" name="ff5e5e" duration="0.6" applyOn="target" moment="impact" />
+	<FX type="fade" name="402E1A" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="16" frequency="12" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_02" attack="2">
+	<FX type="flash" name="FFF5BA" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="9C9384" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="fx" amplitude="4" frequency="16" duration="0.3" />
+	<FX type="sprite" name="fx_planetarium" blendmode="add" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+		<spawn number="1" targetDelay="0.2" />
+	</FX>
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="fx" amplitude="12" frequency="10" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_02" attack="2p">
+	<FX type="flash" name="FFF5BA" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="3B2F26" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="fx" amplitude="5" frequency="18" duration="0.3" />
+	<FX type="sprite" name="fx_planetarium" blendmode="add" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+		<spawn number="2" targetDelay="0.3" />
+	</FX>
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="fx" amplitude="15" frequency="14" duration="0.6" />
+</AttackFX>

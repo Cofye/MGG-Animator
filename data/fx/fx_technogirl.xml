@@ -1,0 +1,37 @@
+<Sprite id="fx_technogirl" bitmap="fx/a_a_hit.png" cache="2">
+    <Composite>
+      <Sprite>
+        <Image srcX="227" srcY="0" dstX="-29.5" dstY="-117" width="52" height="229" />
+      </Sprite>
+      <Key frame="0" x="-0.5" y="3" angle="-39.5288277" scaleX="0.454771578" scaleY="0.208530545" />
+      <Key frame="2" x="-0.5" y="3" angle="-39.5288277" scaleY="2.05423975" />
+      <Key frame="4" x="-0.5" y="3" angle="-39.5288277" scaleY="3.001953" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="227" srcY="0" dstX="-29.5" dstY="-117" width="52" height="229" />
+      </Sprite>
+      <Key frame="2" x="9" y="-3" angle="-166.457382" scaleX="0.454771578" scaleY="0.208530545" />
+      <Key frame="4" x="9" y="-3" angle="-166.457382" scaleX="0.9689626" scaleY="1.74461317" />
+      <Key frame="6" x="9" y="-3" angle="-166.457382" scaleX="0.9689626" scaleY="2.80378771" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="227" srcY="0" dstX="-29.5" dstY="-117" width="52" height="229" />
+      </Sprite>
+      <Key frame="5" x="-0.5" y="3" angle="-118.5098" scaleX="0.454771578" scaleY="0.208530545" />
+      <Key frame="7" x="-0.5" y="3" angle="-111.7313" scaleY="2.05423975" />
+      <Key frame="9" x="-0.5" y="3" angle="-111.7313" scaleY="3.06945586" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-101.5" dstY="-78" width="231" height="184" />
+      </Sprite>
+      <Key frame="6" x="2" y="-7" scaleX="0.767857134" scaleY="1.55319154" />
+      <Key frame="8" x="44" y="-16" scaleX="1.39539957" scaleY="3.4402082" />
+      <Key frame="10" x="116" y="-19" scaleX="1.60378444" scaleY="3.95395875" alpha="0.3" visible="false" />
+    </Composite>
+    <Frame rep="10" />
+    <Frame delay="10000" />
+  </Sprite>
+  

@@ -1,0 +1,66 @@
+<Sprite id="fx_clown1p2" bitmap="character/b_a_07.png" cache="18">
+    <Composite>
+      <Sprite cache="6" autoLoop="true">
+        <Composite>
+          <Sprite cache="1" autoLoop="true">
+            <Composite>
+              <Sprite>
+                <Image srcX="8" srcY="358" dstX="-72" dstY="-8.333336" width="77" height="79" />
+              </Sprite>
+              <Key frame="0" x="-45" y="15" />
+              <Key frame="14" x="-45" y="15" angle="26.9940414" />
+              <Key frame="17" x="-45" y="15" angle="21.2096043" />
+              <Key frame="20" x="-45" y="15" angle="26.9940414" />
+              <Key frame="24" x="-45" y="15" angle="-74.91413" />
+            </Composite>
+            <Composite>
+              <Sprite>
+                <Image srcX="11" srcY="465" dstX="-19.6666641" dstY="-17.3333282" width="60" height="45" />
+              </Sprite>
+              <Key frame="0" x="-108" y="77" />
+              <Key frame="14" x="-128" y="40" angle="50.0100136" />
+              <Key frame="17" x="-123.714287" y="47.9285736" angle="39.2935829" />
+              <Key frame="20" x="-128" y="40" angle="50.0100136" />
+              <Key frame="24" x="1" y="85" angle="-2.424021" gAdd="0.5019608" bAdd="0.5019608" />
+              <Key frame="27" x="-53.5" y="81" angle="-1.2120105" />
+            </Composite>
+            <Composite>
+              <Sprite>
+                <Image srcX="290" srcY="305" dstX="-19" dstY="-19" width="38" height="38" />
+              </Sprite>
+              <Key frame="24" x="117" y="74" scaleY="3.88888884" rMul="0.5019608" gAdd="0.7529412" bAdd="0.7529412" />
+              <Key frame="26" x="117" y="74" scaleX="3.08026314" scaleY="11.9788008" rMul="0.5019608" gAdd="0.7529412" bAdd="0.7529412" />
+              <Key frame="29" x="117" y="74" scaleX="6.200658" scaleY="24.1136684" rMul="0.5019608" alpha="0.2" gAdd="0.7529412" bAdd="0.7529412" visible="false" />
+            </Composite>
+            <Composite>
+              <Sprite>
+                <Image srcX="210" srcY="21" dstX="-8.333334" dstY="-77.33333" width="75" height="133" />
+              </Sprite>
+              <Key frame="0" x="-74" y="91" />
+              <Key frame="14" x="-117" y="82" angle="-25.8977776" />
+              <Key frame="17" x="-107.785713" y="83.92857" angle="-20.3482533" />
+              <Key frame="20" x="-117" y="82" angle="-25.8977776" />
+              <Key frame="24" x="37" y="99" angle="-20.8615036" scaleX="1.59306276" scaleY="1.25105512" gAdd="1" bAdd="1" />
+              <Key frame="27" x="-18.5" y="95" angle="-10.4307518" scaleX="1.69440329" scaleY="1.47092283" />
+            </Composite>
+            <Frame rep="29" />
+          </Sprite>
+          <Key frame="0" x="-10" y="-16.666666" angle="10.3915443" />
+          <Key frame="15" x="-10" y="-11.666666" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" x="47" y="-75" scaleX="-1.86782813" scaleY="1.86782813" rMul="0.7529412" alpha="0" gAdd="0.5019608" bAdd="0.5019608" />
+      <Key frame="15" x="142" y="-328" angle="14.0209494" scaleX="-2.46164823" scaleY="2.46164823" rMul="0.7529412" gAdd="0.5019608" bAdd="0.5019608" />
+      <Key frame="82" x="142" y="-328" angle="14.0209494" scaleX="-2.46164823" scaleY="2.46164823" rMul="0.7529412" gAdd="0.5019608" bAdd="0.5019608" />
+      <Key frame="86" x="173" y="-234" angle="14.0209494" scaleX="-3.54173779" scaleY="3.54173779" rMul="0.7529412" gAdd="0.5019608" bAdd="0.5019608" />
+      <Key frame="94" x="47" y="-75" scaleX="-1.86782813" scaleY="1.86782813" rMul="0.7529412" alpha="0" gAdd="0.5019608" bAdd="0.5019608" />
+    </Composite>
+    <Frame rep="94" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <Skin>halloween</Skin>
+  </Sprite>
+  

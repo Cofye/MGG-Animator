@@ -1,0 +1,33 @@
+<AttackFX specimen="Specimen_FC_02" attack="1">
+	<FX type="flash" name="dbfbfe" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="allclip+background-target-self" moment="peace" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_02" attack="1p">
+	<FX type="color" add="0e2426" mul="e8eff9" duration="0.8" moment="arrived" applyOn="background" />
+	<FX type="color" duration="0.5" moment="peace" applyOn="allclip+background-target-self" />
+	<FX type="flash" name="dbfbfe" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="allclip+background-target-self" moment="peace" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_02" attack="2">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="c0faff" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="color" add="ffffff" mul="548be6" duration="0.2" moment="white" applyOn="background" />
+	<FX type="color" add="dddddd" mul="548be6" duration="0.2" moment="white" applyOn="allclip-target-self" />
+	<FX type="color" duration="0.2" moment="end" applyOn="allclip+background-target-self" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_02" attack="2p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="c0faff" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="color" add="ffffff" mul="548be6" duration="0.2" moment="white" applyOn="background" />
+	<FX type="color" add="dddddd" mul="548be6" duration="0.2" moment="white" applyOn="allclip-target-self" />
+	<FX type="color" duration="0.2" moment="end" applyOn="allclip+background-target-self" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="10" duration="0.1" />
+</AttackFX>

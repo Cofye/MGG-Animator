@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_EE_03" attack="1">
+	<FX type="fade" name="466E5A" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="ffffff" duration="0.6" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_03" attack="1p">
+	<FX type="fade" name="1E4520" applyOn="allclip+background-target-self" moment="start" duration="1.5" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="1C4A05" duration="0.6" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="shakeit" amplitude="5" frequency="20" duration="0.8" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_03" attack="2">
+	<FX type="flash" name="169E38" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="fade" name="3F4F43" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="2" frequency="12" duration="0.1" />
+	<FX type="sprite" name="fx_yoda" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<tranform scale="0.4" />
+		<spawn number="1" targetDelay="0.1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_03" attack="2p">
+	<FX type="flash" name="169E38" duration="0.2" applyOn="allclip+background" moment="flash" />
+	<FX type="flash" name="169E38" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="fade" name="19261C" applyOn="allclip+background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="shakeit" amplitude="15" frequency="10" duration="1.2" />
+	<FX type="sprite" name="fx_yoda" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<tranform scale="0.8" />
+		<spawn number="1" targetDelay="0.1" />
+	</FX>
+</AttackFX>

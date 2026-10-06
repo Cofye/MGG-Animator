@@ -1,0 +1,21 @@
+<Sprite id="fx_explosion_purple" bitmap="fx/c_f_explosion.png" cache="6">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-106.50573" dstY="-91.51727" width="215" height="184" />
+      </Sprite>
+      <Key frame="0" y="-40" scaleX="0.8326764" scaleY="0.8326764" />
+      <Key frame="14" x="-2" y="-103" scaleX="2.36533666" scaleY="2.36533666" alpha="0" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="217" srcY="1" dstX="-86.49423" dstY="-83.16095" width="144" height="133" a="1.2456584" d="1.2456584" />
+      </Sprite>
+      <Key frame="0" x="-3" y="-37" scaleX="1.07351875" scaleY="1.07351875" />
+      <Key frame="3" x="-3" y="-37" scaleX="1.27536392" scaleY="1.27536392" alpha="0" />
+    </Composite>
+    <Frame>
+      <Image srcX="217" srcY="1" dstX="-94" dstY="-127" width="144" height="133" a="1.31726229" b="0.00601640576" c="-0.00601640576" d="1.31726229" />
+    </Frame>
+    <Frame rep="16" />
+  </Sprite>
+  

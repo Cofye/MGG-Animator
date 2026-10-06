@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_DF_01" attack="1">
+	<FX type="flash" name="9785f2" duration="1" applyOn="background" moment="impact" />
+	<FX type="fade" name="575757" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_01" attack="1p">
+	<FX type="sprite" name="fx_dragon" blendmode="normal" applyOn="target" position="bottom" moment="dragon">
+		<tranform scale="1.5" />
+	</FX>
+	<FX type="flash" name="3c23b8" duration="1" applyOn="background" moment="impact" />
+	<FX type="fade" name="575757" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="FAF2D2" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_armageddon" blendmode="add" applyOn="target" position="bottom" moment="armageddon">
+		<tranform scale="2.0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_01" attack="2p">
+	<FX type="fade" name="301169" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="FAF2D2" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>

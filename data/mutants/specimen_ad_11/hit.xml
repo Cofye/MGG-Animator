@@ -1,0 +1,35 @@
+<Sprite id="specimen_AD_11_hit" bitmap="character/ad_11.png" cache="77">
+    <Optim srcX="194" srcY="129" width="159" height="128" optimX="0.8" optimY="0.8" />
+    <Optim srcX="503" srcY="172" width="237" height="293" optimX="0.75" optimY="0.75" />
+    <Optim srcX="878" srcY="142" width="106" height="257" optimX="0.5" optimY="0.5" />
+    <Optim srcX="801" srcY="240" width="34" height="144" optimX="0.75" optimY="0.75" />
+    <Composite>
+      <Sprite cache="4">
+        <Composite>
+          <Sprite>
+            <Image srcX="412" srcY="285" dstX="-29" dstY="-24.6666718" width="47" height="45" />
+          </Sprite>
+          <Key frame="0" x="-7" y="-164" angle="90.21814" scaleX="0.6988957" scaleY="1.68375325" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="572" srcY="87" dstX="-46.66667" dstY="-57" width="94" height="63" />
+          </Sprite>
+          <Key frame="0" x="-7" y="-157" scaleX="0.75" scaleY="0.75" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="501" srcY="171" dstX="-124" dstY="-281" width="239" height="294" />
+          </Sprite>
+          <Key frame="0" y="35" scaleX="0.75" scaleY="0.75" />
+        </Composite>
+      </Sprite>
+      <Key frame="0" x="-156" y="-58" angle="-7.88976765" />
+      <Key frame="1" x="-177" y="-82" angle="-18.1407318" />
+      <Key frame="2" x="-156" y="-58" angle="-7.88976765" />
+      <Key frame="6" x="-49.5" y="-22.75" angle="-4.535183" />
+      <Key frame="12" x="-7" y="-3" />
+    </Composite>
+    <Frame rep="19" />
+  </Sprite>
+  

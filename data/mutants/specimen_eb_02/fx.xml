@@ -1,0 +1,30 @@
+<AttackFX specimen="Specimen_EB_02" attack="1">
+	<FX type="flash" name="be9458" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_explosion_blue" blendmode="add" applyOn="target" position="center" moment="boom">
+		<tranform scale="0.7" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_02" attack="1p">
+	<FX type="fade" name="3f615e" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="be9458" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="bdf9f4" duration="1.0" applyOn="background" moment="boom" />
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="9" frequency="20" duration="1.2" />
+	<FX type="sprite" name="fx_explosion_blue" blendmode="add" applyOn="target" position="center" moment="boom">
+		<tranform scale="0.8" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_02" attack="2">
+	<FX type="flash" name="58bea2" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_ondine" blendmode="normal" applyOn="target" position="bottom" moment="fx" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_02" attack="2p">
+	<FX type="fade" name="7D7D7D" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="end" duration="0.8" />
+	<FX type="sprite" name="fx_ondine02" blendmode="normal" applyOn="target" position="bottom" moment="fx" />
+	<FX type="flash" name="58bea2" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background-target" moment="shake" amplitude="10" frequency="18" duration="1.0" />
+</AttackFX>

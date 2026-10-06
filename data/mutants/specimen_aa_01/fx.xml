@@ -1,0 +1,34 @@
+<AttackFX specimen="Specimen_AA_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="9d54bc" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_01" attack="1p">
+	<FX type="sprite" name="fx_electricity_pink" blendmode="add" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="2.0" />
+	</FX>
+	<FX type="fade" name="174480" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="BC75FF" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_technogirl" blendmode="add" applyOn="target" position="center" moment="impact">
+		<tranform scale="1.2" />
+		<spawn number="1" targetDelay="0.1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_01" attack="2p">
+	<FX type="fade" name="661780" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="ABABAB" duration="0.5" applyOn="background" moment="impact" />
+	<FX type="flash" name="ed6d82" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_technogirl" blendmode="add" applyOn="target" position="center" moment="impact">
+		<tranform scale="1.6" />
+		<spawn number="1" targetDelay="0.1" />
+	</FX>
+</AttackFX>

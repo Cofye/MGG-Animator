@@ -1,0 +1,28 @@
+<AttackFX specimen="Specimen_EC_01" attack="1">
+	<FX type="flash" name="1BAEC4" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_01" attack="1p">
+	<FX type="flash" name="1BAEC4" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_01" attack="2">
+	<FX type="fade" name="42606d" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="background+target" moment="impact" amplitude="5" frequency="60" duration="0.4" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="EBAA42" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_01" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="land" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="allclip+background-self" moment="impact" amplitude="12" frequency="10" duration="0.3" />
+	<FX type="sprite" name="fx_gatling" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<spawn number="1" scatterX="150" scatterY="-100" targetDelay="0" />
+	</FX>
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="BA6714" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

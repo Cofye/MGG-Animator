@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_DD_15" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="b6f090" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="91d02d" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_15" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="51370a" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="b6f090" duration="0.3" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="91d02d" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_15" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="1faafa" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="back" />
+	<FX type="flash" name="0aa9f3" duration="0.2" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="b7efff" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_15" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="1faafa" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="back" />
+	<FX type="flash" name="0aa9f3" duration="0.2" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="b7efff" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

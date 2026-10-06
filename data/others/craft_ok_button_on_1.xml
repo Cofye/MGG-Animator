@@ -1,0 +1,40 @@
+<Sprite id="craft_ok_button_on_1" bitmap="hud/crafting/ui_right_2.png" cache="34">
+    <Composite>
+      <Sprite>
+        <Image srcX="608" srcY="443" dstX="-78.34178" dstY="-22.9367065" width="156" height="46" />
+      </Sprite>
+      <Key frame="0" x="14" y="42" />
+      <Key frame="2" x="14" y="42" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="669" srcY="183" dstX="-62.30803" dstY="-22.2615967" width="124" height="46" />
+      </Sprite>
+      <Key frame="3" x="30" y="41" visible="false" />
+      <Key frame="4" x="30" y="41" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="669" srcY="133" dstX="-53.2025452" dstY="-22.6708832" width="106" height="46" />
+      </Sprite>
+      <Key frame="5" x="39" y="41" visible="false" />
+      <Key frame="6" x="39" y="41" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="669" srcY="83" dstX="-37.9198456" dstY="-22.5611725" width="75" height="46" />
+      </Sprite>
+      <Key frame="7" x="55" y="41" visible="false" />
+      <Key frame="8" x="55" y="41" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="669" srcY="33" dstX="-23.9620361" dstY="-22.1561127" width="46" height="46" />
+      </Sprite>
+      <Key frame="9" x="70" y="41" visible="false" />
+      <Key frame="10" x="70" y="41" visible="false" />
+    </Composite>
+    <Frame rep="10" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

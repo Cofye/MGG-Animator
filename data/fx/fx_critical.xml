@@ -1,0 +1,68 @@
+<Sprite id="fx_critical" bitmap="fx/assist.png" cache="23">
+    <Composite>
+      <Sprite>
+        <Image srcX="165" srcY="71" dstX="-129" dstY="-16" width="258" height="33" />
+      </Sprite>
+      <Key frame="4" x="600" y="43" angle="7.19763231" scaleX="1.2452637" scaleY="2.71957684" alpha="0" />
+      <Key frame="6" x="-77" y="-4" angle="7.19763231" scaleX="1.2452637" scaleY="2.71957684" />
+      <Key frame="7" x="17" y="4" angle="7.19763231" scaleX="1.2452637" scaleY="2.71957684" />
+      <Key frame="17" x="17" y="4" angle="7.19763231" scaleX="1.2452637" scaleY="2.71957684" />
+      <Key frame="20" x="-455" y="-42" angle="7.19763231" scaleX="0.66098386" scaleY="1.44354677" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="209" srcY="204" dstX="-96" dstY="-8" width="192" height="17" />
+      </Sprite>
+      <Key frame="4" x="606" y="-189" angle="-21.4122658" scaleX="1.37722027" alpha="0" />
+      <Key frame="7" x="15" y="42" angle="-21.4122658" scaleX="1.37722027" />
+      <Key frame="8" x="67" y="21" angle="-21.4122658" scaleX="1.37722027" />
+      <Key frame="17" x="67" y="21" angle="-21.4122658" scaleX="1.37722027" />
+      <Key frame="20" x="-423" y="170" angle="-21.4122658" scaleX="1.37722027" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="209" srcY="204" dstX="-96" dstY="-8" width="192" height="17" />
+      </Sprite>
+      <Key frame="5" x="-230" y="345" angle="-59.763855" alpha="0" />
+      <Key frame="7" x="-26" y="-47" angle="-59.763855" />
+      <Key frame="8" x="-46" y="-3" angle="-59.763855" />
+      <Key frame="17" x="-46" y="-3" angle="-59.763855" />
+      <Key frame="20" x="87" y="-263" angle="-59.763855" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="165" srcY="71" dstX="-129" dstY="-16" width="258" height="33" />
+      </Sprite>
+      <Key frame="5" x="-228" y="367" angle="-49.8412781" scaleX="0.707639158" alpha="0" />
+      <Key frame="8" x="88" y="-23" angle="-49.8412781" scaleX="0.707639158" />
+      <Key frame="9" x="61" y="13" angle="-49.8412781" scaleX="0.707639158" />
+      <Key frame="17" x="61" y="13" angle="-49.8412781" scaleX="0.707639158" />
+      <Key frame="20" x="252" y="-240" angle="-49.8412781" scaleX="0.707639158" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="209" srcY="204" dstX="-96" dstY="-8" width="192" height="17" />
+      </Sprite>
+      <Key frame="6" x="152" y="-376" angle="-53.42884" scaleX="0.9098593" alpha="0" />
+      <Key frame="8" x="-140" y="47" angle="-53.42884" scaleX="0.9098593" />
+      <Key frame="9" x="-111" y="4" angle="-53.42884" scaleX="0.9098593" />
+      <Key frame="17" x="-111" y="4" angle="-53.42884" scaleX="0.9098593" />
+      <Key frame="20" x="-266" y="270" angle="-53.42884" scaleX="0.9098593" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Image srcX="171" srcY="260" dstX="-116" dstY="0" width="232" height="63" />
+        <Tag key="clipName" value="text" />
+      </Sprite>
+      <Key frame="0" x="9" y="-27" scaleX="0.8389046" scaleY="0.8389046" alpha="0.1" />
+      <Key frame="1" x="9" y="-58" scaleX="1.71802235" scaleY="1.71802235" />
+      <Key frame="2" x="9" y="-30" />
+      <Key frame="17" x="9" y="-30" />
+      <Key frame="20" x="9" y="-22" scaleX="0.659999967" scaleY="0.659999967" alpha="0.1" visible="false" />
+    </Composite>
+    <Frame>
+      <Tag key="sound" value="ui_combo" />
+    </Frame>
+    <Frame rep="20" />
+  </Sprite>
+  

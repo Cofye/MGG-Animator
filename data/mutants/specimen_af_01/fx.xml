@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_AF_01" attack="1">
+	<FX type="flash" name="748b6f" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_techno02" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scale="1.5" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AF_01" attack="1p">
+	<FX type="fade" name="7D7D7D" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" duration="0.5" />
+	<FX type="flash" name="779949" duration="1.0" applyOn="background" moment="impact" />
+	<FX type="flash" name="DFF7BE" duration="0.2" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AF_01" attack="2">
+	<FX type="fade" name="023558" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="teleport" />
+	<FX type="flash" name="19679d" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="ffffff" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_techno01" blendmode="add" applyOn="target" position="bottom" moment="fx">
+		<colorTransform mul="0000ff" add="4051b6" alpha="1.0" />
+	</FX>
+	<FX type="sprite" name="fx_invocation_AF" blendmode="add" applyOn="background" moment="invocation" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AF_01" attack="2p">
+	<FX type="fade" name="001104" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="teleport" />
+	<FX type="flash" name="199d29" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="ffffff" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="land" amplitude="6" frequency="20" duration="2.0" />
+	<FX type="sprite" name="fx_techno01" blendmode="add" applyOn="target" position="bottom" moment="fx">
+	</FX>
+	<FX type="sprite" name="fx_invocation_AF_2" blendmode="add" applyOn="background" moment="invocation" />
+</AttackFX>

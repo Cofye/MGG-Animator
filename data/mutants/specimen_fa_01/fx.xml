@@ -1,0 +1,21 @@
+<AttackFX specimen="Specimen_FA_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="73532F" duration="0.15" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FA_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FA_01" attack="2">
+	<FX type="flash" name="EDDD00" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="85680B" duration="4.0" applyOn="allclip+background-target-self" moment="firstImpact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="15" frequency="20" duration="0.60" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FA_01" attack="2p">
+	<FX type="flash" name="EDDD00" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="85680B" duration="4.0" applyOn="allclip+background-target-self" moment="firstImpact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="15" frequency="20" duration="0.60" />
+</AttackFX>

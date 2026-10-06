@@ -1,0 +1,38 @@
+<AttackFX specimen="Specimen_DD_07" attack="1">
+	<FX type="flash" name="c88f3c" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ad6a1a" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_07" attack="1p">
+	<FX type="fade" name="d68800" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="c88f3c" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ad6a1a" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="sprite" name="fx_explosion_blue" blendmode="normal" applyOn="target" position="center" moment="explosion" zOrder="self"> </FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_07" attack="2">
+	<FX type="flash" name="d49e35" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ad6a1a" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="sprite" name="fx_balloons_loris" blendmode="normal" applyOn="target" position="center" moment="balloons" zOrder="self"> </FX>
+	<FX type="sprite" name="fx_explosion_multi" blendmode="normal" applyOn="target" position="center" moment="explosion" zOrder="self">
+		<tranform scale="1.5" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DD_07" attack="2p">
+	<FX type="fade" name="d68800" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="d49e35" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ad6a1a" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="sprite" name="fx_balloons_loris2p" blendmode="normal" applyOn="target" position="center" moment="bomb" zOrder="self"> </FX>
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="center" moment="explosion" zOrder="self"> </FX>
+</AttackFX>

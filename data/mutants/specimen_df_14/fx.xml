@@ -1,0 +1,63 @@
+<AttackFX specimen="Specimen_DF_14" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="efefef" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="fade" name="5a7485" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="sprite" name="fx_df_14_dragon" blendmode="add" applyOn="self" position="bottom" moment="start" duration="5">
+		<spawn number="1" scatterX="250" scatterY="-200" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack1" blendmode="hardlight" applyOn="target" position="bottom" moment="impact">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_14" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="173e45" applyOn="allclip+background-target-self" moment="arrived" duration="4" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="efefef" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_df_14_dragon" blendmode="add" applyOn="self" position="bottom" moment="start" duration="5">
+		<spawn number="1" scatterX="250" scatterY="-200" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack1p" blendmode="hardlight" applyOn="target" position="bottom" moment="impact">
+		<tranform scaleMin="0.7" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_14" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="efefef" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="173e45" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0,5" />
+	<FX type="sprite" name="fx_df_14_dragon" blendmode="add" applyOn="self" position="bottom" moment="start" duration="5">
+		<spawn number="1" scatterX="250" scatterY="-200" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack2" blendmode="screen" applyOn="target" position="bottom" moment="arrived">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack1" blendmode="add" applyOn="target" position="bottom" moment="impact">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_14" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.3" />
+	<FX type="fade" name="173e45" applyOn="allclip+background-target-self" moment="arrived" duration="4" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0,5" />
+	<FX type="flash" name="efefef" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_df_14_dragon" blendmode="add" applyOn="self" position="bottom" moment="start" duration="5">
+		<spawn number="1" scatterX="250" scatterY="-200" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack2p" blendmode="screen" applyOn="target" position="bottom" moment="impact">
+		<tranform scaleMin="0.7" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+	<FX type="sprite" name="fx_df_14_attack1p" blendmode="add" applyOn="target" position="bottom" moment="impact">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

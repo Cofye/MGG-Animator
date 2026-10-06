@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_DE_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.25" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_01" attack="1p">
+	<FX type="flash" name="827839" duration="0.25" applyOn="background" moment="impact" />
+	<FX type="color" mul="B353CF" add="ABA930" duration="1.0" applyOn="target" moment="fade" />
+	<FX type="color" duration="1.5" applyOn="target" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_01" attack="2">
+	<FX type="flash" name="C9B00A" duration="0.25" applyOn="target" moment="impact" />
+	<FX type="flash" name="827839" duration="0.25" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_splurch" blendmode="normal" applyOn="target" position="bottom" moment="splurch">
+		<tranform randomX="true" />
+		<spawn number="1" scatterX="30" scatterY="0" targetDelay="0.2" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background+self" moment="quake1" amplitude="4" frequency="18" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="quake2" amplitude="6" frequency="20" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="quake3" amplitude="8" frequency="25" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="splurch" amplitude="6" frequency="30" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_01" attack="2p">
+	<FX type="flash" name="C9B00A" duration="0.25" applyOn="target" moment="impact" />
+	<FX type="flash" name="827839" duration="0.25" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_splurch" blendmode="normal" applyOn="target" position="bottom" moment="splurch">
+		<tranform randomX="true" />
+		<spawn number="1" scatterX="30" scatterY="0" targetDelay="0.2" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background+self" moment="quake1" amplitude="4" frequency="18" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="quake2" amplitude="6" frequency="20" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="quake3" amplitude="8" frequency="25" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background+self" moment="splurch" amplitude="6" frequency="30" duration="1.0" />
+</AttackFX>

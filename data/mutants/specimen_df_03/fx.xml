@@ -1,0 +1,37 @@
+<AttackFX specimen="Specimen_DF_03" attack="1">
+	<FX type="fade" name="7b8847" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffe5fa" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_03" attack="1p">
+	<FX type="fade" name="7b8847" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffe5fa" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_03" attack="2">
+	<FX type="sprite" name="fx_caterpillar" blendmode="normal" applyOn="background+target-self" position="center" moment="nuage">
+		<tranform scale="2" />
+	</FX>
+	<FX type="fade" name="faa6ff" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffe5fa" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DF_03" attack="2p">
+	<FX type="sprite" name="fx_caterpillar" blendmode="normal" applyOn="background+target-self" position="center" moment="nuage">
+		<tranform scale="2" />
+	</FX>
+	<FX type="fade" name="faa6ff" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffe5fa" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>

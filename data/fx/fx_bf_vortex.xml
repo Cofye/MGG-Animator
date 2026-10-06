@@ -1,0 +1,87 @@
+<Sprite id="fx_bf_vortex" bitmap="fx/bf_11_vortex.png" cache="25">
+    <Composite>
+      <Sprite cache="8">
+        <Composite>
+          <Sprite>
+            <Image srcX="35" srcY="392" dstX="-54" dstY="-34" width="104" height="34" />
+          </Sprite>
+          <Key frame="0" x="2" y="0.5" />
+          <Key frame="1" x="2" y="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="185" srcY="352" dstX="-45" dstY="-68.5" width="89" height="74" />
+          </Sprite>
+          <Key frame="2" x="1" y="-6" />
+          <Key frame="3" x="1" y="-6" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="294" srcY="311" dstX="-49" dstY="-114.5" width="100" height="115" />
+          </Sprite>
+          <Key frame="4" x="-3" y="-4" />
+          <Key frame="5" x="-3" y="-4" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="412" srcY="268" dstX="-49" dstY="-156.5" width="98" height="157" />
+          </Sprite>
+          <Key frame="6" x="-3" y="-2" />
+          <Key frame="7" x="-3" y="-2" visible="false" />
+          <Key frame="12" x="-3" y="-2" />
+          <Key frame="13" x="-3" y="-2" visible="false" />
+          <Key frame="18" x="-3" y="-2" />
+          <Key frame="19" x="-3" y="-2" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="537" srcY="268" dstX="-49" dstY="-156.5" width="97" height="158" />
+          </Sprite>
+          <Key frame="8" />
+          <Key frame="9" visible="false" />
+          <Key frame="14" />
+          <Key frame="15" y="-1" visible="false" />
+          <Key frame="20" />
+          <Key frame="21" y="-1" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="654" srcY="263" dstX="-46" dstY="-163.5" width="95" height="163" />
+          </Sprite>
+          <Key frame="10" y="2" />
+          <Key frame="11" y="2" visible="false" />
+          <Key frame="16" y="2" />
+          <Key frame="17" y="2" visible="false" />
+          <Key frame="22" y="2" />
+          <Key frame="23" y="2" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="772" srcY="263" dstX="-57" dstY="-141.5" width="112" height="141" />
+          </Sprite>
+          <Key frame="24" x="1" y="-16" />
+          <Key frame="25" x="1" y="-16" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="921" srcY="263" dstX="-74" dstY="-76.5" width="150" height="76" />
+          </Sprite>
+          <Key frame="26" x="7" y="-84" />
+          <Key frame="27" x="7" y="-84" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="1098" srcY="263" dstX="-72" dstY="-45.5" width="141" height="45" />
+          </Sprite>
+          <Key frame="28" x="6" y="-114" />
+          <Key frame="29" x="6" y="-114" visible="false" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" y="49" scaleX="2" scaleY="2" rMul="0" gMul="0.5019608" bMul="0.5019608" alpha="0.5" />
+      <Key frame="26" y="50" scaleX="3" scaleY="3" rAdd="0.5019608" gAdd="1" bAdd="1" />
+      <Key frame="29" y="50" scaleX="3" scaleY="3" alpha="0" visible="false" />
+    </Composite>
+    <Frame rep="29" />
+  </Sprite>
+  

@@ -1,0 +1,32 @@
+<AttackFX specimen="Specimen_BB_01" attack="1">
+	<FX type="fade" name="000000" applyOn="target" moment="suck" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="target" moment="return" duration="1.0" />
+	<FX type="fade" name="C46A6A" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_01" attack="1p">
+	<FX type="flash" name="C46A6A" duration="0.5" applyOn="background" moment="impact" />
+	<FX type="fade" name="000000" applyOn="target" moment="suck" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="target" moment="return" duration="1.0" />
+	<FX type="fade" name="DB0000" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="move" name="shake" applyOn="background" moment="suck" amplitude="10" frequency="18" duration="2.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.25" applyOn="target" moment="impact" />
+	<FX type="flash" name="9C0000" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_01" attack="2p">
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="9C0000" duration="1.0" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="18" duration="0.2" />
+	<FX type="sprite" name="fx_bat_swarm" blendmode="normal" applyOn="target" position="center" moment="swarm">
+		<tranform randomX="true" />
+		<spawn number="1" scatterX="50" scatterY="50" targetDelay="0.2" />
+	</FX>
+	<FX type="fade" name="C46A6A" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+</AttackFX>

@@ -1,0 +1,31 @@
+<Sprite id="coach_happy_mobile" bitmap="pnj/coach_happy.png" cache="6" minDelay="60" rndDelay="100">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-116" dstY="-249" width="203" height="358" />
+      </Sprite>
+      <Key frame="0" x="7" y="-56" />
+    </Composite>
+    <Composite>
+      <Sprite autoLoop="true" minDelay="60" rndDelay="100">
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="360" dstX="-28" dstY="-23" width="203" height="131" />
+          </Sprite>
+          <Key frame="0" x="5" y="-7" />
+        </Composite>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="-91" y="-150" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" framerate="2" minDelay="30" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="492" dstX="-27" dstY="-22" width="59" height="27" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-33" y="-231" />
+    </Composite>
+    <Frame />
+  </Sprite>
+  

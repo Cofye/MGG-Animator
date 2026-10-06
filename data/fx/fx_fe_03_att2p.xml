@@ -1,0 +1,22 @@
+<Sprite id="fx_fe_03_att2p" bitmap="character/f_e_03.png" cache="33">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="680" srcY="537" dstX="-28.5" dstY="-2" width="59" height="2" />
+          </Sprite>
+          <Key frame="0" x="-3" y="-2" scaleX="3.5" scaleY="551.1" />
+          <Key frame="2" x="4" y="-2" scaleX="3.5" scaleY="551.1" />
+        </Composite>
+        <Frame rep="3" />
+      </Sprite>
+      <Key frame="0" x="1" y="-1" scaleX="0.0700636953" alpha="0.2" />
+      <Key frame="5" x="1" y="-1" />
+      <Key frame="51" x="1" y="-1" />
+      <Key frame="56" x="1" y="-1" scaleX="0.12230216" alpha="0.2" visible="false" />
+    </Composite>
+    <Frame rep="56" />
+    <Frame delay="10000" />
+    <Skin>wireframe</Skin>
+  </Sprite>
+  

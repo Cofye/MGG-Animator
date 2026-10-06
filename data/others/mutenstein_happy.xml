@@ -1,0 +1,64 @@
+<Sprite id="mutenstein_happy" bitmap="pnj/mutenstein_happy.png" cache="6">
+    <Composite>
+      <Sprite>
+        <Image srcX="436" srcY="240" dstX="-18.5" dstY="-47.5" width="38" height="95" />
+      </Sprite>
+      <Key frame="0" x="26" y="-129" angle="-8.484234" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="10" srcY="4" dstX="-115.257805" dstY="-200.445313" width="241" height="370" />
+      </Sprite>
+      <Key frame="0" x="-25" y="-122" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="5">
+        <Frame>
+          <Image srcX="313" srcY="55" dstX="-40" dstY="-19.5" width="76" height="39" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="393" srcY="57" dstX="-39" dstY="-17.5" width="75" height="35" />
+        </Frame>
+        <Frame>
+          <Image srcX="313" srcY="55" dstX="-40" dstY="-19.5" width="76" height="39" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="393" srcY="57" dstX="-39" dstY="-17.5" width="75" height="35" />
+        </Frame>
+        <Frame>
+          <Image srcX="475" srcY="51" dstX="-39" dstY="-24" width="75" height="37" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-22" y="-212" />
+      <Key frame="93" x="-23" y="-212" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite minDelay="60" rndDelay="200">
+        <Composite>
+          <Sprite>
+            <Image srcX="385" srcY="150" dstX="-13.9765625" dstY="-77.94531" width="89" height="185" />
+          </Sprite>
+          <Key frame="0" x="0.5" y="-9.5" />
+          <Key frame="19" x="0.5" y="-9.5" angle="-1.25729358" />
+          <Key frame="28" x="0.5" y="-9.5" angle="2.67751932" />
+          <Key frame="36" x="0.5" y="-9.5" />
+        </Composite>
+        <Frame rep="36" />
+      </Sprite>
+      <Key frame="0" x="17" y="-154" angle="-2.43084145" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="262" srcY="48" dstX="-19" dstY="-22" width="41" height="43" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-33" y="-261" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

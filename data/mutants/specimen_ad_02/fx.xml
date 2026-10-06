@@ -1,0 +1,34 @@
+<AttackFX specimen="Specimen_AD_02" attack="1">
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="fx" />
+	<FX type="flash" name="AB8726" duration="0.2" applyOn="allclip+background-target-self" moment="fx" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="18" duration="0.3" />
+	<FX type="sprite" name="fx_bomb2" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scaleMin="0.4" scaleMax="0.8" randomX="true" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AD_02" attack="1p">
+	<FX type="fade" name="783d5c" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="fx" />
+	<FX type="flash" name="AB8726" duration="0.2" applyOn="allclip+background-target-self" moment="fx" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="18" duration="0.3" />
+	<FX type="sprite" name="fx_bomb2" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scaleMin="0.3" scaleMax="0.7" randomX="true" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AD_02" attack="2">
+	<FX type="flash" name="f69aae" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="a73956" duration="0.1" applyOn="allclip+background-target+self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="18" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AD_02" attack="2p">
+	<FX type="fade" name="5b2c45" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="f69aae" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="flash" name="a73956" duration="0.1" applyOn="allclip+background-target+self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="15" frequency="20" duration="0.3" />
+</AttackFX>

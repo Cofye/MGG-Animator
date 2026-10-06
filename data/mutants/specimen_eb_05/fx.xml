@@ -1,0 +1,37 @@
+<AttackFX specimen="Specimen_EB_05" attack="1">
+	<FX type="flash" name="66cccc" duration="2.0" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="3" frequency="18" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_05" attack="1p">
+	<FX type="fade" name="1d5a6e" applyOn="allclip+background-target--self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target--self" moment="return" duration="0.5" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="66cccc" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="3" frequency="18" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_05" attack="2">
+	<FX type="color" duration="5.0" moment="impact" applyOn="allclip+background-target-self" />
+	<FX type="flash" name="66cccc" duration="2.0" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_spacemarine_02" blendmode="normal" applyOn="target" position="bottom" moment="fx_spacemarine_02">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_05" attack="2p">
+	<FX type="fade" name="568972" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="66cccc" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="b66b7e" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="shake" amplitude="6" frequency="18" duration="2.1" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_spacemarine_02p" blendmode="normal" applyOn="target" position="bottom" moment="fx_spacemarine_02p">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

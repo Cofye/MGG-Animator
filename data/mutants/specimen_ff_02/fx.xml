@@ -1,0 +1,40 @@
+<AttackFX specimen="Specimen_FF_02" attack="1">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="ffeafe" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffeafe" duration="0.6" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="3" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_02" attack="1p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="ffeafe" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffeafe" duration="0.6" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_02" attack="2">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="10" duration="0.2" />
+	<FX type="flash" name="ffcaf6" duration="0.2" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffcaf6" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_spear" blendmode="add" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="0.6" scaleMax="0.6" randomX="true" />
+		<colorTransform mul="000000" add="E6800B" alpha="0.8" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_02" attack="2p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="10" duration="0.2" />
+	<FX type="color" mul="422c57" duration="0.2" moment="magic" applyOn="allclip+background-target-self" />
+	<FX type="flash" name="ffcaf6" duration="0.2" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffcaf6" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_spear" blendmode="add" applyOn="target" position="bottom" moment="fx">
+		<spawn number="1" scatterX="150" scatterY="10" />
+		<iteration delay=".2" amount="5" />
+		<tranform scaleMin="0.6" scaleMax="0.6" randomX="true" />
+		<colorTransform mul="000000" add="E6800B" alpha="0.8" />
+	</FX>
+</AttackFX>

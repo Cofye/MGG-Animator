@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_AE_02" attack="1">
+	<FX type="flash" name="af2222" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="af2222" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AE_02" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="22" duration="0.4" />
+	<FX type="fade" name="3a2121" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="e52a2a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="af2222" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AE_02" attack="2">
+	<FX type="fade" name="7585b0" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="impact" applyOn="background" moment="shake" amplitude="4" frequency="18" duration="0.3" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="bfdaf0" duration="0.8" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AE_02" attack="2p">
+	<FX type="fade" name="7585b0" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="3" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="bfdaf0" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

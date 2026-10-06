@@ -1,0 +1,73 @@
+<Sprite id="trevor_unhappy" bitmap="pnj/presenter_unhappy.png" cache="30">
+    <Composite>
+      <Sprite autoLoop="true" minDelay="15" rndDelay="25">
+        <Composite>
+          <Sprite>
+            <Image srcX="269" srcY="1" dstX="-38.70999" dstY="-20.2099915" width="173" height="163" />
+          </Sprite>
+          <Key frame="0" x="-3" y="-3" />
+          <Key frame="48" x="-3" y="1" angle="0.8877099" />
+        </Composite>
+        <Frame rep="89" />
+      </Sprite>
+      <Key frame="0" x="51" y="-141" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="443" srcY="1" dstX="-192.709991" dstY="-318.21" width="314" height="374" />
+      </Sprite>
+      <Key frame="0" x="-27.2900085" y="-0.790008545" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" framerate="3">
+        <Frame>
+          <Image srcX="186" srcY="288" dstX="-30.7099915" dstY="-23.2099915" width="63" height="48" />
+        </Frame>
+        <Frame>
+          <Image srcX="269" srcY="165" dstX="-30" dstY="-23" width="62" height="50" />
+        </Frame>
+        <Frame>
+          <Image srcX="186" srcY="288" dstX="-30.7099915" dstY="-23.2099915" width="63" height="48" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="186" srcY="288" dstX="-30.7099915" dstY="-23.2099915" width="63" height="48" />
+        </Frame>
+        <Frame>
+          <Image srcX="269" srcY="165" dstX="-30" dstY="-23" width="62" height="50" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="269" srcY="165" dstX="-30" dstY="-23" width="62" height="50" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-3" y="-205" />
+      <Key frame="90" x="-3" y="-205" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="186" srcY="337" dstX="-28.7099915" dstY="-18.2099915" width="59" height="38" />
+        </Frame>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="2" y="-247" />
+    </Composite>
+    <Composite>
+      <Sprite autoLoop="true" minDelay="45" rndDelay="30">
+        <Composite>
+          <Sprite>
+            <Image srcX="758" srcY="1" dstX="-85.70999" dstY="-148.209991" width="127" height="177" />
+          </Sprite>
+          <Key frame="0" x="-12" y="-3" />
+          <Key frame="8" x="-13" y="-4" angle="-1.86478531" />
+        </Composite>
+        <Frame rep="17" />
+      </Sprite>
+      <Key frame="0" x="-124" y="-107" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

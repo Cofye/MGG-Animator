@@ -1,0 +1,27 @@
+<AttackFX specimen="Specimen_DB_06" attack="1">
+	<FX type="flash" name="ffecb7" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f6db9b" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="allclip+background-self" moment="impact" amplitude="8" frequency="10" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_06" attack="1p">
+	<FX type="flash" name="f6db9b" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="c17c1a" applyOn="allclip+background-target-self" moment="start" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.7" />
+	<FX type="flash" name="ffecb7" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="allclip+background-self" moment="impact" amplitude="12" frequency="10" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_06" attack="2">
+	<FX type="flash" name="e3ffc4" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="94e587" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="allclip+background-self" moment="impact" amplitude="8" frequency="10" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_06" attack="2p">
+	<FX type="fade" name="8fb420" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="e3ffc4" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="94e587" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="allclip+background-self" moment="impact" amplitude="12" frequency="10" duration="0.2" />
+</AttackFX>

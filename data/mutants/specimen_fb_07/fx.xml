@@ -1,0 +1,48 @@
+<AttackFX specimen="Specimen_FB_07" attack="1">
+	<FX type="flash" name="df46ed" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="8a42b0" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="sprite" name="fx_moires1" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<tranform scaleMin="1.2" scaleMax="1.2" scale="1.2" randomX="false" randomY="false" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_07" attack="1p">
+	<FX type="fade" name="86235b" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="df46ed" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="8a42b0" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="sprite" name="fx_moires1p" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<tranform scaleMin="1.2" scaleMax="1.2" scale="1.2" randomX="false" randomY="false" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_07" attack="2">
+	<FX type="flash" name="84d435" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="657b18" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="sprite" name="fx_moires2" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self"> </FX>
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_07" attack="2p">
+	<FX type="fade" name="9cd600" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="84d435" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="657b18" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="sprite" name="fx_moires2p" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self"> </FX>
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>

@@ -1,0 +1,19 @@
+<Sprite id="fx_impact_mortier" bitmap="fx/a_b_hit02.png" cache="5">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-47" dstY="-104" width="37" height="73" a="2.12921143" d="2.12921143" />
+      </Sprite>
+      <Key frame="0" x="21" y="-580" />
+      <Key frame="4" x="6" y="-60" scaleY="1.24358976" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="39" srcY="1" dstX="-64" dstY="-50" width="121" height="107" />
+      </Sprite>
+      <Key frame="4" x="5" y="-28" />
+      <Key frame="10" x="12" y="-78" angle="-0.5499749" scaleX="3.32882476" scaleY="3.075289" />
+      <Key frame="22" x="12" y="-78" angle="-0.5499749" scaleX="3.98212" scaleY="3.67882681" alpha="0" />
+    </Composite>
+    <Frame rep="49" />
+  </Sprite>
+  

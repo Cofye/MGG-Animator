@@ -1,0 +1,51 @@
+<Sprite id="coach_neutral_winter_vignette" bitmap="pnj/coach_winter.png" cache="6">
+    <Composite>
+      <Sprite cache="2">
+        <Image srcX="95" srcY="1" dstX="-74" dstY="-179" width="130" height="174" />
+      </Sprite>
+      <Key frame="0" x="74" y="6" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="30" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="360" dstX="-33" dstY="-14" width="65" height="28" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="78" y="-101" />
+      <Key frame="99" x="79" y="-101" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3" framerate="5">
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame>
+          <Image srcX="131" srcY="360" dstX="-32" dstY="-23" width="63" height="47" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="131" srcY="360" dstX="-32" dstY="-23" width="63" height="47" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="77" y="-71" />
+      <Key frame="93" x="77" y="-71" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="287" srcY="2" dstX="-88" dstY="-69" width="138" height="100" />
+      </Sprite>
+      <Key frame="0" x="77" y="-136" angle="15.1713533" scaleX="-0.9417082" scaleY="0.9417082" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

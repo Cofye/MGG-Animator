@@ -1,0 +1,50 @@
+<AttackFX specimen="Specimen_F_03" attack="1">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="shakeit" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="fade" name="0B82BD" applyOn="allclip+background-target-self" moment="shakeit" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="98E4F5" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_snowmantornado" blendmode="normal" applyOn="target" position="bottom" moment="tornado">
+		<spawn number="1" scatterX="150" scatterY="10" />
+		<iteration delay="0.2" amount="1" />
+		<tranform scaleMin="0.8" scaleMax="0.8" randomX="true" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_03" attack="1p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="shakeit" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="fade" name="061D47" applyOn="allclip+background-target-self" moment="shakeit" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="B3FFFA" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_snowmantornado2" blendmode="normal" applyOn="target" position="bottom" moment="tornado">
+		<spawn number="1" scatterX="150" scatterY="10" />
+		<iteration delay="0.2" amount="1" />
+		<tranform scaleMin="1.2" scaleMax="1.2" randomX="true" />
+	</FX>
+	<FX type="sprite" name="fx_snowmanpieces" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<spawn number="1" scatterX="100" scatterY="60" />
+		<iteration delay="0.1" amount="1" />
+		<tranform scaleMin="0.7" scaleMax="0.7" randomX="true" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_03" attack="2">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="10" duration="0.2" />
+	<FX type="color" mul="0A618C" duration="0.2" moment="start" applyOn="allclip+background-target-self" />
+	<FX type="flash" name="D5DDEB" duration="0.2" applyOn="allclip+background-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_snowman" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<spawn number="1" scatterX="50" scatterY="10" targetDelay="0.1" />
+		<tranform scaleMin="2" scaleMax="2" randomX="true" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_03" attack="2p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="10" duration="0.2" />
+	<FX type="color" mul="05293B" duration="0.2" moment="start" applyOn="allclip+background-target-self" />
+	<FX type="flash" name="D5DDEB" duration="0.2" applyOn="allclip+background-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_snowman" blendmode="normal" applyOn="target" position="center" moment="impact">
+		<spawn number="1" scatterX="50" scatterY="10" targetDelay="0.1" />
+		<tranform scaleMin="2" scaleMax="2" randomX="true" />
+	</FX>
+</AttackFX>

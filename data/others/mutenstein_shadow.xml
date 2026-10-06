@@ -1,0 +1,12 @@
+<Sprite id="mutenstein_shadow" bitmap="pnj/mutenstein_shadow.png" cache="1">
+    <Composite>
+      <Sprite>
+        <Image srcX="4" srcY="4" dstX="-125" dstY="-342" width="285" height="427" />
+      </Sprite>
+      <Key frame="0" x="1" alpha="0.95" />
+      <Key frame="50" x="1" alpha="0.88" />
+      <Key frame="99" x="1" alpha="0.95" />
+    </Composite>
+    <Frame rep="99" />
+  </Sprite>
+  

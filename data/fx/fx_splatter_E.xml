@@ -1,0 +1,475 @@
+<Sprite id="fx_splatter_E" bitmap="fx/fx_splatter_e.png" cache="30">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-211.649628" dstY="-92.70073" width="422" height="185" />
+      </Sprite>
+      <Key frame="14" x="-3" y="-2" scaleX="0.349750221" scaleY="0.349750221" />
+      <Key frame="17" x="-3" y="-2" scaleX="0.6053425" scaleY="0.6053425" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="1" x="-52" y="-272" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="2" x="20" y="-246" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+      <Key frame="10" x="20" y="-246" scaleX="0.579868436" scaleY="0.579868436" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="5" x="-40" y="-223" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="6" x="-75" y="-177" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="6" x="18" y="-158" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="6" x="-50" y="-117" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="8" x="-50" y="-117" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="10" x="18" y="-101" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="12" x="-73" y="-65" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="13" x="-7" y="-59" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite cache="5" framerate="2">
+        <Frame>
+          <Image srcX="424" srcY="1" dstX="-50.94162" dstY="-53.4598541" width="103" height="108" />
+        </Frame>
+        <Frame>
+          <Image srcX="528" srcY="1" dstX="-79" dstY="-91" width="148" height="163" />
+        </Frame>
+        <Frame>
+          <Image srcX="677" srcY="1" dstX="-74" dstY="-94" width="147" height="194" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="-9" dstY="-60" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-61" dstY="34" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-57" dstY="-34" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="46" dstY="20" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="1" dstY="-72" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-63" dstY="48" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-73" dstY="-36" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="61" dstY="30" width="20" height="18" />
+        </Frame>
+        <Frame>
+          <Image srcX="424" srcY="110" dstX="4" dstY="-83" width="91" height="44" a="0.6209664" b="0.78383714" c="0.78383714" d="-0.620966434" />
+          <Image srcX="424" srcY="110" dstX="-67" dstY="57" width="91" height="44" />
+          <Image srcX="424" srcY="155" dstX="-82" dstY="-37" width="20" height="18" />
+          <Image srcX="424" srcY="155" dstX="70" dstY="38" width="20" height="18" />
+        </Frame>
+        <Frame rep="1" />
+        <Frame delay="50" />
+      </Sprite>
+      <Key frame="8" x="65" y="-113" scaleX="0.5891911" scaleY="0.5891911" alpha="0.8" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="1" dstX="-36.59854" dstY="-39.9781036" width="74" height="81" />
+      </Sprite>
+      <Key frame="3" x="-55" y="-248" />
+      <Key frame="6" x="-55" y="-248" scaleX="2.02741051" scaleY="2.02741051" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="1" dstX="-36.59854" dstY="-39.9781036" width="74" height="81" />
+      </Sprite>
+      <Key frame="8" x="24" y="-198" />
+      <Key frame="11" x="38" y="-192" scaleX="2.02741051" scaleY="2.02741051" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="1" dstX="-36.59854" dstY="-39.9781036" width="74" height="81" />
+      </Sprite>
+      <Key frame="13" x="-65" y="-143" />
+      <Key frame="17" x="-73" y="-127" scaleX="2.02741051" scaleY="2.02741051" alpha="0.4" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="445" srcY="155" dstX="-22.93431" dstY="-17.5328445" width="47" height="34" />
+      </Sprite>
+      <Key frame="15" x="-34" y="10" scaleX="0.5396115" scaleY="0.5396115" />
+      <Key frame="20" x="-119" y="49" scaleX="0.5396115" scaleY="0.5396115" />
+      <Key frame="24" x="-139" y="65" angle="13.4124718" scaleX="0.5396115" scaleY="0.5396115" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="900" srcY="1" dstX="-26.6277466" dstY="-15.7883205" width="55" height="31" />
+      </Sprite>
+      <Key frame="15" x="30" y="4" scaleX="-0.759289563" scaleY="0.759289563" />
+      <Key frame="20" x="122" y="32" scaleX="-0.759289563" scaleY="0.759289563" />
+      <Key frame="25" x="151" y="42" scaleX="-0.759289563" scaleY="0.759289563" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="900" srcY="33" dstX="-38.05838" dstY="-21.6934357" width="76" height="44" />
+      </Sprite>
+      <Key frame="14" x="-50" y="9" scaleX="0.656800568" scaleY="0.656800568" />
+      <Key frame="19" x="-111" y="45" scaleX="0.656800568" scaleY="0.656800568" />
+      <Key frame="24" x="-127" y="55" scaleX="0.656800568" scaleY="0.656800568" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="83" dstX="-30.2919769" dstY="-16.8394165" width="68" height="38" />
+      </Sprite>
+      <Key frame="15" x="18" y="-1" scaleX="0.661432743" scaleY="0.661432743" />
+      <Key frame="21" x="92" y="40" scaleX="0.661432743" scaleY="0.661432743" />
+      <Key frame="27" x="122" y="52" scaleX="0.661432743" scaleY="0.661432743" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="122" dstX="-30.321167" dstY="-17.8321152" width="61" height="34" />
+      </Sprite>
+      <Key frame="14" y="16" angle="174.030045" scaleX="-0.618547857" scaleY="0.618547857" />
+      <Key frame="19" x="4" y="58" angle="174.030045" scaleX="-0.618547857" scaleY="0.618547857" />
+      <Key frame="24" x="5" y="73" angle="174.030045" scaleX="-0.618547857" scaleY="0.618547857" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="894" srcY="83" dstX="-40.4160461" dstY="-19.1970825" width="82" height="40" />
+      </Sprite>
+      <Key frame="7" x="-70" y="-262" angle="57.960968" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="11" x="-90" y="-305" angle="29.7003117" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="14" x="-124" y="-328" angle="-19.60272" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="19" x="-137" y="-256" angle="-55.79219" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="24" x="-137" y="-169" angle="-162.121735" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="29" x="-142" y="-34" angle="-254.870544" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="33" x="-141" y="-13" angle="-254.870544" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="37" x="-156" y="-21" angle="-321.290649" scaleX="0.413753331" scaleY="0.413753331" />
+      <Key frame="41" x="-157" y="2" angle="-371.5632" scaleX="0.413753331" scaleY="0.413753331" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="825" srcY="157" dstX="-25.7372131" dstY="-15.4160576" width="53" height="32" />
+      </Sprite>
+      <Key frame="10" x="25" y="-250" angle="-47.8938141" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="14" x="42" y="-283" angle="-47.8938141" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="18" x="63" y="-303" angle="26.2364864" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="21" x="81" y="-269" angle="84.9872" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="26" x="106" y="-194" angle="145.084732" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="32" x="124" y="-57" angle="145.084732" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="35" x="128" y="-14" angle="179.056229" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="38" x="143" y="-36" angle="236.266235" scaleX="0.67967844" scaleY="0.67967844" />
+      <Key frame="41" x="161" y="-12" angle="357.679779" scaleX="0.67967844" scaleY="0.67967844" />
+    </Composite>
+    <Frame rep="44" />
+  </Sprite>
+  

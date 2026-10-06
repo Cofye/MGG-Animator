@@ -1,0 +1,84 @@
+<Sprite id="fx_electricity_pink" bitmap="fx/a_e_hit_pink.png" cache="7" framerate="2">
+    <Composite>
+      <Sprite cache="3" framerate="2">
+        <Frame>
+          <Image srcX="1" srcY="203" dstX="-6" dstY="-29" width="33" height="33" />
+        </Frame>
+        <Frame>
+          <Image srcX="35" srcY="203" dstX="-6" dstY="-50" width="41" height="55" />
+        </Frame>
+        <Frame>
+          <Image srcX="77" srcY="203" dstX="8" dstY="-64" width="42" height="44" />
+        </Frame>
+        <Frame>
+          <Image srcX="120" srcY="203" dstX="7" dstY="-77" width="42" height="40" />
+        </Frame>
+        <Frame rep="2" />
+      </Sprite>
+      <Key frame="0" x="24" y="-107" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3" framerate="2">
+        <Frame>
+          <Image srcX="1" srcY="203" dstX="-6" dstY="-29" width="33" height="33" />
+        </Frame>
+        <Frame>
+          <Image srcX="35" srcY="203" dstX="-6" dstY="-50" width="41" height="55" />
+        </Frame>
+        <Frame>
+          <Image srcX="77" srcY="203" dstX="8" dstY="-64" width="42" height="44" />
+        </Frame>
+        <Frame>
+          <Image srcX="120" srcY="203" dstX="7" dstY="-77" width="42" height="40" />
+        </Frame>
+        <Frame rep="2" />
+      </Sprite>
+      <Key frame="5" x="-30" y="18" scaleX="-1" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3" framerate="2">
+        <Frame>
+          <Image srcX="1" srcY="203" dstX="-6" dstY="-29" width="33" height="33" />
+        </Frame>
+        <Frame>
+          <Image srcX="35" srcY="203" dstX="-6" dstY="-50" width="41" height="55" />
+        </Frame>
+        <Frame>
+          <Image srcX="77" srcY="203" dstX="8" dstY="-64" width="42" height="44" />
+        </Frame>
+        <Frame>
+          <Image srcX="120" srcY="203" dstX="7" dstY="-77" width="42" height="40" />
+        </Frame>
+        <Frame rep="2" />
+      </Sprite>
+      <Key frame="3" x="36" y="19" />
+    </Composite>
+    <Frame>
+      <Image srcX="1" srcY="1" dstX="-105" dstY="-172" width="180" height="201" />
+    </Frame>
+    <Frame>
+      <Image srcX="182" srcY="1" dstX="-114" dstY="-179" width="226" height="222" />
+    </Frame>
+    <Frame>
+      <Image srcX="409" srcY="1" dstX="-84" dstY="-190" width="190" height="232" />
+    </Frame>
+    <Frame>
+      <Image srcX="600" srcY="1" dstX="-91" dstY="-189" width="188" height="217" />
+    </Frame>
+    <Frame>
+      <Image srcX="789" srcY="1" dstX="-85" dstY="-175" width="172" height="210" />
+    </Frame>
+    <Frame>
+      <Image srcX="1" srcY="1" dstX="-105" dstY="-172" width="180" height="201" />
+    </Frame>
+    <Frame>
+      <Image srcX="182" srcY="1" dstX="-114" dstY="-179" width="226" height="222" />
+    </Frame>
+    <Frame>
+      <Image srcX="409" srcY="1" dstX="-84" dstY="-190" width="190" height="232" />
+    </Frame>
+    <Frame>
+      <Image srcX="600" srcY="1" dstX="-91" dstY="-189" width="188" height="217" />
+    </Frame>
+  </Sprite>
+  

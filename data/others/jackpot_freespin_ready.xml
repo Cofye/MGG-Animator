@@ -1,0 +1,18 @@
+<Sprite id="jackpot_freespin_ready" bitmap="hud/jackpot/jackpot_freespin_ready.png" cache="1">
+    <Composite>
+      <Sprite cache="1" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="0" srcY="0" dstX="-105.714287" dstY="-28.57143" width="212" height="58" />
+          </Sprite>
+          <Key frame="0" y="1" alpha="0" />
+          <Key frame="9" y="1" />
+        </Composite>
+        <Image srcX="15" srcY="73" dstX="-91.57143" dstY="-14.5714283" width="183" height="30" />
+        <Frame rep="17" />
+      </Sprite>
+      <Key frame="0" x="0.5714286" y="-0.428571433" />
+    </Composite>
+    <Frame />
+  </Sprite>
+  

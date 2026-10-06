@@ -1,0 +1,70 @@
+<Sprite id="fx_sandman1" bitmap="character/b_b_04.png" cache="83">
+    <Composite>
+      <Sprite>
+        <Image srcX="463" srcY="517" dstX="-21" dstY="-18" width="39" height="57" />
+      </Sprite>
+      <Key frame="0" x="-7" y="-633" alpha="0" />
+      <Key frame="8" x="-7" y="-298" scaleY="7.222222" />
+      <Key frame="16" x="-5" y="-45" scaleX="3.66666675" scaleY="2.688889" alpha="0.2" />
+      <Key frame="18" x="-8" y="-84" angle="0.8392717" scaleX="10.7142258" scaleY="4.47102642" alpha="0.2" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="371" srcY="506" dstX="-43" dstY="-44" width="84" height="51" />
+      </Sprite>
+      <Key frame="7" x="-5" y="-2" />
+      <Key frame="12" x="-5" y="-2" scaleX="6.42468452" scaleY="6.42468452" />
+      <Key frame="14" x="-5" y="-2" />
+      <Key frame="18" x="-4" y="-3" scaleX="0.723214269" scaleY="0.723214269" alpha="0" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="96" srcY="388" dstX="-38" dstY="-28" width="77" height="59" />
+          </Sprite>
+          <Key frame="0" x="5" y="-6" />
+          <Key frame="4" x="5" y="-6" scaleX="3.08571434" scaleY="3.08571434" />
+        </Composite>
+        <Frame rep="4" />
+      </Sprite>
+      <Key frame="7" x="-54" y="-210" scaleX="0.8888889" scaleY="0.8888889" />
+      <Key frame="11" x="-54" y="-211" scaleX="0.8888889" scaleY="0.8888889" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="96" srcY="388" dstX="-38" dstY="-28" width="77" height="59" />
+          </Sprite>
+          <Key frame="0" x="5" y="-6" />
+          <Key frame="4" x="5" y="-6" scaleX="3.08571434" scaleY="3.08571434" />
+        </Composite>
+        <Frame rep="4" />
+      </Sprite>
+      <Key frame="10" x="22" y="-93" scaleX="1.49629641" scaleY="1.49629641" />
+      <Key frame="14" x="22" y="-93" scaleX="1.49629641" scaleY="1.49629641" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="96" srcY="388" dstX="-38" dstY="-28" width="77" height="59" />
+          </Sprite>
+          <Key frame="0" x="5" y="-6" />
+          <Key frame="4" x="5" y="-6" scaleX="3.08571434" scaleY="3.08571434" />
+        </Composite>
+        <Frame rep="4" />
+      </Sprite>
+      <Key frame="11" x="-67" y="-58" scaleX="0.8888889" scaleY="0.8888889" />
+      <Key frame="16" x="-50" y="-25" scaleX="0.8888889" scaleY="0.8888889" visible="false" />
+    </Composite>
+    <Frame rep="18" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <Skin>halloween</Skin>
+    <DataPoint name="DataPoint001" x="-15" y="-146" />
+  </Sprite>
+  

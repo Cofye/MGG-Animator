@@ -1,0 +1,42 @@
+<AttackFX specimen="Specimen_EC_06" attack="1">
+	<FX type="flash" name="3d2878" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="b48cd9" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="6" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="shake" amplitude="6" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_06" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="6" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="shake" amplitude="6" frequency="10" duration="0.1" />
+	<FX type="fade" name="203eaf" applyOn="allclip+background+target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target-self" moment="return" />
+	<FX type="flash" name="3d2878" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="b48cd9" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_megaman2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1.0" randomX="false" />
+		<colorTransform mul="c85959" add="e2ae8e" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_06" attack="2">
+	<FX type="flash" name="3d2878" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="b48cd9" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_06" attack="2p">
+	<FX type="fade" name="203eaf" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="3d2878" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="b48cd9" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_pangolin" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1.0" randomX="false" />
+	</FX>
+	<FX type="sprite" name="fx_megaman2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1.0" randomX="false" />
+		<colorTransform mul="c85959" add="e2ae8e" alpha="1" />
+	</FX>
+</AttackFX>

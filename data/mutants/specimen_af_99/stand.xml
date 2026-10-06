@@ -1,0 +1,41 @@
+<Sprite id="specimen_AF_99_stand" bitmap="character/af_99.png" cache="1">
+    <Optim srcX="407" srcY="0" width="180" height="281" optimX="0.5" optimY="0.5" />
+    <Composite>
+      <Sprite cache="3">
+        <Composite>
+          <Sprite>
+            <Image srcX="360" srcY="0" dstX="-160" dstY="-111.5" width="308" height="327" />
+          </Sprite>
+          <Key frame="0" x="-3" y="-45" alpha="0" />
+          <Key frame="6" x="-3" y="-45" alpha="0.15384616" rAdd="0.0193061866" gAdd="0.0193061866" bAdd="0.0193061866" />
+          <Key frame="33" x="-3" y="-45" alpha="1.83216786" rAdd="0.229919121" gAdd="0.229919121" bAdd="0.229919121" />
+          <Key frame="39" x="-3" y="-45" alpha="2" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+          <Key frame="45" x="-3" y="-45" alpha="1.82857144" rAdd="0.2294678" gAdd="0.2294678" bAdd="0.2294678" />
+          <Key frame="68" x="-3" y="-45" alpha="0.189162612" rAdd="0.0237380415" gAdd="0.0237380415" bAdd="0.0237380415" />
+          <Key frame="74" x="-3" y="-45" alpha="0" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="22" srcY="394" dstX="-89.2727356" dstY="-50.0908966" width="177" height="230" />
+          </Sprite>
+          <Key frame="0" x="-51" y="-127" scaleX="1.17626417" scaleY="1.17626417" />
+        </Composite>
+        <Image srcX="0" srcY="8" dstX="-179" dstY="-172.5" width="329" height="352" />
+        <Frame rep="74" />
+      </Sprite>
+      <Key frame="0" x="16" y="-188" />
+      <Key frame="6" x="16" y="-189.15715" angle="0.0432857163" scaleY="0.9986918" />
+      <Key frame="64" x="16" y="-213.78862" angle="0.964685261" scaleY="0.9708445" />
+      <Key frame="70" x="16" y="-215" angle="1.01" scaleY="0.969475" />
+      <Key frame="76" x="16" y="-213.82608" angle="0.9660869" scaleY="0.9708021" />
+      <Key frame="133" x="16" y="-189.229813" angle="0.0460041165" scaleY="0.9986096" />
+      <Key frame="139" x="16" y="-188" />
+    </Composite>
+    <Frame rep="139" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <Skin>winter</Skin>
+  </Sprite>
+  

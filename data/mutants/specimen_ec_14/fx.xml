@@ -1,0 +1,31 @@
+<AttackFX specimen="Specimen_EC_14" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="18849f" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="345dc5" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="051d48" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_14" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="0c495b" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="345dc5" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="06113b" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_14" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="18849f" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="1e2e84" duration="0.2" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="06113b" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_14" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="063e5b" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="1e2e84" duration="0.2" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="06113b" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

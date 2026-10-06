@@ -1,0 +1,153 @@
+//FORMATEO
+//filtro;nombre;imagen;valor
+
+//MARCADORES
+//[]=buscar en localisation
+//#=buscar en langs
+//§=cualquier valor
+//$$=ruta kobojo
+//&&=ruta folder
+
+
+
+//Idiomas  
+langs;Deutsch;&&/images/icons/flags/flag_de.png;de
+langs;English;&&/images/icons/flags/flag_en.png;en
+langs;Español;&&/images/icons/flags/flag_es.png;es
+langs;Français;&&/images/icons/flags/flag_fr.png;fr
+langs;Italiano;&&/images/icons/flags/flag_it.png;it
+langs;Nederlands;&&/images/icons/flags/flag_nl.png;nl
+langs;Português;&&/images/icons/flags/flag_pt.png;pt
+langs;Русский;&&/images/icons/flags/flag_ru.png;ru
+langs;Türkçe;&&/images/icons/flags/flag_tr.png;tr
+
+
+
+//Velocidades
+speed;0.05x;;0.05
+speed;0.25x;;0.25
+speed;0.5x;;0.5
+speed;1x;;1
+speed;2x;;2
+
+
+
+//Filtro Mutante (no se usa)
+genes;[subcategory_all];&&/image/filters/gene_all.png;default_§
+genes;[subcategory_a];&&/image/filters/gene_a.png;default_a
+genes;[subcategory_b];&&/image/filters/gene_b.png;default_b
+genes;[subcategory_c];&&/image/filters/gene_c.png;default_c
+genes;[subcategory_d];&&/image/filters/gene_d.png;default_d
+genes;[subcategory_e];&&/image/filters/gene_e.png;default_e
+genes;[subcategory_f];&&/image/filters/gene_f.png;default_f
+hidden;[subtab_achievement_all];&&/image/filters/hidden_all.png;hidden_§
+hidden;[subcategory_abilities];&&/image/filters/hidden_ability.png;hidden_ability
+hidden;#npc;&&/image/filters/hidden_npc.png;hidden_npc
+hidden;[subcategory_building];&&/image/filters/hidden_building.png;hidden_building
+hidden;[subcategory_other];&&/image/filters/hidden_other.png;hidden_other
+
+
+
+//Filtro Fondo (no se usa)
+background;[subtab_achievement_all];&&/image/filters/bg_all.png;bg_§
+background;#campaign;&&/image/filters/bg_campaign.png;bg_cmp
+background;#pve;&&/image/filters/bg_pve.png;bg_pve
+background;#raid;&&/image/filters/bg_raid.png;bg_rid
+background;#valentines;&&/image/filters/bg_valentines.png;bg_val
+background;#easter;&&/image/filters/bg_easter.png;bg_eas
+background;#anniversary;&&/image/filters/bg_anniversary.png;bg_anv
+background;#halloween;&&/image/filters/bg_halloween.png;bg_hal
+background;#xmas;&&/image/filters/bg_xmas.png;bg_xms
+
+
+
+//Fondos
+  //Campaña
+bg_cmp;Detroit Rock City;;detroit_01
+bg_cmp;Mexicopolis;;mexico_01
+bg_cmp;Chernobyl;;tchernobyl_01
+bg_cmp;Nu New Delhi;;newdelhi_01
+bg_cmp;Shoreline Shanghai;;shanghai_01
+bg_cmp;Floating Tokyo;;tokyo_01
+bg_cmp;Atlantic;;atlantis_01
+bg_cmp;Neo Paris;;paris_01
+bg_cmp;Great Cairo;;cairo_01
+
+  //PVE
+bg_pve;The First Experiment;;pit_neutral
+bg_pve;Vegas;;vegas
+bg_pve;Rapa Nui;;rapanui
+bg_pve;Japan;;japan
+bg_pve;Dark City;;gotham
+bg_pve;Antartica;;ice
+bg_pve;Amazonia;;jungle
+bg_pve;Mars;;mars
+bg_pve;Beach Clash Miami;;miami
+bg_pve;Moon;;moon
+bg_pve;Mount Olympus;;olympus
+bg_pve;Colosseum Nu Roma;;rome
+bg_pve;Spaceport;;space
+bg_pve;Hellfire;;hellfire
+bg_pve;Celestial;;celestial
+bg_pve;Hyperborea;;hyperborea
+bg_pve;Light Speed;;neon
+
+  //Incursiones
+bg_rid;Dante's Inferno;;inferno
+bg_rid;Verne's World;;verne
+bg_rid;Crucible of Insanity;;insanity
+bg_rid;GrandMaster's Grotto;;musashi
+bg_rid;Eternal Library;;library
+bg_rid;Stage of Mystical Songs;;kalevala
+bg_rid;Royale Skirmish;;dumas
+bg_rid;Cryptid Woods;;cryptid
+bg_rid;Mall of the Unliving;;unliving
+bg_rid;The Robot Factory;;factory
+bg_rid;Distant Observatory;;asteroids
+bg_rid;Blackbeard Cove;;pirates
+bg_rid;Everlasting Sands;;everlastingsands
+bg_rid;Architectural Chaos;;architecture
+bg_rid;Oceanic Vendetta;;mafia
+bg_rid;Abyss;;abyss
+
+  //Valentin
+bg_val;Whirling Passion;;valentines
+bg_val;Runic Valentines;;runic
+bg_val;Pixel Love;;valentines26
+
+  //Pascua
+bg_eas;Chocoworld;;chocoworld
+bg_eas;The Dig;;thedig
+bg_eas;Secrets of Rapa Nui;;moais
+bg_eas;B.U.N. Tower;;buntower
+
+  //Aniversario
+bg_anv;Awakening;;anniversary_20_1
+bg_anv;Mutenstein's Pyramid 1;;pyramid
+bg_anv;Mutenstein's Pyramid 2;;laboratory
+bg_anv;Cubic Apparitions;;cubic
+bg_anv;Inside the Cube;;matrix
+bg_anv;Alien Discoveries;;weirdtech
+bg_anv;Crossed Realities;;10years_1
+bg_anv;Conspiracy;;anniversary_24_1
+bg_anv;City of Turmoil;;anniversary_25_1
+bg_anv;Maelstrom of Tumult;;anniversary_25_2
+bg_anv;Hex City 1;;hexcity_1
+bg_anv;Hex City 2;;hexcity_2
+
+  //Halloween
+bg_hal;Halloween Nightmare;;halloween
+bg_hal;River of Souls;;stygian
+bg_hal;Creepy Horror Show;;halloween25
+bg_hal;Under the Moonlight;;halloween26
+
+  //Navidad
+bg_xms;Jungle Bells;;jungle_bells_1
+bg_xms;Snowstorm;;snowstorm
+bg_xms;Eye of the Snowstorm;;eyestorm
+bg_xms;Winter Investigation 1;;xmas23_1
+bg_xms;Winter Investigation 2;;xmas23_2
+bg_xms;Sunset Christmas;;xmas24_1
+bg_xms;Twilight Christmas;;xmas24_2
+bg_xms;Under a Starry Sky 1;;xmas25_1
+bg_xms;Under a Starry Sky 2;;xmas25_2

@@ -1,0 +1,43 @@
+<AttackFX specimen="Specimen_EA_99" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.3" />
+	<FX type="fade" name="6d371f" applyOn="allclip+background-target-self" moment="arrived" duration="1.5" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="f2f1a8" duration="0.1" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_EA_99_fahrenheit" blendmode="normal" applyOn="allclip" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_99" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="6d371f" applyOn="allclip+background-target-self" moment="arrived" duration="2" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="f2f1a8" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_EA_99_fahrenheit_plus" blendmode="normal" applyOn="allclip" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_99" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="3d4699" applyOn="allclip+background-target-self" moment="arrived" duration="2" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="a8d4f2" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_EA_99_kelvin" blendmode="normal" applyOn="allclip" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_99" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="3d4699" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="a8d4f2" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_EA_99_kelvin_plus" blendmode="normal" applyOn="allclip" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

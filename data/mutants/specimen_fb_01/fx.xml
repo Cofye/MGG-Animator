@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_FB_01" attack="1">
+	<FX type="flash" name="9223B8" duration="0.8" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_lady" blendmode="add" applyOn="target" position="bottom" moment="lady">
+		<tranform scale="1.5" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_01" attack="1p">
+	<FX type="flash" name="468C61" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background+target" moment="impact" amplitude="6" frequency="25" duration="0.4" />
+	<FX type="fade" name="1E4519" applyOn="allclip+background-target-self" moment="debut" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_01" attack="2">
+	<FX type="flash" name="239416" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="0D6104" applyOn="allclip+background-target-self" moment="dark" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="light" />
+	<FX type="move" name="shake" applyOn="background+target" moment="impact" amplitude="6" frequency="25" duration="0.4" />
+	<FX type="sprite" name="fx_bubble" blendmode="normal" applyOn="target" position="bottom" moment="bubblestart">
+		<spawn number="1" targetDelay="0.15" />
+		<tranform scale="1.8" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_FB_01" attack="2p">
+	<FX type="fade" name="239416" applyOn="target" moment="bubbles" duration="0.3" />
+	<FX type="fade" name="normal" applyOn="target" moment="goodcolor" duration="0.2" />
+	<FX type="fade" name="0F2E0B" applyOn="allclip+background-target-self" moment="bubbles" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="goodcolor" />
+	<FX type="move" name="shake" applyOn="background+target" moment="impact" amplitude="6" frequency="25" duration="0.4" />
+	<FX type="sprite" name="fx_bubble" blendmode="normal" applyOn="target" position="bottom" moment="bubbles">
+		<tranform scale="2.0" />
+	</FX>
+</AttackFX>

@@ -1,0 +1,27 @@
+<AttackFX specimen="Specimen_DE_08" attack="1">
+	<FX type="color" add="000000" mul="000000" duration="0.5" moment="black" applyOn="allclip+background+target-self" />
+	<FX type="color" duration="0.5" moment="down" applyOn="allclip+background+target-self" />
+	<FX type="sprite" name="fx_DE_08_1" blendmode="normal" applyOn="target" position="center" moment="fx_claws">
+		<tranform scale="1.3" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_08" attack="1p">
+	<FX type="color" add="000000" mul="000000" duration="0.5" moment="black" applyOn="allclip+background+target-self" />
+	<FX type="color" duration="0.5" moment="down" applyOn="allclip+background+target-self" />
+	<FX type="sprite" name="fx_DE_08_2" blendmode="normal" applyOn="target" position="center" moment="fx_claws_bites">
+		<tranform scale="1.3" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_08" attack="2">
+	<FX type="flash" name="c89723" duration="1.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="c89723" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DE_08" attack="2p">
+	<FX type="fade" name="c89723" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="c89723" duration="1.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="c89723" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>

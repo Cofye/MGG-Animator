@@ -1,0 +1,125 @@
+<Sprite id="building_tech_base" bitmap="buildings/techcenter.png" cache="20">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="45" dstX="-20" dstY="-10" width="40" height="20" />
+        <Tag key="clipName" value="slot" />
+      </Sprite>
+      <Key frame="0" x="1" y="-29" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="104" srcY="1" dstX="-88.04762" dstY="-122.761909" width="177" height="146" />
+      </Sprite>
+      <Key frame="0" x="-0.952381" y="69.76191" />
+    </Composite>
+    <Composite>
+      <Sprite cache="10" framerate="4">
+        <Frame>
+          <Image srcX="1" srcY="66" dstX="-7" dstY="-11.5" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="92" dstX="4" dstY="-10" width="4" height="24" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="117" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="18" srcY="66" dstX="-6" dstY="-11" width="15" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="51" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="68" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="92" dstX="-7" dstY="-12" width="16" height="26" />
+        </Frame>
+        <Frame>
+          <Image srcX="85" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="119" dstX="-6" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Tag key="clipName" value="digit0" />
+      </Sprite>
+      <Key frame="0" x="16" y="29" />
+    </Composite>
+    <Composite>
+      <Sprite cache="10" framerate="4">
+        <Frame>
+          <Image srcX="1" srcY="66" dstX="-7" dstY="-11.5" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="92" dstX="4" dstY="-10" width="4" height="24" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="117" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="18" srcY="66" dstX="-6" dstY="-11" width="15" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="51" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="68" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="92" dstX="-7" dstY="-12" width="16" height="26" />
+        </Frame>
+        <Frame>
+          <Image srcX="85" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="119" dstX="-6" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Tag key="clipName" value="digit1" />
+      </Sprite>
+      <Key frame="0" x="-2" y="29" />
+    </Composite>
+    <Composite>
+      <Sprite cache="10" framerate="4">
+        <Frame>
+          <Image srcX="1" srcY="66" dstX="-7" dstY="-11.5" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="92" dstX="4" dstY="-10" width="4" height="24" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="117" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="18" srcY="66" dstX="-6" dstY="-11" width="15" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="51" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="68" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="92" dstX="-7" dstY="-12" width="16" height="26" />
+        </Frame>
+        <Frame>
+          <Image srcX="85" srcY="66" dstX="-7" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Frame>
+          <Image srcX="34" srcY="119" dstX="-6" dstY="-11" width="16" height="25" />
+        </Frame>
+        <Tag key="clipName" value="digit2" />
+      </Sprite>
+      <Key frame="0" x="-20" y="29" />
+    </Composite>
+    <Image srcX="1" srcY="1" dstX="-51" dstY="-53" width="102" height="43" />
+  </Sprite>
+  

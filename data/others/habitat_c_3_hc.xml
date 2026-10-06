@@ -1,0 +1,166 @@
+<Sprite id="habitat_c_3_hc" bitmap="habitats/c_hc.png" cache="98">
+    <Preview srcX="180" srcY="63" dstX="-9" dstY="0" width="20" height="10" />
+    <Composite>
+      <Sprite cache="6">
+        <Composite>
+          <Sprite>
+            <Image srcX="84" srcY="397" dstX="-157.166672" dstY="-102.5" width="381" height="197" />
+          </Sprite>
+          <Key frame="0" x="0.166666672" y="-0.5" alpha="0.3" />
+          <Key frame="25" x="0.166666672" y="-0.5" />
+          <Key frame="50" x="0.166666672" y="-0.5" alpha="0" visible="false" />
+          <Key frame="99" x="0.166666672" y="-0.5" alpha="0" />
+          <Key frame="124" x="0.166666672" y="-0.5" alpha="0.3" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="503" srcY="396" dstX="-201.833328" dstY="-103.166664" width="338" height="210" />
+          </Sprite>
+          <Key frame="25" x="1.83333349" y="-1.83333325" alpha="0" />
+          <Key frame="50" x="1.83333349" y="-1.83333325" alpha="0.3" />
+          <Key frame="75" x="1.83333349" y="-1.83333325" />
+          <Key frame="99" x="1.83333349" y="-1.83333325" alpha="0" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="545" srcY="8" dstX="-167.166672" dstY="-100.833336" width="351" height="198" />
+          </Sprite>
+          <Key frame="0" x="0.166666627" y="-2.16666651" />
+          <Key frame="25" x="0.166666627" y="-2.16666651" alpha="0" visible="false" />
+          <Key frame="75" x="0.166666627" y="-2.16666651" alpha="0" />
+          <Key frame="99" x="0.166666627" y="-2.16666651" alpha="0.3" />
+          <Key frame="124" x="0.166666627" y="-2.16666651" />
+        </Composite>
+        <Frame rep="124" />
+      </Sprite>
+      <Key frame="0" x="-12" y="117" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="205" srcY="287" dstX="-26.75" dstY="-19.75" width="56" height="41" />
+      </Sprite>
+      <Key frame="0" x="-124.25" y="78.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="273" srcY="222" dstX="-43.25" dstY="-2.75" width="86" height="26" />
+      </Sprite>
+      <Key frame="0" x="-71.75" y="86.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="84" dstX="-24.75" dstY="-7.75" width="36" height="23" />
+      </Sprite>
+      <Key frame="0" x="63.75" y="39.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="29" dstX="10.75" dstY="-8.75" width="35" height="38" a="-1" />
+      </Sprite>
+      <Key frame="0" x="44.25" y="46.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="273" srcY="249" dstX="-33.75" dstY="-32.75" width="51" height="53" a="0.8843797" b="0.466768146" c="-0.466768146" d="0.8843797" />
+      </Sprite>
+      <Key frame="0" x="35.75" y="76.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="68" dstX="-15" dstY="-7" width="30" height="15" />
+        <Tag key="clipName" value="Slot2" />
+      </Sprite>
+      <Key frame="0" x="-26" y="56" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="115" srcY="222" dstX="-30.75" dstY="-76.25" width="89" height="104" />
+      </Sprite>
+      <Key frame="0" x="-15.25" y="105.25" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="126" srcY="223" dstX="-33" dstY="-50" width="64" height="60" />
+      </Sprite>
+      <Key frame="0" x="-2" y="81" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" autoLoop="true">
+        <Composite>
+          <Sprite cache="1">
+            <Composite>
+              <Sprite cache="4">
+                <Image srcX="205" srcY="222" dstX="-31" dstY="-4" width="67" height="64" />
+                <Tag key="clipName" value="gauge" />
+              </Sprite>
+              <Key frame="0" x="-4" y="-28" gMul="0.7529412" bMul="0.5019608" rAdd="1" />
+            </Composite>
+            <Image srcX="205" srcY="222" dstX="-35" dstY="-31" width="67" height="64" />
+          </Sprite>
+          <Key frame="0" x="9" y="-8" />
+          <Key frame="11" x="9" y="-11" />
+        </Composite>
+        <Frame rep="21" />
+      </Sprite>
+      <Key frame="0" x="-8" y="75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="273" srcY="222" dstX="-45.75" dstY="-3.75" width="86" height="26" />
+      </Sprite>
+      <Key frame="0" x="51.75" y="118.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="273" srcY="222" dstX="-32.25" dstY="-8.25" width="86" height="26" />
+      </Sprite>
+      <Key frame="0" x="98.25" y="133.25" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="133" dstX="-14.75" dstY="-8.75" width="29" height="22" />
+      </Sprite>
+      <Key frame="0" x="-2.25" y="123.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="273" srcY="303" dstX="-21.75" dstY="-21.75" width="34" height="26" />
+      </Sprite>
+      <Key frame="0" x="146.75" y="153.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="29" dstX="5.75" dstY="-8.25" width="35" height="38" a="-1" />
+      </Sprite>
+      <Key frame="0" x="-27.75" y="120.25" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="51" srcY="222" dstX="-19.75" dstY="-12.75" width="63" height="67" a="0.7330014" d="0.7330014" />
+      </Sprite>
+      <Key frame="0" x="-36.25" y="157.75" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="68" dstX="-15" dstY="-7" width="30" height="15" />
+        <Tag key="clipName" value="Slot3" />
+      </Sprite>
+      <Key frame="0" x="92" y="89" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="68" dstX="-15" dstY="-7" width="30" height="15" />
+        <Tag key="clipName" value="Slot1" />
+      </Sprite>
+      <Key frame="0" x="-108" y="123" scaleX="-1" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="68" dstX="-15" dstY="-7" width="30" height="15" />
+        <Tag key="clipName" value="Slot4" />
+      </Sprite>
+      <Key frame="0" x="34" y="164" scaleX="-1" />
+    </Composite>
+    <Image srcX="51" srcY="1" dstX="-213" dstY="2" width="438" height="220" />
+  </Sprite>
+  

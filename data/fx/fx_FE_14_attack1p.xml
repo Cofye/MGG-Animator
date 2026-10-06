@@ -1,0 +1,54 @@
+<Sprite id="fx_FE_14_attack1p" bitmap="character/f_e_14.png" cache="35">
+    <Composite>
+      <Sprite cache="4">
+        <Composite>
+          <Sprite>
+            <Image srcX="839" srcY="17" dstX="-2" dstY="-68" width="6" height="74" />
+          </Sprite>
+          <Key frame="0" y="-79" scaleX="1.904762" scaleY="9.796967" />
+          <Key frame="4" x="-4" y="-3" scaleX="2.33333325" scaleY="0.9391796" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="829" srcY="117" dstX="-11" dstY="-43" width="22" height="47" />
+          </Sprite>
+          <Key frame="2" x="-1" y="-5" scaleX="1.16666663" scaleY="2.88336182" />
+          <Key frame="5" x="-1" y="-5" scaleX="2.347222" scaleY="4.461337" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="752" srcY="6" dstX="-36" dstY="-31" width="58" height="62" />
+          </Sprite>
+          <Key frame="2" x="2" y="1" angle="-90" scaleX="0.7727273" scaleY="2.03598452" />
+          <Key frame="8" x="2" y="1" angle="-90" scaleX="2.12500119" scaleY="10.9083824" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="816" srcY="174" dstX="-23" dstY="-55" width="45" height="58" />
+          </Sprite>
+          <Key frame="6" x="1" y="4" scaleX="1.91047621" scaleY="5.04504776" />
+          <Key frame="8" x="1" y="3.71428561" scaleX="4.268616" scaleY="11.4398346" alpha="0.857142866" />
+          <Key frame="12" x="1" y="3" scaleX="5.04982662" scaleY="14.6729221" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="748" srcY="252" dstX="-22" dstY="-33.5" width="44" height="37" />
+          </Sprite>
+          <Key frame="4" y="4" scaleX="2.375" scaleY="2.27272725" />
+          <Key frame="7" y="4" scaleX="4.267835" scaleY="6.898959" alpha="0.5" visible="false" />
+        </Composite>
+        <Frame rep="15" />
+      </Sprite>
+      <Key frame="2" y="15" scaleX="1.5" scaleY="1.5" />
+      <Key frame="17" y="15" scaleX="1.5" scaleY="1.5" visible="false" />
+      <Key frame="30" x="81" y="49" scaleX="1.5" scaleY="1.5" />
+      <Key frame="45" x="81" y="49" scaleX="1.5" scaleY="1.5" visible="false" />
+    </Composite>
+    <Frame rep="59" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <DataPoint name="DataPoint001" x="537" y="-154" />
+  </Sprite>
+  

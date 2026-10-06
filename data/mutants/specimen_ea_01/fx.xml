@@ -1,0 +1,25 @@
+<AttackFX specimen="Specimen_EA_01" attack="1">
+	<FX type="flash" name="1DC45B" duration="0.8" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_01" attack="1p">
+	<FX type="flash" name="E8B7B7" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.3" />
+	<FX type="fade" name="4F785A" applyOn="allclip+background-target-self" moment="ready" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_01" attack="2">
+	<FX type="flash" name="8F3F3F" duration="1.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="8F3F3F" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_01" attack="2p">
+	<FX type="flash" name="FA9614" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="AB6724" duration="1.5" applyOn="background+target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background+target" moment="impact" amplitude="6" frequency="25" duration="0.7" />
+	<FX type="sprite" name="fx_shuriken" blendmode="normal" applyOn="target" position="bottom" moment="shuriken">
+		<spawn number="1" targetDelay="0.2" />
+	</FX>
+</AttackFX>

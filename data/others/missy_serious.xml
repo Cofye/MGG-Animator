@@ -1,0 +1,47 @@
+<Sprite id="missy_serious" bitmap="pnj/missy_serious_angry.png" cache="39">
+    <Composite>
+      <Sprite cache="1">
+        <Image srcX="17" srcY="26" dstX="95" dstY="-169" width="190" height="333" a="-1" />
+      </Sprite>
+      <Key frame="0" x="-9" y="-90" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite cache="1">
+            <Image srcX="218" srcY="61" dstX="28" dstY="-15" width="56" height="31" a="-1" />
+          </Sprite>
+          <Key frame="0" />
+          <Key frame="6" />
+          <Key frame="8" alpha="0" visible="false" />
+        </Composite>
+        <Frame rep="99" />
+      </Sprite>
+      <Key frame="0" x="-5" y="-208" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite cache="1">
+            <Image srcX="229" srcY="195" dstX="6" dstY="-7" width="40" height="12" a="-1" />
+          </Sprite>
+          <Key frame="0" x="-2.5" y="-2.75" />
+          <Key frame="9" x="-2.5" y="-2.75" />
+          <Key frame="11" x="-2.5" y="-2.75" angle="20.7036362" />
+          <Key frame="17" x="-2.5" y="-2.75" angle="27.6048489" />
+          <Key frame="20" x="-2.5" y="-2.75" />
+          <Key frame="23" x="-2.5" y="-2.75" angle="18.4032326" />
+          <Key frame="28" x="-2.5" y="-2.75" />
+          <Key frame="32" x="-2.5" y="-2.75" angle="18.4032326" />
+          <Key frame="35" x="-2.5" y="-2.75" angle="3.34604263" />
+          <Key frame="43" x="-2.5" y="-2.75" />
+          <Key frame="105" x="-2.5" y="-2.75" />
+        </Composite>
+        <Frame rep="105" />
+      </Sprite>
+      <Key frame="0" x="-26" y="-81" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

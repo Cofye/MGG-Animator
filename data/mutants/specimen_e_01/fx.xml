@@ -1,0 +1,33 @@
+<AttackFX specimen="Specimen_E_01" attack="1">
+	<FX type="flash" name="ecb46a" duration="1.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="898672" duration="0.5" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_E_01" attack="1p">
+	<FX type="fade" name="555555" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="4f3f2a" duration="0.3" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_E_01" attack="2">
+	<FX type="fade" name="b5b5b5" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="FFFFFF" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="7F5380" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_foot" blendmode="normal" applyOn="target" position="bottom" moment="foot">
+		<tranform scale="2.0" randomX="false" randomY="false" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="50" duration="0.7" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_E_01" attack="2p">
+	<FX type="fade" name="b5b5b5" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="FFFFFF" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="7F5380" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_foot2" blendmode="normal" applyOn="target" position="bottom" moment="foot">
+		<tranform scale="2.0" randomX="false" randomY="false" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="50" duration="0.7" />
+</AttackFX>

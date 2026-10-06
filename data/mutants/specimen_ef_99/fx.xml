@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_EF_99" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.3" />
+	<FX type="fade" name="1c2f78" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ceecec" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="85dfe2" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_99" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.3" />
+	<FX type="fade" name="1c2f78" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ceecec" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="85dfe2" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_EF_99_attack1p" blendmode="add" applyOn="target" zOrder="background" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_99" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="flash" name="e2ceec" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="b170d0" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EF_99" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.3" />
+	<FX type="fade" name="56266c" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="e2ceec" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="b170d0" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_EF_99_attack2p" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>

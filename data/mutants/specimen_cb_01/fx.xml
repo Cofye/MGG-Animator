@@ -1,0 +1,22 @@
+<AttackFX specimen="Specimen_CB_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_01" attack="2">
+	<FX type="fade" name="7D7D7D" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="5081b2" duration="0.5" applyOn="background" moment="impact" />
+	<FX type="flash" name="ff0000" duration="1.0" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_01" attack="2p">
+	<FX type="fade" name="7D7D7D" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="5081b2" duration="0.5" applyOn="background" moment="impact" />
+	<FX type="flash" name="ff0000" duration="1.0" applyOn="target" moment="impact" />
+</AttackFX>

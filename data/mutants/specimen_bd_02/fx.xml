@@ -1,0 +1,34 @@
+<AttackFX specimen="Specimen_BD_02" attack="1">
+	<FX type="sprite" name="fx_skull_attack" blendmode="normal" applyOn="target" position="bottom" moment="skull">
+		<tranform scale="1" />
+	</FX>
+	<FX type="flash" name="af2222" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="af2222" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BD_02" attack="1p">
+	<FX type="sprite" name="fx_skull_attack2" blendmode="normal" applyOn="target" position="bottom" moment="skull">
+		<tranform scale="1.2" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="22" duration="0.4" />
+	<FX type="fade" name="612828" applyOn="allclip+background-target-self" moment="skull" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="fadeback" />
+	<FX type="flash" name="e52a2a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="af2222" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BD_02" attack="2">
+	<FX type="fade" name="927e7e" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="impact" applyOn="background" moment="shake" amplitude="4" frequency="18" duration="0.3" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="f0efdb" duration="0.8" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BD_02" attack="2p">
+	<FX type="fade" name="927e7e" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f0efdb" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

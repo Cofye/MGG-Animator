@@ -1,0 +1,22 @@
+<Sprite id="cursor" bitmap="mobile/hud/tutorial/cursor.png" cache="2">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="14" srcY="72" dstX="-15.22488" dstY="-14.6602859" width="30" height="30" />
+          </Sprite>
+          <Key frame="0" x="0.239234462" y="-0.239234462" scaleX="0.773809552" scaleY="0.773809552" />
+          <Key frame="11" x="0.239234462" y="-0.239234462" scaleX="2.85431242" scaleY="2.85431242" alpha="0" visible="false" />
+        </Composite>
+        <Frame rep="15" />
+      </Sprite>
+      <Key frame="0" y="1" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-28" dstY="-57" width="48" height="66" />
+      </Sprite>
+      <Key frame="0" x="10" y="57" />
+    </Composite>
+  </Sprite>
+  

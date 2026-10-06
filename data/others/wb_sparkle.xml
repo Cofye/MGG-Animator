@@ -1,0 +1,13 @@
+<Sprite id="wb_sparkle" bitmap="hud/popup/welcome_back/sparkle.png" cache="1">
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-32" dstY="-32" width="64" height="64" />
+      </Sprite>
+      <Key frame="0" x="2.5" y="-2" scaleX="0.4321267" scaleY="0.4321267" />
+      <Key frame="7" x="2.5" y="-2" angle="179.5466" scaleX="1.61401355" scaleY="1.61401355" />
+      <Key frame="12" x="2.5" y="-2" angle="270.592" scaleX="1.36239457" scaleY="1.36239457" alpha="0" />
+    </Composite>
+    <Frame rep="12" />
+    <Frame delay="100" />
+  </Sprite>
+  

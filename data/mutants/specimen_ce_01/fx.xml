@@ -1,0 +1,34 @@
+<AttackFX specimen="Specimen_CE_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="40" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_01" attack="1p">
+	<FX type="flash" name="E9FF1F" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="518A6D" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="moulinet" amplitude="20" frequency="20" duration="0.6" />
+	<FX type="move" name="shake" applyOn="target" moment="finalblow" amplitude="40" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_01" attack="2">
+	<FX type="flash" name="91D962" duration="2.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="639641" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_gaz" blendmode="normal" applyOn="target" position="dealerimpact" moment="impact">
+		<spawn number="1" scatterX="50" scatterY="200" />
+		<tranform scaleMin="0.7" scaleMax="1.0" randomX="true" randomY="false" />
+		<colorTransform alpha="0.5" mul="0xFFFFFF" add="0x000000" />
+		<iteration delay=".05" amount="4" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_01" attack="2p">
+	<FX type="sprite" name="fx_gaz" blendmode="normal" applyOn="target" position="dealerimpact" moment="impact">
+		<spawn number="1" scatterX="50" scatterY="200" />
+		<tranform scaleMin="0.7" scaleMax="1.0" randomX="true" randomY="false" />
+		<colorTransform alpha="0.5" mul="0xFFFFFF" add="0x000000" />
+		<iteration delay=".05" amount="4" />
+	</FX>
+	<FX type="flash" name="13210A" duration="1.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="7EBD55" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="20" duration="0.2" />
+</AttackFX>

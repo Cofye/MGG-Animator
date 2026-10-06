@@ -1,0 +1,87 @@
+<Sprite id="gacha_reactor_map_halloween" bitmap="hud/gacha/gacha_reactor_map_halloween.png" cache="8">
+    <Optim srcX="701" srcY="291" width="230" height="112" optimX="0.5" optimY="0.5" />
+    <Composite>
+      <Sprite>
+        <Image srcX="5" srcY="7" dstX="-339" dstY="-206" width="678" height="411" />
+      </Sprite>
+      <Key frame="0" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="683" srcY="76" dstX="-122.8" dstY="-1.2" width="124" height="123" />
+            <Image srcX="683" srcY="76" dstX="123.2" dstY="-1.20000076" width="124" height="123" a="-1" />
+            <Image srcX="683" srcY="76" dstX="-122.8" dstY="1.800003" width="124" height="123" d="-1" />
+            <Image srcX="683" srcY="76" dstX="123.2" dstY="1.800003" width="124" height="123" a="-1" d="-1" />
+          </Sprite>
+          <Key frame="0" x="-0.2" y="0.2" />
+          <Key frame="56" x="-0.199999988" y="0.200000048" angle="180" />
+        </Composite>
+        <Frame rep="56" />
+      </Sprite>
+      <Key frame="0" x="-17" y="-56" scaleX="0.983909845" scaleY="0.465092123" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="701" srcY="291" dstX="-114.684204" dstY="-56.9473724" width="230" height="112" />
+      </Sprite>
+      <Key frame="0" x="-25" y="-55" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="848" srcY="176" dstX="-37.5" dstY="-51" width="74" height="87" />
+          </Sprite>
+          <Key frame="0" x="-1" y="-29" />
+          <Key frame="16" x="-1" y="-29" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+        </Composite>
+        <Image srcX="841" srcY="35" dstX="-45.5" dstY="-72" width="88" height="97" />
+        <Frame rep="32" />
+      </Sprite>
+      <Key frame="0" x="-79" y="-85" />
+      <Key frame="10" x="-62" y="-97" />
+      <Key frame="20" x="-34" y="-101" />
+      <Key frame="30" x="11" y="-102" />
+      <Key frame="40" x="49" y="-87" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="848" srcY="176" dstX="-37.5" dstY="-51" width="74" height="87" />
+          </Sprite>
+          <Key frame="0" x="-1" y="-29" />
+          <Key frame="16" x="-1" y="-29" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+        </Composite>
+        <Image srcX="841" srcY="35" dstX="-45.5" dstY="-72" width="88" height="97" />
+        <Frame rep="32" />
+      </Sprite>
+      <Key frame="0" x="52" y="-85" />
+      <Key frame="10" x="63" y="-70" />
+      <Key frame="20" x="59" y="-52" />
+      <Key frame="30" x="37" y="-34" />
+      <Key frame="40" x="-14" y="-25" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="848" srcY="176" dstX="-37.5" dstY="-51" width="74" height="87" />
+          </Sprite>
+          <Key frame="0" x="-1" y="-29" />
+          <Key frame="16" x="-1" y="-29" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+        </Composite>
+        <Image srcX="841" srcY="35" dstX="-45.5" dstY="-72" width="88" height="97" />
+        <Frame rep="32" />
+      </Sprite>
+      <Key frame="0" x="-17" y="-26" />
+      <Key frame="10" x="-55" y="-30" />
+      <Key frame="20" x="-79" y="-40" />
+      <Key frame="30" x="-94" y="-58" />
+      <Key frame="40" x="-83" y="-82" />
+    </Composite>
+    <Frame rep="40" />
+  </Sprite>
+  

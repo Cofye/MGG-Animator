@@ -1,0 +1,41 @@
+<AttackFX specimen="Specimen_AA_06" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="fx" amplitude="5" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="ffea00" duration="0.3" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffea00" duration="0.2" applyOn="self" moment="fx" />
+	<FX type="sprite" name="fx_cannon_bang" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_06" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="fx" amplitude="5" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="ffea00" duration="0.3" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffea00" duration="0.2" applyOn="self" moment="fx" />
+	<FX type="sprite" name="fx_cannon_bang" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<FX type="fade" name="8c1818" applyOn="allclip+background-target-self" moment="start" />
+		<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_06" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="fire" amplitude="5" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="ffea00" duration="0.3" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffea00" duration="0.2" applyOn="self" moment="fire" />
+	<FX type="sprite" name="fx_artillery1" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_06" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="stomp" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="fire" amplitude="5" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="ffea00" duration="0.3" applyOn="allclip+background-self" moment="impact" />
+	<FX type="flash" name="ffea00" duration="0.2" applyOn="self" moment="fire" />
+	<FX type="sprite" name="fx_artillery1" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<FX type="fade" name="8c1818" applyOn="allclip+background-target-self" moment="stomp" />
+		<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	</FX>
+</AttackFX>

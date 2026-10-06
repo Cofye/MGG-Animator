@@ -1,0 +1,23 @@
+<Sprite id="fx_fe_03_symbol" bitmap="character/f_e_03.png" cache="33">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="533" srcY="318" dstX="-83" dstY="-86" width="168" height="168" />
+          </Sprite>
+          <Key frame="0" x="-1" y="2" />
+          <Key frame="21" x="-1" y="2" angle="-128.694031" />
+          <Key frame="33" x="-1" y="2" angle="-215.704391" />
+          <Key frame="54" x="-1" y="2" angle="-358.654541" />
+        </Composite>
+        <Frame rep="54" />
+      </Sprite>
+      <Key frame="0" scaleX="2.253887" scaleY="1.20810556" alpha="0.1" />
+      <Key frame="4" scaleX="2.253887" scaleY="1.20810556" alpha="0.4" />
+      <Key frame="51" scaleX="2.253887" scaleY="1.20810556" alpha="0.4" />
+      <Key frame="55" scaleX="2.253887" scaleY="1.20810556" alpha="0.1" />
+    </Composite>
+    <Frame rep="55" />
+    <Skin>wireframe</Skin>
+  </Sprite>
+  

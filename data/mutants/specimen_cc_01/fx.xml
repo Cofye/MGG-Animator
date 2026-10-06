@@ -1,0 +1,32 @@
+<AttackFX specimen="Specimen_CC_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="334067" duration="0.8" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_01" attack="2">
+	<FX type="fade" name="8DA5C4" applyOn="background-target-self" moment="arrived" duration="5.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="3.0" />
+	<FX type="flash" name="FFFFFF" duration="0.3" applyOn="background" moment="wings" />
+	<FX type="flash" name="1C588C" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="63A8E6" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_thunder" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<spawn number="1" scatterX="150" scatterY="20" />
+		<tranform scaleMin="1.0" scaleMax="1.5" scale="1.0" randomX="true" randomY="false" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_01" attack="2p">
+	<FX type="fade" name="2B66B3" applyOn="background-target-self" moment="arrived" duration="5.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="3.5" />
+	<FX type="flash" name="FFFFFF" duration="0.3" applyOn="background" moment="wings" />
+	<FX type="flash" name="B3D3FC" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="FFFFFF" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_thunder" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<spawn number="1" scatterX="150" scatterY="20" />
+		<tranform scaleMin="1.0" scaleMax="1.5" scale="1.5" randomX="true" randomY="false" />
+	</FX>
+</AttackFX>

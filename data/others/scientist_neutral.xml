@@ -1,0 +1,71 @@
+<Sprite id="scientist_neutral" bitmap="pnj/scientist_neutral.png" cache="11">
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite framerate="2" minDelay="60" rndDelay="60">
+            <Frame>
+              <Image srcX="1" srcY="367" dstX="-7.56965637" dstY="-4.482971" width="14" height="9" />
+            </Frame>
+            <Frame />
+            <Frame>
+              <Image srcX="1" srcY="367" dstX="-7.56965637" dstY="-4.482971" width="14" height="9" />
+            </Frame>
+            <Frame />
+            <Frame>
+              <Image srcX="1" srcY="367" dstX="-7.56965637" dstY="-4.482971" width="14" height="9" />
+            </Frame>
+            <Frame />
+            <Frame>
+              <Image srcX="1" srcY="367" dstX="-7.56965637" dstY="-4.482971" width="14" height="9" />
+            </Frame>
+          </Sprite>
+          <Key frame="0" x="92.56966" y="-71.51703" />
+        </Composite>
+        <Image srcX="1" srcY="1" dstX="-36" dstY="-286" width="199" height="365" />
+        <Frame rep="4" />
+      </Sprite>
+      <Key frame="0" x="-87" y="-32" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="377" dstX="-16" dstY="-22" width="62" height="41" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-26" y="-240" />
+    </Composite>
+    <Composite>
+      <Sprite autoLoop="true" minDelay="60" rndDelay="200">
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="419" dstX="-92.83872" dstY="-140.645142" width="194" height="195" />
+          </Sprite>
+          <Key frame="0" x="-10.2258062" y="8.225806" />
+          <Key frame="19" x="-10.2258062" y="6.225806" />
+        </Composite>
+        <Frame rep="36" />
+      </Sprite>
+      <Key frame="0" x="-23" y="-38" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" framerate="5">
+        <Frame>
+          <Image srcX="64" srcY="377" dstX="-22" dstY="-122" width="57" height="40" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="615" dstX="-22" dstY="-130" width="58" height="49" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="615" dstX="-22" dstY="-130" width="58" height="49" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-24" y="-101" />
+      <Key frame="91" x="-24" y="-101" visible="false" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="999999" />
+  </Sprite>
+  

@@ -1,0 +1,37 @@
+<AttackFX specimen="Specimen_DB_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="656FA8" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_portal01" blendmode="normal" applyOn="target" position="center" moment="portal" />
+	<FX type="fade" name="293EB3" applyOn="allclip+background-target-self" moment="portalopen" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="portalclose" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_portal02" blendmode="normal" applyOn="target" position="center" moment="portal" />
+	<FX type="fade" name="A35F00" applyOn="allclip+background-target-self" moment="portalopen" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="portalclose" duration="1.0" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="20" frequency="15" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.25" applyOn="target" moment="impact" />
+	<FX type="flash" name="9C0000" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_doom02" blendmode="normal" applyOn="target" position="bottom" moment="doom" zOrder="background" />
+	<FX type="sprite" name="fx_doom01" blendmode="normal" applyOn="target" position="bottom" moment="doom" />
+	<FX type="fade" name="7A6A6A" applyOn="allclip+background-target-self" moment="portalopen" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="portalclose" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DB_01" attack="2p">
+	<FX type="flash" name="ffffff" duration="0.25" applyOn="target" moment="impact" />
+	<FX type="flash" name="DBFFF7" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="shakeshake" amplitude="10" frequency="10" duration="0.5" />
+	<FX type="fade" name="300202" applyOn="allclip+background-target-self" moment="portalopen" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="chucknorris" duration="1.0" />
+	<FX type="sprite" name="fx_doom02b" blendmode="normal" applyOn="target" position="bottom" moment="doom" zOrder="background" />
+	<FX type="sprite" name="fx_doom01b" blendmode="add" applyOn="target" position="bottom" moment="doom" />
+</AttackFX>

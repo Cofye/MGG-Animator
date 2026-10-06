@@ -1,0 +1,24 @@
+<AttackFX specimen="Specimen_F_01" attack="1">
+	<FX type="flash" name="E314FA" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="7F5380" duration="2.0" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_01" attack="1p">
+	<FX type="fade" name="555555" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="sprite" name="fx_pink_fire" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="2.0" randomX="false" randomY="false" />
+	</FX>
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="4F2A4F" duration="0.3" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_01" attack="2">
+	<FX type="flash" name="FFFFFF" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="7F5380" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_F_01" attack="2p">
+	<FX type="flash" name="FFFFFF" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="b893b9" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

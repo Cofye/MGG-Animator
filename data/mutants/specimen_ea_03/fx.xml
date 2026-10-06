@@ -1,0 +1,30 @@
+<AttackFX specimen="Specimen_EA_03" attack="1">
+	<FX type="flash" name="ace0c2" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="c55d71" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="8e60a1" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_03" attack="1p">
+	<FX type="flash" name="ace0c2" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="c55d71" applyOn="target" moment="impact" duration="1.0" />
+	<FX type="fade" name="6a318b" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="18" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_03" attack="2">
+	<FX type="flash" name="66cd92" duration="0.1" applyOn="background" moment="impact" />
+	<FX type="fade" name="b1dfb6" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="79e674" applyOn="target" moment="impact" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EA_03" attack="2p">
+	<FX type="flash" name="66cd92" duration="0.1" applyOn="background" moment="impact" />
+	<FX type="fade" name="5f8e67" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="79e674" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="18" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="18" duration="0.2" />
+</AttackFX>

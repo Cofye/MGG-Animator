@@ -1,0 +1,24 @@
+<AttackFX specimen="Specimen_EB_01" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_01" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="70695B" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_01" attack="2">
+	<FX type="fade" name="AD3B3B" applyOn="target" moment="blood" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="target" moment="return" duration="1.0" />
+	<FX type="fade" name="7D7D7D" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="2.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_01" attack="2p">
+	<FX type="flash" name="614002" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="A8480C" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="fade" name="AD3B3B" applyOn="target" moment="blood" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="target" moment="return" duration="1.0" />
+	<FX type="fade" name="0F0909" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="2.0" />
+</AttackFX>

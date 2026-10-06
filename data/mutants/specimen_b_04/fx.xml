@@ -1,0 +1,42 @@
+<AttackFX specimen="Specimen_B_04" attack="1">
+	<FX type="flash" name="f47373" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f47373" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_impact_death_fire" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1.5" scaleMax="1.5" randomX="false" />
+		<colorTransform mul="ffffff" add="000000" alpha="0.9" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_B_04" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="fade" name="121958" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f47373" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f47373" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_dragon" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<colorTransform mul="cd311c" add="df2a21" alpha="0.9" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_B_04" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="flash" name="9cdbab" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="9cdbab" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_liche_01" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="b56cd3" add="000000" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_B_04" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="flash" name="9cdbab" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="9cdbab" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="23431d" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="sprite" name="fx_skull_attack2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="95e48b" add="19bf34" alpha="0.9" />
+	</FX>
+</AttackFX>

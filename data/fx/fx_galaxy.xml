@@ -1,0 +1,20 @@
+<Sprite id="fx_galaxy" bitmap="fx/fx_galaxie.png" cache="1">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="0" srcY="0" dstX="-204" dstY="-212" width="429" height="432" />
+          </Sprite>
+          <Key frame="0" x="-2" />
+          <Key frame="199" x="-2" angle="-360" />
+        </Composite>
+        <Frame rep="199" />
+      </Sprite>
+      <Key frame="0" x="-6" y="-38" angle="-27.7045078" scaleY="0.5" alpha="0" />
+      <Key frame="10" x="-6" y="-39" angle="-27.7045078" scaleX="1.09084785" scaleY="0.5454239" />
+      <Key frame="89" x="-6" y="-38" angle="-27.7045078" scaleX="1.80854571" scaleY="0.904272854" />
+      <Key frame="99" x="-6" y="-38" angle="-27.7045078" scaleX="1.89939356" scaleY="0.9496968" alpha="0" />
+    </Composite>
+    <Frame rep="99" />
+  </Sprite>
+  

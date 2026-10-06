@@ -1,0 +1,27 @@
+<AttackFX specimen="Specimen_BE_02" attack="1">
+	<FX type="flash" name="5dc5a6" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="236598" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_02" attack="1p">
+	<FX type="flash" name="5dc5a6" applyOn="target" moment="impact" duration="1.0" />
+	<FX type="fade" name="082a44" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="18" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_02" attack="2">
+	<FX type="fade" name="9aaef2" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="74bae6" applyOn="target" moment="impact" duration="0.2" />
+	<FX type="sprite" name="fx_halo_blue01" blendmode="normal" applyOn="target" position="bottom" moment="fx" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_02" attack="2p">
+	<FX type="fade" name="7882b3" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="74bae6" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_halo_blue02" blendmode="normal" applyOn="target" position="bottom" moment="fx" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="18" duration="0.2" />
+</AttackFX>

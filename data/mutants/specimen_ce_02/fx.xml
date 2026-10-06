@@ -1,0 +1,46 @@
+<AttackFX specimen="Specimen_CE_02" attack="1">
+	<FX type="move" name="shake" applyOn="allclip+background+target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="eed270" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c18f63" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="color" add="89b1de" mul="548be6" duration="0.1" moment="fade" applyOn="background" />
+	<FX type="color" duration="0.1" moment="end" applyOn="allclip+background-target-self" />
+	<FX type="sprite" name="fx_gemini_att1" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_02" attack="1p">
+	<FX type="move" name="shake" applyOn="allclip+background+target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="flash" name="eed270" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c18f63" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="color" add="89b1de" mul="548be6" duration="0.1" moment="fade" applyOn="background" />
+	<FX type="color" duration="0.1" moment="end" applyOn="allclip+background-target-self" />
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="fade" name="416285" applyOn="allclip+background-target-self" moment="fade2" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end2" />
+	<FX type="sprite" name="fx_gemini_att1p" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_02" attack="2">
+	<FX type="flash" name="bdccf4" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="fade" name="000000" applyOn="background" moment="fade" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="move" name="shake" applyOn="allclip+background+target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_gemini_att2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CE_02" attack="2p">
+	<FX type="fade" name="6c95c4" applyOn="allclip+background-target-self" moment="fade2" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end2" />
+	<FX type="flash" name="bdccf4" duration="0.2" applyOn="allclip+background+target-self" moment="impact" />
+	<FX type="fade" name="000000" applyOn="background" moment="fade" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="move" name="shake" applyOn="allclip+background+target-self" moment="impact" amplitude="10" frequency="10" duration="0.2" />
+	<FX type="sprite" name="fx_gemini_att2p" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>

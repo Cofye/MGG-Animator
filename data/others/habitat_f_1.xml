@@ -1,0 +1,46 @@
+<Sprite id="habitat_f_1" bitmap="habitats/f.png" cache="99">
+    <Preview srcX="243" srcY="63" dstX="-4" dstY="0" width="10" height="5" />
+    <Composite>
+      <Sprite framerate="2" autoLoop="true">
+        <Composite>
+          <Sprite cache="1">
+            <Composite>
+              <Sprite cache="7">
+                <Image srcX="214" srcY="222" dstX="-29" dstY="-8" width="53" height="67" />
+                <Tag key="clipName" value="gauge" />
+              </Sprite>
+              <Key frame="0" x="7" y="-37" gMul="0.7529412" bMul="0.5019608" rAdd="1" />
+            </Composite>
+            <Image srcX="205" srcY="229" dstX="-31" dstY="-38" width="70" height="56" />
+          </Sprite>
+          <Key frame="0" x="-1" y="-8" />
+          <Key frame="11" x="-1" y="-11" />
+        </Composite>
+        <Frame rep="21" />
+      </Sprite>
+      <Key frame="0" x="-6" y="69" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="109" dstX="-15" dstY="-8" width="30" height="15" />
+        <Tag key="clipName" value="Slot1" />
+      </Sprite>
+      <Key frame="0" x="-84" y="87" scaleX="-1" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="109" dstX="-15" dstY="-7" width="30" height="15" />
+        <Tag key="clipName" value="Slot2" />
+      </Sprite>
+      <Key frame="0" x="79" y="85" />
+    </Composite>
+    <Image srcX="1" srcY="1" dstX="-28" dstY="109" width="49" height="27" />
+    <Image srcX="51" srcY="1" dstX="-167" dstY="0" width="438" height="220" a="0.787754357" d="0.787754357" />
+    <Image srcX="1" srcY="1" dstX="-28" dstY="109" width="49" height="27" />
+    <Image srcX="1" srcY="1" dstX="-28" dstY="109" width="49" height="27" />
+    <Image srcX="1" srcY="29" dstX="-16" dstY="38" width="23" height="40" />
+    <Image srcX="1" srcY="70" dstX="-27" dstY="7" width="35" height="38" />
+    <Image srcX="51" srcY="222" dstX="-19" dstY="104" width="63" height="67" />
+    <Image srcX="115" srcY="222" dstX="-46" dstY="11" width="89" height="104" />
+  </Sprite>
+  

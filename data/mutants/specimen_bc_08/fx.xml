@@ -1,0 +1,41 @@
+<AttackFX specimen="Specimen_BC_08" attack="1">
+	<FX type="flash" name="dd3c26" duration="1" applyOn="target" moment="impact" />
+	<FX type="flash" name="dd3c26" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="sprite" name="fx_demonist2" blendmode="normal" applyOn="target" position="bottom" moment="fx_demonist2">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="50" scatterY="75" targetDelay="0.1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_08" attack="1p">
+	<FX type="fade" name="973426" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="dd3c26" duration="1.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="a81aad" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="sprite" name="fx_demonist2p" blendmode="normal" applyOn="target" position="bottom" moment="fx_demonist2p">
+		<tranform scaleMin="1" scaleMax="1.0" randomX="false" />
+		<spawn number="1" scatterX="50" scatterY="75" targetDelay="0.1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_08" attack="2">
+	<FX type="flash" name="3ae100" duration="1" applyOn="target" moment="impact" />
+	<FX type="flash" name="3ae100" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_08" attack="2p">
+	<FX type="fade" name="836222" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="3ae100" duration="1" applyOn="target" moment="impact" />
+	<FX type="flash" name="3ae100" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+</AttackFX>

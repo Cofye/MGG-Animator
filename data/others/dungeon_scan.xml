@@ -1,0 +1,102 @@
+<Sprite id="dungeon_scan" bitmap="hud/dungeon/scan_mod.png" cache="7">
+    <Composite>
+      <Sprite>
+        <Image srcX="211" srcY="16" dstX="-39.5" dstY="-25" width="81" height="51" />
+      </Sprite>
+      <Key frame="0" x="-1.5" y="-23" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="9" srcY="8" dstX="-85" dstY="-284" width="170" height="330" />
+          </Sprite>
+          <Key frame="0" x="2.5" y="-11" />
+          <Key frame="12" x="2.5" y="-11" alpha="0.5" />
+          <Key frame="24" x="2.5" y="-11" />
+          <Key frame="36" x="2.5" y="-11" alpha="0.5" />
+          <Key frame="48" x="2.5" y="-11" />
+        </Composite>
+        <Frame rep="48" />
+      </Sprite>
+      <Key frame="0" x="-1" y="-32" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="216" srcY="130" dstX="-50" dstY="-13" width="88" height="19" />
+          </Sprite>
+          <Key frame="0" x="7.5" y="4" gAdd="0.09803922" />
+          <Key frame="5" x="7.5" y="4" alpha="0.5" />
+          <Key frame="10" x="7.5" y="4" gAdd="0.09803922" />
+        </Composite>
+        <Frame rep="10" />
+      </Sprite>
+      <Key frame="0" x="-4" y="31" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="223" srcY="101" dstX="-38" dstY="-5" width="75" height="12" />
+          </Sprite>
+          <Key frame="0" x="1.5" y="-1" />
+          <Key frame="23" x="1.5" y="-1" />
+          <Key frame="25" x="1.5" y="-1" alpha="0" />
+          <Key frame="27" x="1.5" y="-1" />
+          <Key frame="29" x="1.5" y="-1" alpha="0" />
+          <Key frame="31" x="1.5" y="-1" />
+        </Composite>
+        <Frame rep="69" />
+      </Sprite>
+      <Key frame="0" x="-2" y="31" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="244" srcY="337" dstX="-5.5" dstY="-7" width="16" height="20" />
+      </Sprite>
+      <Key frame="0" x="-24" y="-26" scaleX="0.6666667" scaleY="0.6666667" />
+      <Key frame="24" x="-26" y="-180" />
+      <Key frame="43" x="-31" y="-335" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="244" srcY="337" dstX="-5.5" dstY="-7" width="16" height="20" />
+      </Sprite>
+      <Key frame="7" x="20" y="-26" scaleX="0.6666667" scaleY="0.6666667" />
+      <Key frame="33" x="18" y="-180" />
+      <Key frame="53" x="13" y="-335" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="244" srcY="337" dstX="-5.5" dstY="-7" width="16" height="20" />
+      </Sprite>
+      <Key frame="16" x="-7" y="-39" scaleX="0.6666667" scaleY="0.6666667" />
+      <Key frame="41" x="-9" y="-193" />
+      <Key frame="56" x="-14" y="-348" alpha="0" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="244" srcY="337" dstX="-5.5" dstY="-7" width="16" height="20" />
+      </Sprite>
+      <Key frame="0" x="-15.75" y="-292.25" alpha="0.249999985" />
+      <Key frame="7" x="-17" y="-331" alpha="0" visible="false" />
+      <Key frame="32" x="-10" y="-22" scaleX="0.6666667" scaleY="0.6666667" />
+      <Key frame="54" x="-12" y="-176" />
+      <Key frame="68" x="-15.333334" y="-279.333344" alpha="0.3333333" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="244" srcY="337" dstX="-5.5" dstY="-7" width="16" height="20" />
+      </Sprite>
+      <Key frame="0" x="-0.8181818" y="-242.363647" alpha="0.6363636" />
+      <Key frame="15" x="-4" y="-341" alpha="0" visible="false" />
+      <Key frame="43" x="3" y="-32" scaleX="0.6666667" scaleY="0.6666667" />
+      <Key frame="62" x="1" y="-186" />
+      <Key frame="68" x="-0.363636374" y="-228.272736" alpha="0.727272749" />
+    </Composite>
+    <Image srcX="205" srcY="182" dstX="-64" dstY="-55" width="128" height="111" />
+    <Frame rep="68" />
+  </Sprite>
+  

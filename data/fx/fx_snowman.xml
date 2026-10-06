@@ -1,0 +1,51 @@
+<Sprite id="fx_snowman" bitmap="character/f_03.png" cache="34">
+    <Composite>
+      <Sprite>
+        <Image srcX="186" srcY="245" dstX="-84" dstY="-90" width="165" height="99" />
+      </Sprite>
+      <Key frame="0" x="-5" y="-4" angle="-59.5776176" />
+      <Key frame="4" x="-14" y="-9" angle="-59.5776176" scaleX="2.28638744" scaleY="2.28638744" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="197" srcY="365" dstX="-83" dstY="-79" width="162" height="88" />
+      </Sprite>
+      <Key frame="0" x="11" y="-26" angle="-13.2017241" />
+      <Key frame="6" x="11" y="-26" angle="-15.8809881" scaleX="2.60479259" scaleY="2.60479259" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="7" srcY="440" dstX="-14" dstY="-7" width="28" height="14" />
+      </Sprite>
+      <Key frame="2" x="-26" y="-94" angle="51.1188164" />
+      <Key frame="4" x="-119" y="-206" angle="22.7860832" />
+      <Key frame="8" x="-315" y="-299" angle="-8.343584" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="40" srcY="464" dstX="-9" dstY="-11" width="18" height="22" />
+      </Sprite>
+      <Key frame="3" x="-29" y="-27" />
+      <Key frame="6" x="-156" y="-49" angle="-99.56444" />
+      <Key frame="10" x="-290" y="-10" angle="-165.120483" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="74" srcY="463" dstX="-6" dstY="-10" width="13" height="21" />
+      </Sprite>
+      <Key frame="1" x="-36" y="-35" />
+      <Key frame="4" x="-150" y="-131" angle="-64.73079" />
+      <Key frame="8" x="-373" y="-36" angle="-126.749443" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="16" srcY="426" dstX="-7" dstY="-4" width="14" height="9" />
+      </Sprite>
+      <Key frame="4" x="9" y="-48" angle="61.34599" />
+      <Key frame="7" x="-90" y="-102" angle="24.4594955" />
+      <Key frame="10" x="-202" y="-51" angle="-10.0647945" alpha="0.2" visible="false" />
+    </Composite>
+    <Frame rep="11" />
+    <Frame delay="10000" />
+  </Sprite>
+  

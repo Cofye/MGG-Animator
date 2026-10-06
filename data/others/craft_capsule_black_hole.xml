@@ -1,0 +1,32 @@
+<Sprite id="craft_capsule_black_hole" bitmap="hud/crafting/capsule_crafting_black_hole.png" cache="4">
+    <Composite>
+      <Sprite>
+        <Image srcX="6" srcY="65" dstX="-44.6011543" dstY="-24.5491333" width="91" height="51" />
+      </Sprite>
+      <Key frame="0" y="45" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-47.86127" dstY="-19.734108" width="96" height="41" />
+        <Frame />
+      </Sprite>
+      <Key frame="1" x="1" y="50" alpha="0" />
+      <Key frame="10" x="1" y="50" />
+    </Composite>
+    <Frame>
+      <Tag key="label" value="item_off" />
+    </Frame>
+    <Frame>
+      <Tag key="label" value="item_on" />
+    </Frame>
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+    <Frame />
+  </Sprite>
+  

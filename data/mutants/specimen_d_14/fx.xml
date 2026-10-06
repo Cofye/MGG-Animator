@@ -1,0 +1,27 @@
+<AttackFX specimen="Specimen_D_14" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="f0d690" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="d0af2d" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_D_14" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="51370a" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="f0d690" duration="0.3" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="d0af2d" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_D_14" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="efe5c6" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="eaab02" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_D_14" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="5a3d0a" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="efe5c6" duration="0.2" applyOn="teamtarget" moment="impact" />
+	<FX type="flash" name="eaab02" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>

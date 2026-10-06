@@ -1,0 +1,22 @@
+<Sprite id="fx_thunder" bitmap="fx/c_c_hit.png" cache="3">
+    <Optim srcX="1" srcY="1" width="239" height="551" optimY="0.8" />
+    <Composite>
+      <Sprite cache="3" framerate="2">
+        <Frame>
+          <Image srcX="1" srcY="1" dstX="-22" dstY="-540" width="69" height="550" />
+        </Frame>
+        <Frame>
+          <Image srcX="71" srcY="1" dstX="-26" dstY="-541" width="63" height="551" />
+        </Frame>
+        <Frame>
+          <Image srcX="135" srcY="1" dstX="-31" dstY="-541" width="60" height="549" />
+        </Frame>
+        <Frame>
+          <Image srcX="196" srcY="1" dstX="-19" dstY="-538" width="44" height="547" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="1" y="-3" scaleX="2" scaleY="2" />
+    </Composite>
+    <Frame rep="7" />
+  </Sprite>
+  

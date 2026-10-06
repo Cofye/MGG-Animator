@@ -1,0 +1,44 @@
+<Sprite id="fx_swarm_queen_eggs_2" bitmap="character/e_e_05.png" cache="42">
+    <Composite>
+      <Sprite>
+        <Image srcX="459" srcY="521" dstX="-25.5" dstY="-30.5" width="52" height="63" />
+      </Sprite>
+      <Key frame="1" x="-2" y="-4" scaleX="0.309523821" scaleY="0.3148148" />
+      <Key frame="3" x="-4" y="-27" />
+      <Key frame="6" x="1" y="-154" />
+      <Key frame="10" x="2" y="-245" angle="27.2371979" scaleX="1.7" scaleY="1.7" gAdd="0.7529412" />
+      <Key frame="12" x="2" y="-270" angle="27.2371979" scaleX="1.2" scaleY="1.2" gAdd="0.7529412" />
+      <Key frame="15" x="5" y="-233" angle="27.2371979" scaleX="3.08787727" scaleY="2.47507715" gAdd="0.7529412" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="430" srcY="612" dstX="-61.5" dstY="-14.5" width="120" height="28" />
+      </Sprite>
+      <Key frame="0" x="2" y="2" scaleX="0.5" scaleY="0.538461566" />
+      <Key frame="3" x="1.5" y="1.5" />
+      <Key frame="24" x="1.5" y="1.5" />
+      <Key frame="28" x="1.5" y="1.5" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="622" srcY="86" dstX="-16.5" dstY="-22.5" width="34" height="47" />
+      </Sprite>
+      <Key frame="16" x="14" y="-197" scaleX="5.79999971" scaleY="5.79999971" />
+      <Key frame="19" x="14" y="-202" scaleX="9.183799" scaleY="9.183799" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="615" srcY="10" dstX="-25.5" dstY="-27.5" width="49" height="55" />
+      </Sprite>
+      <Key frame="20" x="26" y="-197" scaleX="9.236363" scaleY="9.236363" />
+      <Key frame="23" x="26" y="-199" scaleX="9.236363" scaleY="1.056133" alpha="0.5" />
+      <Key frame="25" x="26" y="-199" scaleX="2.072648" scaleY="1.056133" alpha="0.2" visible="false" />
+    </Composite>
+    <Frame rep="29" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <DataPoint name="DataPoint001" x="88" y="-150" />
+  </Sprite>
+  

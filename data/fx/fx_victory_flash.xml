@@ -1,0 +1,12 @@
+<Sprite id="fx_victory_flash" bitmap="fx/fx_hud_victory.png" cache="1">
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="0" dstX="-133" dstY="-49" width="266" height="99" />
+      </Sprite>
+      <Key frame="0" y="-2" />
+      <Key frame="3" y="-2" scaleX="2.14314342" scaleY="-0.0714285746" />
+      <Key frame="6" y="-2" scaleX="2.73077941" scaleY="-0.0714285746" alpha="0" />
+    </Composite>
+    <Frame rep="19" />
+  </Sprite>
+  

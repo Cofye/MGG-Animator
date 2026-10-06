@@ -1,0 +1,34 @@
+<AttackFX specimen="Specimen_BC_04" attack="1">
+	<FX type="flash" name="a5efff" applyOn="target" moment="impact" duration="0.4" />
+	<FX type="fade" name="363957" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="7" frequency="17" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="12" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_04" attack="1p">
+	<FX type="flash" name="a5efff" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="575642" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="fade" name="363957" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="8" frequency="20" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_04" attack="2">
+	<FX type="flash" name="ffd954" duration="0.4" applyOn="-allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="ffd235" duration="0.7" applyOn="target" moment="impact" />
+	<FX type="fade" name="782e2e" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target-self" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BC_04" attack="2p">
+	<FX type="flash" name="ffd954" duration="0.4" applyOn="-allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="ffd235" duration="0.9" applyOn="target" moment="impact" />
+	<FX type="fade" name="782e2e" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target-self" moment="impact" amplitude="10" frequency="15" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="18" duration="0.3" />
+</AttackFX>

@@ -1,0 +1,19 @@
+<Sprite id="fx_kris" bitmap="character/b_f.png" cache="58">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-35.9243622" dstY="-42.2184753" width="69" height="286" />
+      </Sprite>
+      <Key frame="0" x="-191" y="-344" angle="-30.8940487" alpha="0.2" />
+      <Key frame="16" x="-191" y="-344" angle="-30.8940487" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="71" srcY="1" dstX="-35.0840149" dstY="-41.31932" width="70" height="369" />
+      </Sprite>
+      <Key frame="18" x="-228" y="-395" angle="-32.0947533" />
+      <Key frame="23" x="-79" y="-147" angle="-32.0947533" />
+      <Key frame="27" x="-79" y="-147" angle="-32.0947533" alpha="0.2" />
+    </Composite>
+    <Frame rep="27" />
+  </Sprite>
+  

@@ -1,0 +1,51 @@
+<Sprite id="fx_AE_13_attack2" bitmap="character/a_e_13.png" cache="20">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="545" srcY="5" dstX="-34" dstY="-36.5" width="66" height="66" />
+          </Sprite>
+          <Key frame="0" y="-0.5" />
+          <Key frame="3" y="-0.5" scaleX="1.18486" scaleY="1.18486" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="545" srcY="5" dstX="-34" dstY="-36.5" width="66" height="66" />
+          </Sprite>
+          <Key frame="0" y="-0.5" scaleX="0.8" scaleY="0.8" />
+          <Key frame="4" y="-0.5" scaleX="1.1" scaleY="1.1" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="545" srcY="5" dstX="-34" dstY="-36.5" width="66" height="66" />
+          </Sprite>
+          <Key frame="0" y="-0.5" scaleX="0.6" scaleY="0.6" />
+          <Key frame="6" y="-0.5" scaleX="0.9" scaleY="0.9" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="545" srcY="5" dstX="-34" dstY="-36.5" width="66" height="66" />
+          </Sprite>
+          <Key frame="0" y="-0.5" scaleX="0.4" scaleY="0.4" />
+          <Key frame="8" y="-0.5" scaleX="0.7" scaleY="0.7" alpha="0.5" visible="false" />
+        </Composite>
+        <Frame rep="9" />
+      </Sprite>
+      <Key frame="12" x="2" y="6" scaleX="2.786392" scaleY="0.8837095" rAdd="1" gAdd="1" />
+      <Key frame="16" x="2" y="6" scaleX="5.47519064" scaleY="0.8837095" alpha="0.5" rAdd="1" gAdd="1" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="754" srcY="2" dstX="-37.66667" dstY="-30.3939819" width="58" height="62" />
+      </Sprite>
+      <Key frame="12" x="9" y="-2" angle="-90" scaleX="1.15987432" scaleY="3.46666551" rAdd="1" gAdd="0.5019608" />
+      <Key frame="16" x="1" y="-2" angle="-90" scaleX="4.07140827" scaleY="14.2507219" alpha="0.5" rAdd="1" gAdd="0.5019608" visible="false" />
+    </Composite>
+    <Frame rep="19" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <DataPoint name="DataPoint001" x="704" y="-186" />
+  </Sprite>
+  

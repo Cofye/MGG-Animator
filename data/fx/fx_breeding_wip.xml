@@ -1,0 +1,18 @@
+<Sprite id="fx_breeding_wip" bitmap="fx/fx_breeding.png" cache="7">
+    <Composite>
+      <Sprite>
+        <Image srcX="155" srcY="1" dstX="-110" dstY="-63" width="210" height="126" />
+      </Sprite>
+      <Key frame="0" x="2" y="3" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="155" srcY="128" dstX="-80.59813" dstY="-64.5327148" width="163" height="130" />
+      </Sprite>
+      <Key frame="0" x="-2" y="-27" alpha="0.5" />
+      <Key frame="12" x="-4" y="-54" scaleX="1.10460258" scaleY="1.45158052" rMul="0.5019608" bMul="0.5019608" alpha="0.8" />
+      <Key frame="24" x="-2" y="-27" alpha="0.5" />
+    </Composite>
+    <Frame rep="24" />
+  </Sprite>
+  

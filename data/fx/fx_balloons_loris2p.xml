@@ -1,0 +1,55 @@
+<Sprite id="fx_balloons_loris2p" bitmap="character/d_d_07.png" cache="51">
+    <Composite>
+      <Sprite>
+        <Image srcX="437" srcY="72" dstX="-53.5" dstY="-161" width="104" height="163" />
+      </Sprite>
+      <Key frame="0" x="-52" y="-463" angle="-6.670747" alpha="0.5" />
+      <Key frame="10" x="-53" y="-317" angle="3.81373644" />
+      <Key frame="20" x="-6" y="-169" angle="-12.0164032" />
+      <Key frame="29" x="-5" y="-40" angle="-1.15036869" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="254" srcY="367" dstX="-47.5" dstY="-162" width="96" height="166" />
+      </Sprite>
+      <Key frame="0" x="-53" y="-463" angle="-44.770668" alpha="0.5" />
+      <Key frame="10" x="-54" y="-317" angle="-34.01371" />
+      <Key frame="20" x="-7" y="-169" angle="-57.2269478" />
+      <Key frame="29" x="-6" y="-40" angle="-33.13678" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="366" srcY="453" dstX="-47.5" dstY="-128" width="89" height="131" />
+      </Sprite>
+      <Key frame="0" x="-48" y="-464" angle="26.0709381" alpha="0.5" />
+      <Key frame="10" x="-49" y="-318" angle="42.28811" />
+      <Key frame="20" x="-2" y="-170" angle="19.0646172" />
+      <Key frame="29" x="-1" y="-41" angle="12.8696632" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2">
+        <Composite>
+          <Sprite>
+            <Image srcX="784" srcY="282" dstX="-25" dstY="-29" width="49" height="57" />
+          </Sprite>
+          <Key frame="0" x="-35" y="21" alpha="0" />
+          <Key frame="3" x="-35" y="21" />
+          <Key frame="7" x="-35" y="21" gMul="0.5019608" bMul="0" />
+        </Composite>
+        <Image srcX="660" srcY="281" dstX="-64.5" dstY="-36" width="104" height="91" />
+        <Frame rep="7" />
+      </Sprite>
+      <Key frame="0" x="-36.5" y="-440" alpha="0.5" />
+      <Key frame="10" x="-37" y="-294" angle="16.3091011" />
+      <Key frame="20" x="13" y="-137" angle="11.0903635" scaleX="1.15728974" scaleY="1.38638258" rAdd="0.5263158" gAdd="0.2641899" />
+      <Key frame="29" x="18" y="6" angle="28.31127" scaleX="1.29885054" scaleY="1.73412693" rAdd="1" gAdd="0.5019608" visible="false" />
+    </Composite>
+    <Frame rep="29" />
+    <Frame delay="100" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <DataPoint name="DataPoint001" x="498" y="-243" />
+  </Sprite>
+  

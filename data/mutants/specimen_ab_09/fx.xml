@@ -1,0 +1,33 @@
+<AttackFX specimen="Specimen_AB_09" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="flash" name="ced8ec" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="3e89d6" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_09" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="fade" name="2082af" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ced8ec" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="3e89d6" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_09" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.2" />
+	<FX type="flash" name="eabb88" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="ddba5d" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_grinch" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_09" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.2" />
+	<FX type="fade" name="af8f20" applyOn="allclip+background-target-self" moment="black" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" duration="0.5" />
+	<FX type="flash" name="eabb88" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="ddba5d" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_grinch2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+	</FX>
+</AttackFX>

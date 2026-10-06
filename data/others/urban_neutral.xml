@@ -1,0 +1,52 @@
+<Sprite id="urban_neutral" bitmap="pnj/bad_guy.png" cache="9">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-122.5" dstY="-336" width="262" height="402" />
+      </Sprite>
+      <Key frame="0" x="-13.5" y="-16" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" framerate="5">
+        <Frame>
+          <Image srcX="1" srcY="404" dstX="-24.5" dstY="-19" width="50" height="38" />
+        </Frame>
+        <Frame>
+          <Image srcX="52" srcY="404" dstX="-24" dstY="-18" width="50" height="39" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="404" dstX="-24.5" dstY="-19" width="50" height="38" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="52" srcY="404" dstX="-24" dstY="-18" width="50" height="39" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="404" dstX="-24.5" dstY="-19" width="50" height="38" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-28" y="-227" />
+      <Key frame="93" x="-28" y="-227" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="4" framerate="3" minDelay="40" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="103" srcY="404" dstX="-26.47002" dstY="-6.712062" width="43" height="19" a="0.991671264" b="-0.12879476" c="0.12879476" d="0.991671264" />
+        </Frame>
+        <Frame>
+          <Image srcX="147" srcY="404" dstX="-23.810461" dstY="-10.0692549" width="47" height="22" a="0.9967436" b="-0.08063511" c="0.0806351" d="0.9967436" />
+        </Frame>
+        <Frame>
+          <Image srcX="195" srcY="404" dstX="-20.0620766" dstY="-9.300129" width="48" height="22" a="0.993961632" b="-0.109727047" c="0.10972704" d="0.993961632" />
+        </Frame>
+        <Frame>
+          <Image srcX="147" srcY="427" dstX="-16.1676712" dstY="-7.52837038" width="45" height="19" a="0.98875463" b="-0.149546608" c="0.149546608" d="0.98875463" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-36" y="-261" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

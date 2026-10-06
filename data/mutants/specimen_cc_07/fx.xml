@@ -1,0 +1,42 @@
+<AttackFX specimen="Specimen_CC_07" attack="1">
+	<FX type="flash" name="ffbe60" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="color" add="f41515" mul="f41515" duration="0.5" moment="red" applyOn="allclip+background+target-self" />
+	<FX type="color" duration="0.5" moment="return" applyOn="allclip+background+target-self" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_07" attack="1p">
+	<FX type="flash" name="f7df96" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="color" add="f41515" mul="f41515" duration="0.5" moment="red" applyOn="allclip+background+target-self" />
+	<FX type="color" duration="0.5" moment="return" applyOn="allclip+background+target-self" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="15" duration="0.5" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_07" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="up" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="down" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="flash" name="ffbe60" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffbe60" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_weapon1" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CC_07" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="up" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="down" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="c12121" applyOn="allclip+background-target-self" moment="begin" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="down" />
+	<FX type="flash" name="ffbe60" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffbe60" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_weapon2" blendmode="normal" applyOn="target" position="bottom" moment="fx" zOrder="self">
+		<colorTransform mul="ffffff" add="000000" alpha="1" />
+		<spawn number="1" targetDelay="0.2" />
+	</FX>
+</AttackFX>

@@ -1,0 +1,45 @@
+<AttackFX specimen="Specimen_CB_07" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="f89b89" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f89b89" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_CB_07_attack1" blendmode="normal" applyOn="target" position="bottom" moment="fx_CB_07_attack1" zOrder="target">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_07" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.5" />
+	<FX type="fade" name="5f1312" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="f89b89" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="f89b89" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_CB_07_attack1p" blendmode="normal" applyOn="target" position="bottom" moment="fx_CB_07_attack1p" zOrder="target">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_07" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="flash" name="e2c6ef" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="e2c6ef" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="202a22" applyOn="allclip+background-target-self" moment="fade" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="sprite" name="fx_CB_07_attack2" blendmode="normal" applyOn="target" position="bottom" moment="fx_CB_07_attack2" zOrder="target">
+		<tranform scaleMin="1.25" scaleMax="1.25" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_07" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="08100a" applyOn="allclip+background-target-self" moment="fade" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="e2c6ef" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="e2c6ef" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_CB_07_attack2p" blendmode="normal" applyOn="target" position="bottom" moment="fx_CB_07_attack2p" zOrder="target">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

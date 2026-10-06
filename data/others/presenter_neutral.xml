@@ -1,0 +1,112 @@
+<Sprite id="presenter_neutral" bitmap="pnj/presenter_neutral.png" cache="14">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-214" dstY="-293" width="315" height="340" />
+      </Sprite>
+      <Key frame="0" x="-62" y="75" scaleX="0.961932361" scaleY="0.961932361" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="342" dstX="-25" dstY="-33" width="177" height="165" />
+      </Sprite>
+      <Key frame="0" x="129" y="-129" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="317" srcY="1" dstX="-167" dstY="-212" width="373" height="362" />
+      </Sprite>
+      <Key frame="0" x="79" y="-96" />
+    </Composite>
+    <Composite>
+      <Sprite minDelay="40" rndDelay="30">
+        <Composite>
+          <Sprite>
+            <Image srcX="179" srcY="342" dstX="-36.35211" dstY="-190.2817" width="123" height="220" />
+          </Sprite>
+          <Key frame="0" x="12.3521109" y="6.28169441" />
+          <Key frame="13" x="12.3521109" y="4.28169441" angle="-1.3333652" />
+          <Key frame="25" x="12.3521109" y="6.28169441" />
+        </Composite>
+        <Frame rep="49" />
+      </Sprite>
+      <Key frame="0" x="-61" y="-111" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" framerate="3">
+        <Frame>
+          <Image srcX="317" srcY="364" dstX="-32" dstY="-28" width="64" height="56" />
+        </Frame>
+        <Frame>
+          <Image srcX="1" srcY="508" dstX="-32" dstY="-26" width="65" height="54" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="508" dstX="-32" dstY="-26" width="65" height="54" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="317" srcY="364" dstX="-32" dstY="-28" width="64" height="56" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="508" dstX="-32" dstY="-26" width="65" height="54" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="96" y="-197" />
+      <Key frame="91" x="96" y="-197" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="508" dstX="-37.70999" dstY="-23.2099915" width="61" height="45" />
+        </Frame>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="113" y="-238" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="3" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="317" srcY="421" dstX="-22.7099915" dstY="-17.2099915" width="64" height="38" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="317" srcY="421" dstX="-22.7099915" dstY="-17.2099915" width="64" height="38" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="317" srcY="421" dstX="-22.7099915" dstY="-17.2099915" width="64" height="38" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-134" y="-150" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame delay="80">
+          <Image srcX="382" srcY="364" dstX="-40.70999" dstY="-41.20999" width="83" height="85" />
+        </Frame>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="-121" y="-113" />
+      <Key frame="99" x="-122" y="-114" />
+    </Composite>
+    <Composite>
+      <Sprite autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="466" srcY="364" dstX="68.5" dstY="-92.58449" width="137" height="149" a="-1" />
+          </Sprite>
+          <Key frame="0" x="7" y="11.6056347" />
+          <Key frame="60" x="7" y="1.60563469" />
+        </Composite>
+        <Frame rep="119" />
+      </Sprite>
+      <Key frame="0" x="-99.5" y="-328.021149" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

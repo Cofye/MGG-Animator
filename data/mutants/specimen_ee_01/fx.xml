@@ -1,0 +1,58 @@
+<AttackFX specimen="Specimen_EE_01" attack="1">
+	<FX type="flash" name="01080f" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="1b8fe0" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="183269" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="sprite" name="fx_galaxy" blendmode="add" applyOn="self" position="center" moment="arrived" zOrder="background">
+		<tranform scale="2.5" />
+		<colorTransform alpha="0.5" mul="0xFFFFFF" add="0x000000" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_01" attack="1p">
+	<FX type="flash" name="01080f" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="1.1" applyOn="allclip+background" moment="light" />
+	<FX type="flash" name="e07c1b" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="692d18" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="sprite" name="fx_galaxy" blendmode="add" applyOn="self" position="center" moment="arrived" zOrder="background">
+		<tranform scale="2.5" />
+		<colorTransform alpha="0.5" mul="0xFF4400" add="0x000000" />
+	</FX>
+	<FX type="sprite" name="fx_explosion_orange" blendmode="normal" applyOn="target" position="bottom" moment="boom">
+		<tranform scale="1.2" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background+target" moment="boom" amplitude="10" frequency="30" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_01" attack="2">
+	<FX type="flash" name="01080f" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="1b1be0" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="183269" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="sprite" name="fx_centaure" blendmode="add" applyOn="self" position="bottom" moment="fx_centaure" zOrder="background">
+		<tranform scale="0.8" mirrorX="true" />
+	</FX>
+	<FX type="sprite" name="fx_explosion_purple" blendmode="normal" applyOn="target" position="bottom" moment="boom">
+		<tranform scale="1.0" />
+	</FX>
+	<FX type="move" name="shake" applyOn="target" moment="boom" amplitude="7" frequency="20" duration="0.4" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EE_01" attack="2p">
+	<FX type="flash" name="01080f" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="1.1" applyOn="allclip+background" moment="light" />
+	<FX type="flash" name="fbd640" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="183269" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="sprite" name="fx_centaure02" blendmode="add" applyOn="self" position="bottom" moment="fx_centaure" zOrder="background">
+		<tranform scale="0.8" mirrorX="true" />
+	</FX>
+	<FX type="sprite" name="fx_explosion_purple" blendmode="normal" applyOn="target" position="bottom" moment="boom">
+		<tranform scale="1.2" />
+		<colorTransform alpha="1.0" mul="808080" add="C04000" />
+	</FX>
+	<FX type="move" name="shake" applyOn="target" moment="boom" amplitude="7" frequency="20" duration="0.4" />
+</AttackFX>

@@ -1,0 +1,37 @@
+<AttackFX specimen="Specimen_CB_08" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="flash" name="f3a891" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f3a891" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_08" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="fade" name="121958" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f3a891" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="f3a891" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_08" attack="2">
+	<FX type="fade" name="000000" applyOn="allclip+background+target+self" moment="black" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target+self" moment="end" />
+	<FX type="sprite" name="fx_predator1" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="ffffff" add="000000" alpha="0.9" />
+	</FX>
+	<FX type="flash" name="b56cd3" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_08" attack="2p">
+	<FX type="fade" name="000000" applyOn="allclip+background+target+self" moment="black" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target+self" moment="end" />
+	<FX type="sprite" name="fx_predator2" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="ffffff" add="000000" alpha="0.9" />
+	</FX>
+	<FX type="flash" name="b56cd3" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>

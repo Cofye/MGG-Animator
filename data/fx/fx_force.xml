@@ -1,0 +1,15 @@
+<Sprite id="fx_force" bitmap="character/e_f.png" cache="64">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-61.75" dstY="-71.25" width="125" height="143" />
+      </Sprite>
+      <Key frame="0" x="200.45" y="-252.7" scaleX="1.55934429" scaleY="1.24268556" alpha="0.5" />
+      <Key frame="3" x="254.599991" y="-252.7" scaleX="2.01890063" scaleY="1.80874443" visible="false" />
+      <Key frame="4" x="341" y="-251" scaleX="3.054529" scaleY="2.351565" />
+      <Key frame="5" x="341" y="-251" scaleX="3.054529" scaleY="2.58820033" alpha="0.2" />
+      <Key frame="8" x="695" y="-251" scaleX="4.223892" scaleY="3.579039" />
+      <Key frame="9" x="695" y="-251" scaleX="4.223892" scaleY="3.579039" alpha="0.2" />
+    </Composite>
+    <Frame rep="9" />
+  </Sprite>
+  

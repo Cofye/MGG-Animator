@@ -1,0 +1,39 @@
+<AttackFX specimen="Specimen_AB_03" attack="1">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="eee3ff" duration="1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="3b1746" duration="1" applyOn="target" moment="impact" />
+	<FX type="color" mul="2d2130" duration="0.5" moment="impact" applyOn="allclip+background-target-self" />
+	<FX type="fade" name="3b1746" applyOn="background" moment="arrived" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="20" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="20" frequency="15" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_03" attack="1p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="eee3ff" duration="1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="3b1746" duration="1" applyOn="target" moment="impact" />
+	<FX type="color" mul="2d2130" duration="0.5" moment="impact" applyOn="allclip+background-target-self" />
+	<FX type="fade" name="3b1746" applyOn="background" moment="arrived" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="20" duration="0.2" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="20" frequency="20" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_03" attack="2">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="eee3ff" duration="1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="3b1746" duration="1" applyOn="target" moment="impact" />
+	<FX type="color" mul="2d2130" duration="0.5" moment="impact" applyOn="allclip+background-target-self" />
+	<FX type="fade" name="3b1746" applyOn="background" moment="arrived" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="20" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="20" frequency="15" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_03" attack="2p">
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="15" frequency="15" duration="0.2" />
+	<FX type="flash" name="eee3ff" duration="1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="3b1746" duration="1" applyOn="target" moment="impact" />
+	<FX type="color" mul="2d2130" duration="0.5" moment="impact" applyOn="allclip+background-target-self" />
+	<FX type="fade" name="3b1746" applyOn="background" moment="arrived" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="20" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="allclip+background-target-self" moment="impact" amplitude="20" frequency="15" duration="0.1" />
+</AttackFX>

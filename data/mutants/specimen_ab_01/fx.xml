@@ -1,0 +1,33 @@
+<AttackFX specimen="Specimen_AB_01" attack="1">
+	<FX type="flash" name="3C913C" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="234728" duration="1.0" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_01" attack="1p">
+	<FX type="fade" name="3f3644" applyOn="allclip+background-target-self" moment="arrived" duration="1.5" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.1" />
+	<FX type="flash" name="50d36f" duration="1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="c6f6d1" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_01" attack="2">
+	<FX type="fade" name="885555" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="flash" name="990000" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="flash" name="aaaaaa" duration="0.2" applyOn="target" moment="burn" />
+	<FX type="flash" name="aa0000" duration="3.0" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_impact_death_fire" blendmode="add" applyOn="target" position="bottom" moment="burn">
+		<tranform scale="2.0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_01" attack="2p">
+	<FX type="flash" name="00cc00" duration="0.3" applyOn="background" moment="shoot" />
+	<FX type="flash" name="005306" duration="1.0" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_impact_mortier" blendmode="normal" applyOn="target" position="bottom" moment="drop">
+		<tranform scale="1.6" />
+	</FX>
+	<FX type="sprite" name="fx_impact_death_fire" blendmode="add" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="2.0" />
+	</FX>
+</AttackFX>

@@ -1,0 +1,12 @@
+<Sprite id="fx_dash" bitmap="character/a_c.png" cache="71">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-43" dstY="-230" width="87" height="465" />
+      </Sprite>
+      <Key frame="0" x="-3" y="1" angle="-35.7157" scaleY="0.174477711" />
+      <Key frame="2" x="-3" y="1" angle="-35.7157" />
+      <Key frame="23" x="-3" y="1" angle="-35.7157" scaleY="1.88671541" alpha="0" />
+    </Composite>
+    <Frame rep="23" />
+  </Sprite>
+  

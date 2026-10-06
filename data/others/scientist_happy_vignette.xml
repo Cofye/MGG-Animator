@@ -1,0 +1,81 @@
+<Sprite id="scientist_happy_vignette" bitmap="pnj/scientist_happy.png" cache="13">
+    <Composite>
+      <Sprite>
+        <Image srcX="110" srcY="1" dstX="-75.13004" dstY="-92.3811646" width="150" height="187" />
+      </Sprite>
+      <Key frame="0" x="75.13004" y="-94.6188354" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" framerate="4">
+        <Frame>
+          <Image srcX="17" srcY="384" dstX="-32" dstY="-20" width="65" height="41" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="426" dstX="-30" dstY="-14" width="60" height="42" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="384" dstX="-32" dstY="-20" width="65" height="41" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="469" dstX="-30" dstY="-17" width="59" height="45" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="384" dstX="-32" dstY="-20" width="65" height="41" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="384" dstX="-32" dstY="-20" width="65" height="41" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="426" dstX="-30" dstY="-14" width="60" height="42" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="469" dstX="-30" dstY="-17" width="59" height="45" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="426" dstX="-30" dstY="-14" width="60" height="42" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="66" y="-66" />
+      <Key frame="54" x="65" y="-65" />
+    </Composite>
+    <Composite>
+      <Sprite cache="4" framerate="4">
+        <Image srcX="17" srcY="515" dstX="-31" dstY="-24" width="62" height="49" />
+        <Frame />
+        <Frame>
+          <Image srcX="17" srcY="565" dstX="-29" dstY="-21" width="60" height="43" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="565" dstX="-29" dstY="-21" width="60" height="43" />
+          <Image srcX="17" srcY="609" dstX="-23" dstY="-21" width="46" height="27" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="17" srcY="609" dstX="-23" dstY="-21" width="46" height="27" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="17" srcY="565" dstX="-29" dstY="-21" width="60" height="43" />
+        </Frame>
+        <Frame>
+          <Image srcX="17" srcY="565" dstX="-29" dstY="-21" width="60" height="43" />
+          <Image srcX="17" srcY="609" dstX="-23" dstY="-21" width="46" height="27" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="64" y="-60" />
+      <Key frame="91" x="64" y="-61" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="50" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="17" srcY="637" dstX="-26" dstY="-20" width="63" height="36" />
+        </Frame>
+        <Frame />
+      </Sprite>
+      <Key frame="0" x="60" y="-104" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="10000000" />
+  </Sprite>
+  

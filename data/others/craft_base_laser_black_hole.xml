@@ -1,0 +1,16 @@
+<Sprite id="craft_base_laser_black_hole" bitmap="hud/crafting/laser_black_hole.png" cache="6">
+    <Composite>
+      <Sprite>
+        <Image srcX="14" srcY="186" dstX="-93.5" dstY="-43.5" width="187" height="85" />
+      </Sprite>
+      <Key frame="0" x="-194" y="-167" angle="32" scaleX="0.9" scaleY="0.9" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="14" srcY="186" dstX="-93.5" dstY="-43.5" width="187" height="85" />
+      </Sprite>
+      <Key frame="0" x="208" y="-167" angle="-32" scaleX="-0.9" scaleY="0.9" />
+    </Composite>
+    <Frame />
+  </Sprite>
+  

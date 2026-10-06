@@ -1,0 +1,37 @@
+<Sprite id="fx_weapon1" bitmap="character/c_c_07.png" cache="40" autoLoop="true">
+    <Optim srcX="587" srcY="9" width="246" height="161" optimX="0.9" optimY="0.9" />
+    <Composite>
+      <Sprite cache="2">
+        <Image srcX="482" srcY="1" dstX="-69" dstY="151" width="110" height="242" a="-0.7190486" b="-0.694959939" c="0.6949599" d="-0.7190486" />
+        <Frame delay="1000" />
+        <Frame rep="18" />
+      </Sprite>
+      <Key frame="0" x="-675" y="-713" angle="356.140717" scaleY="1.10527587" />
+      <Key frame="6" x="-431" y="-544" angle="516.1648" scaleY="1.10527587" />
+      <Key frame="11" x="-257" y="-315" angle="671.455261" scaleY="1.10527587" />
+      <Key frame="15" x="-83" y="-148" angle="740.497742" scaleY="1.10527587" />
+      <Key frame="26" x="-83" y="-148" angle="740.497742" scaleY="1.10527587" alpha="0.5" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2">
+        <Image srcX="613" srcY="0" dstX="-139" dstY="-113" width="34" height="331" a="0.6954292" b="-0.7185944" c="0.7190407" d="0.6958612" />
+        <Frame delay="1000" />
+        <Frame rep="18" />
+      </Sprite>
+      <Key frame="8" x="-783" y="-775" angle="415.357239" scaleX="1.41567039" scaleY="1.41567039" />
+      <Key frame="18" x="-464" y="-455" angle="573.195557" scaleX="1.41567039" scaleY="1.41567039" />
+      <Key frame="24" x="-198" y="-115" angle="727.8503" scaleX="1.41567039" scaleY="1.41567039" />
+      <Key frame="33" x="-207" y="-112" angle="725.325256" scaleX="1.41567039" scaleY="1.41567039" alpha="0.5" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Image srcX="569" srcY="256" dstX="-9.320476" dstY="-163.321411" width="35" height="188" a="1.41831291" d="1.41831291" />
+      </Sprite>
+      <Key frame="4" x="-653" y="-629" angle="-383.97522" scaleX="-1" />
+      <Key frame="14" x="-288" y="-334" angle="-112.290138" scaleX="-1" />
+      <Key frame="17" x="-61" y="-64" angle="-12.5163164" scaleX="-1" />
+      <Key frame="29" x="-61" y="-64" angle="-12.5163164" scaleX="-1" alpha="0.5" visible="false" />
+    </Composite>
+    <Frame rep="33" />
+  </Sprite>
+  

@@ -1,0 +1,26 @@
+<AttackFX specimen="Specimen_CB_02" attack="1">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.3" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_02" attack="1p">
+	<FX type="fade" name="000000" applyOn="allclip+background+target+self" moment="dark" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target+self" moment="return" />
+	<FX type="sprite" name="fx_samurai" blendmode="normal" applyOn="target" position="center" moment="fury">
+		<tranform scale="1.3" />
+	</FX>
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="ffffff" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_02" attack="2">
+	<FX type="flash" name="4f0c7a" duration="1.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="7A4196" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CB_02" attack="2p">
+	<FX type="fade" name="725384" applyOn="allclip+background-target-self" moment="dark" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="4f0c7a" duration="1.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="722d99" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>

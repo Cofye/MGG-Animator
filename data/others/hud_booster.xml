@@ -1,0 +1,86 @@
+<Sprite id="hud_booster" bitmap="hud/popup/hud_booster_popup.png" cache="10" autoLoop="true">
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="117" dstX="-158.5" dstY="-41" width="319" height="83" />
+      </Sprite>
+      <Key frame="0" x="-37" y="1" scaleX="1.03361559" scaleY="1.06666672" />
+      <Key frame="34" x="-13" y="1" scaleX="1.21061409" scaleY="1.06666672" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="351" srcY="155" dstX="-0.659338236" dstY="-8.51647949" width="64" height="18" />
+          </Sprite>
+          <Key frame="0" x="-2.04395461" y="-1" scaleX="0.205357149" rMul="0" gAdd="1" bAdd="1" />
+          <Key frame="29" x="-3" y="-1" scaleX="1.45583117" rMul="0.5019608" gAdd="1" bAdd="1" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" x="27" y="-4" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="228" srcY="42" dstX="-2.5" dstY="-24" width="163" height="58" />
+      </Sprite>
+      <Key frame="0" x="-47" y="2" />
+      <Key frame="34" x="3" y="2" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="351" srcY="155" dstX="-3.390133" dstY="-8.139015" width="64" height="18" />
+          </Sprite>
+          <Key frame="0" x="1.97309482" rAdd="0.7529412" gAdd="0.2509804" />
+          <Key frame="27" x="1.97309482" alpha="0" rAdd="0.7529412" gAdd="0.2509804" />
+        </Composite>
+        <Frame rep="27" />
+      </Sprite>
+      <Key frame="24" x="44" y="1" scaleX="1.4146893" alpha="0" />
+      <Key frame="34" x="44" y="1" scaleX="1.4146893" />
+    </Composite>
+    <Composite>
+      <Sprite cache="2" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="440" srcY="0" dstX="-62.9602051" dstY="-75.08458" width="123" height="104" />
+          </Sprite>
+          <Key frame="0" x="1" y="-5" scaleY="0.9032278" alpha="0.6" />
+          <Key frame="29" x="1" y="-24" scaleY="0.976770163" alpha="0" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="452" srcY="119" dstX="-45.5" dstY="-40" width="93" height="81" />
+          </Sprite>
+          <Key frame="0" x="1.5" y="-1" rAdd="0.2509804" gAdd="0.2509804" bAdd="0.2509804" />
+          <Key frame="29" x="1.5" y="-1" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" x="59" y="1" />
+      <Key frame="34" x="113" y="1" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="0" srcY="117" dstX="-158.5" dstY="-41" width="319" height="83" />
+      </Sprite>
+      <Key frame="0" x="-72" y="22" scaleX="0.461924881" scaleY="-1.01201844" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="34" srcY="31" dstX="-63.5" dstY="-36" width="187" height="86" />
+      </Sprite>
+      <Key frame="0" x="-121.5" y="3" />
+    </Composite>
+    <Frame />
+    <Frame>
+      <Tag key="sound" value="ui_bonus2" />
+    </Frame>
+    <Frame rep="30" />
+    <Frame>
+      <Tag key="sound" value="building_upgrade" />
+    </Frame>
+    <Frame delay="100000" />
+  </Sprite>
+  

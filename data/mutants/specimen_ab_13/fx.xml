@@ -1,0 +1,43 @@
+<AttackFX specimen="Specimen_AB_13" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="f2f1a8" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="212b69" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="sprite" name="fx_ab_13_attack1" blendmode="overlay" applyOn="target" position="top" moment="impact">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_13" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.4" />
+	<FX type="fade" name="171d45" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f2f1a8" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_ab_13_attack1p" blendmode="overlay" applyOn="target" position="top" moment="impact">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_13" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="f2f1a8" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="fade" name="212b69" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="sprite" name="fx_ab_13_attack2" blendmode="add" applyOn="target" position="top" moment="arrived">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AB_13" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.4" />
+	<FX type="fade" name="171d45" applyOn="allclip+background-target-self" moment="arrived" duration="3" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f2f1a8" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_ab_13_attack2p" blendmode="add" applyOn="target" position="top" moment="arrived">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

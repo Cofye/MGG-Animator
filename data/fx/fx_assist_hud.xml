@@ -1,0 +1,544 @@
+<Sprite id="fx_assist_hud" bitmap="fx/assist.png" cache="23">
+    <Optim srcX="1" srcY="70" width="162" height="189" optimY="0.1" />
+    <Optim srcX="7" srcY="274" width="111" height="185" optimX="0.2" optimY="0.2" />
+    <Optim srcX="144" srcY="11" width="299" height="52" optimX="0.85" />
+    <Composite>
+      <Sprite cache="2">
+        <Image srcX="1" srcY="31" dstX="-274" dstY="-38" width="585" height="38" />
+        <Image srcX="1" srcY="65" dstX="-274" dstY="-1" width="585" height="4" d="29" />
+      </Sprite>
+      <Key frame="0" x="635" y="740" angle="180" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="4" x="636" y="571" angle="180" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="52" x="636" y="571" angle="180" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="56" x="635" y="740" angle="180" scaleX="2.05720019" scaleY="-1.21786487" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="70" dstX="-2" dstY="-2" width="162" height="189" />
+      </Sprite>
+      <Key frame="0" x="-903" y="-76" angle="-0.114994578" scaleX="5.603259" scaleY="4.275666" />
+      <Key frame="7" x="-3" y="-80" angle="-0.114994578" scaleX="5.603259" scaleY="4.275666" />
+      <Key frame="39" x="-3" y="-80" angle="-0.114994578" scaleX="5.603259" scaleY="4.275666" />
+      <Key frame="56" x="-3" y="-80" angle="-0.114994578" scaleX="5.603259" scaleY="4.275666" alpha="0" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="31" dstX="-274" dstY="-38" width="585" height="38" />
+        <Image srcX="1" srcY="65" dstX="-274" dstY="-1" width="585" height="4" d="29" />
+      </Sprite>
+      <Key frame="0" x="559" y="-66" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="4" x="560" y="96" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="52" x="560" y="96" scaleX="2.05720019" scaleY="-1.21786487" />
+      <Key frame="56" x="559" y="-66" scaleX="2.05720019" scaleY="-1.21786487" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="18" x="-61" y="426" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="20" x="-6" y="51" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="34" x="-24" y="64" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="24" x="-24" y="84" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="11" x="-14" y="571" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="8" x="-18" y="544" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="37" x="-10" y="534" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="22" x="-10" y="518" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="51" x="-22" y="587" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="44" x="-20" y="597" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="5" x="-6" y="19" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="9" x="-47" y="240" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="28" x="-41" y="202" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="0" x="-246" y="22" />
+          <Key frame="10" x="1440" y="25" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-234.532822" dstY="-3" width="476" height="7" />
+          </Sprite>
+          <Key frame="4" x="-121" y="50" scaleX="0.489798158" scaleY="2.161438" />
+          <Key frame="15" x="1334" y="53" scaleX="0.489798158" scaleY="2.161438" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="45" srcY="10" dstX="-237.060669" dstY="-3.12120819" width="476" height="7" />
+          </Sprite>
+          <Key frame="11" x="-258" y="94" />
+          <Key frame="22" x="1481" y="82" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="40" x="-59" y="404" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="321" srcY="80" dstX="-9.130432" dstY="-5.60870361" width="19" height="13" />
+      </Sprite>
+      <Key frame="8" x="624" y="301" scaleX="73.1012344" scaleY="69.15928" alpha="0.6" rAdd="1" />
+      <Key frame="19" x="624" y="301" scaleX="73.1012344" scaleY="69.15928" alpha="0" rAdd="1" gAdd="1" bAdd="1" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="260" dstX="-115" dstY="-409" width="117" height="220" a="2" d="2" />
+        <Tag key="clipName" value="fighter" />
+      </Sprite>
+      <Key frame="0" x="-541" y="892" angle="6.36176634" scaleX="3" scaleY="3" alpha="0.1" />
+      <Key frame="8" x="153" y="802" angle="5" scaleX="2.2702117" scaleY="2.2702117" />
+      <Key frame="44" x="188" y="802" angle="6" scaleX="2.2702117" scaleY="2.2702117" />
+      <Key frame="51" x="1458" y="712" angle="6.36176634" scaleX="2.2702117" scaleY="2.2702117" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="164" srcY="105" dstX="-104" dstY="-42" width="238" height="97" />
+        <Tag key="clipName" value="text" />
+      </Sprite>
+      <Key frame="7" x="693" y="327" angle="-8.638988" scaleX="0.272194684" scaleY="0.272194684" />
+      <Key frame="10" x="693" y="327" angle="-8.638988" scaleX="1.81454134" scaleY="1.81454134" />
+      <Key frame="12" x="693.7647" y="327.705872" angle="-8.638988" scaleX="1.73610234" scaleY="1.73610234" />
+      <Key frame="42" x="713.7647" y="327.705872" angle="-8.638988" scaleX="1.73610234" scaleY="1.73610234" />
+      <Key frame="47" x="1457" y="312" angle="-8.638988" scaleX="1.73610234" scaleY="1.73610234" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="403" srcY="105" dstX="-7.086975" dstY="-3.13043213" width="15" height="8" />
+      </Sprite>
+      <Key frame="11" x="742" y="258" />
+      <Key frame="33" x="1214" y="244" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="193" srcY="204" dstX="-7.60870361" dstY="-3.78259277" width="14" height="6" />
+      </Sprite>
+      <Key frame="30" x="802" y="402" />
+      <Key frame="50" x="1230" y="405" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="164" srcY="203" dstX="-21.4782715" dstY="-2.30435181" width="43" height="7" />
+      </Sprite>
+      <Key frame="32" x="759" y="265" />
+      <Key frame="52" x="1218" y="272" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="403" srcY="105" dstX="-7.56518555" dstY="-3.217392" width="15" height="8" />
+      </Sprite>
+      <Key frame="27" x="739" y="315" />
+      <Key frame="46" x="1237" y="319" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="403" srcY="105" dstX="-7.95651245" dstY="-3.95652771" width="15" height="8" />
+      </Sprite>
+      <Key frame="32" x="660" y="427" />
+      <Key frame="49" x="1219" y="428" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="403" srcY="105" dstX="-7.65216064" dstY="-3.782608" width="15" height="8" />
+      </Sprite>
+      <Key frame="16" x="305" y="532" />
+      <Key frame="42" x="1235" y="522" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3">
+        <Composite>
+          <Sprite>
+            <Image srcX="424" srcY="70" dstX="-19.3328285" dstY="-9.57706451" width="155" height="146" a="0.616058946" b="-0.00036423665" c="0.000364236621" d="0.616058946" />
+          </Sprite>
+          <Key frame="0" x="-8.047624" y="-5.90476656" />
+          <Key frame="8" x="-8.047624" y="-5.90476656" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="208" srcY="203" dstX="-96.40582" dstY="-9.884033" width="193" height="18" />
+          </Sprite>
+          <Key frame="5" x="140" y="-75" angle="-51.6931" scaleX="0.6" scaleY="0.6" />
+          <Key frame="8" x="40" y="42" angle="-51.6931" scaleX="0.6" scaleY="0.6" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="164" srcY="70" dstX="-134.985535" dstY="-17.65216" width="259" height="34" />
+          </Sprite>
+          <Key frame="5" x="-123" y="171" angle="-44.4263" scaleX="0.6726504" scaleY="0.6726504" />
+          <Key frame="8" x="27" y="22" angle="-44.4263" scaleX="0.6726504" scaleY="0.6726504" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="119" srcY="260" dstX="-27.1904736" dstY="-29.33333" width="51" height="51" />
+          </Sprite>
+          <Key frame="0" x="27.1904736" y="29.33333" />
+          <Key frame="8" x="27.1904736" y="29.33333" />
+        </Composite>
+        <Frame rep="56" />
+        <Tag key="clipName" value="photo" />
+      </Sprite>
+      <Key frame="4" x="671" y="728" angle="4.59751368" scaleX="2.23636723" scaleY="2.23636723" />
+      <Key frame="8" x="955" y="457" angle="4.59751368" scaleX="2.23636723" scaleY="2.23636723" />
+      <Key frame="40" x="965" y="449" angle="4.59751368" scaleX="2.23636723" scaleY="2.23636723" />
+      <Key frame="45" x="1383" y="451" angle="4.59751368" scaleX="2.23636723" scaleY="2.23636723" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="403" srcY="105" dstX="-7.217392" dstY="-3.434784" width="15" height="8" />
+      </Sprite>
+      <Key frame="28" x="309" y="123" />
+      <Key frame="50" x="1235" y="114" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="193" srcY="204" dstX="-7.52172852" dstY="-2" width="14" height="6" />
+      </Sprite>
+      <Key frame="15" x="368" y="171" />
+      <Key frame="41" x="1209" y="156" />
+    </Composite>
+    <Frame rep="1" />
+    <Frame>
+      <Tag key="sound" value="ui_combo" />
+    </Frame>
+    <Frame rep="10" />
+    <Frame>
+      <Image srcX="1" srcY="1" dstX="631" dstY="558" width="398" height="29" />
+    </Frame>
+    <Frame rep="41" />
+  </Sprite>
+  

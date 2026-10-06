@@ -1,0 +1,45 @@
+<Sprite id="fx_deathmaster2_back" bitmap="character/b_b_02.png" cache="57">
+    <Composite>
+      <Sprite>
+        <Image srcX="453" srcY="349" dstX="-48.0625" dstY="-18.75" width="94" height="38" />
+      </Sprite>
+      <Key frame="0" x="1" y="-2" />
+      <Key frame="8" x="-2" y="-7" scaleX="2.79147935" scaleY="2.7342608" alpha="0.6" />
+      <Key frame="38" x="-2" y="-7" scaleX="2.79147935" scaleY="2.7342608" alpha="0.6" />
+      <Key frame="43" x="-2" y="-7" scaleX="2.79147935" scaleY="2.7342608" alpha="0" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="5" srcY="186" dstX="-21.6295471" dstY="39.0591736" width="138" height="46" a="0.006867311" b="-0.999976456" c="0.999976456" d="0.006867311" />
+          </Sprite>
+          <Key frame="0" x="3" y="-66" scaleX="2.72222233" scaleY="2.483871" />
+          <Key frame="2" x="1" y="-91" scaleX="2.72222233" scaleY="3.74657321" />
+          <Key frame="4" x="3" y="-66" scaleX="2.72222233" scaleY="2.483871" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="5" srcY="186" dstX="-21.6295471" dstY="39.0591736" width="138" height="46" a="0.006867311" b="-0.999976456" c="0.999976456" d="0.006867311" />
+          </Sprite>
+          <Key frame="0" x="-82" y="-51" scaleX="1.74092925" scaleY="2.483871" />
+          <Key frame="2" x="-71" y="-39" scaleX="1.74092925" scaleY="2.16460752" />
+          <Key frame="4" x="-82" y="-51" scaleX="1.74092925" scaleY="2.483871" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="5" srcY="186" dstX="-21.6295471" dstY="39.0591736" width="138" height="46" a="0.006867311" b="-0.999976456" c="0.999976456" d="0.006867311" />
+          </Sprite>
+          <Key frame="0" x="90" y="-50" scaleX="1.74092925" scaleY="2.483871" />
+          <Key frame="2" x="76" y="-33" scaleX="1.74092925" scaleY="2.132048" />
+          <Key frame="4" x="90" y="-50" scaleX="1.74092925" scaleY="2.483871" />
+        </Composite>
+        <Frame rep="4" />
+      </Sprite>
+      <Key frame="0" x="-3" y="-26" scaleX="0.386921" />
+      <Key frame="8" x="-8" y="-62" alpha="0.7" />
+    </Composite>
+    <Frame rep="43" />
+    <Skin>vegetal</Skin>
+  </Sprite>
+  

@@ -1,0 +1,43 @@
+<Sprite id="jackpot_amount_bg" bitmap="hud/jackpot/jackpot_amount_bg.png" cache="8">
+    <Composite>
+      <Sprite cache="1">
+        <Composite>
+          <Sprite>
+            <Image srcX="42" srcY="124" dstX="-198.428574" dstY="-36.8571358" width="393" height="78" />
+          </Sprite>
+          <Key frame="0" x="2" y="-2" alpha="0" />
+          <Key frame="15" x="2" y="-2" />
+          <Key frame="29" x="2" y="-2" alpha="0" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="496" srcY="125" dstX="-195.190475" dstY="-37.38095" width="392" height="77" />
+          </Sprite>
+          <Key frame="0" />
+          <Key frame="4" visible="false" />
+          <Key frame="10" />
+          <Key frame="14" visible="false" />
+          <Key frame="20" />
+          <Key frame="24" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="42" srcY="124" dstX="-198.428574" dstY="-36.8571358" width="393" height="78" />
+          </Sprite>
+          <Key frame="5" x="2" y="-2" />
+          <Key frame="9" x="2" y="-2" visible="false" />
+          <Key frame="15" x="2" y="-2" />
+          <Key frame="19" x="2" y="-2" visible="false" />
+          <Key frame="25" x="2" y="-2" />
+          <Key frame="29" x="2" y="-2" visible="false" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" />
+    </Composite>
+    <Image srcX="64" srcY="19" dstX="-388" dstY="-39" width="799" height="86" />
+    <Frame>
+      <Image srcX="255" srcY="19" dstX="-1183" dstY="-238" width="396" height="86" />
+    </Frame>
+  </Sprite>
+  

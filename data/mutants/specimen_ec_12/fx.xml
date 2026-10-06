@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_EC_12" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.3" />
+	<FX type="flash" name="c6dbef" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="6c92e0" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_12" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="10" duration="0.5" />
+	<FX type="fade" name="211849" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="c6dbef" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="6c92e0" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_12" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="flash" name="efd5c6" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="e0856c" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background+target" moment="crush" amplitude="10" frequency="30" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EC_12" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="482818" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="efd5c6" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="e0856c" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background+target" moment="crush" amplitude="10" frequency="30" duration="1.0" />
+</AttackFX>

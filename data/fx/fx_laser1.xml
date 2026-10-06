@@ -1,0 +1,54 @@
+<Sprite id="fx_laser1" bitmap="fx/fx_laser.png" cache="45">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite cache="3">
+            <Frame>
+              <Image srcX="249" srcY="434" dstX="-71" dstY="-70.5" width="143" height="142" />
+            </Frame>
+            <Frame>
+              <Image srcX="249" srcY="434" dstX="-71" dstY="-70.5" width="143" height="142" />
+            </Frame>
+            <Frame>
+              <Image srcX="24" srcY="455" dstX="-85" dstY="-71" width="170" height="127" />
+            </Frame>
+            <Frame>
+              <Image srcX="24" srcY="455" dstX="-85" dstY="-71" width="170" height="127" />
+            </Frame>
+            <Frame>
+              <Image srcX="422" srcY="477" dstX="-78" dstY="-44" width="161" height="103" />
+            </Frame>
+            <Frame>
+              <Image srcX="422" srcY="477" dstX="-78" dstY="-44" width="161" height="103" />
+            </Frame>
+            <Frame>
+              <Image srcX="616" srcY="486" dstX="-80" dstY="-39" width="161" height="84" />
+            </Frame>
+            <Frame>
+              <Image srcX="616" srcY="486" dstX="-80" dstY="-39" width="161" height="84" />
+            </Frame>
+          </Sprite>
+          <Key frame="10" x="362" y="-108" scaleX="2" scaleY="2" />
+          <Key frame="14" x="474" y="-115" scaleX="3.80851054" scaleY="3.08474565" />
+          <Key frame="21" x="464.304352" y="-106" scaleX="3.912054" scaleY="3.398773" />
+          <Key frame="25" x="467" y="-103" scaleX="4.21551132" scaleY="1.05415463" alpha="0.75" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="657" srcY="350" dstX="-20.5" dstY="-20" width="40" height="40" />
+          </Sprite>
+          <Key frame="0" x="272" y="-100" scaleX="1.92592406" scaleY="1.92592406" alpha="0.25" />
+          <Key frame="8" x="271" y="-100" angle="1.48070133" scaleX="3.05083847" scaleY="3.05083847" alpha="0.6944444" />
+          <Key frame="10" x="271" y="-100" angle="1.48070133" scaleX="3.05083847" scaleY="3.05083847" alpha="0.6944444" visible="false" />
+        </Composite>
+        <Frame rep="25" />
+      </Sprite>
+      <Key frame="0" scaleX="-1" />
+    </Composite>
+    <Frame rep="25" />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+  </Sprite>
+  

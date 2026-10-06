@@ -1,0 +1,18 @@
+<Sprite id="scientist_gift" bitmap="pnj/scientist_gift.png" cache="14">
+    <Composite>
+      <Sprite autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="377" dstX="-45" dstY="-13" width="72" height="32" />
+          </Sprite>
+          <Key frame="0" x="9" y="-3" />
+          <Key frame="15" x="9" y="-3" rAdd="0.8784314" gAdd="0.8784314" bAdd="0.8784314" />
+        </Composite>
+        <Frame rep="29" />
+      </Sprite>
+      <Key frame="0" x="-40" y="-67" />
+    </Composite>
+    <Image srcX="1" srcY="1" dstX="-161" dstY="-308" width="348" height="375" />
+    <Frame />
+  </Sprite>
+  

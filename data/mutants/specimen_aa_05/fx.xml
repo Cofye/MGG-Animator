@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_AA_05" attack="1">
+	<FX type="flash" name="ffffff" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="AB8726" duration="2.0" applyOn="allclip+background-target-self" moment="boom" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_05" attack="1p">
+	<FX type="flash" name="ffffff" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="AB8726" duration="2.0" applyOn="allclip+background-target-self" moment="boom" />
+	<FX type="flash" name="AB8726" duration="0.2" applyOn="allclip+background-target-self" moment="shoot" />
+	<FX type="move" name="shake" applyOn="background" moment="boom" amplitude="5" frequency="30" duration="1.5" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_05" attack="2">
+	<FX type="flash" name="FA9614" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="807453" duration="2.0" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="0.6" scaleMax="0.8" randomX="true" />
+		<spawn number="1" scatterX="50" scatterY="0" targetDelay="0.2" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AA_05" attack="2p">
+	<FX type="fade" name="575048" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="FA9614" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="9a8213" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scaleMin="0.8" scaleMax="1.5" randomX="true" />
+		<spawn number="1" scatterX="50" scatterY="0" targetDelay="0.35" />
+	</FX>
+</AttackFX>

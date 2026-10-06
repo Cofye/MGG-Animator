@@ -1,0 +1,30 @@
+<Sprite id="ability_fx_retaliate" bitmap="fx/fx_retaliate3.png" cache="11">
+    <Composite>
+      <Sprite cache="2">
+        <Image srcX="136" srcY="22" dstX="-246" dstY="-264" width="486" height="528" />
+      </Sprite>
+      <Key frame="0" x="-2" y="-136" scaleX="0.140541762" scaleY="0.140541762" alpha="0.3" rAdd="1" gAdd="0.8784314" bAdd="0.7529412" />
+      <Key frame="2" x="-2" y="-136" scaleX="1.16542983" scaleY="1.16542983" />
+      <Key frame="3" x="-2" y="-136" scaleX="1.14303327" scaleY="1.14303327" alpha="0.82" rAdd="1" gAdd="0.8784314" bAdd="0.7529412" />
+      <Key frame="4" x="-2" y="-136" scaleX="1.14303327" scaleY="1.14303327" alpha="0.82" rAdd="1" gAdd="0.8784314" bAdd="0.7529412" />
+      <Key frame="5" x="-2" y="-136" scaleX="0.9341699" scaleY="0.9341699" />
+      <Key frame="6" x="-2" y="-136" scaleX="0.9341699" scaleY="0.9341699" />
+      <Key frame="7" x="-2" y="-136" scaleX="1.18739474" scaleY="1.18739474" alpha="0.82" rAdd="1" gAdd="0.8784314" bAdd="0.7529412" />
+      <Key frame="10" x="-2" y="-136" scaleX="1.0626688" scaleY="1.0626688" rAdd="0.7529412" gAdd="0.2509804" />
+      <Key frame="20" x="-2" y="-136" scaleX="1.12981415" scaleY="1.12981415" />
+      <Key frame="24" x="-2" y="-136" scaleX="1.15667224" scaleY="1.15667224" alpha="0.5" visible="false" />
+    </Composite>
+    <Frame>
+      <Tag key="sound" value="mutant_c_01_ability1" />
+    </Frame>
+    <Frame rep="1" />
+    <Frame>
+      <Tag key="label" value="white" />
+    </Frame>
+    <Frame />
+    <Frame>
+      <Tag key="label" value="shake" />
+    </Frame>
+    <Frame rep="19" />
+  </Sprite>
+  

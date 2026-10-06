@@ -1,0 +1,42 @@
+<AttackFX specimen="Specimen_BB_03" attack="1">
+	<FX type="flash" name="F0E9C9" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="FFDD80" duration="0.7" applyOn="target" moment="impact" />
+	<FX type="fade" name="80718A" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="8" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_03" attack="1p">
+	<FX type="flash" name="F0E9C9" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="FFDD80" duration="0.8" applyOn="target" moment="impact" />
+	<FX type="fade" name="3F3347" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="12" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_03" attack="2">
+	<FX type="flash" name="FC9935" applyOn="target" moment="impact" duration="0.2" />
+	<FX type="flash" name="FFDD80" duration="0.1" applyOn="background" moment="impact" />
+	<FX type="fade" name="80718A" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="sprite" name="fx_ghostrider1" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="1.8" />
+		<spawn number="1" scatterX="50" scatterY="200" />
+		<iteration delay=".04" amount="1" />
+	</FX>
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="12" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BB_03" attack="2p">
+	<FX type="flash" name="FFDD80" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="fade" name="2F2336" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="sprite" name="fx_ghostrider2" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="2" />
+		<spawn number="1" scatterX="50" scatterY="200" />
+		<iteration delay=".05" amount="1" />
+	</FX>
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="8" frequency="18" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="18" duration="0.3" />
+</AttackFX>

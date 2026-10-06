@@ -1,0 +1,26 @@
+<AttackFX specimen="Specimen_CD_02" attack="1">
+	<FX type="flash" name="e59865" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_arrow02" blendmode="normal" applyOn="target" position="bottom" moment="fx" />
+	<FX type="move" name="shake" applyOn="background+target" moment="fx" amplitude="5" frequency="20" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CD_02" attack="1p">
+	<FX type="flash" name="e59865" applyOn="target" moment="impact" duration="1.0" />
+	<FX type="flash" name="e59865" applyOn="background" moment="impact" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="15" frequency="20" duration="2.0" />
+	<FX type="fade" name="686e5a" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="end" />
+	<FX type="sprite" name="fx_arrow02" blendmode="normal" applyOn="target" position="bottom" moment="fx">
+		<tranform scale="1.3" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_CD_02" attack="2">
+	<FX type="flash" name="ef866a" applyOn="target" moment="impact" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_CD_02" attack="2p">
+	<FX type="fade" name="8b7970" applyOn="allclip+background-target-self" moment="start" duration="3.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="ef866a" duration="0.2" applyOn="target" moment="impact" />
+</AttackFX>

@@ -1,0 +1,45 @@
+<AttackFX specimen="Specimen_DA_06" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="flash" name="c9996a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c56157" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_06" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="fade" name="af4520" applyOn="allclip+background+target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target-self" moment="return" />
+	<FX type="flash" name="c9996a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c56157" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_megaman3" blendmode="add" applyOn="target" position="bottom" moment="fx">
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_06" attack="2">
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="flash" name="c9996a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c56157" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_dirt" blendmode="add" applyOn="target" position="bottom" moment="dirt">
+	</FX>
+	<FX type="sprite" name="fx_megaman2" blendmode="add" applyOn="target" position="bottom" moment="fx">
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_06" attack="2p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="fade" name="5a3c07" applyOn="allclip+background-target-self" moment="arrived" duration="1" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="c9996a" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="c56157" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_megaman2" blendmode="add" applyOn="target" position="bottom" moment="fx">
+	</FX>
+	<FX type="sprite" name="fx_megaman3" blendmode="add" applyOn="target" position="bottom" moment="fx2">
+	</FX>
+</AttackFX>

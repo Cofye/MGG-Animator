@@ -1,0 +1,49 @@
+<AttackFX specimen="Specimen_EB_06" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="flash" name="ce9cdb" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="653ed6" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_armageddon2" blendmode="normal" applyOn="target" position="bottom" moment="fx1">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<colorTransform mul="b56cd3" add="000000" alpha="0.9" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_06" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.3" />
+	<FX type="fade" name="121958" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ce9cdb" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="flash" name="653ed6" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_armageddon2" blendmode="normal" applyOn="target" position="bottom" moment="fx1">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<colorTransform mul="896cd3" add="000000" alpha="0.9" />
+	</FX>
+	<FX type="sprite" name="fx_astro_bomb" blendmode="normal" applyOn="target" position="center" moment="fx2">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<colorTransform mul="b56cd3" add="000000" alpha="0.9" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_06" attack="2">
+	<FX type="fade" name="000000" applyOn="allclip+background+target+self" moment="black" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target+self" moment="end" />
+	<FX type="sprite" name="fx_darkness1" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="b56cd3" add="000000" alpha="0.9" />
+	</FX>
+	<FX type="flash" name="b56cd3" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_EB_06" attack="2p">
+	<FX type="fade" name="000000" applyOn="allclip+background+target+self" moment="black" />
+	<FX type="fade" name="normal" applyOn="allclip+background+target+self" moment="end" />
+	<FX type="sprite" name="fx_darkness2" blendmode="normal" applyOn="target" position="center" moment="fx">
+		<tranform scale="1" />
+		<colorTransform mul="b56cd3" add="000000" alpha="0.9" />
+	</FX>
+	<FX type="flash" name="b56cd3" duration="0.5" applyOn="target" moment="impact" />
+</AttackFX>

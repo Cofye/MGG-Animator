@@ -1,0 +1,24 @@
+<Sprite id="charm_fx_03" bitmap="hud/charms/charms_fx.png" cache="3" loopFrame="23">
+    <Composite>
+      <Sprite cache="5">
+        <Composite>
+          <Sprite>
+            <Image srcX="197" srcY="180" dstX="-50" dstY="-45.5" width="101" height="92" />
+          </Sprite>
+          <Key frame="0" scaleX="4" scaleY="4" />
+        </Composite>
+        <Frame />
+        <Tag key="clipName" value="charm" />
+      </Sprite>
+      <Key frame="0" scaleX="0.182634428" scaleY="0.182634428" />
+      <Key frame="4" />
+      <Key frame="5" scaleX="0.879761934" scaleY="0.879761934" />
+      <Key frame="6" />
+      <Key frame="16" />
+      <Key frame="39" />
+      <Key frame="42" scaleX="1.2" scaleY="1.2" />
+      <Key frame="49" />
+    </Composite>
+    <Frame rep="49" />
+  </Sprite>
+  

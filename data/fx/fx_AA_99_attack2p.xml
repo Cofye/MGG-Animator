@@ -1,0 +1,45 @@
+<Sprite id="fx_AA_99_attack2p" bitmap="character/a_a_99.png" cache="41">
+    <Composite>
+      <Sprite>
+        <Composite>
+          <Sprite>
+            <Image srcX="374" srcY="224" dstX="-8" dstY="-12" width="16" height="19" />
+          </Sprite>
+          <Key frame="0" x="-0.5" y="-2.5" />
+          <Key frame="2" x="-0.5" y="-2.5" />
+          <Key frame="7" x="-2" y="-24" scaleY="2.25" />
+          <Key frame="10" x="-5" y="-37" scaleX="2.510398" scaleY="1.32542932" alpha="0.55" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="393" srcY="234" dstX="-6.5" dstY="-5.5" width="12" height="12" />
+          </Sprite>
+          <Key frame="0" x="13" y="-8" />
+          <Key frame="6" x="16" y="-48" scaleY="2.77777767" />
+          <Key frame="11" x="16" y="-61" scaleX="2.33333325" scaleY="1.14379084" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="408" srcY="231" dstX="-6.5" dstY="-4.5" width="13" height="13" />
+          </Sprite>
+          <Key frame="0" x="8" y="-24" />
+          <Key frame="6" x="6" y="-71" scaleY="2.11111116" />
+          <Key frame="11" x="5" y="-76" scaleX="2.55555558" scaleY="1.10582018" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="408" srcY="231" dstX="-6.5" dstY="-4.5" width="13" height="13" />
+          </Sprite>
+          <Key frame="0" x="-10" y="-2" />
+          <Key frame="5" x="-13" y="-35" scaleY="1.57142854" />
+          <Key frame="8" x="-14" y="-39" scaleX="2.142857" scaleY="0.8319328" alpha="0.5" visible="false" />
+        </Composite>
+        <Frame rep="12" />
+      </Sprite>
+      <Key frame="2" x="-5" y="-2" scaleX="3.26807976" scaleY="4.855433" rAdd="1" />
+      <Key frame="14" x="4" y="-11" scaleX="3.59985781" scaleY="5.244671" alpha="0.5" rAdd="1" gAdd="0.5019608" visible="false" />
+    </Composite>
+    <Frame rep="14" />
+    <DataPoint name="DataPoint001" x="-13" y="-106" />
+  </Sprite>
+  

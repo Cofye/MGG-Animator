@@ -1,0 +1,781 @@
+DOCUMENTACIÓN DEL SISTEMA DE ANIMACIÓN XML
+Versión 11 — Basada en el código descompilado del motor original (TBMM)
+================================================================
+
+NOTAS:
+ [C] = confirmado directamente en el binario
+ [I] = inferido por contexto o por el flujo del código
+ [F] = valor no especificado por el formato (comportamiento observable
+       pero fuera del contrato del XML)
+
+================================================================
+>>> ESTRUCTURA DE ARCHIVO <<<
+================================================================
+
+La estructura siguiente representa el orden lógico de procesamiento
+observado, no necesariamente el orden físico de recorrido de los
+nodos XML, ni una gramática XML formal.
+
+<Sprite id="..." bitmap="..." cache="..." framerate="..."
+        minDelay="..." rndDelay="..." autoLoop="..." loopFrame="..."
+        packID="..." pvrCompression="...">
+
+    <Image .../>              <!-- Imágenes permanentes del Sprite -->
+
+    <Frame ...>               <!-- Frames del Sprite -->
+        <Image .../>
+        <Image .../>
+        <Tag key="..." value="..."/>   <!-- blurX, blurY, sound -->
+    </Frame>
+
+    <Composite>
+        <Sprite>              <!-- Sprite INTERNO obligatorio -->
+            <Image .../>
+            <Frame .../>
+            <Composite>...</Composite>
+            <Tag key="synch" value="parent"/>
+        </Sprite>
+        <Key frame="0" .../>
+        <Key frame="10" .../>
+    </Composite>
+
+    <Optim .../>
+    <Preview .../>
+    <DataPoint .../>
+    <Tag key="..." value="..."/>
+    <Skin>...</Skin>
+
+</Sprite>
+
+NOTA: Un <Sprite> anidado directamente dentro de otro <Sprite> NO
+es procesado por el parser. Los Sprite anidados SOLO se procesan
+dentro de un <Composite>.
+
+================================================================
+>>> NODOS <<<
+================================================================
+
+<Sprite>     Nodo raíz o interno de un Composite.
+             Procesa: <Image>, <Frame>, <Composite>, <DataPoint>,
+             <Optim>, <Preview>, <Tag>, <Skin>.
+             NO procesa <Sprite> anidados directamente.
+
+<Composite>  Contenedor. SIEMPRE contiene exactamente 1 <Sprite> interno
+             (obligatorio; su ausencia produce comportamiento no
+             especificado por el formato) + 0..N <Key>.
+             El Composite toma su duración del <Sprite> interno
+             (ver regla 3).
+
+<Image>      Recorte del spritesheet. NO tiene hijos.
+
+<Key>        Solo dentro de <Composite>. Transformación interpolable.
+
+<Frame>      Frame concreto. Contiene <Image> hijos y <Tag> hijos.
+             Atributos: delay, rep. rep="N" genera N+1 frames idénticos.
+
+<Optim>      Áreas de caché. Ignoradas por el motor de render.
+<Preview>    Preview para UI. Ignorada por el motor de render.
+<Tag>        Metadato clave/valor.
+<Skin>       Metadatos de skin. No participa en el pipeline de render
+             analizado. Uso runtime no determinado.
+<DataPoint>  Puntos de anclaje (name, x, y). No participa en el
+             pipeline de render analizado. Uso runtime no determinado;
+             probablemente consumido por sistemas externos.
+
+================================================================
+>>> ATRIBUTOS (Valores por Defecto) <<<
+================================================================
+
+--SPRITE--
+id             [REQUERIDO]  (string)
+bitmap         [REQUERIDO]  (string)  Nombre del spritesheet SIN extensión
+cache          [REQUERIDO]  (int)     VER ADVERTENCIA AL FINAL
+framerate      = 1          (int)
+minDelay       = 0          (int)
+rndDelay       = 0          (int)
+autoLoop       = false      (bool)
+loopFrame      = 0          (int)
+packID         = ""         (string)  Sin uso en runtime
+pvrCompression = ""         (string)  Sin uso en runtime
+
+--COMPOSITE--
+Sin atributos propios.
+
+--IMAGE-- (todos float)
+srcX = 0, srcY = 0            Esquina superior izquierda del recorte
+dstX = 0, dstY = 0            Traslación
+width = 1, height = 1         Dimensiones del recorte
+a = 1, b = 0, c = 0, d = 1    Matriz 2D
+alpha = 1                     (0.0-1.0)
+
+--KEY--
+frame   [REQUERIDO]  (int)
+x, y                 (float, default 0)
+angle                (float, default 0, GRADOS en XML → RADIANES en runtime)
+scaleX = 1           (float)
+scaleY = 1           (float)
+rMul = gMul = bMul = 1    (float) } colorMul
+alpha = 1                 (float) } CAMPO SEPARADO
+rAdd = gAdd = bAdd = 0    (float) } colorAdd
+visible = true       (bool)       Discreto, NO interpolado
+
+--FRAME--
+delay = 0   (int)
+rep   = 0   (int)
+
+El nodo <Frame> NO posee atributos blurX/blurY propios.
+blurX/blurY son <Tag> hijos del <Frame>:
+    <Tag key="blurX" value="N"/>
+    <Tag key="blurY" value="N"/>
+
+--TAG--
+key   [REQUERIDO]  (string)
+value [REQUERIDO]  (string; puede castearse a int/bool)
+
+--DATAPOINT--
+name [REQUERIDO]  (string)
+x, y [REQUERIDO]  (float)
+
+================================================================
+>>> SISTEMA DE TIEMPO <<<
+================================================================
+
+El motor usa un ACUMULADOR DISCRETO a 30 Hz.
+
+CONVERSIÓN
+----------------------------------------------------------------
+  frameAccumulator += dt_segundos * 30.0 * speedFactor
+
+Cada cruce de 1.0 consume UN STEP. Los steps se procesan en un
+bucle while (fullSteps = floor(accumulator) al inicio del update).
+
+CONVENCIÓN DE ESTADOS
+----------------------------------------------------------------
+Todos los ejemplos de esta documentación usan la convención:
+
+  - "Step 0"  = estado ANTES del primer update/step (inicial).
+  - "Step N"  = estado DESPUÉS de procesar el step N.
+
+ALGORITMO EXACTO DEL STEP [C]
+----------------------------------------------------------------
+  accumulator -= 1.0
+  if (delayCounter < 1):
+      if (framerate != 0):
+          frameCounter = (frameCounter + 1) % framerate
+      else:
+          frameCounter = frameCounter + 1
+          // NOTA [C]: con framerate=0, frameCounter se incrementa
+          // indefinidamente y NUNCA vuelve a 0 en la operación
+          // observada. Como la condición de avance es frameCounter==0,
+          // el frame permanece congelado mientras el contador crece.
+      if (frameCounter == 0):
+          if (currentFrame + 1 >= totalFrames):
+              hasLoopedThisFrame = true
+              if (loopEnabled):
+                  nextFrame = loopFrame
+              else:
+                  nextFrame = totalFrames - 1
+                  frameAccumulator = 0
+          else:
+              nextFrame = currentFrame + 1
+          setFrame(nextFrame)
+          if (loopEnabled):
+              if (currentFrame == loopFrame):
+                  if (rndDelay < 1):
+                      delayCounter = 0
+                  else:
+                      delayCounter = minDelay + (rand() % rndDelay)
+              if (frames[currentFrame].delay > 0):
+                  delayCounter += frames[currentFrame].delay
+  else:
+      delayCounter--
+
+ORDEN EXACTO DE OPERACIONES POR STEP
+----------------------------------------------------------------
+1. Se decrementa el accumulator (independiente del resto).
+2. Se evalúa delayCounter ANTES que frameCounter.
+3. Si delayCounter >= 1, solo decrementa. No toca frameCounter.
+4. Si delayCounter < 1, se incrementa frameCounter.
+5. delayCounter se consulta UNA VEZ por step.
+
+ESTRUCTURA RUNTIME (SpritePlayBack)
+----------------------------------------------------------------
+  0x00  bool    drawContent           Habilita dibujar DisplayObject hijos
+  0x08  ptr     SpriteDefinition*
+  0x10  float   frameAccumulator
+  0x14  float   speedFactor           Factor de velocidad (USADO)
+  0x18  float   speedFactor2          Campo inerte en el binario actual [C]
+  0x1C  int     delayCounter
+  0x20  int     frameCounter
+  0x24  int     currentFrame
+  0x28  int     totalFrames
+  0x30  string  clipName
+  0x48  bool    drawContentEnabled    Habilita dibujar contenido del sprite
+  0x49  bool    loopEnabled           = autoLoop
+  0x4A  bool    hasLoopedThisFrame
+  0x4C  int     localMinDelay         (copia runtime de minDelay)
+  0x50  int     localRndDelay         (copia runtime de rndDelay)
+  0x58  ptr     postShader
+  0x60  ptr     shader
+  0x68  ptr     currentFrameRuntime
+  0x70  list    compositeList
+  0x88  ptr     frameTagEvent
+  0x90  vector  displayChildren       DisplayObject* hijos por código
+
+CÁLCULO DE parentFramePos
+----------------------------------------------------------------
+  if (speedFactor <= 0 || delayCounter >= 1):
+      parentFramePos = currentFrame
+  else:
+      parentFramePos = currentFrame + frameAccumulator
+  parentFramePos = min(parentFramePos, totalFrames - 0.001)
+
+El clamp limita parentFramePos al rango [..., totalFrames - 0.001],
+evitando que la posición interpolada alcance exactamente totalFrames.
+No debe interpretarse como una validación de índices: operaciones
+posteriores que indexen por currentFrame aún pueden salirse del
+rango si currentFrame = totalFrames (caso degenerado no contemplado
+por el formato).
+
+NOTA [F]: Si totalFrames = 0 (caso degenerado, no contemplado por
+el formato), el cálculo queda indefinido:
+
+    parentFramePos = min(currentFrame, 0 - 0.001) = -0.001
+
+y las búsquedas de keys pueden devolver punteros fuera de rango.
+Un Sprite con totalFrames = 0 no tiene timeline válido. El formato
+no especifica su comportamiento; en la práctica los archivos
+exportados siempre tienen al menos un <Frame> o heredan duración
+del padre.
+
+================================================================
+>>> setFrame() — FUNCIÓN CENTRAL DE SpritePlayBack <<<
+================================================================
+
+setFrame(newFrame) es la función central de SpritePlayBack utilizada
+para establecer el frame actual del timeline. Comportamiento
+confirmado [C]:
+
+  1. Compara newFrame con currentFrame.
+     Si son iguales Y ya había un frame previo (no es la primera
+     invocación), retorna temprano SIN re-procesar tags ni delays.
+  2. Actualiza currentFrame = newFrame.
+  3. Actualiza currentFrameRuntime = frames[newFrame].
+  4. Si el frame cambió, lee blurX / blurY del FrameDefinition y
+     activa/desactiva el shader de blur correspondiente.
+  5. Itera los Tags del FrameDefinition:
+       - Si key == "sound" → SoundManager::playSound(value)
+       - Si frameTagEvent (0x88) está registrado → envía el evento
+         con (key, value).
+  6. NO modifica delayCounter directamente. El llamador (el step
+     del update) es quien suma los delays correspondientes tras
+     invocar setFrame() y comprobar que hubo cambio.
+
+El delay de Frame y el minDelay/rndDelay se aplican FUERA de
+setFrame(), en el bucle del step, después de que setFrame() retorna
+y tras confirmarse el cambio de frame.
+
+NOTA: Existe una función adicional forceFrame() en SpritePlayBack
+utilizada por CompositePlayBack cuando synch="parent" está activo.
+forceFrame llama a setFrame seguido de un reset de delayCounter
+a 0. Los detalles de cuándo se invoca están en la regla 41.
+
+================================================================
+>>> REGLAS DEL MOTOR <<<
+================================================================
+
+--Timelines y Duraciones--
+1. Tipos de Tiempo:
+   - Universal: ticks discretos a 30 Hz.
+   - Global:    duración del <Sprite> raíz.
+   - Individual: duración interna de cada nodo.
+
+2. Cálculo de Frames y rep:
+   totalFrames = Σ (1 + rep) de cada <Frame>.
+   Los frames repetidos comparten la MISMA FrameDefinition pero
+   ocupan posiciones distintas en el vector runtime.
+
+   Por tanto, rep aumenta totalFrames, pero NO crea nuevas
+   FrameDefinition independientes. Un rep="9" en un solo <Frame>
+   no equivale a nueve nodos <Frame> separados en el XML: es un
+   único FrameDefinition referenciado diez veces.
+
+3. Herencia de Duración (descendente):
+   En la herencia de duración, la dependencia normal es de padre
+   a hijo:
+   - Nodo sin <Frame> propios → hereda totalFrames del padre.
+   - El Composite toma su duración del <Sprite> interno.
+
+   Excepción: la duración del Composite sigue derivándose del
+   Sprite interno; con synch="parent", la POSICIÓN TEMPORAL del
+   Sprite interno pasa a estar determinada por parentFramePos del
+   padre. En este caso, la dependencia es de posición, no de
+   duración.
+
+4. Herencia de Transformaciones:
+   - x, y, angle, scale: acumuladas por pila de matrices.
+   - colorMul/colorAdd: acumulados por ColorState del Renderer.
+   - alpha: multiplicado en el ColorState.
+
+--Fallback de Atributos--
+5. Atributo omitido → valor por defecto.
+
+--Control de Loops y Delays--
+6. autoLoop:
+   - true:  al terminar, salta a loopFrame.
+   - false: al terminar, se queda en totalFrames-1, accumulator = 0.
+            Espera pasivamente al padre.
+
+7. loopFrame:
+   - Destino cuando currentFrame + 1 >= totalFrames y autoLoop = true.
+   - La primera iteración arranca siempre en frame 0. Al llegar
+     naturalmente al frame loopFrame (puede ser durante la primera
+     pasada si loopFrame > 0), se activa la lógica de delay (punto 8).
+     NO se salta a loopFrame durante la primera pasada; el salto solo
+     ocurre al cruzar el fin del timeline.
+   - El parser NO valida su valor. loopFrame < 0 o >= totalFrames
+     produce comportamiento no especificado por el formato [F]
+     (posible acceso fuera de rango en el vector de frames).
+
+8. minDelay / rndDelay:
+   - Se evalúan después de un setFrame() que haya producido un
+     cambio de frame, cuando el nuevo currentFrame == loopFrame Y
+     autoLoop = true.
+   - Esto cubre tanto alcanzar loopFrame naturalmente durante la
+     primera pasada, como alcanzarlo tras un reinicio por cruzar el
+     fin del timeline.
+   - Fórmula: delayCounter = minDelay + (rand() % rndDelay)
+   - Rango de rand() % rndDelay: [0, rndDelay - 1]
+       rndDelay = 0  → delayCounter = 0 (minDelay IGNORADO)
+       rndDelay = 1  → delayCounter = minDelay + 0
+       rndDelay = 2  → delayCounter = minDelay + {0,1}
+       rndDelay = 5  → delayCounter = minDelay + {0..4}
+   - Se aplica SOLO si autoLoop = true.
+   - Expresado en ticks universales.
+
+9. delay de <Frame>:
+   - Se suma al delayCounter AL ENTRAR en el frame (justo tras
+     setFrame con cambio efectivo). NUNCA al salir.
+   - Se aplica CADA VEZ que se entra al frame, incluidos los loops.
+   - Se aplica SOLO si autoLoop = true.
+
+   IMPORTANTE: el atributo delay es una propiedad del modo loop,
+   NO una propiedad temporal universal del <Frame>. En un Sprite con
+   autoLoop=false, el delay de sus <Frame> NO tiene efecto: el nodo
+   avanza a velocidad normal por su timeline individual y, al
+   concluir, queda congelado en totalFrames-1. Un frame con delay
+   nunca congela un Sprite no-looping.
+
+--Avance de Frames--
+10. framerate:
+    - Contador sub-frame por step. Cada N steps → avanza 1 frame.
+    - framerate >= 1: comportamiento normal, contrato del formato.
+
+    - framerate = 0: valor NO especificado por el formato [F].
+      En el binario analizado [C]: el código evita el módulo por
+      cero con `if (framerate != 0)` y simplemente incrementa
+      frameCounter, por lo que el frame queda congelado mientras
+      frameCounter crece indefinidamente.
+
+    - framerate < 0: valor NO especificado por el formato [F].
+      El binario no valida el signo. El comportamiento exacto para
+      valores negativos no forma parte del contrato del formato.
+
+      [I] Inferido del flujo descompilado: con framerate=-1, la
+      expresión (frameCounter + 1) % framerate produce 0 en cada
+      step, alcanzando la condición de avance (frameCounter == 0).
+      El resultado observable sería avanzar un frame por step. No
+      confirmado por ejecución directa del binario.
+
+--Interpolación de Keys--
+11. La interpolación entre dos valores requiere al menos 2 keys
+    reales en el Composite. Con 1 key, sus valores se mantienen
+    fijos; el sentinel (regla 23) no constituye una key XML
+    adicional.
+    Los <Sprite> NO tienen keys.
+
+    NOTA: El "retorno al Key 0" descrito en las versiones previas
+    de esta documentación es un caso particular del comportamiento
+    del sentinel nextKey (ver regla 23). No existe una regla
+    especial para Key 0: el sentinel copia los valores de la
+    PRIMERA key del vector (que típicamente, pero no siempre, es
+    Key 0).
+
+12. Búsqueda de keys:
+    prevKey = key con frame <= parentFramePos, MÁXIMO frame.
+              Si hay empate, gana el PRIMERO en orden XML.
+    nextKey = PRIMER key con frame >= parentFramePos.
+
+13. Cálculo de t:
+    span = nextKey.frame - prevKey.frame
+    t = span > 0 ? min((parentFramePos - prevKey.frame) / span, 1) : 0
+
+14. Interpolación LINEAL:
+    value = prev + (next - prev) * t
+    Aplica a: x, y, angle, scaleX, scaleY, colorMul, colorAdd y alpha.
+
+15. Ángulo: interpolación LINEAL sobre radianes. NO hay camino más
+    corto. Ej: 350° → 10° interpola retrocediendo por 180°.
+
+16. Un Composite con 1 solo key: valores fijos sin interpolación.
+17. Un Composite sin keys: valores por defecto.
+
+18. Keys duplicados en el mismo frame:
+    - prevKey: gana el PRIMERO en XML.
+    - nextKey: gana el PRIMERO en XML (return inmediato).
+
+19. Keys fuera de rango (frame < 0 o >= totalFrames): NO validados.
+    Keys con frame negativo pueden actuar como prevKey.
+
+NOTA [C]: Las comparaciones entre parentFramePos (float) y
+key.frame (int) en la búsqueda de prevKey/nextKey son comparaciones
+directas float <= int, sin epsilon. En cambio, en la lógica de
+visibilidad (ver regla 22), el binario realiza una conversión
+explícita de parentFramePos a int antes de comparar. No hay epsilon
+ni tolerancia documentada en el binario.
+
+--Visibilidad--
+20. Discreta: NO se interpola.
+21. Se lee del prevKey (el key activo más reciente).
+
+22. Comportamiento exacto [C] confirmado en CompositePlayBack::update.
+    Sea posInt = conversión de parentFramePos a int (truncamiento
+    hacia cero, según la operación observada en el binario)
+
+    Si prevKey.visible == true:
+        → drawThisFrame = true
+
+    Si prevKey.visible == false:
+        Si posInt == prevKey.frame       → drawThisFrame = true
+        Sino si posInt == nextKey.frame  → drawThisFrame = true
+        Sino                             → drawThisFrame = false
+                                           (return temprano en draw)
+
+    Notas importantes:
+    a. La comparación se hace contra la parte entera de
+       parentFramePos, no contra el float exacto. El binario
+       realiza una conversión explícita de parentFramePos a int
+       antes de comparar. No hay epsilon ni tolerancia.
+
+    b. Con framerate=1, parentFramePos avanza en pasos de 1.0
+       (0.0, 1.0, 2.0, ...) y la comparación coincide exactamente
+       con el frame del key.
+
+    c. Con framerate>1, parentFramePos puede ser fraccional. Por
+       ejemplo, con parentFramePos = 1.5:
+           posInt = 1
+           Si prevKey.frame == 1 → Visible ese step.
+
+    d. Efecto práctico: el Key con visible=false se dibuja durante
+       los steps cuya parte entera coincide con el frame del key
+       Y también durante los steps cuya parte entera coincide con
+       el frame del SIGUIENTE key. Solo se vuelve invisible en los
+       steps intermedios.
+
+    e. NO es "1 tick de retraso" en el sentido temporal universal.
+       Es una condición discreta basada en la posición truncada.
+       El valor de drawThisFrame persiste entre updates como estado
+       runtime (offset 0xE8 de CompositePlayBack).
+
+--Interpolación al final del timeline (sentinel nextKey)--
+23. Cuando parentFramePos es mayor que el frame de la última Key
+    real, la búsqueda de nextKey no encuentra ninguna key con
+    frame >= parentFramePos. En ese caso, el playback utiliza un
+    SENTINEL INTERNO del CompositePlayBack como nextKey.
+
+    El sentinel interno tiene:
+        frame = totalFrames del padre (garantiza span > 0)
+        x, y, angle, scaleX, scaleY, colorMul, colorAdd, alpha:
+            - si autoLoop = true:  copia de los valores de la
+                                   PRIMERA key (típicamente Key 0)
+            - si autoLoop = false: copia de los valores de la
+                                   ÚLTIMA key
+
+    Comportamiento observable [C]:
+
+    a. autoLoop = true: la interpolación desde lastKey hasta el
+       sentinel ES el "retorno a Key 0" documentado en la regla 11.
+       El retorno no ocurre porque exista una Key 0 especial, sino
+       porque el sentinel fue inicializado con los valores de la
+       primera key.
+
+    b. autoLoop = false: la interpolación desde lastKey hasta el
+       sentinel interpola hacia los MISMOS valores de lastKey, por
+       lo que el resultado es una congelación (sin cambio visible).
+
+    c. Si la primera key NO está en frame 0 (por ejemplo, keys en
+       2, 4, 6), el "retorno" va a los valores de la key del frame
+       mínimo, no necesariamente a frame 0.
+
+    d. Los valores del sentinel se copian UNA VEZ en setup() al
+       construir el CompositePlayBack, no se recalculan por update.
+
+    Esto explica los ejemplos de la sección EJEMPLOS DE
+    COMPORTAMIENTO: en autoLoop=true, los "frames sobrantes"
+    interpolan hacia los valores de la primera key; en autoLoop=false,
+    interpolan hacia la misma última key (congelación).
+
+--Color--
+24. Cada Key tiene colorMul (r,g,b) y colorAdd (r,g,b) y alpha
+    SEPARADO.
+25. Multiplicativo + Aditivo:
+       pixel_out = pixel_in * colorMul + colorAdd
+26. Herencia jerárquica:
+       colorMul_hijo = colorMul_padre * colorMul_local
+       colorAdd_hijo = colorAdd_padre + colorAdd_local
+27. hasColorChange() es true si algún mul != 1 o algún add != 0.
+    Si false, se omite el cálculo de color (optimización).
+28. El motor NO realiza un clamp explícito de colorAdd ni de
+    colorMul. El tratamiento de valores fuera de [0,1] queda
+    delegado al shader / backend gráfico y al formato del
+    framebuffer (un framebuffer flotante puede preservar valores
+    > 1, un framebuffer UNORM los clampará).
+
+--Alpha--
+29. Alpha tiene su propio campo separado del color.
+30. Interpolación lineal continua entre keys.
+31. Cadena recursiva completa de alpha:
+       alpha_final = alpha_inicial
+                   × alpha_Key_nivel_1
+                   × alpha_Key_nivel_2
+                   × ...
+                   × alpha_Key_nivel_N
+                   × alpha_Image
+    Donde "alpha_inicial" es el alpha del render state entrante
+    (normalmente 1.0 en el Sprite raíz).
+
+--Transformaciones--
+32. Orden de operaciones por nodo:
+       Traslación → Rotación → Escala
+33. Pivote: coordenadas locales (0, 0).
+34. Fórmula de transformación de <Image>:
+       x' = a*x + c*y + dstX
+       y' = b*x + d*y + dstY
+    donde (x,y) es un punto en el espacio LOCAL DEL RECORTE
+    (0..width, 0..height) y (x',y') es el resultado en coordenadas
+    locales del nodo Sprite/Composite que contiene la imagen.
+    Después de esta transformación propia de la imagen, las
+    coordenadas resultantes participan en la transformación
+    jerárquica del padre (Composite o Sprite superior).
+
+--srcX / srcY--
+35. Representan la esquina SUPERIOR IZQUIERDA del área de recorte
+    en el spritesheet.
+36. width/height son las dimensiones del área a recortar.
+
+--Orden de renderizado--
+37. Orden EXACTO de dibujado en SpritePlayBack::draw [C]:
+    a. Imágenes directas del <Sprite> (FrameDefinition interno).
+       Se dibujan SIEMPRE, en orden XML, independientemente del
+       currentFrame.
+    b. Imágenes del currentFrame actual (FrameDefinition del frame
+       activo), en orden XML.
+    c. Hijos Composite (lista enlazada), en orden de aparición XML,
+       cada uno con CompositePlayBack::draw recursivo.
+    d. DisplayObject* hijos (vector 0x90), solo si drawContent es
+       true. Son hijos añadidos por código, no por XML.
+
+38. Las <Image> dentro de <Frame> solo se dibujan si ese frame es
+    el currentFrame. Las <Image> directas bajo <Sprite> siempre.
+    El orden relativo entre Image-directa, Frame-images y Composite
+    es el indicado: (a) → (b) → (c) → (d).
+
+--Sincronización (synch="parent")--
+39. El Sprite interno de un Composite con tag synch="parent":
+       innerFrame = floor(parentFramePos) % innerTotalFrames
+       innerFractional = parentFramePos - floor(parentFramePos)
+    El Sprite interno avanza con innerFractional.
+40. Si innerTotalFrames = 0: comportamiento no especificado por el
+    formato [F]. El binario puede producir división por cero o
+    forceFrame con valor fuera de rango.
+41. Con synch activo, el autoLoop del Sprite interno NO participa:
+    el frame se fuerza con forceFrame y el avance se hace con la
+    fracción de parentFramePos, no con el dt propio del hijo.
+
+    Comportamiento exacto de forceFrame() [C]:
+        forceFrame(frame):
+            setFrame(frame)
+            delayCounter = 0
+
+    Consecuencia funcional: un Sprite interno sincronizado con
+    synch="parent" NO conserva los delays que el playback autónomo
+    hubiera aplicado. Aunque setFrame() internamente procesa los
+    tags y actualiza currentFrame, forceFrame() vacía inmediatamente
+    delayCounter, por lo que el minDelay/rndDelay y el Frame.delay
+    del Sprite interno no producen retención temporal del frame
+    mientras synch="parent" controla el playback. Los Tags de
+    entrada (por ejemplo "sound") sí siguen ejecutándose mediante
+    setFrame().
+
+--hasLoopedThisFrame--
+42. Se limpia (false) al inicio de cada update.
+43. Se pone (true) en el step donde currentFrame+1 cruza el fin del
+    timeline, independientemente de si hay loop o se queda en el
+    último frame.
+44. Solo es true durante la ejecución del update donde ocurrió el
+    cruce. Al inicio del siguiente update vuelve a false.
+
+--frameTagEvent--
+45. Callback (EventData3*) registrado por setFrameTagEvent.
+46. Se dispara desde setFrame cuando el frame cambió y el nuevo
+    FrameDefinition tiene Tags (ver sección setFrame).
+47. Sin callback registrado, el motor sigue funcionando pero no
+    emite eventos.
+
+--DisplayObject* (0x90)--
+48. Vector de DisplayObject hijos añadidos por CÓDIGO.
+49. Reciben update(dt) directo, NO parentFramePos.
+50. Solo se dibujan si drawContent (0x00) es true.
+
+--Tags conocidas--
+--SPRITE--
+<Tag key="clipName"    value="..."/>     Nombre del clip
+<Tag key="temporal"    value="true"/>    Marca temporal
+<Tag key="interpolate" value="..."/>     Modo de interpolación
+
+--FRAME--
+<Tag key="blurX" value="N"/>  Shader blur horizontal (int)
+<Tag key="blurY" value="N"/>  Shader blur vertical (int)
+<Tag key="sound" value="..."/> Sonido al entrar al frame (string)
+
+--COMPOSITE (Sprite interno)--
+<Tag key="synch" value="parent"/>  Sync con parentFramePos
+
+================================================================
+>>> EJEMPLOS DE COMPORTAMIENTO <<<
+================================================================
+
+Convención: "Step 0" = estado inicial (antes de cualquier update).
+            "Step N" = estado después del step N.
+
+--Interpolación con autoLoop=false--
+Global: 13 steps
+Composite: 10 frames, keys en 0, 2, 4, 6
+Step 0:  Key 0
+Step 1:  Interpolando 0 -> 2
+Step 2:  Key 2
+Step 3:  Interpolando 2 -> 4
+Step 4:  Key 4
+Step 5:  Interpolando 4 -> 6
+Step 6:  Key 6
+Step 7:  Interpolando hacia el sentinel (frame=10, valores=Key 6)
+         → en la práctica: congelado en Key 6
+Step 8:  Ídem
+Step 9:  Ídem
+Step 10: Congelado en el último frame
+Step 11: Congelado
+Step 12: Congelado
+
+--Interpolación con autoLoop=true--
+(mismo estado hasta Step 6)
+Step 7:  Interpolando hacia el sentinel (frame=10, valores=Key 0)
+         → en la práctica: interpolando 6 -> 0
+Step 8:  Interpolando 6 -> 0 (2/3)
+Step 9:  Interpolando 6 -> 0 (3/3)
+Step 10: [REINICIO] Key 0
+Step 11: Interpolando 0 -> 2
+Step 12: Key 2
+
+Nota: los valores del sentinel se fijan en setup() y son
+inmutables durante el playback. El span real de la interpolación
+es (totalFrames - lastKey.frame), no (totalFrames - 1 - lastKey.frame),
+porque el sentinel tiene frame = totalFrames (no totalFrames - 1).
+
+Nota: en este ejemplo la primera key está en frame 0; por eso el
+sentinel representa sus valores. Si las keys fueran 2, 4, 6, el
+sentinel copiaría los valores de la key con frame=2.
+
+--Nodo con delay en Frame--
+Nodo: framerate=3, 4 frames, Frame 4 con delay=3, autoLoop=true
+Step 0:  Frame 1 (inicial, delayCounter = 0, frameCounter = 0)
+Step 1:  Frame 1 (frameCounter 0 -> 1)
+Step 2:  Frame 1 (frameCounter 1 -> 2)
+Step 3:  Frame 2 (frameCounter 2 -> 0 → avanza)
+Step 4:  Frame 2 (frameCounter 0 -> 1)
+Step 5:  Frame 2 (frameCounter 1 -> 2)
+Step 6:  Frame 3 (frameCounter 2 -> 0 → avanza)
+Step 7:  Frame 3
+Step 8:  Frame 3
+Step 9:  Frame 4 (frameCounter 2 -> 0 → avanza; setFrame suma delay=3 → delayCounter=3)
+Step 10: Frame 4 (delayCounter 3 -> 2)
+Step 11: Frame 4 (delayCounter 2 -> 1)
+Step 12: Frame 4 (delayCounter 1 -> 0)
+Step 13: Frame 1 (reinicio del ciclo)
+Step 14: Frame 1
+Step 15: Frame 1
+Step 16: Frame 2
+...
+
+--Atributo visible discreto [C]--
+Lógica exacta (ver regla 22). Sea posInt = (int)parentFramePos.
+
+Nodo: 5 frames, keys: 0(vis=true), 1(vis=false), 3(vis=true)
+framerate=1 → parentFramePos avanza 0, 1, 2, 3, 4.
+
+Step 0 (parentFramePos = 0.0, posInt = 0):
+    prevKey = Key0 (vis=true) → Visible
+
+Step 1 (parentFramePos = 1.0, posInt = 1):
+    prevKey = Key1 (vis=false)
+    posInt == prevKey.frame (1 == 1) → Visible
+    (por la primera condición del árbol de decisión)
+
+Step 2 (parentFramePos = 2.0, posInt = 2):
+    prevKey = Key1 (vis=false), nextKey = Key3 (frame=3)
+    posInt (2) != prevKey.frame (1)
+    posInt (2) != nextKey.frame (3)
+    → Invisible (return temprano)
+
+Step 3 (parentFramePos = 3.0, posInt = 3):
+    prevKey = Key3 (vis=true) → Visible
+
+Step 4 (parentFramePos = 4.0, posInt = 4):
+    prevKey = Key3 (vis=true) → Visible
+
+--framerate=1, delay=1--
+Nodo: 4 frames, Frame 2 con delay=1, autoLoop=true
+Step 0: Frame 1 (delayCounter = 0)
+Step 1: Frame 2 (setFrame aplica delay → delayCounter = 1)
+Step 2: Frame 2 (delayCounter 1 -> 0)
+Step 3: Frame 3 (delayCounter = 0)
+Step 4: Frame 4 (delayCounter = 0)
+Step 5: Frame 1 (wrap, delayCounter = 0)
+...
+
+================================================================
+>>> ADVERTENCIAS Y CAMPOS NO COMPLETAMENTE DOCUMENTADOS <<<
+================================================================
+
+--cache--
+Atributo requerido en el XML, PERO el parser de SpriteDefinition
+NO lo lee. Es un hint de build-time (posiblemente para el pipeline
+de compresión de texturas PVR/ETC). En runtime es un NO-OP.
+
+Niveles (si existen) NO están documentados en el binario.
+Verificar en el editor/exportador de XML original.
+
+--speedFactor2--
+Campo runtime (0x18 de SpritePlayBack) que se inicializa en el
+constructor pero NO se usa en update. Campo inerte en el binario
+actual. Uso previsto no determinado.
+
+--DisplayObject* (0x90)--
+Vector de hijos añadidos por código. No hay tag XML que añada a
+este vector. Puede ser usado por scripts/eventos externos al motor
+de animación.
+
+--frameTagEvent--
+Requiere inicialización externa (setFrameTagEvent). Sin él, el
+motor sigue funcionando pero no dispara eventos de tags.
+
+--Sistema de shaders (blur, postShader)--
+ShaderProgram con blurFragment. Activado por tags blurX/blurY.
+La implementación exacta del shader no está documentada aquí.
+
+--SoundManager--
+Necesario para tags con key="sound". Su implementación específica
+no está cubierta.
+
+--Skin / DataPoint--
+No participan en el pipeline de render analizado. Uso runtime no
+determinado; probablemente consumidos por sistemas externos.

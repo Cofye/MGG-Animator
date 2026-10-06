@@ -1,0 +1,53 @@
+<Sprite id="specimen_AF_01_hit" bitmap="character/a_f.png" cache="46" autoLoop="true">
+    <Preview srcX="144" srcY="42" dstX="-5" dstY="-19" width="11" height="20" />
+    <Composite>
+      <Sprite cache="1">
+        <Frame>
+          <Image srcX="631" srcY="589" dstX="-84" dstY="121" width="213" height="47" />
+          <Image srcX="513" srcY="1" dstX="-94" dstY="88" width="183" height="33" />
+          <Image srcX="91" srcY="545" dstX="-45" dstY="-19" width="105" height="107" />
+          <Image srcX="697" srcY="1" dstX="-88" dstY="-33" width="145" height="14" />
+          <Image srcX="777" srcY="191" dstX="-103" dstY="-52" width="185" height="19" />
+          <Image srcX="777" srcY="211" dstX="-95" dstY="-77" width="206" height="25" />
+          <Image srcX="212" srcY="104" dstX="-54" dstY="-130" width="110" height="53" />
+        </Frame>
+        <Frame>
+          <Image srcX="629" srcY="338" dstX="-102" dstY="-131" width="215" height="298" />
+        </Frame>
+        <Frame>
+          <Image srcX="631" srcY="589" dstX="-84" dstY="121" width="213" height="47" />
+          <Image srcX="632" srcY="556" dstX="-94" dstY="88" width="183" height="33" />
+          <Image srcX="676" srcY="449" dstX="-45" dstY="-19" width="105" height="107" />
+          <Image srcX="638" srcY="435" dstX="-88" dstY="-33" width="145" height="14" />
+          <Image srcX="630" srcY="416" dstX="-103" dstY="-52" width="185" height="19" />
+          <Image srcX="630" srcY="391" dstX="-95" dstY="-77" width="206" height="25" />
+          <Image srcX="681" srcY="338" dstX="-54" dstY="-130" width="110" height="53" />
+        </Frame>
+        <Frame>
+          <Image srcX="629" srcY="338" dstX="-102" dstY="-131" width="215" height="298" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-11" y="-184" scaleX="1.30098009" scaleY="1.30098009" />
+      <Key frame="1" x="-11" y="-184" scaleX="1.30098009" scaleY="1.30098009" alpha="0.5" />
+      <Key frame="2" x="-11" y="-184" scaleX="1.30098009" scaleY="1.30098009" />
+      <Key frame="3" x="-11" y="-184" scaleX="1.30098009" scaleY="1.30098009" alpha="0.7" />
+      <Key frame="4" x="-11" y="-184" scaleX="1.30098009" scaleY="1.30098009" />
+    </Composite>
+    <Frame />
+    <Frame>
+      <Tag key="blurX" value="10" />
+    </Frame>
+    <Frame>
+      <Tag key="blurX" value="20" />
+    </Frame>
+    <Frame>
+      <Tag key="blurX" value="10" />
+    </Frame>
+    <Frame />
+    <Skin>bronze</Skin>
+    <Skin>silver</Skin>
+    <Skin>gold</Skin>
+    <Skin>platinum</Skin>
+    <Skin>vegetal</Skin>
+  </Sprite>
+  

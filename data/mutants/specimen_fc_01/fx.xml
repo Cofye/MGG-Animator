@@ -1,0 +1,27 @@
+<AttackFX specimen="Specimen_FC_01" attack="1">
+	<FX type="fade" name="a2a2a2" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="933267" duration="0.8" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_01" attack="1p">
+	<FX type="fade" name="47344f" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f1969f" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="f399bd" duration="0.2" applyOn="background" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_01" attack="2">
+	<FX type="flash" name="cbdaf8" duration="1" applyOn="background" moment="impact" />
+	<FX type="flash" name="96b8f1" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="fade" name="5d83d1" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FC_01" attack="2p">
+	<FX type="flash" name="cbdaf8" duration="1" applyOn="background" moment="impact" />
+	<FX type="flash" name="96b8f1" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="fade" name="5d83d1" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>

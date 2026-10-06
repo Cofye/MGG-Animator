@@ -1,0 +1,52 @@
+<AttackFX specimen="Specimen_BF_11" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="up" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="down" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="flash" name="60ff89" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="60ff89" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_bf_vortex" blendmode="normal" applyOn="self" position="bottom" moment="fx_vortex" zOrder="self" />
+	<FX type="sprite" name="fx_bf_soul" blendmode="normal" applyOn="self" position="bottom" moment="fx_soul" zOrder="self" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_11" attack="1p">
+	<FX type="fade" name="336633" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="background" moment="down" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="10" duration="0.3" />
+	<FX type="fade" name="a5c121" applyOn="allclip+background-target-self" moment="begin" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="down" />
+	<FX type="flash" name="60ff89" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="60ff89" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="sprite" name="fx_bf_vortex" blendmode="normal" applyOn="self" position="bottom" moment="fx_vortex" zOrder="self" />
+	<FX type="sprite" name="fx_bf_soul" blendmode="normal" applyOn="self" position="bottom" moment="fx_soul" zOrder="self" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_11" attack="2">
+	<FX type="flash" name="f496f7" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="f496f7" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.2" />
+	<FX type="move" name="shake" applyOn="background" moment="fx_wind" amplitude="15" frequency="15" duration="0.3" />
+	<FX type="sprite" name="fx_bf_vortex" blendmode="normal" applyOn="self" position="bottom" moment="fx_vortex" />
+	<FX type="sprite" name="fx_bf_thunder" blendmode="normal" applyOn="self" position="bottom" moment="fx_thunder" />
+	<FX type="sprite" name="fx_bf_wind" blendmode="normal" applyOn="target" position="bottom" moment="fx_wind">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_11" attack="2p">
+	<FX type="flash" name="f496f7" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="660099" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="f496f7" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="6" frequency="10" duration="0.3" />
+	<FX type="move" name="shake" applyOn="background" moment="fx_wind" amplitude="15" frequency="15" duration="0.5" />
+	<FX type="sprite" name="fx_bf_vortex" blendmode="normal" applyOn="self" position="bottom" moment="fx_vortex" />
+	<FX type="sprite" name="fx_bf_thunder" blendmode="normal" applyOn="self" position="bottom" moment="fx_thunder" />
+	<FX type="sprite" name="fx_bf_wind" blendmode="normal" applyOn="target" position="bottom" moment="fx_wind">
+		<tranform scaleMin="1" scaleMax="1" randomX="false" />
+		<spawn number="1" scatterX="0" scatterY="0" />
+	</FX>
+</AttackFX>

@@ -1,0 +1,18 @@
+<AttackFX specimen="Specimen_B_02" attack="1">
+	<FX type="flash" name="42733E" duration="0.3" applyOn="target" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_B_02" attack="1p">
+	<FX type="flash" name="75C76D" duration="2.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="686B37" duration="0.5" applyOn="allclip+background-target-self" moment="impact" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_B_02" attack="2">
+	<FX type="flash" name="ffffff" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="flash" name="AD880E" duration="1.5" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="7" frequency="12" duration="0.8" />
+	<FX type="sprite" name="fx_bomb3" blendmode="normal" applyOn="target" position="bottom" moment="impact">
+		<tranform scale="1.0" />
+		<colorTransform alpha="0.3" mul="0xFFFFFF" add="0x000000" />
+	</FX>
+</AttackFX>

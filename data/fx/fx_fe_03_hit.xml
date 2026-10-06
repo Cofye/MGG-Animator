@@ -1,0 +1,21 @@
+<Sprite id="fx_fe_03_hit" bitmap="character/f_e_03.png" cache="33">
+    <Composite>
+      <Sprite>
+        <Image srcX="695" srcY="9" dstX="-65" dstY="-66" width="129" height="128" />
+      </Sprite>
+      <Key frame="0" x="1" y="2" angle="-4.02995825" scaleX="0.8407469" scaleY="0.8407469" />
+      <Key frame="2" x="1" y="2" angle="-10.0124884" scaleX="3.43219614" scaleY="3.43219614" />
+      <Key frame="5" x="1" y="2" angle="-10.0124884" scaleX="5.169939" scaleY="5.169939" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="762" srcY="512" dstX="-26" dstY="-25" width="52" height="51" />
+      </Sprite>
+      <Key frame="2" x="5" y="-1" scaleX="2.30769229" scaleY="2.30769229" />
+      <Key frame="15" x="5" y="-1" angle="-27.1313438" scaleX="9.477272" scaleY="9.477272" alpha="0.2" visible="false" />
+    </Composite>
+    <Frame rep="15" />
+    <Frame delay="10000" />
+    <Skin>wireframe</Skin>
+  </Sprite>
+  

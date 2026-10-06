@@ -1,0 +1,36 @@
+<Sprite id="fx_snowmanpieces" bitmap="character/f_03.png" cache="34">
+    <Composite>
+      <Sprite>
+        <Image srcX="208" srcY="364" dstX="-69.5" dstY="-83" width="134" height="89" />
+      </Sprite>
+      <Key frame="0" x="5" y="-8" angle="-8.112779" scaleX="1.25670993" scaleY="1.25670993" />
+      <Key frame="5" x="-7" y="-11" angle="-9.982781" scaleX="2.86839128" scaleY="2.86839128" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="12" srcY="461" dstX="-10.5" dstY="-91" width="18" height="106" />
+      </Sprite>
+      <Key frame="0" x="2" y="2" angle="-16.2285786" />
+      <Key frame="4" x="-141" y="-227" angle="-36.30092" />
+      <Key frame="10" x="-289" y="-322" angle="-71.2635651" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="40" srcY="464" dstX="-9.5" dstY="-11" width="18" height="22" />
+      </Sprite>
+      <Key frame="0" x="6" y="-10" angle="-95.92569" scaleX="1.66666663" scaleY="1.66666663" />
+      <Key frame="3" x="209" y="-128" angle="-79.57276" scaleX="1.66666663" scaleY="1.66666663" />
+      <Key frame="7" x="504" y="-101" angle="-28.1713181" scaleX="1.66666663" scaleY="1.66666663" alpha="0.2" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite>
+        <Image srcX="74" srcY="463" dstX="-5.5" dstY="-10" width="13" height="21" />
+      </Sprite>
+      <Key frame="3" x="-2" y="-19" angle="-22.3171864" scaleX="1.45652175" scaleY="1.45652175" />
+      <Key frame="6" x="40" y="-291" angle="-10.5961056" scaleX="1.28370988" scaleY="1.28370988" />
+      <Key frame="10" x="114" y="-406" angle="26.8348732" scaleX="1.28370988" scaleY="1.28370988" alpha="0.2" visible="false" />
+    </Composite>
+    <Frame rep="10" />
+    <Frame delay="10000" />
+  </Sprite>
+  

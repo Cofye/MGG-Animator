@@ -1,0 +1,35 @@
+<AttackFX specimen="Specimen_BE_08" attack="1">
+	<FX type="flash" name="e80000" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="flash" name="a7d41e" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="4" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_08" attack="1p">
+	<FX type="fade" name="74b700" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="e80000" duration="0.4" applyOn="target" moment="impact" />
+	<FX type="flash" name="a7d41e" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="10" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_08" attack="2">
+	<FX type="flash" name="24c9f9" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="000000" duration="0.5" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="70d2ee" duration="0.5" applyOn="self" moment="impact" />
+	<FX type="flash" name="0e5167" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BE_08" attack="2p">
+	<FX type="fade" name="063953" applyOn="allclip+background-target-self" moment="start" duration="1.8" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="24c9f9" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="000000" duration="0.5" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="70d2ee" duration="0.5" applyOn="self" moment="impact" />
+	<FX type="flash" name="0e5167" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="10" frequency="15" duration="0.2" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="15" duration="0.1" />
+</AttackFX>

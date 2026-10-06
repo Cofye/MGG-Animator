@@ -1,0 +1,49 @@
+<Sprite id="urban_happy" bitmap="pnj/bad_guy_happy.png" cache="11">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-157.5" dstY="-333" width="346" height="405" />
+      </Sprite>
+      <Key frame="0" x="-17.5" y="-36" />
+    </Composite>
+    <Composite>
+      <Sprite cache="1" framerate="5">
+        <Frame>
+          <Image srcX="1" srcY="407" dstX="-31.5" dstY="-23" width="65" height="46" />
+        </Frame>
+        <Frame>
+          <Image srcX="67" srcY="407" dstX="-32" dstY="-22" width="65" height="46" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="407" dstX="-31.5" dstY="-23" width="65" height="46" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="407" dstX="-32" dstY="-22" width="65" height="46" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-21" y="-253" />
+      <Key frame="93" x="-21" y="-253" visible="false" />
+    </Composite>
+    <Composite>
+      <Sprite cache="4" framerate="3" minDelay="40" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="133" srcY="407" dstX="-21.5" dstY="-10" width="43" height="19" />
+        </Frame>
+        <Frame>
+          <Image srcX="177" srcY="407" dstX="-21" dstY="-12" width="47" height="22" />
+        </Frame>
+        <Frame>
+          <Image srcX="225" srcY="407" dstX="-14" dstY="-13" width="48" height="22" />
+        </Frame>
+        <Frame>
+          <Image srcX="177" srcY="430" dstX="-9" dstY="-12" width="45" height="19" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-29" y="-294" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

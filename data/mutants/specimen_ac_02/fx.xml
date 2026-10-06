@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_AC_02" attack="1">
+	<FX type="flash" name="be9458" duration="0.3" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_bomb2" blendmode="add" applyOn="target" position="center" moment="boom">
+		<tranform scale="0.6" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AC_02" attack="1p">
+	<FX type="fade" name="7D7D7D" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="be9458" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="sprite" name="fx_bomb2" blendmode="add" applyOn="target" position="center" moment="boom">
+		<tranform scale="0.7" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_AC_02" attack="2">
+	<FX type="flash" name="ececec" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="flash" name="d65858" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background-target" moment="impact" amplitude="5" frequency="18" duration="0.4" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_AC_02" attack="2p">
+	<FX type="fade" name="7D7D7D" applyOn="background-target-self" moment="start" duration="1.0" />
+	<FX type="fade" name="normal" applyOn="background-target-self" moment="return" duration="0.8" />
+	<FX type="flash" name="d65858" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="d1c0c0" duration="0.3" applyOn="background" moment="impact" />
+	<FX type="move" name="shake" applyOn="background-target" moment="impact" amplitude="7" frequency="18" duration="0.5" />
+</AttackFX>

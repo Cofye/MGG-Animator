@@ -1,0 +1,46 @@
+<Sprite id="fx_lady" bitmap="character/f_b.png" cache="54">
+    <Composite>
+      <Sprite cache="6" autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="54" srcY="90" dstX="-35.66892" dstY="-18.6756763" width="71" height="36" />
+          </Sprite>
+          <Key frame="0" x="0.168918923" y="0.6756757" scaleX="1.10533512" scaleY="1.10533512" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="1" srcY="63" dstX="-21.75" dstY="-148.486481" width="43" height="160" />
+          </Sprite>
+          <Key frame="0" y="7" scaleX="1.2990191" scaleY="1.2990191" alpha="0.6" />
+          <Key frame="4" y="7" scaleX="1.2990191" scaleY="2.21564364" alpha="0.4" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="55" srcY="128" dstX="-39.82849" dstY="-25.4530716" width="86" height="68" a="0.8770691" d="0.8770691" />
+          </Sprite>
+          <Key frame="0" x="2" y="-9" scaleX="0.754908562" scaleY="0.2715561" alpha="0.5" />
+          <Key frame="5" x="2" y="-221" scaleX="0.754908562" scaleY="1.49792957" alpha="0.5" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="55" srcY="128" dstX="-39.82849" dstY="-25.4530716" width="86" height="68" a="0.8770691" d="0.8770691" />
+          </Sprite>
+          <Key frame="0" x="-1" y="-185" scaleX="-0.754908562" scaleY="1.74862206" alpha="0.5" visible="false" />
+          <Key frame="4" x="-1" y="-7" scaleX="-0.754908562" scaleY="0.3262758" alpha="0.5" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="55" srcY="128" dstX="-39.82849" dstY="-25.4530716" width="86" height="68" a="0.8770691" d="0.8770691" />
+          </Sprite>
+          <Key frame="2" x="3" y="-8" scaleX="0.754908562" scaleY="0.356354445" alpha="0.5" />
+          <Key frame="7" x="2" y="-184" scaleX="0.754908562" scaleY="1.80972838" alpha="0.5" visible="false" />
+        </Composite>
+        <Frame rep="9" />
+      </Sprite>
+      <Key frame="0" x="2" y="-6" scaleX="3.04081" scaleY="3.04081" />
+      <Key frame="31" x="2" y="-6" scaleX="3.04081" scaleY="3.04081" />
+      <Key frame="37" x="2" y="-6" scaleX="0.390961319" scaleY="1.06214917" />
+    </Composite>
+    <Frame rep="37" />
+  </Sprite>
+  

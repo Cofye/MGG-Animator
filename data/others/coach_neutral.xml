@@ -1,0 +1,45 @@
+<Sprite id="coach_neutral" bitmap="pnj/coach.png" cache="5">
+    <Composite>
+      <Sprite>
+        <Image srcX="1" srcY="1" dstX="-176.8125" dstY="-304.875" width="278" height="358" />
+      </Sprite>
+      <Key frame="0" x="-17.1875" y="-3.125" />
+    </Composite>
+    <Composite>
+      <Sprite framerate="2" minDelay="30" rndDelay="60">
+        <Frame />
+        <Frame>
+          <Image srcX="1" srcY="360" dstX="-33" dstY="-14" width="65" height="28" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-22" y="-236" />
+      <Key frame="99" x="-21" y="-236" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3" framerate="5">
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame>
+          <Image srcX="131" srcY="360" dstX="-32" dstY="-23" width="63" height="47" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="67" srcY="360" dstX="-32" dstY="-22" width="63" height="45" />
+        </Frame>
+        <Frame />
+        <Frame>
+          <Image srcX="131" srcY="360" dstX="-32" dstY="-23" width="63" height="47" />
+        </Frame>
+      </Sprite>
+      <Key frame="0" x="-23" y="-206" />
+      <Key frame="93" x="-23" y="-206" visible="false" />
+    </Composite>
+    <Frame rep="98" />
+    <Frame delay="1000000" />
+  </Sprite>
+  

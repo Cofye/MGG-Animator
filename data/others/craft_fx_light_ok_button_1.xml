@@ -1,0 +1,82 @@
+<Sprite id="craft_fx_light_ok_button_1" bitmap="hud/crafting/ui_right_2.png" cache="34">
+    <Composite>
+      <Sprite cache="4">
+        <Composite>
+          <Sprite>
+            <Image srcX="612" srcY="85" dstX="-10.1" dstY="-8.6" width="20" height="17" />
+          </Sprite>
+          <Key frame="0" x="-3.9" y="-14.4" />
+          <Key frame="3" x="-3.9" y="-14.4" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="611" srcY="105" dstX="-10.9000015" dstY="-8.799999" width="23" height="18" />
+          </Sprite>
+          <Key frame="4" x="-3" y="-6" />
+          <Key frame="7" x="-3" y="-6" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="611" srcY="125" dstX="-10.2999992" dstY="-8.4" width="21" height="17" />
+          </Sprite>
+          <Key frame="8" x="-2" y="4" />
+          <Key frame="11" x="-2" y="4" visible="false" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="611" srcY="145" dstX="-9.5" dstY="-7.39999962" width="20" height="17" />
+          </Sprite>
+          <Key frame="12" x="-5" y="11" />
+          <Key frame="15" x="-5" y="11" visible="false" />
+        </Composite>
+        <Frame rep="21" />
+      </Sprite>
+      <Key frame="2" x="-85" y="64" />
+    </Composite>
+    <Composite>
+      <Sprite autoLoop="true">
+        <Composite>
+          <Sprite>
+            <Image srcX="610" srcY="60" dstX="-10.6278772" dstY="-12" width="21" height="24" />
+          </Sprite>
+          <Key frame="0" x="1.12787724" />
+          <Key frame="12" x="1.12787724" alpha="0" />
+        </Composite>
+        <Frame rep="24" />
+      </Sprite>
+      <Key frame="0" x="-122" y="64" />
+    </Composite>
+    <Composite>
+      <Sprite cache="3">
+        <Composite>
+          <Sprite>
+            <Image srcX="571" srcY="28" dstX="-11.1659164" dstY="-10.9910278" width="22" height="22" />
+          </Sprite>
+          <Key frame="3" x="-0.327354252" />
+          <Key frame="6" x="-0.327354252" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="599" srcY="26" dstX="-8.950676" dstY="-12.3811646" width="18" height="27" />
+          </Sprite>
+          <Key frame="7" x="9" y="-3" />
+          <Key frame="10" x="9" y="-3" />
+        </Composite>
+        <Composite>
+          <Sprite>
+            <Image srcX="624" srcY="23" dstX="-9.33424" dstY="-14.956522" width="19" height="30" />
+          </Sprite>
+          <Key frame="11" x="18" y="-3" />
+          <Key frame="15" x="18" y="-3" visible="false" />
+          <Key frame="21" x="18" y="-3" />
+          <Key frame="25" x="18" y="-3" visible="false" />
+          <Key frame="31" x="18" y="-3" />
+          <Key frame="35" x="18" y="-3" visible="false" />
+        </Composite>
+        <Frame rep="35" />
+      </Sprite>
+      <Key frame="3" x="98" y="66" />
+    </Composite>
+    <Frame rep="42" />
+  </Sprite>
+  

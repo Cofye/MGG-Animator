@@ -1,0 +1,39 @@
+<AttackFX specimen="Specimen_BF_01" attack="1">
+	<FX type="sprite" name="fx_kris" blendmode="add" applyOn="target" position="center" moment="fx" />
+	<FX type="flash" name="ffffff" duration="1.0" applyOn="target" moment="impact" />
+	<FX type="fade" name="7F3DA6" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="impact" duration="1.0" />
+	<FX type="sprite" name="fx_impact_death_fire" blendmode="add" applyOn="self" position="bottom" moment="concentration" zOrder="background">
+		<tranform scale="2.5" />
+		<colorTransform alpha="0.4" mul="0xFF00FF" add="0x000000" />
+	</FX>
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_01" attack="1p">
+	<FX type="sprite" name="fx_kris2" blendmode="add" applyOn="target" position="center" moment="fx" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="7F3DA6" duration="0.1" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="7F3DA6" applyOn="allclip+background-target-self" moment="start" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="unfade" duration="1.0" />
+	<FX type="sprite" name="fx_impact_death_fire" blendmode="add" applyOn="self" position="bottom" moment="concentration" zOrder="background">
+		<tranform scale="2.5" />
+		<colorTransform alpha="0.5" mul="0xFF00FF" add="0x000000" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="concentration" amplitude="5" frequency="15" duration="2.5" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_01" attack="2">
+	<FX type="flash" name="7A4196" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="fade" name="7F3DA6" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="color" mul="7D5196" add="6796E6" duration="1.0" applyOn="target" moment="soulcapture" />
+	<FX type="color" duration="1.5" applyOn="target" moment="soulrelease" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_BF_01" attack="2p">
+	<FX type="fade" name="7F3DA6" applyOn="allclip+background-target-self" moment="arrived" duration="2.0" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="1.0" />
+	<FX type="flash" name="7A4196" duration="0.3" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="FFFFFF" duration="0.2" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="5" frequency="20" duration="0.7" />
+</AttackFX>

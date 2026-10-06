@@ -1,0 +1,29 @@
+<AttackFX specimen="Specimen_DA_05" attack="1">
+	<FX type="flash" name="D3DCDE" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="AB8D80" duration="0.7" applyOn="target" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="6" frequency="8" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_05" attack="1p">
+	<FX type="flash" name="D3DCDE" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="flash" name="AB8D80" duration="0.8" applyOn="target" moment="impact" />
+	<FX type="fade" name="915110" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="10" frequency="12" duration="0.3" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_05" attack="2">
+	<FX type="flash" name="D15B0D" duration="0.1" applyOn="background" moment="impact" />
+	<FX type="flash" name="FC9935" applyOn="target" moment="impact" duration="0.4" />
+	<FX type="flash" name="D3DCDE" duration="0.2" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="8" frequency="12" duration="0.2" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_DA_05" attack="2p">
+	<FX type="fade" name="1D5F6E" applyOn="allclip+background-target-self" moment="start" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" duration="0.5" />
+	<FX type="flash" name="D15B0D" duration="0.6" applyOn="target" moment="impact" />
+	<FX type="flash" name="D3DCDE" duration="0.4" applyOn="allclip+background-target-self" moment="impact" />
+	<FX type="move" name="shake" applyOn="target" moment="impact" amplitude="8" frequency="18" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="8" frequency="18" duration="0.3" />
+</AttackFX>

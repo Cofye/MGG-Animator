@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" />
+  <title>MGG Animator</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div id="scale-container">
+    <div class="logoManu">
+      <button id="logoManu" data-target="infoLayer">
+        <img src="images/ui/logo_manu.png" >
+      </button>
+    </div>
+
+    <div class="hidden" id="canvasLoad">
+      <img class="canvasStatic" src="images/ui/static.png">
+      <img class="canvasCircle" src="images/ui/tab-loading.gif">
+    </div>
+
+    <div class="canvas" id="canvasWrapper">
+      <canvas id="mutantCanvas" width="1020" height="515"></canvas>
+      <button class="btn btnFullscreen" id="btnFullscreen">
+        <img src="images/icons/players/player_fullscreen.png">
+      </button>
+    </div>
+
+    <div class="btnStats">
+      <a class="hidden" id="btnStats" href="" target="_blank"></a>
+    </div>
+
+    <div class="bgMenu">
+      <img src="images/ui/desk/bg_menu.png">
+    </div>
+
+    <div class="btnLang">
+      <button class="btn" id="btnLang" data-target="langLayer">
+        <img class="slot" src="images/ui/slot_languaje.png">
+        <img class="flag" src="">
+      </button>
+    </div>
+
+    <div class="btnDiscord">
+      <button class="btns" id="btnDiscord" data-target="discordLayer">
+        <img class="iconDiscord" src="images/ui/btn_discord_icon.png">
+        <div class="textMask">
+          <span class="textList textDiscord" data-lang="signin_dc"></span>
+        </div>
+        <div class="bodyDiscord"></div>
+      </button>
+    </div>
+
+    <div class="btnDiscordUser hidden">
+      <button class="btns" id="btnDiscordUser" data-target="discordLayer">
+        <img class="profileDiscord" src="images/icons/icon_profile_default.png">
+        <img class="iconDiscord" src="images/ui/discord_profile.png">
+        <div class="textMaskProfile">
+          <span class="textList textProfile">Nombre de usuario</span>
+        </div>
+        <div class="bodyProfile"></div>
+      </button>
+      <div class="bgLogout">
+        <img src="images/ui/bg_logout.png">
+        <button class="btn" id="btnLogout">
+          <span class="textLogout" data-lang="logout_dc"></span>
+          <img class="iconLogout" src="images/icons/icon_logout.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="menuPlayer">
+      <div class="playerTimeline" id="playerTimeline">
+        <img class="playerLine" id="playerLine" src="images/ui/player_line.png">
+        <img class="playerBar" id="playerBar" src="images/ui/player_bar.png">
+      </div>
+      <button class="btnPlayerOff" id="btnPlay">
+        <img src="images/icons/players/player_pause.png">
+      </button>
+      <button class="btnPlayerOff" id="btnBack">
+        <img src="images/icons/players/player_back.png">
+      </button>
+      <button class="btnPlayerOff" id="btnForward">
+        <img src="images/icons/players/player_forward.png">
+      </button>
+      <button class="btnPlayerOff" id="btnStop">
+        <img src="images/icons/players/player_stop.png">
+      </button>
+      <button class="btnPlayerOff" id="btnSpeed">
+        <span class="textBtn">1x</span>
+      </button>
+      <button class="btnPlayerOff" id="btnLoop">
+        <img src="images/icons/players/player_loop.png">
+      </button>
+      <button class="btnPlayerOff" id="btnSound">
+        <img src="images/icons/players/player_sound_on.png">
+      </button>
+      <button class="btnPlayerOff" id="btnScreenshot">
+        <img src="images/icons/players/player_screenshot.png">
+      </button>
+    </div>
+
+    <div class="btnMenu" id="btnMenu">
+      <button class="btn menu active " id="btnMutant" aria-pressed="true" data-target="menuMutant">
+        <span class="textBtn" data-lang="mutant"></span>
+      </button>
+      <button class="btn menu" id="btnCustomize" aria-pressed="false" data-target="menuCustomize">
+        <span class="textBtn" data-lang="customize"></span>
+      </button>
+      <button class="btn menu" id="btnDebug" aria-pressed="false" data-target="menuDebug">
+        <span class="textBtn" data-lang="extras"></span>
+      </button>
+    </div>
+
+    <div class="menuContent active" id="menuMutant">
+      <div class="text sub1" data-lang="genes"></div>
+      <div class="geneFilter" id="mutantFilter">
+        <button class="btnGene active" id="geneAll" data-value="default_"></button>
+        <button class="btnGene" id="geneA" data-value="default_a"></button>
+        <button class="btnGene" id="geneB" data-value="default_b"></button>
+        <button class="btnGene" id="geneC" data-value="default_c"></button>
+        <button class="btnGene" id="geneD" data-value="default_d"></button>
+        <button class="btnGene" id="geneE" data-value="default_e"></button>
+        <button class="btnGene" id="geneF" data-value="default_f"></button>
+      </div>
+      <div class="text sub2" data-lang="mutant"></div>
+      <button class="btnList" id="mutantSelect">
+        <img class="mutantIcon" src="images/icons/icon_mutants.png">
+        <span class="textList left" data-lang="select_mutant"></span>
+      </button>
+      <div class="text sub3" data-lang="skins"></div>
+      <button class="btnList" id="skinSelect">
+        <img class="skinIcon" src="images/icons/icon_lock.png">
+        <span class="textList left"></span>
+      </button>
+      <div class="text sub4" data-lang="animation"></div>
+      <button class="btnList" id="animationSelect">
+        <img class="animationIcon" src="images/icons/icon_lock.png">
+        <span class="textList left"></span>
+      </button>
+    </div>
+
+    <div class="menuContent hidden" id="menuCustomize">
+      <div class="text sub1" data-lang="background"></div>
+      <div class="menuBackgrounds">
+        <button class="btn btnBg" id="btnNone">
+          <span class="textBtn" data-lang="transparent"></span>
+        </button>
+        <button class="btn btnBg" id="btnCampaign">
+          <span class="textBtn" data-lang="campaign"></span>
+        </button>
+        <button class="btn btnBg" id="btnPve">
+          <span class="textBtn" data-lang="pve"></span>
+        </button>
+        <button class="btn btnBg" id="btnRaid">
+          <span class="textBtn" data-lang="raid"></span>
+        </button>
+        <button class="btn btnBg" id="btnValentines">
+          <span class="textBtn" data-lang="valentines"></span>
+        </button>
+        <button class="btn btnBg" id="btnEaster">
+          <span class="textBtn" data-lang="easter"></span>
+        </button>
+        <button class="btn btnBg" id="btnAnniversary">
+          <span class="textBtn" data-lang="anniversary"></span>
+        </button>
+        <button class="btn btnBg" id="btnHalloween">
+          <span class="textBtn" data-lang="halloween"></span>
+        </button>
+        <button class="btn btnBg" id="btnXmas">
+          <span class="textBtn" data-lang="xmas"></span>
+        </button>
+      </div>
+      <div class="text sub3" data-lang="genes"></div>
+      <div class="geneFilter" id="rivalFilter">
+        <button class="btnGene active" id="geneAll" data-value="default_"></button>
+        <button class="btnGene" id="geneA" data-value="default_a"></button>
+        <button class="btnGene" id="geneB" data-value="default_b"></button>
+        <button class="btnGene" id="geneC" data-value="default_c"></button>
+        <button class="btnGene" id="geneD" data-value="default_d"></button>
+        <button class="btnGene" id="geneE" data-value="default_e"></button>
+        <button class="btnGene" id="geneF" data-value="default_f"></button>
+      </div>
+      <div class="text sub4" data-lang="rival"></div>
+      <button class="btnList" id="rivalSelect">
+        <img class="rivalIcon" src="images/icons/icon_mutants.png">
+        <span class="textList right" data-lang="select_rival"></span>
+      </button>
+    </div>
+
+    <div class="menuContent hidden" id="menuDebug">
+      <button class="btn btnDebug" id="btnBounds">
+        <span class="textBtnLeft" data-lang="bounding"></span>
+        <img class="activeIcon" src="images/icons/icon_off.png">
+      </button>
+      <button class="btn" id="btnColor">
+        <img src="images/ui/circle_color.png">
+      </button>
+      <input type="color" id="colorPicker" value="#00ff00">
+      <button class="btn btnDebug" id="btnShowRival">
+        <span class="textBtnLeft" data-lang="show-rival"></span>
+        <img class="activeIcon" src="images/icons/icon_on.png">
+      </button>
+      <button class="btn btnDebug" id="btnEffects">
+        <span class="textBtnLeft" data-lang="effects"></span>
+        <img class="activeIcon" src="images/icons/icon_on.png">
+      </button>
+      <button class="btn btnDebug" id="btnFrames">
+        <span class="textBtnLeft" data-lang="frame"></span>
+        <img class="activeIcon" src="images/icons/icon_off.png">
+      </button>
+      <button class="btn btnDebug" id="btnWatermark">
+        <span class="textBtnLeft" data-lang="logo"></span>
+        <img class="activeIcon" src="images/icons/icon_on.png">
+      </button>
+    </div>
+    
+  </div>
+
+
+  <div id="cover-container">
+
+    <div class="clickBlocker hidden" id="clickBlocker">
+      <img src="images/ui/static.png">
+    </div>
+
+  </div>
+
+  
+  <div id="scale-container-layer">
+
+    <div class="clickToClose hidden" id="clickToClose">
+    </div>
+
+    <div class="lang-layer hidden" id="langLayer" ></div>
+
+    <div class="infoLayer hidden" id="infoLayer">
+      <button class="btn infoClose" id="infoClose">
+        <img src="images/ui/btn_close.png">
+      </button>
+      <img src="images/ui/bg_info.png">
+      <div class="text legal" data-lang="legal"></div>
+      <div class="text disclaimer" data-lang="disclaimer"></div>
+      <div class="text follow" data-lang="follow"></div>
+      <div id="social-icon">
+        <a class="social iconYt" href="https://youtube.com/@manuellewe" target="_blank"></a>
+        <a class="social iconFb" href="https://www.facebook.com/profile.php?id=61584841468711" target="_blank"></a>
+        <a class="social iconDc" href="https://discord.gg/puEGR4U" target="_blank"></a>
+        <a class="social iconKk" href="https://kick.com/manuellewe" target="_blank"></a>
+      </div>
+      <div class="text made" data-lang="made"></div>
+    </div>
+
+    <div class="exclusiveLayer hidden" id="exclusiveLayer">
+      <button class="btn exclusiveClose" id="exclusiveClose">
+        <img src="images/ui/btn_close.png">
+      </button>
+      <img class="bg_join" src="images/ui/bg_discord.png">
+      <img class="npc_exclusive" src="images/ui/discord_missy.png">
+      <div class="exclusive" data-lang="dc_message"></div>
+      <button class="btn" id="btnExclusive" aria-pressed="true" data-target="">
+        <span class="textBtn" data-lang="signin_dc"></span>
+      </button>
+    </div>
+
+    <div class="joinLayer hidden" id="joinLayer">
+      <button class="btn joinClose" id="joinClose">
+        <img src="images/ui/btn_close.png">
+      </button>
+      <img class="bg_join" src="images/ui/bg_discord.png">
+      <img class="npc_join" src="images/ui/discord_darwin.png">
+      <div class="join" data-lang="dc_exclusive"></div>
+      <button class="btn" id="btnJoin" aria-pressed="true" data-target="">
+        <span class="textBtn" data-lang="join_dc"></span>
+      </button>
+    </div>
+
+    <div class="loadingScreen" id="loadingScreen">
+      <img class="circle" src="images/ui/tab-loading.gif">
+    </div>
+
+    <div id="mutantListBg" class="hidden">
+      <img src="images/ui/bg_search.png">
+      <input type="text" id="mutantSearch" data-lang="search_mutant" placeholder="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
+
+    <div id="mutantListLayer" class="hidden">
+      <div id="mutantListContainer"></div>
+    </div>
+
+    <div id="skinListBg" class="hidden">
+      <img src="images/ui/bg_search.png">
+    </div>
+
+    <div id="skinListLayer" class="hidden">
+      <div id="skinListContainer"></div>
+    </div>
+
+    <div id="bgListBg" class="hidden">
+      <img src="images/ui/bg_search.png">
+      <input type="text" id="bgSearch" data-lang="search_bg" placeholder="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
+
+    <div id="bgListLayer" class="hidden">
+      <div id="bgListContainer"></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/discordIntegration.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/txtParser.js"></script>
+  <script src="js/xmlParser.js"></script>
+  <script src="js/rescale.js"></script>
+  <script src="js/mutantAnimationLoader.js"></script>
+  <script src="js/animationEngine.js"></script>
+  <script src="js/sceneRender.js"></script>
+  <script src="js/fxManager.js"></script>
+  <script src="js/soundManager.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<AttackFX specimen="Specimen_FF_01" attack="1">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.5" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="flash" name="B87723" duration="1" applyOn="background" moment="impact" />
+	<FX type="fade" name="575757" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_01" attack="1p">
+	<FX type="move" name="shake" applyOn="background" moment="impact" amplitude="4" frequency="18" duration="0.4" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="flash" name="B87723" duration="1" applyOn="background" moment="impact" />
+	<FX type="fade" name="575757" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_01" attack="2">
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="FAF2D2" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_armageddon" blendmode="add" applyOn="target" position="bottom" moment="armageddon">
+		<tranform scale="2.0" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="armageddon" amplitude="5" frequency="18" duration="1.0" />
+</AttackFX>
+
+<AttackFX specimen="Specimen_FF_01" attack="2p">
+	<FX type="fade" name="691111" applyOn="allclip+background-target-self" moment="arrived" />
+	<FX type="fade" name="normal" applyOn="allclip+background-target-self" moment="return" />
+	<FX type="flash" name="ffffff" duration="0.5" applyOn="target" moment="impact" />
+	<FX type="flash" name="FAF2D2" duration="0.2" applyOn="background" moment="impact" />
+	<FX type="sprite" name="fx_armageddon2" blendmode="add" applyOn="target" position="bottom" moment="armageddon">
+		<tranform scale="2.0" />
+	</FX>
+	<FX type="move" name="shake" applyOn="background" moment="arrived" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="back" amplitude="4" frequency="18" duration="0.1" />
+	<FX type="move" name="shake" applyOn="background" moment="shake" amplitude="4" frequency="89" duration="2.0" />
+</AttackFX>
