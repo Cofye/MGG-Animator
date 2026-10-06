@@ -5,7 +5,7 @@ let masterGain = null;
 let soundEnabled = true;
 let playbackRate = 1;
 const activeSources = new Set();
-let pausedSnapshot = [];   // ← sonidos que quedaron en pausa para reanudar
+let pausedSnapshot = [];
 
 function ensureAudioCtx() {
   if (!audioCtx) {
@@ -32,17 +32,8 @@ async function loadSound(name) {
   const promise = (async () => {
     const ctx = ensureAudioCtx();
     if (!ctx) return null;
-    const localUrl  = `../data/sounds/${name}.wav`;
-    const remoteUrl = `https://s-beta.kobojo.com/mutants/assets/sound_mb/${name}.wav`;
     try {
-      const res = await fetch(localUrl);
-      if (res.ok) {
-        const ab = await res.arrayBuffer();
-        return await ctx.decodeAudioData(ab);
-      }
-    } catch (_) {}
-    try {
-      const res = await fetch(remoteUrl);
+      const res = await fetch(`data/sounds/${name}.wav`);
       if (!res.ok) return null;
       const ab = await res.arrayBuffer();
       return await ctx.decodeAudioData(ab);
@@ -143,7 +134,6 @@ function getSoundBuffer(name) {
   return cached;
 }
 
-/** Detiene TODO sin guardar nada. Se usa al cambiar de animación/mutante. */
 function stopAllSounds() {
   for (const src of activeSources) {
     try { src.stop(); } catch (_) {}
@@ -156,8 +146,8 @@ function pauseAllSounds() {
   const ctx = ensureAudioCtx();
   if (!ctx) return;
   pausedSnapshot = [];
-  const snapshot = Array.from(activeSources);   // ← copia primero
-  activeSources.clear();                        // ← limpia ya
+  const snapshot = Array.from(activeSources);
+  activeSources.clear();
   for (const src of snapshot) {
     const info = src._soundInfo;
     if (info) {
@@ -170,7 +160,6 @@ function pauseAllSounds() {
   }
 }
 
-/** Vuelve a lanzar los sonidos que quedaron pausados, desde su offset. */
 function resumeAllSounds() {
   if (!soundEnabled || pausedSnapshot.length === 0) {
     pausedSnapshot = [];
@@ -182,8 +171,6 @@ function resumeAllSounds() {
     playBuffer(s.buffer, s.reverse, s.name, s.offset);
   }
 }
-
-function isSoundEnabled() { return soundEnabled; }
 
 function setPlaybackRate(r) {
   const n = Number(r);

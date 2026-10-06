@@ -269,7 +269,7 @@ async function loadFxForMutant(mutantValue) {
   if (fxCache.has(mutantValue)) return fxCache.get(mutantValue);
   const promise = (async () => {
     try {
-      const url = `../data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
+      const url = `data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
       const txt = await fetch(url).then(r => {
         if (!r.ok) throw new Error();
         return r.text();
@@ -310,7 +310,7 @@ async function loadSpriteFxAsset(name) {
   if (fxSpriteCache.has(name)) return fxSpriteCache.get(name);
   const promise = (async () => {
     try {
-      const xmlUrl = `../data/fx/${name}.xml?nocache=${Date.now()}`;
+      const xmlUrl = `data/fx/${name}.xml?nocache=${Date.now()}`;
       const txt = await fetch(xmlUrl).then(r => {
         if (!r.ok) throw new Error();
         return r.text();

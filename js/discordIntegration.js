@@ -126,7 +126,7 @@ function signInWithDiscord() {
     provider: 'discord',
     options: {
       scopes: 'identify guilds',
-      redirectTo: window.location.origin
+      redirectTo: window.location.origin + window.location.pathname
     }
   });
 }
