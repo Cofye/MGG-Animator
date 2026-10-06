@@ -163,6 +163,7 @@ async function loadMutantImage(mutantValue, animName, skin) {
     window.animationEngine.setSpritesheet(img);
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.setTree(tree);
+    window.animationEngine.pause();   // ← nuevo
     finishLoading(true);
   } catch (_) {
     finishLoading(false);
