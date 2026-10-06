@@ -417,8 +417,8 @@ body::before {
   position: absolute;
   z-index: 8;
   height: 100%;
-  -webkit-mask-image: url("/images/ui/discord_profile_alpha.png");
-  mask-image: url("/images/ui/discord_profile_alpha.png");
+  -webkit-mask-image: url("../images/ui/discord_profile_alpha.png");
+  mask-image: url("../images/ui/discord_profile_alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
 }
