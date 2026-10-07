@@ -211,8 +211,7 @@ function updateChildren(node, dtSeconds) {
 
 function spriteUpdate(node, dtSeconds) {
   if (!node) return;
-  const speedFactor = currentSpeedFactor;
-  node.frameAccumulator += dtSeconds * UNIVERSAL_FPS * speedFactor;
+  node.frameAccumulator += dtSeconds * UNIVERSAL_FPS;
   let fullSteps = Math.floor(node.frameAccumulator);
   node.frameAccumulator -= fullSteps;
   node.hasLoopedThisFrame = false;
@@ -270,7 +269,7 @@ function spriteUpdate(node, dtSeconds) {
       node.delayCounter--;
     }
   }
-  if (speedFactor <= 0 || node.delayCounter >= 1) node.parentFramePos = node.currentFrame;
+  if (node.delayCounter >= 1) node.parentFramePos = node.currentFrame;
   else node.parentFramePos = node.currentFrame + node.frameAccumulator;
   if (node.parentFramePos > node.totalFrames - 0.001) node.parentFramePos = node.totalFrames - 0.001;
   updateChildren(node, dtSeconds);
@@ -386,11 +385,11 @@ function updateTick(dtSeconds) {
       return;
     }
   }
-  const scaledDt = dtSeconds * attackSpeedMultiplier;
+  const scaledDt = dtSeconds * currentSpeedFactor * attackSpeedMultiplier;
   spriteUpdate(animationTree, scaledDt);
   if (rivalVisible && rivalTree) spriteUpdate(rivalTree, scaledDt);
   if (postTree && postStartTick >= 0 && animationTime >= postStartTick) {
-    spriteUpdate(postTree, scaledDt);
+    spriteUpdate(postTree, dtSeconds * currentSpeedFactor * attackSpeedMultiplier);
   }
 }
 

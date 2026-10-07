@@ -516,6 +516,7 @@ async function selectCharacter(context, mutant) {
       window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(anim));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
+      updateSoundPlaybackRate();
       window.fxManager.clear();
       window.soundManager.stopAllSounds();
       window.mutantLoader.pushLoadingHold();
@@ -790,6 +791,7 @@ async function selectAnimation(anim) {
   window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(value));
   window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
   window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
+  updateSoundPlaybackRate();
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
 
@@ -871,8 +873,8 @@ function updateSoundButtonIcon() {
   const img = btnSound.querySelector("img");
   if (!img) return;
   const v = window.soundManager.getSoundVolume();
-  const name = v >= 0.99 ? "player_sound_100.png"
-             : v >= 0.49 ? "player_sound_50.png"
+  const name = v >= 0.99 ? "player_sound_on.png"
+             : v >= 0.39 ? "player_sound_50.png"
              : "player_sound_off.png";
   const desired = `images/icons/players/${name}`;
   if (img.src.indexOf(desired) === -1) img.src = desired;
@@ -1007,6 +1009,14 @@ async function loadAvailableSpeeds() {
   const idx = availableSpeeds.findIndex(s => parseFloat(s.value) === 1);
   currentSpeedIndex = idx >= 0 ? idx : 0;
 }
+
+function updateSoundPlaybackRate() {
+  const speed = availableSpeeds[currentSpeedIndex];
+  const userFactor = speed ? (parseFloat(speed.value) || 1) : 1;
+  const attackMult = window.animationEngine.getAttackSpeedMultiplier();
+  window.soundManager.setPlaybackRate(userFactor * attackMult);
+}
+
 function applyCurrentSpeed() {
   if (availableSpeeds.length === 0) return;
   const speed = availableSpeeds[currentSpeedIndex];
@@ -1015,8 +1025,9 @@ function applyCurrentSpeed() {
   const value = parseFloat(speed.value);
   const factor = Number.isFinite(value) ? value : 1;
   window.animationEngine.setSpeed(factor);
-  window.soundManager.setPlaybackRate(factor);
+  updateSoundPlaybackRate();
 }
+
 function setupSpeedControl() {
   btnSpeed.addEventListener("click", () => {
     if (availableSpeeds.length === 0) return;
@@ -1150,11 +1161,8 @@ function playResumeSoundForTick(targetTick) {
     }
   }
   if (!best) return;
-  const animValue = selectedAnimation ? (selectedAnimation.value || "") : "";
-  const isAttack = ATTACK_PATTERN.test(animValue);
-  const mult = isAttack ? ATTACK_SPEED_MULTIPLIER : 1;
   const elapsedTicks = targetTick - best.tick;
-  const offsetSeconds = elapsedTicks / (30 * mult);
+  const offsetSeconds = elapsedTicks / 30;
   const buffer = window.soundManager.getSoundBuffer(best.name);
   if (!buffer) return;
   if (offsetSeconds >= buffer.duration) return;
@@ -1167,7 +1175,7 @@ function computeSoundTailEndTick() {
   for (const s of soundSchedule) {
     const buf = window.soundManager.getSoundBuffer(s.name);
     const dur = buf ? buf.duration : 2;
-    const end = s.tick + dur * 30 * ATTACK_SPEED_MULTIPLIER;
+    const end = s.tick + dur * 30;
     if (end > maxEnd) maxEnd = end;
   }
   return maxEnd;
