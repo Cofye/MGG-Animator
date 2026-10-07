@@ -516,7 +516,6 @@ async function selectCharacter(context, mutant) {
       window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(anim));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
-      updateSoundPlaybackRate();
       window.fxManager.clear();
       window.soundManager.stopAllSounds();
       window.mutantLoader.pushLoadingHold();
@@ -784,20 +783,15 @@ async function selectAnimation(anim) {
   updateAnimationButton();
   closeItemList(); closeCharacterList();
   clickToClose.classList.add("hidden"); scaleContainerLayer.classList.add("hidden"); hideStatic();
-
   const value = anim.value || "stand";
   const isAttack = ATTACK_PATTERN.test(value);
-
   window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(value));
   window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
   window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
-  updateSoundPlaybackRate();
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
-
   const hasMutant = !!selectedValues.mutant;
   const hasLoader = window.mutantLoader && typeof window.mutantLoader.setAnimation === "function";
-
   if (hasMutant && hasLoader) {
     window.mutantLoader.pushLoadingHold();
     window.animationEngine.pause();
@@ -1010,13 +1004,6 @@ async function loadAvailableSpeeds() {
   currentSpeedIndex = idx >= 0 ? idx : 0;
 }
 
-function updateSoundPlaybackRate() {
-  const speed = availableSpeeds[currentSpeedIndex];
-  const userFactor = speed ? (parseFloat(speed.value) || 1) : 1;
-  const attackMult = window.animationEngine.getAttackSpeedMultiplier();
-  window.soundManager.setPlaybackRate(userFactor * attackMult);
-}
-
 function applyCurrentSpeed() {
   if (availableSpeeds.length === 0) return;
   const speed = availableSpeeds[currentSpeedIndex];
@@ -1025,7 +1012,7 @@ function applyCurrentSpeed() {
   const value = parseFloat(speed.value);
   const factor = Number.isFinite(value) ? value : 1;
   window.animationEngine.setSpeed(factor);
-  updateSoundPlaybackRate();
+  window.soundManager.setPlaybackRate(factor);
 }
 
 function setupSpeedControl() {

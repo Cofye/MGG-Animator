@@ -385,11 +385,12 @@ function updateTick(dtSeconds) {
       return;
     }
   }
-  const scaledDt = dtSeconds * currentSpeedFactor * attackSpeedMultiplier;
-  spriteUpdate(animationTree, scaledDt);
-  if (rivalVisible && rivalTree) spriteUpdate(rivalTree, scaledDt);
+  const attackDt = dtSeconds * currentSpeedFactor * attackSpeedMultiplier;
+  const normalDt = dtSeconds * currentSpeedFactor;
+  spriteUpdate(animationTree, attackDt);
+  if (rivalVisible && rivalTree) spriteUpdate(rivalTree, normalDt);
   if (postTree && postStartTick >= 0 && animationTime >= postStartTick) {
-    spriteUpdate(postTree, dtSeconds * currentSpeedFactor * attackSpeedMultiplier);
+    spriteUpdate(postTree, normalDt);
   }
 }
 
