@@ -29,16 +29,12 @@ function parseHexColor(str) {
   if (s.startsWith("0x")) s = s.slice(2);
   if (s.startsWith("#")) s = s.slice(1);
   let a = 1;
-  if (s.length === 8) {
-    a = parseInt(s.slice(0, 2), 16) / 255;
-    s = s.slice(2);
-  }
+  if (s.length === 8) { a = parseInt(s.slice(0, 2), 16) / 255; s = s.slice(2); }
   if (s.length === 6) {
     return {
       r: parseInt(s.slice(0, 2), 16) / 255,
       g: parseInt(s.slice(2, 4), 16) / 255,
-      b: parseInt(s.slice(4, 6), 16) / 255,
-      a,
+      b: parseInt(s.slice(4, 6), 16) / 255, a,
     };
   }
   return { r: 1, g: 1, b: 1, a: 1 };
@@ -53,10 +49,8 @@ function parseApplyOn(str) {
   for (const t of tokens) {
     const sign = t[0] === "+";
     const name = t.slice(1);
-    if (name === "allclip") {
-      flags.self = sign;
-      flags.target = sign;
-    } else if (name === "self") flags.self = sign;
+    if (name === "allclip") { flags.self = sign; flags.target = sign; }
+    else if (name === "self") flags.self = sign;
     else if (name === "target") flags.target = sign;
     else if (name === "background") flags.background = sign;
   }
@@ -96,8 +90,7 @@ function cloneTree(node, isRoot = true) {
     copy.colorMul = { r: 1, g: 1, b: 1 };
     copy.colorAdd = { r: 0, g: 0, b: 0 };
     copy.innerSprite = node.innerSprite ? cloneTree(node.innerSprite, false) : null;
-    copy.prevKey = null;
-    copy.nextKey = null;
+    copy.prevKey = null; copy.nextKey = null;
     copy.x = 0; copy.y = 0; copy.angle = 0;
     copy.scaleX = 1; copy.scaleY = 1;
     copy.alpha = 1; copy.visible = true;
@@ -113,7 +106,6 @@ function computeTreeDuration(tree) {
   for (const f of tree.frames) totalTicks += fr + (f.delay || 0);
   return Math.max(0.1, totalTicks / 30);
 }
-
 function getTreeTotalTicks(node) {
   if (!node || node.type !== "Sprite" || !node.frames) return 1;
   const fr = Math.max(1, node.framerate || 1);
@@ -124,40 +116,32 @@ function getTreeTotalTicks(node) {
 
 function computeSpriteVisualCenter(tree, img) {
   if (!tree || !img) return { cx: 0, cy: 0 };
-
   const size = 1024;
   const half = size / 2;
   const downscale = 0.25;
   const upscale = 1 / downscale;
-
   const canvas = document.createElement("canvas");
   canvas.width = size;
   canvas.height = size;
   const cx2 = canvas.getContext("2d", { willReadFrequently: true });
-
   let minX = size, minY = size, maxX = 0, maxY = 0, any = false;
-
   const totalTicks = getTreeTotalTicks(tree);
   const effectiveTicks = Math.min(totalTicks, 300);
   const sampleCount = 8;
   const engine = window.animationEngine;
   const savedSpeed = engine.getInfo().speed;
   engine.setSpeed(1);
-
   try {
     for (let i = 0; i < sampleCount; i++) {
       const probe = cloneTree(tree);
       const targetTick = Math.floor(effectiveTicks * i / Math.max(1, sampleCount - 1));
       engine.spriteUpdate(probe, targetTick / 30);
-
       cx2.clearRect(0, 0, size, size);
       cx2.save();
       cx2.translate(half, half);
       cx2.scale(downscale, downscale);
-      engine.renderNode(cx2, probe, true,
-        { r: 1, g: 1, b: 1 }, { r: 0, g: 0, b: 0 }, img);
+      engine.renderNode(cx2, probe, true, { r: 1, g: 1, b: 1 }, { r: 0, g: 0, b: 0 }, img);
       cx2.restore();
-
       const imgData = cx2.getImageData(0, 0, size, size);
       const u32 = new Uint32Array(imgData.data.buffer);
       const len = u32.length;
@@ -173,15 +157,9 @@ function computeSpriteVisualCenter(tree, img) {
         }
       }
     }
-  } finally {
-    engine.setSpeed(savedSpeed);
-  }
-
+  } finally { engine.setSpeed(savedSpeed); }
   if (!any) return { cx: 0, cy: 0 };
-  return {
-    cx: ((minX + maxX) / 2 - half) * upscale,
-    cy: ((minY + maxY) / 2 - half) * upscale,
-  };
+  return { cx: ((minX + maxX) / 2 - half) * upscale, cy: ((minY + maxY) / 2 - half) * upscale };
 }
 
 function parseFxElement(node) {
@@ -199,18 +177,13 @@ function parseFxElement(node) {
     alpha: parseFloat(node.getAttribute("alpha")) || 1,
     mul: node.getAttribute("mul") || null,
     add: node.getAttribute("add") || null,
-    transform: null,
-    colorTransform: null,
-    spawn: null,
-    iteration: null,
+    transform: null, colorTransform: null, spawn: null, iteration: null,
   };
   const t = firstChildByName(node, "tranform") || firstChildByName(node, "transform");
   if (t) {
     const g = (n) => (t.getAttribute(n) != null ? parseFloat(t.getAttribute(n)) : null);
     def.transform = {
-      scale: g("scale"),
-      scaleMin: g("scaleMin"),
-      scaleMax: g("scaleMax"),
+      scale: g("scale"), scaleMin: g("scaleMin"), scaleMax: g("scaleMax"),
       randomX: t.getAttribute("randomX") === "true",
       randomY: t.getAttribute("randomY") === "true",
       mirrorX: t.getAttribute("mirrorX") === "true",
@@ -269,15 +242,14 @@ async function loadFxForMutant(mutantValue) {
   if (fxCache.has(mutantValue)) return fxCache.get(mutantValue);
   const promise = (async () => {
     try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 15000);
       const url = `data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
-      const txt = await fetch(url).then(r => {
-        if (!r.ok) throw new Error();
-        return r.text();
-      });
-      return parseFxXml(txt);
-    } catch (_) {
-      return {};
-    }
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(tid);
+      if (!res.ok) throw new Error();
+      return parseFxXml(await res.text());
+    } catch (_) { return {}; }
   })();
   fxCache.set(mutantValue, promise);
   const parsed = await promise;
@@ -292,10 +264,7 @@ function mapAnimValueToAttackKey(animValue) {
 
 function setCurrentAnimation(animValue, attacks) {
   const key = mapAnimValueToAttackKey(animValue);
-  if (key == null) {
-    currentAttacks = null;
-    return;
-  }
+  if (key == null) { currentAttacks = null; return; }
   const all = attacks || currentAttacks?.all || null;
   if (!all) { currentAttacks = null; return; }
   currentAttacks = { all, key, list: all[key] || null };
@@ -305,16 +274,34 @@ function setAttacksTable(table) {
   currentAttacks = table ? { all: table, key: null, list: null } : null;
 }
 
+function computeTailEndTick(moments) {
+  if (!currentAttacks || !currentAttacks.list || !moments) return 0;
+  let maxEnd = 0;
+  for (const def of currentAttacks.list) {
+    const moment = def.moment || "impact";
+    const ticks = moments[moment];
+    if (!ticks || !ticks.length) continue;
+    const dur = def.duration > 0 ? def.duration : 0.4;
+    const durTicks = dur * 30;
+    const last = ticks[ticks.length - 1];
+    const end = last + durTicks;
+    if (end > maxEnd) maxEnd = end;
+  }
+  return maxEnd;
+}
+
 async function loadSpriteFxAsset(name) {
   if (!name) return null;
   if (fxSpriteCache.has(name)) return fxSpriteCache.get(name);
   const promise = (async () => {
     try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 15000);
       const xmlUrl = `data/fx/${name}.xml?nocache=${Date.now()}`;
-      const txt = await fetch(xmlUrl).then(r => {
-        if (!r.ok) throw new Error();
-        return r.text();
-      });
+      const res = await fetch(xmlUrl, { signal: controller.signal });
+      clearTimeout(tid);
+      if (!res.ok) throw new Error();
+      const txt = await res.text();
       const doc = new DOMParser().parseFromString(txt, "application/xml");
       const spriteEl = doc.querySelector("Sprite");
       if (!spriteEl) throw new Error();
@@ -323,17 +310,16 @@ async function loadSpriteFxAsset(name) {
       const imgUrl = `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
       const img = await new Promise((res, rej) => {
         const i = new Image();
+        const t = setTimeout(() => { i.onload = null; i.onerror = null; i.src = ""; rej(new Error("timeout")); }, 15000);
         i.crossOrigin = "anonymous";
-        i.onload = () => res(i);
-        i.onerror = () => rej(new Error());
+        i.onload = () => { clearTimeout(t); res(i); };
+        i.onerror = () => { clearTimeout(t); rej(new Error()); };
         i.src = imgUrl;
       });
       const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
       const center = computeSpriteVisualCenter(tree, img);
       return { img, tree, center };
-    } catch (_) {
-      return null;
-    }
+    } catch (_) { return null; }
   })();
   fxSpriteCache.set(name, promise);
   const asset = await promise;
@@ -349,9 +335,7 @@ async function preloadSpriteAssetsForAttack(attackKey) {
   if (!list || list.length === 0) return;
   const promises = [];
   for (const def of list) {
-    if (def.type === "sprite" && def.name) {
-      promises.push(loadSpriteFxAsset(def.name));
-    }
+    if (def.type === "sprite" && def.name) promises.push(loadSpriteFxAsset(def.name));
   }
   if (promises.length > 0) await Promise.all(promises);
 }
@@ -362,29 +346,9 @@ async function preloadForCurrentAttack() {
 
 function createInstance(def) {
   const t = def.type;
-  if (t === "flash") {
-    return {
-      kind: "flash", def, t: 0,
-      duration: def.duration > 0 ? def.duration : 0.4,
-      color: parseHexColor(def.name),
-    };
-  }
-  if (t === "fade") {
-    return {
-      kind: "fade", def, t: 0,
-      duration: def.duration > 0 ? def.duration : 0.5,
-      color: parseHexColor(def.name),
-      capturedMap: null,
-    };
-  }
-  if (t === "move") {
-    return {
-      kind: "shake", def, t: 0,
-      duration: def.duration > 0 ? def.duration : 0.1,
-      amplitude: def.amplitude || 5,
-      frequency: def.frequency || 30,
-    };
-  }
+  if (t === "flash") return { kind: "flash", def, t: 0, duration: def.duration > 0 ? def.duration : 0.4, color: parseHexColor(def.name) };
+  if (t === "fade") return { kind: "fade", def, t: 0, duration: def.duration > 0 ? def.duration : 0.5, color: parseHexColor(def.name), capturedMap: null };
+  if (t === "move") return { kind: "shake", def, t: 0, duration: def.duration > 0 ? def.duration : 0.1, amplitude: def.amplitude || 5, frequency: def.frequency || 30 };
   if (t === "color") {
     return {
       kind: "color", def, t: 0,
@@ -405,29 +369,16 @@ function createInstance(def) {
       const scale = sMin + Math.random() * Math.max(0, sMax - sMin);
       const ox = tr.randomX ? (Math.random() - 0.5) * sp.scatterX : 0;
       const oy = tr.randomY ? (Math.random() - 0.5) * sp.scatterY : 0;
-      particles.push({
-        scale, ox, oy,
-        elapsed: 0,
-        delay: sp.targetDelay,
-        started: false,
-        playTime: 0,
-        cycleDuration: 0,
-        cyclesDone: 0,
-        repeatCount,
-        done: false,
-        tree: null,
-      });
+      particles.push({ scale, ox, oy, elapsed: 0, delay: sp.targetDelay, started: false, playTime: 0, cycleDuration: 0, cyclesDone: 0, repeatCount, done: false, tree: null });
     }
     return {
-      kind: "sprite", def, t: 0, name: def.name,
-      particles,
-      position: def.position,
-      blendmode: def.blendmode,
-      zOrder: def.zOrder,
+      kind: "sprite", def, t: 0, name: def.name, particles,
+      position: def.position, blendmode: def.blendmode, zOrder: def.zOrder,
       colorMul: def.colorTransform ? parseHexColor(def.colorTransform.mul) : { r: 1, g: 1, b: 1 },
       colorAdd: def.colorTransform ? parseHexColor(def.colorTransform.add) : { r: 0, g: 0, b: 0 },
-      alpha: def.colorTransform ? def.colorTransform.alpha : 1,
-      asset: null,
+      alpha: def.colorTransform ? def.colorTransform.alpha : 1, asset: null,
+      mirrorX: tr.mirrorX === true,
+      mirrorY: tr.mirrorY === true,
     };
   }
   return null;
@@ -444,19 +395,13 @@ function onLabelMoment(moment) {
       if (asset && !(asset instanceof Promise)) {
         inst.asset = asset;
         const cycleDur = computeTreeDuration(asset.tree);
-        for (const p of inst.particles) {
-          p.tree = cloneTree(asset.tree);
-          p.cycleDuration = cycleDur;
-        }
+        for (const p of inst.particles) { p.tree = cloneTree(asset.tree); p.cycleDuration = cycleDur; }
       } else {
         loadSpriteFxAsset(inst.name).then(a => {
           if (!a) return;
           inst.asset = a;
           const cycleDur = computeTreeDuration(a.tree);
-          for (const p of inst.particles) {
-            p.tree = cloneTree(a.tree);
-            p.cycleDuration = cycleDur;
-          }
+          for (const p of inst.particles) { p.tree = cloneTree(a.tree); p.cycleDuration = cycleDur; }
         });
       }
     }
@@ -464,18 +409,13 @@ function onLabelMoment(moment) {
   }
 }
 
-function clear() {
-  activeFx = [];
-  resetColorTransforms();
-}
+function clear() { activeFx = []; resetColorTransforms(); }
 
 function update(dtSeconds) {
   if (activeFx.length === 0) return;
   const survivors = [];
-
   for (const fx of activeFx) {
     fx.t += dtSeconds;
-
     if (fx.kind === "sprite") {
       let anyAlive = false;
       for (const p of fx.particles) {
@@ -495,33 +435,25 @@ function update(dtSeconds) {
         window.animationEngine.spriteUpdate(p.tree, dtSeconds);
         if (p.cycleDuration > 0 && p.playTime >= (p.cyclesDone + 1) * p.cycleDuration) {
           p.cyclesDone++;
-          if (p.cyclesDone < p.repeatCount) {
-            window.animationEngine.resetNodeState(p.tree);
-            p.tree.loopEnabled = false;
-          } else {
-            p.done = true;
-          }
+          if (p.cyclesDone < p.repeatCount) { window.animationEngine.resetNodeState(p.tree); p.tree.loopEnabled = false; }
+          else p.done = true;
         }
         if (!p.done) anyAlive = true;
       }
       if (anyAlive) survivors.push(fx);
       continue;
     }
-
     if (fx.kind === "flash") {
       const p = Math.min(1, fx.t / fx.duration);
       const k = 1 - p;
       for (const which of ["self", "target", "background"]) {
         if (!fx.def.applyOn[which]) continue;
         const st = objectColorTransforms[which];
-        st.rAdd = fx.color.r * k;
-        st.gAdd = fx.color.g * k;
-        st.bAdd = fx.color.b * k;
+        st.rAdd = fx.color.r * k; st.gAdd = fx.color.g * k; st.bAdd = fx.color.b * k;
       }
       if (fx.t < fx.duration) survivors.push(fx);
       continue;
     }
-
     if (fx.kind === "fade") {
       if (!fx.capturedMap) {
         fx.capturedMap = {};
@@ -543,22 +475,17 @@ function update(dtSeconds) {
       if (fx.t < fx.duration) survivors.push(fx);
       continue;
     }
-
     if (fx.kind === "color") {
       if (!fx.capturedMap) {
         fx.capturedMap = {};
         for (const which of ["self", "target", "background"]) {
           if (!fx.def.applyOn[which]) continue;
           const st = objectColorTransforms[which];
-          fx.capturedMap[which] = {
-            rMul: st.rMul, gMul: st.gMul, bMul: st.bMul,
-            rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd,
-          };
+          fx.capturedMap[which] = { rMul: st.rMul, gMul: st.gMul, bMul: st.bMul, rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd };
         }
       }
       const p = Math.min(1, fx.t / fx.duration);
-      const tm = fx.mul;
-      const ta = fx.add;
+      const tm = fx.mul; const ta = fx.add;
       for (const which of ["self", "target", "background"]) {
         if (!fx.def.applyOn[which]) continue;
         const cap = fx.capturedMap[which];
@@ -573,7 +500,6 @@ function update(dtSeconds) {
       if (fx.t < fx.duration) survivors.push(fx);
       continue;
     }
-
     if (fx.kind === "shake") {
       if (fx.t < fx.duration) survivors.push(fx);
       continue;
@@ -582,10 +508,7 @@ function update(dtSeconds) {
   activeFx = survivors;
 }
 
-function advanceTicks(ticks) {
-  if (ticks <= 0) return;
-  update(ticks / 30);
-}
+function advanceTicks(ticks) { if (ticks <= 0) return; update(ticks / 30); }
 
 function applyBlendMode(ctx, mode) {
   if (!mode || mode === "normal") ctx.globalCompositeOperation = "source-over";
@@ -611,31 +534,26 @@ function getSpritePosition(bounds, position) {
 
 function drawSpriteFx(ctx, fx, positions) {
   if (!fx.asset) return;
-
-  let bounds = null;
-  let scale = 1;
-  let flipX = false;
-  let useCenter = false;
-
+  let bounds = null, scale = 1, useCenter = false;
   if (fx.def.applyOn.target) {
     bounds = positions.target;
     scale = bounds.scale != null ? bounds.scale : 1;
-    flipX = !!bounds.flipX;
   } else if (fx.def.applyOn.self) {
     bounds = positions.self;
     scale = bounds.scale != null ? bounds.scale : 1;
-    flipX = !!bounds.flipX;
   } else if (fx.def.applyOn.background) {
     bounds = positions.background;
     scale = 1;
-    flipX = false;
     useCenter = true;
   }
   if (!bounds) return;
 
   const base = getSpritePosition(bounds, fx.position);
   const center = fx.asset.center || { cx: 0, cy: 0 };
-  const sx = flipX ? 1 : -1;
+
+  let sx = fx.def.applyOn.self ? -1 : 1;
+  if (fx.mirrorX) sx = -sx;
+  const sy = fx.mirrorY ? -1 : 1;
 
   ctx.save();
   applyBlendMode(ctx, fx.blendmode);
@@ -644,15 +562,9 @@ function drawSpriteFx(ctx, fx, positions) {
     ctx.save();
     ctx.globalAlpha = fx.alpha;
     ctx.translate(base.x + p.ox * sx, base.y + p.oy);
-    ctx.scale(sx * p.scale * scale, p.scale * scale);
-    if (useCenter) {
-      ctx.translate(-center.cx, -center.cy);
-    }
-    window.animationEngine.renderNode(
-      ctx, p.tree, true,
-      fx.colorMul, fx.colorAdd,
-      fx.asset.img
-    );
+    ctx.scale(sx * p.scale * scale, sy * p.scale * scale);
+    if (useCenter) ctx.translate(-center.cx, -center.cy);
+    window.animationEngine.renderNode(ctx, p.tree, true, fx.colorMul, fx.colorAdd, fx.asset.img);
     ctx.restore();
   }
   ctx.restore();
@@ -673,7 +585,6 @@ function isShaking(which) {
   }
   return null;
 }
-
 function getShakeOffset(which) {
   if (!effectsEnabled) return { x: 0, y: 0 };
   const fx = isShaking(which);
@@ -682,38 +593,21 @@ function getShakeOffset(which) {
   if (progress >= 1) return { x: 0, y: 0 };
   const phase = fx.t * fx.frequency * Math.PI * 2;
   const decay = 1 - progress;
-  return {
-    x: Math.sin(phase) * fx.amplitude * decay,
-    y: Math.cos(phase * 1.3) * fx.amplitude * decay,
-  };
+  return { x: Math.sin(phase) * fx.amplitude * decay, y: Math.cos(phase * 1.3) * fx.amplitude * decay };
 }
-
 function getObjectTransform(which) {
-  if (!effectsEnabled) {
-    return { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 };
-  }
+  if (!effectsEnabled) return { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 };
   const st = objectColorTransforms[which];
   if (!st) return null;
-  return {
-    rMul: st.rMul, gMul: st.gMul, bMul: st.bMul,
-    rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd,
-  };
+  return { rMul: st.rMul, gMul: st.gMul, bMul: st.bMul, rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd };
 }
 
 window.fxManager = {
-  loadFxForMutant,
-  setAttacksTable,
-  setCurrentAnimation,
-  onLabelMoment,
-  update,
-  advanceTicks,
-  render,
-  clear,
-  getShakeOffset,
-  getObjectTransform,
-  preloadForCurrentAttack,
-  preloadSpriteAssetsForAttack,
+  loadFxForMutant, setAttacksTable, setCurrentAnimation, onLabelMoment,
+  update, advanceTicks, render, clear,
+  getShakeOffset, getObjectTransform,
+  preloadForCurrentAttack, preloadSpriteAssetsForAttack,
+  computeTailEndTick,
   getActiveCount: () => activeFx.length,
-  setEffectsEnabled,
-  isEffectsEnabled,
+  setEffectsEnabled, isEffectsEnabled,
 };

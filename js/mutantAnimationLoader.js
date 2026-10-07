@@ -15,22 +15,23 @@ let backgroundLoading = false;
 let currentBackgroundValue = null;
 const backgroundCache = new Map();
 
+let cachedStandTree = null;
+let cachedStandImage = null;
+let cachedStandMutant = null;
+
 function loadBackgroundImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    const t = setTimeout(() => { img.onload = null; img.onerror = null; img.src = ""; reject(new Error("timeout")); }, 15000);
     img.crossOrigin = "anonymous";
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error());
+    img.onload = () => { clearTimeout(t); resolve(img); };
+    img.onerror = () => { clearTimeout(t); reject(new Error()); };
     img.src = url;
   });
 }
 
 async function setBackgroundByValue(value) {
-  if (!value) {
-    currentBackgroundValue = null;
-    window.sceneRenderer.setBackground(null);
-    return;
-  }
+  if (!value) { currentBackgroundValue = null; window.sceneRenderer.setBackground(null); return; }
   if (backgroundCache.has(value)) {
     currentBackgroundValue = value;
     window.sceneRenderer.setBackground(backgroundCache.get(value));
@@ -53,9 +54,7 @@ async function setBackgroundByValue(value) {
   }
 }
 
-function getCurrentBackground() {
-  return currentBackgroundValue;
-}
+function getCurrentBackground() { return currentBackgroundValue; }
 
 async function ensureBackground() {
   if (cachedBackground) return cachedBackground;
@@ -65,21 +64,10 @@ async function ensureBackground() {
 
 function notifyStateChange() {
   const isLoading = mutantLoading || backgroundLoading || externalLoadingCount > 0;
-  for (const cb of stateListeners) {
-    try { cb(isLoading, mutantReady); } catch (_) {}
-  }
+  for (const cb of stateListeners) { try { cb(isLoading, mutantReady); } catch (_) {} }
 }
-
-function pushLoadingHold() {
-  externalLoadingCount++;
-  notifyStateChange();
-}
-
-function popLoadingHold() {
-  if (externalLoadingCount > 0) externalLoadingCount--;
-  notifyStateChange();
-}
-
+function pushLoadingHold() { externalLoadingCount++; notifyStateChange(); }
+function popLoadingHold() { if (externalLoadingCount > 0) externalLoadingCount--; notifyStateChange(); }
 function subscribeState(cb) {
   if (typeof cb !== "function") return;
   stateListeners.push(cb);
@@ -87,21 +75,27 @@ function subscribeState(cb) {
 }
 
 async function fetchText(url) {
-  const res = await fetch(url + (url.indexOf("?") === -1 ? "?nocache=" + Date.now() : ""));
-  if (!res.ok) throw new Error();
-  return await res.text();
+  const controller = new AbortController();
+  const tid = setTimeout(() => controller.abort(), 15000);
+  try {
+    const fullUrl = url + (url.indexOf("?") === -1 ? "?nocache=" + Date.now() : "");
+    const res = await fetch(fullUrl, { signal: controller.signal });
+    if (!res.ok) throw new Error();
+    return await res.text();
+  } finally { clearTimeout(tid); }
 }
 
 function loadSpritesheetImage(bitmap, skin) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    const t = setTimeout(() => { img.onload = null; img.onerror = null; img.src = ""; reject(new Error("timeout")); }, 15000);
     img.crossOrigin = "anonymous";
     const base = bitmap.replace(/\.png$/i, "");
     img.src = skin
       ? `https://s-beta.kobojo.com/mutants/assets/${base}_${skin}.png`
       : `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
-    img.onload = () => resolve(img);
-    img.onerror = () => reject();
+    img.onload = () => { clearTimeout(t); resolve(img); };
+    img.onerror = () => { clearTimeout(t); reject(new Error()); };
   });
 }
 
@@ -120,7 +114,6 @@ function normalizeSkin(skin) {
   if (skin === undefined || skin === null) return currentSkinName;
   return String(skin).trim();
 }
-
 function normalizeAnimation(name) {
   if (name === undefined || name === null) return currentAnimationName || "stand";
   const s = String(name).trim();
@@ -134,7 +127,6 @@ function beginLoading() {
   window.sceneRenderer.clearCanvas();
   notifyStateChange();
 }
-
 function finishLoading(success) {
   mutantReady = !!success;
   mutantLoading = false;
@@ -163,7 +155,7 @@ async function loadMutantImage(mutantValue, animName, skin) {
     window.animationEngine.setSpritesheet(img);
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.setTree(tree);
-    window.animationEngine.pause();   // ← nuevo
+    window.animationEngine.pause();
     finishLoading(true);
   } catch (_) {
     finishLoading(false);
@@ -192,12 +184,33 @@ async function setAnimation(animName) {
   if (!currentMutantCode) return;
   await loadMutantImage(currentMutantCode, animName, currentSkinName);
 }
-
 async function reload() {
   if (!currentMutantCode) return;
   await loadMutantImage(currentMutantCode, currentAnimationName, currentSkinName);
 }
 
+async function loadStandTreeForMutant(mutantValue) {
+  if (!mutantValue) return null;
+  if (cachedStandTree && cachedStandMutant === mutantValue) {
+    return { tree: cachedStandTree, image: cachedStandImage };
+  }
+  try {
+    const xmlPath = `data/mutants/${mutantValue}/stand.xml`;
+    const txt = await fetchText(xmlPath);
+    const xml = new DOMParser().parseFromString(txt, "application/xml");
+    const spriteEl = xml.querySelector("Sprite");
+    if (!spriteEl) return null;
+    const bitmap = spriteEl.getAttribute("bitmap") || "";
+    const img = await loadSpritesheetImage(bitmap, currentSkinName);
+    const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
+    window.animationEngine.resetNodeState(tree, true);
+    window.animationEngine.spriteUpdate(tree, 0);
+    cachedStandTree = tree;
+    cachedStandImage = img;
+    cachedStandMutant = mutantValue;
+    return { tree, image: img };
+  } catch (_) { return null; }
+}
 function isReady() { return mutantReady; }
 function isLoading() { return mutantLoading || externalLoadingCount > 0; }
 function getAvailableSkins() { return availableSkins.slice(); }
@@ -208,21 +221,11 @@ function getCurrentSkin() { return currentSkinName; }
 window.loadMutantImage = loadMutantImage;
 
 window.mutantLoader = {
-  loadMutantImage,
-  setSkin,
-  setAnimation,
-  reload,
-  getAvailableSkins,
-  getCurrentMutant,
-  getCurrentAnimation,
-  getCurrentSkin,
-  isReady,
-  isLoading,
-  subscribeState,
-  pushLoadingHold,
-  popLoadingHold,
+  loadMutantImage, setSkin, setAnimation, reload,
+  getAvailableSkins, getCurrentMutant, getCurrentAnimation, getCurrentSkin,
+  isReady, isLoading, subscribeState, pushLoadingHold, popLoadingHold,
+  loadStandTreeForMutant,
   get mutantReady() { return mutantReady; },
   get mutantLoading() { return mutantLoading || externalLoadingCount > 0; },
-  setBackgroundByValue,
-  getCurrentBackground,
+  setBackgroundByValue, getCurrentBackground,
 };

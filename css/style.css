@@ -1155,12 +1155,17 @@ body::before {
   background: rgba(255,255,255,0.1);
 }
 
-#mutantListContainer {
+.mutantListContainer {
   margin-top: 41.5px;
   max-height: 475px;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+.mutantListContainer:not(:has(> :nth-child(6))) {
+  margin-top: 0px;
+  max-height: 555px;
+  height: 555px;
 }
 #mutantListContainer::-webkit-scrollbar {
   display: none;
@@ -1263,14 +1268,20 @@ body::before {
 .skin-item:hover {
   background: rgba(255,255,255,0.1);
 }
-#skinListContainer {
+
+.skinListContainer {
   margin-top: 41.5px;
   max-height: 555px;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-#skinListContainer::-webkit-scrollbar {
+.skinListContainer:not(:has(> :nth-child(7))) {
+  margin-top: 0px;
+  max-height: 639.4px;
+  height: 639.4px;
+}
+.skinListContainer::-webkit-scrollbar {
   display: none;
 }
 /* SCROLL SKIN */
@@ -1491,6 +1502,11 @@ body::before {
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+.bgListContainer:not(:has(> :nth-child(6))) {
+  margin-top: 0px;
+  max-height: 555px;
+  height: 555px;
 }
 #bgListContainer::-webkit-scrollbar {
   display: none;

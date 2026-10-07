@@ -527,7 +527,15 @@ async function selectCharacter(context, mutant) {
           window.fxManager.setCurrentAnimation(anim, attacks);
           await window.fxManager.preloadForCurrentAttack();
         })();
-        await Promise.all([loadMutantImage(mutant.value, anim, skin), fxPromise]);
+        const standPromise = isAttack
+          ? window.mutantLoader.loadStandTreeForMutant(mutant.value)
+          : Promise.resolve(null);
+        const [, , standAssets] = await Promise.all([
+          loadMutantImage(mutant.value, anim, skin),
+          fxPromise,
+          standPromise,
+        ]);
+        window._standAssets = standAssets;
         window.animationEngine.pause();
         buildSoundSchedule();
         await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
@@ -798,7 +806,15 @@ async function selectAnimation(anim) {
         window.fxManager.setCurrentAnimation(value, attacks);
         await window.fxManager.preloadForCurrentAttack();
       })();
-      await Promise.all([window.mutantLoader.setAnimation(value), fxPromise]);
+      const standPromise = isAttack
+        ? window.mutantLoader.loadStandTreeForMutant(selectedValues.mutant)
+        : Promise.resolve(null);
+      const [_, , standAssets] = await Promise.all([
+        window.mutantLoader.setAnimation(value),
+        fxPromise,
+        standPromise,
+      ]);
+      window._standAssets = standAssets;
       window.animationEngine.pause();
       buildSoundSchedule();
       await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
@@ -854,15 +870,16 @@ function updateLoopButtonIcon() {
 function updateSoundButtonIcon() {
   const img = btnSound.querySelector("img");
   if (!img) return;
-  const desired = window.soundManager.isSoundEnabled()
-    ? "images/icons/players/player_sound_on.png"
-    : "images/icons/players/player_sound_off.png";
+  const v = window.soundManager.getSoundVolume();
+  const name = v >= 0.99 ? "player_sound_100.png"
+             : v >= 0.49 ? "player_sound_50.png"
+             : "player_sound_off.png";
+  const desired = `images/icons/players/${name}`;
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 function setupSoundControl() {
   btnSound.addEventListener("click", () => {
-    const next = !window.soundManager.isSoundEnabled();
-    window.soundManager.setSoundEnabled(next);
+    window.soundManager.cycleSoundVolume();
     updateSoundButtonIcon();
   });
   updateSoundButtonIcon();
@@ -911,14 +928,14 @@ function setupPlaybackControls() {
     const info = window.animationEngine.getInfo();
 
     if (wasPaused) {
-      if (window.animationEngine.isAtEnd()) {
+      const tick = info.tickPosition || 0;
+      if (window.animationEngine.isAtEnd() || tick < 0.5) {
         window.animationEngine.gotoTick(0);
         fxLastTick = 0;
         lastSeenTick = 0;
         momentIdx = {};
         playResumeSoundForTick(0);
       } else {
-        const tick = info.tickPosition || 0;
         fxLastTick = tick;
         lastSeenTick = tick;
         playResumeSoundForTick(tick);
@@ -940,9 +957,10 @@ function setupPlaybackControls() {
   });
   btnStop.addEventListener("click", () => {
     applyTickToAll(0);
-    timelineLastFrame = 0;
+    window.animationEngine.pause();
+    timelineLastFrame = -1;
     updateTimelineBar();
-    if (!window.animationEngine.isPaused()) updatePlayButtonIcon();
+    updatePlayButtonIcon();
   });
   updatePlayButtonIcon();
 }
@@ -1018,6 +1036,7 @@ function getTimelineGeometry() {
   const range = Math.max(1, lineWidth - barWidth);
   return { rect, scale, lineStart, lineWidth, barWidth, range };
 }
+
 function updateTimelineBar() {
   const info = window.animationEngine.getInfo();
   if (info.totalFrames <= 0) return;
@@ -1093,16 +1112,14 @@ function restoreRivalHitForTick(targetTick) {
 }
 
 function applyTickToAll(targetTick, opts = {}) {
-  const { preserveSounds = false } = opts;
+  const { silent = false } = opts;
   const prevTick = fxLastTick;
   window.animationEngine.gotoTick(targetTick);
   rebuildFxForTick(targetTick);
   updateMomentIdxForTick(targetTick);
   restoreRivalHitForTick(targetTick);
-  if (!preserveSounds) {
-    window.soundManager.stopAllSounds();
-  }
-  checkSoundCrossings(prevTick, targetTick, null);
+  window.soundManager.stopAllSounds();
+  if (!silent) checkSoundCrossings(prevTick, targetTick, null);
   fxLastTick = targetTick;
   lastSeenTick = targetTick;
   lastAnimationTime = window.animationEngine.getTime();
@@ -1126,7 +1143,6 @@ function stepTimeline(direction) {
 
 function playResumeSoundForTick(targetTick) {
   if (!soundSchedule || soundSchedule.length === 0) return;
-
   let best = null;
   for (const s of soundSchedule) {
     if (s.tick <= targetTick) {
@@ -1134,18 +1150,27 @@ function playResumeSoundForTick(targetTick) {
     }
   }
   if (!best) return;
-
   const animValue = selectedAnimation ? (selectedAnimation.value || "") : "";
   const isAttack = ATTACK_PATTERN.test(animValue);
   const mult = isAttack ? ATTACK_SPEED_MULTIPLIER : 1;
   const elapsedTicks = targetTick - best.tick;
   const offsetSeconds = elapsedTicks / (30 * mult);
-
   const buffer = window.soundManager.getSoundBuffer(best.name);
   if (!buffer) return;
   if (offsetSeconds >= buffer.duration) return;
-
   window.soundManager.playSoundAtOffset(best.name, offsetSeconds);
+}
+
+function computeSoundTailEndTick() {
+  if (!soundSchedule || soundSchedule.length === 0) return 0;
+  let maxEnd = 0;
+  for (const s of soundSchedule) {
+    const buf = window.soundManager.getSoundBuffer(s.name);
+    const dur = buf ? buf.duration : 2;
+    const end = s.tick + dur * 30 * ATTACK_SPEED_MULTIPLIER;
+    if (end > maxEnd) maxEnd = end;
+  }
+  return maxEnd;
 }
 
 function seekTimeline(clientX) {
@@ -1157,7 +1182,7 @@ function seekTimeline(clientX) {
   const relative = localX - lineStart - barWidth / 2;
   const ratio = Math.max(0, Math.min(1, relative / range));
   const target = Math.round(ratio * (dur - 1));
-  applyTickToAll(target);
+  applyTickToAll(target, { silent: true });
   timelineLastFrame = ratio;
   playerBar.style.left = `${lineStart + ratio * range}px`;
 }
@@ -1297,14 +1322,17 @@ function buildTransportSchedule() {
   const total = info.totalFrames;
   lastSeenTick = 0;
   momentIdx = {};
+  fxLastTick = -0.001;
   restoreRivalStand();
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
+  engine.clearAttackTail();
   if (total <= 0) { transportSchedule = null; return; }
   const animValue = selectedAnimation ? (selectedAnimation.value || "") : "";
   if (!ATTACK_PATTERN.test(animValue)) { transportSchedule = null; return; }
   const animTree = engine.getTree();
   if (!animTree) { transportSchedule = null; return; }
+
   const labels = engine.scanAnimationLabels();
   const moments = {};
   for (const labelName of Object.keys(labels)) {
@@ -1312,6 +1340,7 @@ function buildTransportSchedule() {
     if (ticks.length > 0) moments[labelName] = ticks;
   }
   for (const k of Object.keys(moments)) momentIdx[k] = 0;
+
   let targetDeltaX = 0;
   let hasArrivalPhase = false;
   let hasReturnPhase = false;
@@ -1338,6 +1367,14 @@ function buildTransportSchedule() {
     targetDeltaX = dx - (scale * dp.x);
   }
   transportSchedule = { startTick, arrivedTick, returnTick, backTick, moments, targetDeltaX, hasArrivalPhase, hasReturnPhase };
+
+  const attackEnd = info.tickDuration;
+  const fxEnd = window.fxManager.computeTailEndTick(moments);
+  const soundEnd = computeSoundTailEndTick();
+  const tailEnd = Math.max(attackEnd, fxEnd, soundEnd);
+  if (tailEnd > attackEnd && window._standAssets) {
+    engine.setAttackTail(tailEnd, window._standAssets.tree, window._standAssets.image, attackEnd);
+  }
 }
 
 function buildSoundSchedule() {
@@ -1394,23 +1431,25 @@ function checkMomentTicks() {
   }
 }
 
+async function loadOptions() {
+  const parsed = await parseCustomTXT("data/options.txt", currentLang);
+  availableLangs = parsed.filter(l => l.type === "langs");
+  availableSpeeds = parsed.filter(p => p.type === "speed");
+  allBackgrounds = parsed.filter(p => p.type && p.type.startsWith("bg_"));
+  const idx = availableSpeeds.findIndex(s => Math.abs(parseFloat(s.value) - 1) < 0.001);
+  currentSpeedIndex = idx >= 0 ? idx : 0;
+  renderLangMenu();
+  updateFlagLang();
+}
+
 function checkSoundCrossings(prevTick, currTick, maxDelta = 5) {
   if (!soundSchedule || soundSchedule.length === 0) return;
   const delta = currTick - prevTick;
-  if (Math.abs(delta) < 0.0001) return;
-  if (maxDelta !== null && Math.abs(delta) > maxDelta) return;
-
-  if (delta > 0) {
-    for (const s of soundSchedule) {
-      if (s.tick > prevTick && s.tick <= currTick) {
-        window.soundManager.playSound(s.name, false);
-      }
-    }
-  } else {
-    for (const s of soundSchedule) {
-      if (s.tick < prevTick && s.tick >= currTick) {
-        window.soundManager.playSound(s.name, true);
-      }
+  if (delta <= 0.0001) return;
+  if (maxDelta !== null && delta > maxDelta) return;
+  for (const s of soundSchedule) {
+    if (s.tick > prevTick && s.tick <= currTick) {
+      window.soundManager.playSound(s.name);
     }
   }
 }
@@ -1698,19 +1737,28 @@ function initEventListeners() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const t0 = performance.now();
+  const tlog = (label) => console.log(`[boot] ${label}: ${(performance.now() - t0).toFixed(0)}ms`);
   playerButtons.forEach(btn => setPlayerButtonEnabled(btn, false));
   window.sceneRenderer.setCameraEnabled(false);
   showLoading();
-  await loadAvailableLanguages();
-  await loadAvailableSpeeds();
-  await applyLanguage();
-  await loadMutants();
-  await loadBackgrounds();
-  await applyDefaultBackground();
-  createListController("mutant");
-  createListController("skin");
-  createListController("bg");
-  initEventListeners();
-  await setDefaultRival("specimen_a_01");
-  hideLoading();
+  try {
+    tlog("start");
+    await Promise.all([loadOptions(), loadMutants()]);
+    tlog("options+mutants");
+    await applyLanguage();
+    tlog("language");
+    await applyDefaultBackground();
+    tlog("background");
+    createListController("mutant");
+    createListController("skin");
+    createListController("bg");
+    initEventListeners();
+    tlog("listeners");
+    await setDefaultRival("specimen_a_01");
+    tlog("rival");
+  } finally {
+    hideLoading();
+    tlog("hideLoading");
+  }
 });
