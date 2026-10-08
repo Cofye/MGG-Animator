@@ -709,7 +709,12 @@ async function setDefaultRival(mutantValue) {
 function createBgItem(bg) {
   const item = document.createElement("div");
   item.className = "bg-item";
-  item.innerHTML = `<div class="bg"><img class="bg_bg" src="images/ui/bg_background.png"><img class="bg_icon" src="${bg.image}"></div><span class="text">${bg.name}</span>`;
+  item.innerHTML = `
+    <div class="bg">
+      <img class="bg_bg" src="images/ui/bg_background.png">
+      <img class="bg_icon" src="${bg.image}">
+    </div>
+    <span class="text">${bg.name}</span>`;
   item.addEventListener("click", () => selectBg(bg));
   return item;
 }
@@ -800,7 +805,12 @@ async function updateAnimationButton() {
 function createSkinItem(skin) {
   const item = document.createElement("div");
   item.className = "skin-item";
-  item.innerHTML = `<div class="skin"><img class="skin_bg" src="images/ui/skin_background.png"><img class="skin_icon" src="${skin.image}"></div><span class="text">${skin.name}</span>`;
+  item.innerHTML = `
+    <div class="skin">
+      <img class="skin_bg" src="images/ui/skin_background.png">
+      <img class="skin_icon" src="${skin.image}">
+    </div>
+    <span class="text">${skin.name}</span>`;
   item.addEventListener("click", () => selectSkin(skin));
   return item;
 }
@@ -808,7 +818,12 @@ function createSkinItem(skin) {
 function createAnimationItem(anim) {
   const item = document.createElement("div");
   item.className = "skin-item";
-  item.innerHTML = `<div class="skin"><img class="skin_icon" src="${anim.image}"></div><span class="text">${anim.name}</span>`;
+  item.innerHTML = `
+    <div class="skin">
+      <img class="skin_bg" src="images/ui/animation_background.png">
+      <img class="skin_icon" src="${anim.image}">
+    </div>
+    <span class="text">${anim.name}</span>`;
   item.addEventListener("click", () => selectAnimation(anim));
   return item;
 }
@@ -995,16 +1010,19 @@ function updateLoopButtonIcon() {
   const desired = loopEnabled ? "images/icons/players/player_loop.png" : "images/icons/players/player_noloop.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
+
 function updateSoundButtonIcon() {
   const img = btnSound.querySelector("img");
   if (!img) return;
-  const v = window.soundManager.getSoundVolume();
-  const name = v >= 0.99 ? "player_sound_on.png"
-             : v >= 0.39 ? "player_sound_50.png"
+  const level = window.soundManager.getSoundLevel();
+  const name = level === 3 ? "player_sound_3.png"
+             : level === 2 ? "player_sound_2.png"
+             : level === 1 ? "player_sound_1.png"
              : "player_sound_off.png";
   const desired = `images/icons/players/${name}`;
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
+
 function setupSoundControl() {
   btnSound.addEventListener("click", () => {
     window.soundManager.cycleSoundVolume();
@@ -1407,11 +1425,12 @@ function setupTimeline() {
       return;
     }
     if (Math.abs(delta) < 0.0001) return;
-    const isLoop = prevTick > tick && prevTick >= dur - 5;
+    const isLoop = tick < prevTick;
     rebuildFxForTick(tick);
     updateMomentIdxForTick(tick);
     if (isLoop) {
       window.soundManager.stopAllSounds();
+      checkSoundCrossings(prevTick, dur, null);
       checkSoundCrossings(-0.001, tick, null);
     } else {
       checkSoundCrossings(prevTick, tick, null);

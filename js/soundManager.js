@@ -1,7 +1,10 @@
 const soundBufferCache = new Map();
 let audioCtx = null;
 let masterGain = null;
-let soundVolume = 1;
+const SOUND_LEVEL_GAINS = [0, 1/9, 4/9, 1];
+let soundLevel = 3;
+let soundDirection = -1;
+let soundVolume = SOUND_LEVEL_GAINS[soundLevel];
 let playbackRate = 1;
 const activeSources = new Set();
 const MASTER_GAIN = 0.7;
@@ -83,15 +86,28 @@ function playSoundAtOffset(name, offsetSeconds) { playSound(name, offsetSeconds)
 function setSoundVolume(v) {
   const n = Number(v);
   soundVolume = Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 1;
+  let bestLevel = 0;
+  let bestDist = Infinity;
+  for (let i = 0; i < SOUND_LEVEL_GAINS.length; i++) {
+    const d = Math.abs(SOUND_LEVEL_GAINS[i] - soundVolume);
+    if (d < bestDist) { bestDist = d; bestLevel = i; }
+  }
+  soundLevel = bestLevel;
   const ctx = ensureAudioCtx();
   if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
 }
+
+function getSoundLevel() { return soundLevel; }
+
 function getSoundVolume() { return soundVolume; }
 
 function cycleSoundVolume() {
-  if (soundVolume >= 0.99) setSoundVolume(0.5);
-  else if (soundVolume >= 0.49) setSoundVolume(0);
-  else setSoundVolume(1);
+  if (soundLevel === 0) soundDirection = 1;
+  else if (soundLevel === 3) soundDirection = -1;
+  soundLevel += soundDirection;
+  soundVolume = SOUND_LEVEL_GAINS[soundLevel];
+  const ctx = ensureAudioCtx();
+  if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
   return soundVolume;
 }
 
@@ -126,6 +142,7 @@ window.soundManager = {
   pauseAllSounds, resumeAllSounds,
   setSoundEnabled, isSoundEnabled,
   setSoundVolume, getSoundVolume, cycleSoundVolume,
+  getSoundLevel,
   setPlaybackRate, getPlaybackRate,
   getSoundBuffer, playSoundAtOffset,
 };
