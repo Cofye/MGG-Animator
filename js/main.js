@@ -110,6 +110,71 @@ let firstMutantLoaded = false;
 let fxLastTick = -0.001;
 let momentIdx = {};
 let soundSchedule = [];
+let accessRules = {
+  exemptUserIds: new Set(),
+  blockedForEveryone: new Set(),
+  membersOnly: new Set(),
+};
+let currentUserExempt = false;
+let currentUserInGuild = false;
+
+function getDiscordUserId(session) {
+  if (!session || !session.user) return null;
+  const meta = session.user.user_metadata || {};
+  return meta.provider_id || meta.sub || session.user.id || null;
+}
+
+async function loadAccessRules() {
+  try {
+    const res = await fetch(`data/access.json?nocache=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const normalizeList = (arr) => new Set((arr || []).map(s => String(s).toLowerCase()));
+    accessRules.exemptUserIds = new Set((data.exemptUserIds || []).map(String));
+    accessRules.blockedForEveryone = normalizeList(data.blockedForEveryone);
+    accessRules.membersOnly = normalizeList(data.membersOnly);
+    console.log("[main] access rules cargadas:",
+      accessRules.exemptUserIds.size, "excentos,",
+      accessRules.blockedForEveryone.size, "bloqueados,",
+      accessRules.membersOnly.size, "solo miembros");
+  } catch (e) {
+    console.warn("[main] access.json no cargó, sin restricciones:", e.message);
+    accessRules = {
+      exemptUserIds: new Set(),
+      blockedForEveryone: new Set(),
+      membersOnly: new Set(),
+    };
+  }
+}
+
+async function refreshAccessState() {
+  currentUserExempt = false;
+  currentUserInGuild = false;
+  const session = await window.discordIntegration.getSession();
+  if (!session) return;
+  const userId = getDiscordUserId(session);
+  if (userId && accessRules.exemptUserIds.has(String(userId))) {
+    currentUserExempt = true;
+    currentUserInGuild = true;
+    return;
+  }
+  currentUserInGuild = await window.discordIntegration.checkGuildMembership();
+}
+
+function canViewMutant(mutantValue) {
+  if (!mutantValue) return true;
+  if (currentUserExempt) return true;
+  const key = String(mutantValue).toLowerCase();
+  if (accessRules.blockedForEveryone.has(key)) return false;
+  if (accessRules.membersOnly.has(key) && !currentUserInGuild) return false;
+  return true;
+}
+
+function reRenderOpenLists() {
+  if (listControllers.mutant && !listControllers.mutant.layer.classList.contains("hidden")) {
+    renderCharacterList(mutantListLayerContext(), listControllers.mutant.search?.value || "");
+  }
+}
 
 document.querySelectorAll("button:not([type])").forEach(btn => btn.setAttribute("type", "button"));
 
@@ -476,6 +541,7 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   state.container.innerHTML = "";
   const filter = currentFilters[context];
   let filtered = allMutants.filter(m => m.type === filter || filter === "default_");
+  filtered = filtered.filter(m => canViewMutant(m.value));
   if (searchQuery) {
     const q = normalizeText(searchQuery);
     filtered = filtered.filter(m => normalizeText(m.name).includes(q));
@@ -525,6 +591,10 @@ function updateStatsButton(mutantValue) {
 }
 
 async function selectCharacter(context, mutant) {
+  if (!canViewMutant(mutant.value)) {
+    console.warn("[main] mutante restringido para este usuario:", mutant.value);
+    return;
+  }
   const icon = document.querySelector(`#${context}Select img`);
   const text = document.querySelector(`#${context}Select span`);
   icon.src = mutant.image;
@@ -694,6 +764,10 @@ function restoreRivalStand() {
 }
 
 async function setDefaultRival(mutantValue) {
+  if (!canViewMutant(mutantValue)) {
+    console.warn("[main] rival por defecto restringido, se ignora:", mutantValue);
+    return;
+  }
   const found = allMutants.find(m => m.value === mutantValue);
   if (!found) return;
   const icon = document.querySelector("#rivalSelect img");
@@ -1895,6 +1969,10 @@ function initEventListeners() {
     if (!ok) console.warn("[main] death shader no disponible, se usará render normal");
     return ok;
   });
+  window.discordIntegration.onAuthChanged(async () => {
+    await refreshAccessState();
+    reRenderOpenLists();
+  });
   if (window.mutantLoader && typeof window.mutantLoader.subscribeState === "function") {
     window.mutantLoader.subscribeState((loading) => {
       if (loading) {
@@ -1921,8 +1999,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   showLoading();
   try {
     tlog("start");
-    await Promise.all([loadOptions(), loadMutants()]);
-    tlog("options+mutants");
+    await Promise.all([loadOptions(), loadMutants(), loadAccessRules()]);
+    tlog("options+mutants+access");
+    await refreshAccessState();
+    tlog("access-state");
     await applyLanguage();
     tlog("language");
     await applyDefaultBackground();

@@ -96,6 +96,20 @@ async function requireGuildMembership() {
   return false;
 }
 
+async function checkGuildMembership() {
+  const session = await getSession();
+  if (!session) return false;
+  if (localStorage.getItem(GUILD_CACHE_KEY) === 'true') return true;
+  if (session.provider_token) {
+    const guilds = await fetchDiscordGuilds(session.provider_token);
+    if (isInGuild(guilds)) {
+      localStorage.setItem(GUILD_CACHE_KEY, 'true');
+      return true;
+    }
+  }
+  return false;
+}
+
 async function handleDebugClick() {
   const session = await getSession();
   const btnDebug = document.getElementById('btnDebug');
@@ -232,6 +246,7 @@ window.discordIntegration = {
   getSession,
   requireLogin,
   requireGuildMembership,
+  checkGuildMembership,
   setupDiscordAuth,
   setupUserDropdown,
   checkDiscordSession,
