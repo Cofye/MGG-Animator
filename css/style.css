@@ -727,10 +727,6 @@ body::before {
   margin-top: 45.5px;
 }
 
-#rivalFilter {
-  margin-top: 375.5px;
-}
-
 /* SELECTORES LISTAS */
 #mutantSelect {
   width: 600px;
@@ -756,9 +752,16 @@ body::before {
 #rivalSelect {
   width: 600px;
   height: 100px;
-  margin-top: 540px;
+  margin-top: 375.5px;
   margin-left: 50px;
   background-image: url("../images/ui/slot_rival.png");
+}
+#rivalSkinSelect {
+  width: 600px;
+  height: 100px;
+  margin-top: 540px;
+  margin-left: 50px;
+  background-image: url("../images/ui/slot_rival_skin.png");
 }
 
 /*  FONDOS */
@@ -1066,16 +1069,16 @@ body::before {
 .mutantIcon {
   width: 105.7px;
   height: 105.7px;
-  -webkit-mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/alpha.png");
-  mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/alpha.png");
+  -webkit-mask-image: url("../images/ui/alpha.png");
+  mask-image: url("../images/ui/alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
 }
 .rivalIcon {
   width: 105.7px;
   height: 105.7px;
-  -webkit-mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/alpha.png");
-  mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/alpha.png");
+  -webkit-mask-image: url("../images/ui/alpha.png");
+  mask-image: url("../images/ui/alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
   transform: scaleX(-1);
@@ -1088,6 +1091,14 @@ body::before {
   background-size: cover;
   background-position: center;
   left: -1px;
+  position: absolute;
+}
+.rivalSkinIcon {
+  width: 122px;
+  height: 101px;
+  background-size: cover;
+  background-position: center;
+  left: 480px;
   position: absolute;
 }
 .animationIcon {

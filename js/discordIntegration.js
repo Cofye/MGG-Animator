@@ -244,10 +244,14 @@ async function checkDiscordSession() {
       userWrap.classList.remove('hidden');
       const avatarImg = document.querySelector('.profileDiscord');
       if (avatarImg) {
-        const userId = meta.provider_id || meta.sub || session.user.id || "";
-        const color = pickAvatarColor(userId);
-        const tinted = await tintDefaultAvatar(color);
-        if (tinted) avatarImg.src = tinted;
+        if (meta.avatar_url) {
+          avatarImg.src = meta.avatar_url;
+        } else {
+          const userId = meta.provider_id || meta.sub || session.user.id || "";
+          const color = pickAvatarColor(userId);
+          const tinted = await tintDefaultAvatar(color);
+          if (tinted) avatarImg.src = tinted;
+        }
       }
       const nameSpan = document.querySelector('.textProfile');
       if (nameSpan) {

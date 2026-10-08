@@ -32,6 +32,7 @@ const playerBar = document.getElementById("playerBar");
 const btnSound = document.getElementById("btnSound");
 const btnScreenshot = document.getElementById("btnScreenshot");
 const btnDelete = document.getElementById("btnDelete");
+const RivalSkinSelect = document.getElementById("rivalSkinSelect");
 const COMBAT_PATTERN = /^(attack|hit)/i;
 const ATTACK_PATTERN = /^attack/i;
 const ATTACK_SPEED_MULTIPLIER = 1.5;
@@ -79,6 +80,8 @@ let allSkins = [];
 let allAnimations = [];
 let selectedSkin = null;
 let selectedAnimation = null;
+let allRivalSkins = [];
+let selectedRivalSkin = null;
 let itemListMode = null;
 let allBackgrounds = [];
 let currentBgFilter = null;
@@ -517,6 +520,10 @@ async function reloadMutantNames() {
   if (selectedValues.rival) {
     const found = allMutants.find(m => m.value === selectedValues.rival);
     if (found) document.querySelector("#rivalSelect span").textContent = found.name;
+    await loadRivalData(selectedValues.rival);
+    const skinVal = selectedRivalSkin ? (selectedRivalSkin.value || "") : null;
+    selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (skinVal || "")) || allRivalSkins[0] || null;
+    updateRivalSkinButton();
   }
 }
 
@@ -529,6 +536,15 @@ async function loadMutantData(mutantValue) {
     allSkins = parsed.filter(p => p.type === "skin");
     allAnimations = parsed.filter(p => p.type === "animation");
   } catch { allSkins = []; allAnimations = []; }
+}
+
+async function loadRivalData(mutantValue) {
+  allRivalSkins = [];
+  if (!mutantValue) return;
+  try {
+    const parsed = await parseCustomTXT(`data/mutants/${mutantValue}/data.txt?nocache=${Date.now()}`, currentLang);
+    allRivalSkins = parsed.filter(p => p.type === "skin");
+  } catch { allRivalSkins = []; }
 }
 
 function mutantListLayerContext() { return listControllers.mutant?.layer.getAttribute("data-context") || "mutant"; }
@@ -633,7 +649,6 @@ async function selectCharacter(context, mutant) {
       const isDeath = DEATH_PATTERN.test(anim);
       const isAttack = ATTACK_PATTERN.test(anim);
       const animToLoad = isDeath ? "stand" : anim;
-
       window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(anim) || isDeath));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
@@ -642,7 +657,6 @@ async function selectCharacter(context, mutant) {
       window.animationEngine.stopDeath();
       window.mutantLoader.pushLoadingHold();
       window.animationEngine.pause();
-
       let splatterAssets = null;
       let loaded = false;
       try {
@@ -669,7 +683,6 @@ async function selectCharacter(context, mutant) {
         window.animationEngine.pause();
         buildSoundSchedule();
         await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
-
         if (isDeath) {
           if (deathShaderReadyPromise) await deathShaderReadyPromise;
           const gene = extractGeneFromSpecimen(mutant.value);
@@ -678,12 +691,10 @@ async function selectCharacter(context, mutant) {
       } finally {
         window.mutantLoader.popLoadingHold();
       }
-
       if (!loaded) {
         console.error("[main] no se pudo cargar el mutante, se aborta la selección");
         return;
       }
-
       fxLastTick = -0.001;
       lastSeenTick = 0;
       window.animationEngine.play();
@@ -704,7 +715,11 @@ async function selectCharacter(context, mutant) {
       }
     }
   } else if (context === "rival") {
-    await loadRivalStand(mutant.value);
+    await loadRivalData(mutant.value);
+    const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || "") : null;
+    selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allRivalSkins[0] || null;
+    updateRivalSkinButton();
+    await loadRivalStand(mutant.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
   }
@@ -715,7 +730,7 @@ function applyRivalVisibility(animValue) {
   window.animationEngine.setRivalVisible(isAttack && showRivalEnabled && !!currentRivalStandTree);
 }
 
-async function loadRivalAnimationAssets(mutantValue, animName) {
+async function loadRivalAnimationAssets(mutantValue, animName, skin) {
   const xmlPath = `data/mutants/${mutantValue}/${animName}.xml?nocache=${Date.now()}`;
   const txt = await fetch(xmlPath).then(r => r.text());
   const xml = new DOMParser().parseFromString(txt, "application/xml");
@@ -723,7 +738,8 @@ async function loadRivalAnimationAssets(mutantValue, animName) {
   if (!spriteEl) throw new Error();
   const bitmap = spriteEl.getAttribute("bitmap") || "";
   const base = bitmap.replace(/\.png$/i, "");
-  const url = `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
+  const skinSuffix = skin ? `_${skin}` : "";
+  const url = `https://s-beta.kobojo.com/mutants/assets/${base}${skinSuffix}.png`;
   const img = await new Promise((resolve, reject) => {
     const i = new Image();
     i.crossOrigin = "anonymous";
@@ -735,19 +751,20 @@ async function loadRivalAnimationAssets(mutantValue, animName) {
   return { tree, img };
 }
 
-async function ensureRivalAssets(mutantValue) {
+async function ensureRivalAssets(mutantValue, skin) {
   if (!mutantValue) return null;
-  if (rivalAnimationCache.has(mutantValue)) return rivalAnimationCache.get(mutantValue);
+  const key = `${mutantValue}|${skin || ""}`;
+  if (rivalAnimationCache.has(key)) return rivalAnimationCache.get(key);
   const [stand, hit] = await Promise.all([
-    loadRivalAnimationAssets(mutantValue, "stand"),
-    loadRivalAnimationAssets(mutantValue, "hit").catch(() => null)
+    loadRivalAnimationAssets(mutantValue, "stand", skin),
+    loadRivalAnimationAssets(mutantValue, "hit", skin).catch(() => null)
   ]);
   const assets = { stand, hit };
-  rivalAnimationCache.set(mutantValue, assets);
+  rivalAnimationCache.set(key, assets);
   return assets;
 }
 
-async function loadRivalStand(mutantValue) {
+async function loadRivalStand(mutantValue, skin) {
   if (!mutantValue) {
     currentRivalStandTree = null; currentRivalStandImage = null; currentRivalAssets = null;
     rivalHitPlaying = false;
@@ -755,9 +772,7 @@ async function loadRivalStand(mutantValue) {
     window.animationEngine.setRivalVisible(false);
     return;
   }
-  try {
-    const assets = await ensureRivalAssets(mutantValue);
-    if (!assets || !assets.stand) throw new Error();
+  const applyAssets = (assets) => {
     currentRivalAssets = assets;
     currentRivalStandTree = assets.stand.tree;
     currentRivalStandImage = assets.stand.img;
@@ -765,7 +780,18 @@ async function loadRivalStand(mutantValue) {
     window.animationEngine.setRivalSpritesheet(assets.stand.img);
     window.animationEngine.setRivalTree(assets.stand.tree);
     window.animationEngine.precomputeTimeline();
+  };
+  try {
+    const assets = await ensureRivalAssets(mutantValue, skin);
+    if (!assets || !assets.stand) throw new Error();
+    applyAssets(assets);
   } catch (_) {
+    if (skin) {
+      try {
+        const assets = await ensureRivalAssets(mutantValue, "");
+        if (assets && assets.stand) { applyAssets(assets); return; }
+      } catch (_) {}
+    }
     currentRivalStandTree = null; currentRivalStandImage = null; currentRivalAssets = null;
     rivalHitPlaying = false;
     window.animationEngine.setRivalTree(null);
@@ -792,7 +818,10 @@ async function setDefaultRival(mutantValue) {
   if (icon) icon.src = found.image;
   if (text) text.textContent = found.name;
   selectedValues.rival = found.value;
-  await loadRivalStand(found.value);
+  await loadRivalData(found.value);
+  selectedRivalSkin = allRivalSkins[0] || null;
+  updateRivalSkinButton();
+  await loadRivalStand(found.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
   const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
   applyRivalVisibility(anim);
 }
@@ -892,6 +921,22 @@ async function updateAnimationButton() {
   span.textContent = selectedAnimation.name;
 }
 
+async function updateRivalSkinButton() {
+  const icon = document.querySelector("#rivalSkinSelect img");
+  const span = document.querySelector("#rivalSkinSelect span");
+  if (!icon || !span) return;
+  if (!selectedRivalSkin) {
+    icon.src = "images/icons/icon_cancel.png";
+    span.setAttribute("data-lang", "none");
+    const langsMap = await loadLangsFile();
+    span.textContent = langsMap[`none-${currentLang}`] || langsMap["none"] || "";
+    return;
+  }
+  icon.src = selectedRivalSkin.image;
+  span.removeAttribute("data-lang");
+  span.textContent = selectedRivalSkin.name;
+}
+
 function createSkinItem(skin) {
   const item = document.createElement("div");
   item.className = "skin-item";
@@ -903,6 +948,33 @@ function createSkinItem(skin) {
     <span class="text">${skin.name}</span>`;
   item.addEventListener("click", () => selectSkin(skin));
   return item;
+}
+
+function createRivalSkinItem(skin) {
+  const item = document.createElement("div");
+  item.className = "skin-item";
+  item.innerHTML = `
+    <div class="skin">
+      <img class="skin_bg" src="images/ui/skin_background.png">
+      <img class="skin_icon" src="${skin.image}">
+    </div>
+    <span class="text">${skin.name}</span>`;
+  item.addEventListener("click", () => selectRivalSkin(skin));
+  return item;
+}
+
+async function selectRivalSkin(skin) {
+  selectedRivalSkin = skin;
+  updateRivalSkinButton();
+  closeItemList(); closeCharacterList();
+  clickToClose.classList.add("hidden");
+  scaleContainerLayer.classList.add("hidden");
+  hideStatic();
+  if (selectedValues.rival) {
+    await loadRivalStand(selectedValues.rival, skin ? (skin.value || "") : "");
+    const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+    applyRivalVisibility(anim);
+  }
 }
 
 function createAnimationItem(anim) {
@@ -922,8 +994,18 @@ function renderItemList() {
   const state = listControllers.skin;
   if (!state || !itemListMode) return;
   state.container.innerHTML = "";
-  const items = itemListMode === "animation" ? allAnimations : allSkins;
-  const createFn = itemListMode === "animation" ? createAnimationItem : createSkinItem;
+  let items;
+  let createFn;
+  if (itemListMode === "animation") {
+    items = allAnimations;
+    createFn = createAnimationItem;
+  } else if (itemListMode === "rivalSkin") {
+    items = allRivalSkins;
+    createFn = createRivalSkinItem;
+  } else {
+    items = allSkins;
+    createFn = createSkinItem;
+  }
   items.forEach(item => state.container.appendChild(createFn(item)));
   setTimeout(state.updateScrollUI, 50);
 }
@@ -931,7 +1013,9 @@ function renderItemList() {
 function openItemList(mode) {
   const state = listControllers.skin;
   if (!state) return;
-  const items = mode === "animation" ? allAnimations : allSkins;
+  const items = mode === "animation" ? allAnimations
+              : mode === "rivalSkin" ? allRivalSkins
+              : allSkins;
   if (items.length <= 1) return;
   itemListMode = mode;
   state.bg.classList.remove("hidden"); state.layer.classList.remove("hidden");
@@ -1952,13 +2036,6 @@ function setupGeneFilterEvents() {
       currentFilters.mutant = btn.dataset.value;
     });
   });
-  document.querySelectorAll("#rivalFilter .btnGene").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#rivalFilter .btnGene").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentFilters.rival = btn.dataset.value;
-    });
-  });
 }
 
 function initEventListeners() {
@@ -1985,6 +2062,7 @@ function initEventListeners() {
   rivalSelect.addEventListener("click", () => openCharacterList("rival"));
   skinSelect.addEventListener("click", () => openItemList("skin"));
   animationSelect.addEventListener("click", () => openItemList("animation"));
+  if (rivalSkinSelect) rivalSkinSelect.addEventListener("click", () => openItemList("rivalSkin"));
   clickToClose.addEventListener("click", closeAnyList);
   setupMutantSearch();
   deathShaderReadyPromise = window.deathFxManager.init().then(ok => {
