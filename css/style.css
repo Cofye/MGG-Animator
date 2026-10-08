@@ -8,7 +8,6 @@ body {
   background-color: #000;
   margin: 0;
   position: relative;
-  /* ancho/alto los controla rescale.js */
 }
 body::before {
   content: "";
@@ -33,6 +32,10 @@ body::before {
   height: 1080px;
   position: relative;
   transform-origin: top left;
+  pointer-events: none;
+}
+#scale-container-layer > * {
+  pointer-events: auto;
 }
 
 .encima {
@@ -545,6 +548,18 @@ body::before {
   height: 20px;
   user-select: none;
   touch-action: none;
+}
+.playerTimeline.in-fullscreen {
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 4% !important;
+  top: auto !important;
+  width: min(80vw, 1200px) !important;
+  height: 20px !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  transform-origin: center center !important;
+  z-index: 9999;
 }
 .playerLine {
   position: absolute;
@@ -1586,11 +1601,9 @@ body::before {
   display: block;
 }
 #clickToClose {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: auto;
-  height: auto;
-  z-index: 4;
+  z-index: auto;
 }
 #cover-container {
   position: fixed;

@@ -124,6 +124,30 @@ let accessRules = {
 let currentUserExempt = false;
 let currentUserInGuild = false;
 
+const BOOT_TIMEOUT_MS = 10000;
+const BOOT_ATTEMPT_KEY = "mgg_boot_attempts";
+const MAX_BOOT_ATTEMPTS = 3;
+
+function startBootWatchdog() {
+  const attempts = parseInt(sessionStorage.getItem(BOOT_ATTEMPT_KEY) || "0", 10);
+  if (attempts >= MAX_BOOT_ATTEMPTS) {
+    // Ya reintentamos lo suficiente; no seguir recargando en bucle.
+    return null;
+  }
+  return setTimeout(() => {
+    sessionStorage.setItem(BOOT_ATTEMPT_KEY, String(attempts + 1));
+    window.location.reload();
+  }, BOOT_TIMEOUT_MS);
+}
+
+function cancelBootWatchdog(id) {
+  if (id != null) clearTimeout(id);
+}
+
+function clearBootAttempts() {
+  sessionStorage.removeItem(BOOT_ATTEMPT_KEY);
+}
+
 function getDiscordUserId(session) {
   if (!session || !session.user) return null;
   const meta = session.user.user_metadata || {};
@@ -1899,39 +1923,126 @@ function updateFullscreenIcon() {
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 
-let lastFullscreenClick = 0;
+let timelinePlaceholder = null;
+
+function moveTimelineIntoFullscreen() {
+  const wrapper = document.getElementById("canvasWrapper");
+  const timeline = document.getElementById("playerTimeline");
+  if (!wrapper || !timeline) return;
+  if (timeline.parentElement === wrapper) return;
+
+  timelinePlaceholder = document.createComment("playerTimeline-home");
+  timeline.parentNode.insertBefore(timelinePlaceholder, timeline);
+
+  wrapper.appendChild(timeline);
+  timeline.classList.add("in-fullscreen");
+
+  requestAnimationFrame(() => {
+    updateTimelineBar();
+  });
+}
+
+function moveTimelineBack() {
+  const timeline = document.getElementById("playerTimeline");
+  if (!timeline || !timelinePlaceholder) return;
+
+  timeline.classList.remove("in-fullscreen");
+  timelinePlaceholder.parentNode.insertBefore(timeline, timelinePlaceholder);
+  timelinePlaceholder.parentNode.removeChild(timelinePlaceholder);
+  timelinePlaceholder = null;
+
+  requestAnimationFrame(() => {
+    updateTimelineBar();
+  });
+}
+
+let fullscreenLocked = false;
+
 function setupFullscreen() {
   btnFullscreen.addEventListener("click", async (e) => {
     e.stopPropagation();
-    const now = performance.now();
-    if (now - lastFullscreenClick < 500) return;
-    lastFullscreenClick = now;
-
+    e.preventDefault();
+    if (fullscreenLocked) return;
+    fullscreenLocked = true;
+    setTimeout(() => { fullscreenLocked = false; }, 600);
     const wrapper = document.getElementById("canvasWrapper");
-    if (!wrapper) return;
+    if (!wrapper) { fullscreenLocked = false; return; }
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await wrapper.requestFullscreen();
-    } catch (_) {}
+    } catch (_) {
+      fullscreenLocked = false;
+      moveTimelineBack();
+    }
   });
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
-      disableAncestorTransforms(); updateFullscreenLayout();
-      requestAnimationFrame(updateFullscreenLayout);
+      disableAncestorTransforms();
+      updateFullscreenLayout();
+      moveTimelineIntoFullscreen();
+      requestAnimationFrame(() => {
+        updateFullscreenLayout();
+        updateTimelineBar();
+      });
     } else {
-      clearFullscreenLayout(); restoreAncestorTransforms();
+      moveTimelineBack();
+      clearFullscreenLayout();
+      restoreAncestorTransforms();
       if (typeof scaleSite === "function") scaleSite();
       if (typeof scaleCover === "function") scaleCover();
       requestAnimationFrame(() => {
         if (typeof scaleSite === "function") scaleSite();
         if (typeof scaleCover === "function") scaleCover();
+        updateTimelineBar();
       });
     }
     updateFullscreenIcon();
     updateTimelineBar();
   });
-  window.addEventListener("resize", () => { if (document.fullscreenElement) updateFullscreenLayout(); });
+  window.addEventListener("resize", () => {
+    if (document.fullscreenElement) updateFullscreenLayout();
+  });
   updateFullscreenIcon();
+}
+
+function setupFullscreenKeyboard() {
+  window.addEventListener("keydown", (e) => {
+    // Solo en modo pantalla completa
+    if (!document.fullscreenElement) return;
+
+    // Ignora si el foco está en un campo de texto editable
+    const t = e.target;
+    const tag = (t && t.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+
+    if (e.code === "Space" || e.key === " ") {
+      e.preventDefault();               // evita scroll
+      if (!btnPlay.disabled) btnPlay.click();
+      return;
+    }
+
+    if (e.code === "ArrowRight") {
+      e.preventDefault();               // evita scroll horizontal
+      if (btnForward.disabled) return;
+      if (!window.animationEngine.isPaused()) {
+        window.animationEngine.pause();
+        updatePlayButtonIcon();
+      }
+      stepTimeline(1);
+      return;
+    }
+
+    if (e.code === "ArrowLeft") {
+      e.preventDefault();
+      if (btnBack.disabled) return;
+      if (!window.animationEngine.isPaused()) {
+        window.animationEngine.pause();
+        updatePlayButtonIcon();
+      }
+      stepTimeline(-1);
+      return;
+    }
+  });
 }
 
 function setupCameraControls() {
@@ -2071,6 +2182,7 @@ function initEventListeners() {
   setupSoundControl();
   setupTimeline();
   setupFullscreen();
+  setupFullscreenKeyboard();
   setupCameraControls();
   setupBackgroundControls();
   setupScreenshot();
@@ -2113,9 +2225,13 @@ function initEventListeners() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const watchdogId = startBootWatchdog();
+
   playerButtons.forEach(btn => setPlayerButtonEnabled(btn, false));
   window.sceneRenderer.setCameraEnabled(false);
   showLoading();
+
+  let bootOk = false;
   try {
     await Promise.all([loadOptions(), loadMutants(), loadAccessRules()]);
     await refreshAccessState();
@@ -2126,7 +2242,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     createListController("bg");
     initEventListeners();
     await setDefaultRival("specimen_a_01");
+    bootOk = true;
+  } catch (e) {
+    bootOk = false;
   } finally {
+    cancelBootWatchdog(watchdogId);
     hideLoading();
+    if (bootOk) clearBootAttempts();
   }
 });
