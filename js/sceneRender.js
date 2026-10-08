@@ -399,26 +399,26 @@ function renderAll() {
     const total = Math.max(1, Math.floor(info.tickDuration));
     const current = Math.min(total, Math.max(0, Math.floor(info.tickPosition)));
     const text = `${current}/${total}`;
+    const fontPx = Math.max(10, canvas.width * 0.024);
+    const padding = Math.max(4, fontPx * 0.35);
+    const boxH = fontPx * 1.5;
+    const offsetCanvas = Math.max(6, canvas.width * 0.012);
     const rect = canvas.getBoundingClientRect();
     const cssScale = rect.width > 0 ? rect.width / canvas.width : 1;
-    const screenX = Math.max(12, rect.left + 12 * cssScale);
-    const screenY = Math.max(12, rect.top + 12 * cssScale);
-    const cbX = (screenX - rect.left) / cssScale;
-    const cbY = (screenY - rect.top) / cssScale;
+    const visibleLeft = Math.max(0, -rect.left / cssScale);
+    const visibleTop = Math.max(0, -rect.top / cssScale);
+    const cbX = visibleLeft + offsetCanvas;
+    const cbY = visibleTop + offsetCanvas;
     ctx.save();
-    ctx.translate(cbX, cbY);
-    ctx.scale(1 / cssScale, 1 / cssScale);
-    ctx.font = "bold 22px Bahnschrift, Arial, sans-serif";
+    ctx.font = `bold ${fontPx}px Bahnschrift, Arial, sans-serif`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
-    const padding = 8;
     const metrics = ctx.measureText(text);
     const boxW = metrics.width + padding * 2;
-    const boxH = 32;
     ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
-    ctx.fillRect(0, 0, boxW, boxH);
+    ctx.fillRect(cbX, cbY, boxW, boxH);
     ctx.fillStyle = "#ffffff";
-    ctx.fillText(text, padding, padding - 2);
+    ctx.fillText(text, cbX + padding, cbY + padding - 1);
     ctx.restore();
   }
 }

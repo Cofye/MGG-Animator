@@ -832,15 +832,12 @@ function precomputeTimeline() {
 
 function restoreTick(tick) {
   if (!animationTree) return;
-
   if (deathState.active) {
     const total = getDeathTickDuration();
     let t = Math.trunc(tick);
     if (t < 0) t = 0;
     if (t >= total) t = total - 1;
     deathState.progress = total > 0 ? t / total : 0;
-
-    // Posicionar el stand con los snapshots
     if (precomputedSnapshots && precomputedTotalTicks > 0) {
       const standTotal = precomputedTotalTicks;
       let st = t % standTotal;
@@ -857,35 +854,38 @@ function restoreTick(tick) {
       refreshComposites(animationTree);
       animationTime = t;
     }
-
-    // Posicionar el splatter (one-shot desde 0)
     if (deathSplatterTree) {
       resetNodeState(deathSplatterTree, true);
       deathSplatterTree.loopEnabled = false;
       spriteUpdate(deathSplatterTree, t / UNIVERSAL_FPS);
     }
-
     triggerRender();
     return;
   }
-
   let t = Math.trunc(tick);
   if (t < 0) t = 0;
+  const attackTotal = precomputedTotalTicks > 0 ? precomputedTotalTicks : animationTree.totalFrames;
+  const limit = tailEndTick > 0 ? tailEndTick : attackTotal;
+  if (t >= limit) t = limit - 1;
+  const inTail = tailEndTick > 0 && postTree && postStartTick >= 0 && t >= postStartTick;
   if (precomputedSnapshots && precomputedTotalTicks > 0) {
-    if (t >= precomputedTotalTicks) t = precomputedTotalTicks - 1;
-    const snap = precomputedSnapshots[t];
-    if (!snap) return;
-    restoreTreeState(animationTree, snap.tree);
-    animationTime = t;
-    triggerRender();
-    return;
+    const st = Math.min(t, precomputedTotalTicks - 1);
+    const snap = precomputedSnapshots[st];
+    if (snap) restoreTreeState(animationTree, snap.tree);
+  } else {
+    resetNodeState(animationTree);
+    const savedSpeed = currentSpeedFactor;
+    currentSpeedFactor = 1;
+    spriteUpdate(animationTree, Math.min(t, attackTotal - 1) / UNIVERSAL_FPS);
+    currentSpeedFactor = savedSpeed;
+    refreshComposites(animationTree);
   }
-  resetNodeState(animationTree);
-  const savedSpeed = currentSpeedFactor;
-  currentSpeedFactor = 1;
-  spriteUpdate(animationTree, t / UNIVERSAL_FPS);
-  currentSpeedFactor = savedSpeed;
-  refreshComposites(animationTree);
+  if (inTail) {
+    resetNodeState(postTree, true);
+    const tailTicks = t - postStartTick;
+    if (tailTicks > 0) spriteUpdate(postTree, tailTicks / UNIVERSAL_FPS);
+    else spriteUpdate(postTree, 0);
+  }
   animationTime = t;
   triggerRender();
 }

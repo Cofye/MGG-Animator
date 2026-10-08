@@ -119,7 +119,6 @@ async function handleDebugClick() {
     openExclusiveLayer();
     return;
   }
-
   const isActive = btnDebug.classList.contains("active");
   document.querySelectorAll(".btn.menu").forEach(b => {
     b.classList.remove("active");
