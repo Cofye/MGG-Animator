@@ -51,20 +51,34 @@ async function loadLangsFile() {
 }
 
 let localisationPromises = {};
+
 async function loadLocalisation(lang) {
   const key = lang || currentLang;
-  if (localisationCache[key]) return localisationCache[key];
+  if (localisationCache[key] && Object.keys(localisationCache[key]).length > 0) {
+    return localisationCache[key];
+  }
   if (localisationPromises[key]) return localisationPromises[key];
   localisationPromises[key] = (async () => {
-    try {
-      const url = `https://s-beta.kobojo.com/mutants/gameconfig/localisation_${key}.txt`;
-      const text = await fetchTextFile(url, 6000);
-      localisationCache[key] = parseSimpleTXT(text);
-    } catch (_) { localisationCache[key] = {}; }
-    localisationPromises[key] = null;
-    return localisationCache[key];
+    const url = `https://s-beta.kobojo.com/mutants/gameconfig/localisation_${key}.txt`;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const text = await fetchTextFile(url, 10000);
+        const parsed = parseSimpleTXT(text);
+        if (parsed && Object.keys(parsed).length > 0) {
+          localisationCache[key] = parsed;
+          return parsed;
+        }
+      } catch (_) {}
+      if (attempt < 2) await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
+    }
+    console.warn(`[txtParser] localisation_${key}.txt no se pudo cargar tras 3 intentos`);
+    return {};
   })();
-  return localisationPromises[key];
+  try {
+    return await localisationPromises[key];
+  } finally {
+    localisationPromises[key] = null;
+  }
 }
 
 async function parseCustomTXT(path, lang = currentLang) {

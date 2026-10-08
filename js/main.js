@@ -66,6 +66,7 @@ const BG_BUTTONS = [
 ];
 const playerButtons = [btnPlay, btnBack, btnForward, btnStop, btnSpeed, btnLoop, btnSound, btnScreenshot];
 
+let deathShaderReadyPromise = null;
 let availableLangs = [];
 let currentLang = localStorage.getItem("selectedLang") || "en";
 let currentScale = 1;
@@ -545,6 +546,7 @@ async function selectCharacter(context, mutant) {
       const isDeath = DEATH_PATTERN.test(anim);
       const isAttack = ATTACK_PATTERN.test(anim);
       const animToLoad = isDeath ? "stand" : anim;
+
       window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(anim) || isDeath));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
@@ -553,6 +555,9 @@ async function selectCharacter(context, mutant) {
       window.animationEngine.stopDeath();
       window.mutantLoader.pushLoadingHold();
       window.animationEngine.pause();
+
+      let splatterAssets = null;
+      let loaded = false;
       try {
         const fxPromise = (async () => {
           const attacks = await window.fxManager.loadFxForMutant(mutant.value);
@@ -566,19 +571,32 @@ async function selectCharacter(context, mutant) {
         const deathSoundPromise = isDeath
           ? window.soundManager.preloadSounds(['mutant_death'])
           : Promise.resolve(null);
-        const [, , standAssets] = await Promise.all([
+        const [loadedResult, , standAssets] = await Promise.all([
           loadMutantImage(mutant.value, animToLoad, skin),
           fxPromise,
           standPromise,
           deathSoundPromise,
         ]);
+        loaded = loadedResult;
         window._standAssets = standAssets;
         window.animationEngine.pause();
         buildSoundSchedule();
         await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
+
+        if (isDeath) {
+          if (deathShaderReadyPromise) await deathShaderReadyPromise;
+          const gene = extractGeneFromSpecimen(mutant.value);
+          splatterAssets = await loadDeathSplatterFor(gene);
+        }
       } finally {
         window.mutantLoader.popLoadingHold();
       }
+
+      if (!loaded) {
+        console.error("[main] no se pudo cargar el mutante, se aborta la selección");
+        return;
+      }
+
       fxLastTick = -0.001;
       lastSeenTick = 0;
       window.animationEngine.play();
@@ -592,10 +610,8 @@ async function selectCharacter(context, mutant) {
       buildTransportSchedule();
       applyRivalVisibility(anim);
       if (isDeath) {
-        const gene = extractGeneFromSpecimen(mutant.value);
-        const splatter = await loadDeathSplatterFor(gene);
-        if (splatter) {
-          window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+        if (splatterAssets) {
+          window.animationEngine.setDeathSplatter(splatterAssets.tree, splatterAssets.image);
         }
         window.animationEngine.startDeath(mutant.value);
       }
@@ -858,6 +874,7 @@ async function selectAnimation(anim) {
   const isDeath = DEATH_PATTERN.test(value);
   const isAttack = ATTACK_PATTERN.test(value);
   const animToLoad = isDeath ? "stand" : value;
+
   window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(value) || isDeath));
   window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
   window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
@@ -870,6 +887,8 @@ async function selectAnimation(anim) {
   if (hasMutant && hasLoader) {
     window.mutantLoader.pushLoadingHold();
     window.animationEngine.pause();
+    let loaded = false;
+    let splatterAssets = null;
     try {
       const fxPromise = (async () => {
         const attacks = await window.fxManager.loadFxForMutant(selectedValues.mutant);
@@ -886,28 +905,33 @@ async function selectAnimation(anim) {
       const deathSoundPromise = isDeath
         ? window.soundManager.preloadSounds(['mutant_death'])
         : Promise.resolve(null);
-      const [_, , standAssets] = await Promise.all([
+      const [loadedResult, , standAssets] = await Promise.all([
         window.mutantLoader.setAnimation(animToLoad),
         fxPromise,
         standPromise,
         deathSoundPromise,
       ]);
+      loaded = loadedResult !== false;
       window._standAssets = standAssets;
       window.animationEngine.pause();
       buildSoundSchedule();
       await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
+      if (isDeath) {
+        if (deathShaderReadyPromise) await deathShaderReadyPromise;
+        const gene = extractGeneFromSpecimen(selectedValues.mutant);
+        splatterAssets = await loadDeathSplatterFor(gene);
+      }
     } finally {
       window.mutantLoader.popLoadingHold();
     }
+    if (!loaded) return;
     fxLastTick = -0.001;
     lastSeenTick = 0;
     window.animationEngine.play();
     updatePlayButtonIcon();
     if (isDeath) {
-      const gene = extractGeneFromSpecimen(selectedValues.mutant);
-      const splatter = await loadDeathSplatterFor(gene);
-      if (splatter) {
-        window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+      if (splatterAssets) {
+        window.animationEngine.setDeathSplatter(splatterAssets.tree, splatterAssets.image);
       }
       window.animationEngine.startDeath(selectedValues.mutant);
     }
@@ -922,6 +946,7 @@ async function selectAnimation(anim) {
     window.animationEngine.play();
     updatePlayButtonIcon();
     if (isDeath && selectedValues.mutant) {
+      if (deathShaderReadyPromise) await deathShaderReadyPromise;
       const gene = extractGeneFromSpecimen(selectedValues.mutant);
       const splatter = await loadDeathSplatterFor(gene);
       if (splatter) {
@@ -939,6 +964,7 @@ async function selectAnimation(anim) {
     fxLastTick = -0.001;
     lastSeenTick = 0;
     if (isDeath) {
+      if (deathShaderReadyPromise) await deathShaderReadyPromise;
       const gene = extractGeneFromSpecimen(selectedValues.mutant);
       const splatter = await loadDeathSplatterFor(gene);
       if (splatter) {
@@ -1846,13 +1872,20 @@ function initEventListeners() {
     return filtered;
   }, createBgItem);
   setupMutantSearch();
-  window.deathFxManager.init().then(ok => {
+  deathShaderReadyPromise = window.deathFxManager.init().then(ok => {
     if (!ok) console.warn("[main] death shader no disponible, se usará render normal");
+    return ok;
   });
   if (window.mutantLoader && typeof window.mutantLoader.subscribeState === "function") {
     window.mutantLoader.subscribeState((loading) => {
-      if (loading) canvasLoad.classList.remove("hidden");
-      else canvasLoad.classList.add("hidden");
+      if (loading) {
+        canvasLoad.classList.remove("hidden");
+        window.sceneRenderer.setCharacterVisible(false);
+      } else {
+        canvasLoad.classList.add("hidden");
+        window.sceneRenderer.setCharacterVisible(true);
+        window.animationEngine.startLoop();
+      }
       setSelectButtonsBlocked(loading);
       updatePlayButtonIcon();
       timelineLastFrame = -1;

@@ -22,6 +22,12 @@ let midLayerOpacity = 0.25;
 let midLayerWidthRatio = 1.0;
 let includeMidLayer = false;
 
+let characterVisible = true;
+function setCharacterVisible(v) {
+  characterVisible = !!v;
+  renderAll();
+}
+
 let deathOffscreen = null;
 function getDeathOffscreenCanvas(w, h) {
   if (!deathOffscreen) deathOffscreen = document.createElement("canvas");
@@ -317,57 +323,55 @@ function renderAll() {
   const rivalAnchorY = worldY + rivalConfig.y;
   const selfTransform = window.fxManager?.getObjectTransform?.("self") || null;
   const targetTransform = window.fxManager?.getObjectTransform?.("target") || null;
-  if (engine.isRivalVisible() && rivalTree) {
-    renderCharacterWithEffects(
-      ctx, rivalTree, engine.getRivalImage(), rivalScale,
-      rivalConfig.flipX, rivalAnchorX, rivalAnchorY,
-      targetTransform, targShake.x, targShake.y
-    );
-  }
-
-  if (engine.isDying()) {
-    const splatter = engine.getDeathSplatter();
-    if (splatter) {
-      ctx.save();
-      ctx.translate(selfAnchorX, selfAnchorY);
-      ctx.scale(attackerScale, attackerScale);
-      engine.renderNode(
-        ctx, splatter.tree, true,
-        { r: 1, g: 1, b: 1 }, { r: 0, g: 0, b: 0 },
-        splatter.image
+  if (characterVisible) {
+    if (engine.isRivalVisible() && rivalTree) {
+      renderCharacterWithEffects(
+        ctx, rivalTree, engine.getRivalImage(), rivalScale,
+        rivalConfig.flipX, rivalAnchorX, rivalAnchorY,
+        targetTransform, targShake.x, targShake.y
       );
-      ctx.restore();
     }
+    if (engine.isDying()) {
+      const splatter = engine.getDeathSplatter();
+      if (splatter) {
+        ctx.save();
+        ctx.translate(selfAnchorX, selfAnchorY);
+        ctx.scale(attackerScale, attackerScale);
+        engine.renderNode(
+          ctx, splatter.tree, true,
+          { r: 1, g: 1, b: 1 }, { r: 0, g: 0, b: 0 },
+          splatter.image
+        );
+        ctx.restore();
+      }
+    }
+    if (animTree) {
+      renderCharacterWithEffects(
+        ctx, animTree, animImage, attackerScale,
+        false, selfAnchorX, selfAnchorY,
+        selfTransform, selfShake.x, selfShake.y
+      );
+    }
+    window.fxManager?.render?.(ctx, {
+      self: {
+        x: selfAnchorX - 100,
+        y: selfAnchorY - 300,
+        w: 200,
+        h: 300,
+        scale: attackerScale,
+        flipX: false,
+      },
+      target: {
+        x: rivalAnchorX - 100,
+        y: rivalAnchorY - 300,
+        w: 200,
+        h: 300,
+        scale: rivalScale,
+        flipX: rivalConfig.flipX,
+      },
+      background: { x: bgX, y: bgY, w: bgW, h: bgH },
+    });
   }
-
-  if (animTree) {
-    renderCharacterWithEffects(
-      ctx, animTree, animImage, attackerScale,
-      false, selfAnchorX, selfAnchorY,
-      selfTransform, selfShake.x, selfShake.y
-    );
-  }
-
-  window.fxManager?.render?.(ctx, {
-    self: {
-      x: selfAnchorX - 100,
-      y: selfAnchorY - 300,
-      w: 200,
-      h: 300,
-      scale: attackerScale,
-      flipX: false,
-    },
-    target: {
-      x: rivalAnchorX - 100,
-      y: rivalAnchorY - 300,
-      w: 200,
-      h: 300,
-      scale: rivalScale,
-      flipX: rivalConfig.flipX,
-    },
-    background: { x: bgX, y: bgY, w: bgW, h: bgH },
-  });
-
   ctx.restore();
 }
 
@@ -394,6 +398,7 @@ window.sceneRenderer = {
   setMidLayerImage,
   setIncludeMidLayer,
   setCameraEnabled,
+  setCharacterVisible,
   renderAll,
   clearCanvas,
   getScaleFromPositionY,

@@ -158,6 +158,7 @@ function normalizeSkin(skin) {
   if (skin === undefined || skin === null) return currentSkinName;
   return String(skin).trim();
 }
+
 function normalizeAnimation(name) {
   if (name === undefined || name === null) return currentAnimationName || "stand";
   const s = String(name).trim();
@@ -169,9 +170,9 @@ function beginLoading(label = "") {
   mutantLoading = true;
   console.log("[loader] beginLoading", label);
   window.animationEngine.stopLoop();
-  window.sceneRenderer.clearCanvas();
   notifyStateChange();
 }
+
 function finishLoading(success, label = "") {
   mutantReady = !!success;
   mutantLoading = false;
@@ -180,7 +181,7 @@ function finishLoading(success, label = "") {
 }
 
 async function loadMutantImage(mutantValue, animName, skin) {
-  if (!mutantValue) return;
+  if (!mutantValue) return false;
   const effectiveAnim = normalizeAnimation(animName);
   const effectiveSkin = normalizeSkin(skin);
   beginLoading(`${mutantValue}/${effectiveAnim} skin=${effectiveSkin || "(none)"}`);
@@ -198,23 +199,27 @@ async function loadMutantImage(mutantValue, animName, skin) {
     currentSpriteElement = spriteEl;
     availableSkins = extractSkins(spriteEl);
     const img = await loadSpritesheetImage(bitmap, effectiveSkin);
+    if (!img) throw new Error("spritesheet no cargó");
     window.animationEngine.setSpritesheet(img);
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.setTree(tree);
     window.animationEngine.pause();
     finishLoading(true, `${mutantValue}/${effectiveAnim}`);
+    return true;
   } catch (e) {
     console.error("[loader] loadMutantImage FAILED:", mutantValue, effectiveAnim, e.message);
     finishLoading(false, `${mutantValue}/${effectiveAnim}`);
+    return false;
   }
 }
 
 async function setSkin(skin) {
-  if (!currentSpriteElement) return;
+  if (!currentSpriteElement) return false;
   const effectiveSkin = skin === undefined || skin === null ? "" : String(skin).trim();
   beginLoading(`skin=${effectiveSkin || "(none)"}`);
   try {
     const img = await loadSpritesheetImage(currentBitmap, effectiveSkin);
+    if (!img) throw new Error("spritesheet no cargó");
     window.animationEngine.setSpritesheet(img);
     currentSkinName = effectiveSkin;
     cachedStandKey = null;
@@ -223,11 +228,13 @@ async function setSkin(skin) {
     window.animationEngine.startLoop();
     window.sceneRenderer.renderAll();
     finishLoading(true, `skin=${effectiveSkin}`);
+    return true;
   } catch (e) {
     console.error("[loader] setSkin FAILED:", effectiveSkin, e.message);
     window.animationEngine.startLoop();
     window.sceneRenderer.renderAll();
     finishLoading(false, `skin=${effectiveSkin}`);
+    return false;
   }
 }
 
@@ -257,7 +264,7 @@ async function loadStandTreeForMutant(mutantValue, skin) {
     const spriteEl = xml.querySelector("Sprite");
     if (!spriteEl) return null;
     const bitmap = spriteEl.getAttribute("bitmap") || "";
-    const img = await loadSpritesheetImage(bitmap, effectiveSkin);   // ← usa effectiveSkin
+    const img = await loadSpritesheetImage(bitmap, effectiveSkin);
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.resetNodeState(tree, true);
     window.animationEngine.spriteUpdate(tree, 0);
