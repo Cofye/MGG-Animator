@@ -33,21 +33,34 @@ function pickAvatarColor(userId) {
 function tintDefaultAvatar(color) {
   return new Promise((resolve) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
     img.onload = () => {
       try {
         const c = document.createElement("canvas");
-        c.width = img.naturalWidth;
-        c.height = img.naturalHeight;
+        c.width = img.naturalWidth || 128;
+        c.height = img.naturalHeight || 128;
         const cx = c.getContext("2d");
         cx.drawImage(img, 0, 0);
-        cx.globalCompositeOperation = "multiply";
-        cx.fillStyle = color;
-        cx.fillRect(0, 0, c.width, c.height);
-        cx.globalCompositeOperation = "destination-in";
-        cx.drawImage(img, 0, 0);
+        const id = cx.getImageData(0, 0, c.width, c.height);
+        const d = id.data;
+        const tintR = parseInt(color.slice(1, 3), 16);
+        const tintG = parseInt(color.slice(3, 5), 16);
+        const tintB = parseInt(color.slice(5, 7), 16);
+        for (let i = 0; i < d.length; i += 4) {
+          const a = d[i + 3];
+          if (a === 0) continue;
+          const r = d[i], g = d[i + 1], b = d[i + 2];
+          const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+          const strength = 1 - brightness;
+          d[i]     = r * (1 - strength) + tintR * strength;
+          d[i + 1] = g * (1 - strength) + tintG * strength;
+          d[i + 2] = b * (1 - strength) + tintB * strength;
+        }
+        cx.putImageData(id, 0, 0);
         resolve(c.toDataURL("image/png"));
-      } catch (_) { resolve(null); }
+      } catch (e) {
+        console.error("[discord] tint error:", e);
+        resolve(null);
+      }
     };
     img.onerror = () => resolve(null);
     img.src = "images/icons/icon_profile_default.png";
