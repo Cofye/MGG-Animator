@@ -206,10 +206,13 @@ function showLoading() {
   scaleContainerLayer.classList.remove("hidden");
   showStatic();
 }
+
 function hideLoading() {
   loadingScreen.classList.add("hidden");
   scaleContainerLayer.classList.add("hidden");
   hideStatic();
+  const sc = document.getElementById("scale-container");
+  if (sc) sc.classList.remove("hidden");
 }
 
 function normalizeText(text) {

@@ -5,17 +5,16 @@
 }
 
 body {
-  width: 1920px;
-  height: 1080px;
   background-color: #000;
   margin: 0;
   position: relative;
+  /* ancho/alto los controla rescale.js */
 }
 body::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("https://s-beta.kobojo.com/mutants/assets/mobile/hud/gatchapon/gacha_background.png");
+  background-image: url("../images/ui/background.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -1573,23 +1572,31 @@ body::before {
 
 /*  */
 #clickBlocker {
-  width: 1920px;
-  height: 1080px;
   position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
   z-index: 4;
+  overflow: hidden;
+}
+#clickBlocker img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 #clickToClose {
-  width: 1000%;
-  height: 1000%;
-  left: -500%;
-  top: -500%;
   position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
   z-index: 4;
 }
 #cover-container {
-  transform: none;
+  position: fixed;
+  overflow: hidden;
   backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px)
+  -webkit-backdrop-filter: blur(5px);
 }
 .circle {
   width: 210px;
