@@ -71,7 +71,6 @@ async function loadLocalisation(lang) {
       } catch (_) {}
       if (attempt < 2) await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
     }
-    console.warn(`[txtParser] localisation_${key}.txt no se pudo cargar tras 3 intentos`);
     return {};
   })();
   try {

@@ -118,6 +118,8 @@ let accessRules = {
   exemptUserIds: new Set(),
   blockedForEveryone: new Set(),
   membersOnly: new Set(),
+  blockedBackgroundsForEveryone: new Set(),
+  membersOnlyBackgrounds: new Set(),
 };
 let currentUserExempt = false;
 let currentUserInGuild = false;
@@ -134,19 +136,22 @@ async function loadAccessRules() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const normalizeList = (arr) => new Set((arr || []).map(s => String(s).toLowerCase()));
-    accessRules.exemptUserIds = new Set((data.exemptUserIds || []).map(String));
+    accessRules.exemptUserIds = new Set(
+      (data.exemptUsers || data.exemptUserIds || [])
+        .map(u => typeof u === "string" ? u : String(u.id))
+        .filter(Boolean)
+    );
     accessRules.blockedForEveryone = normalizeList(data.blockedForEveryone);
     accessRules.membersOnly = normalizeList(data.membersOnly);
-    console.log("[main] access rules cargadas:",
-      accessRules.exemptUserIds.size, "excentos,",
-      accessRules.blockedForEveryone.size, "bloqueados,",
-      accessRules.membersOnly.size, "solo miembros");
+    accessRules.blockedBackgroundsForEveryone = normalizeList(data.blockedBackgroundsForEveryone);
+    accessRules.membersOnlyBackgrounds = normalizeList(data.membersOnlyBackgrounds);
   } catch (e) {
-    console.warn("[main] access.json no cargó, sin restricciones:", e.message);
     accessRules = {
       exemptUserIds: new Set(),
       blockedForEveryone: new Set(),
       membersOnly: new Set(),
+      blockedBackgroundsForEveryone: new Set(),
+      membersOnlyBackgrounds: new Set(),
     };
   }
 }
@@ -174,9 +179,21 @@ function canViewMutant(mutantValue) {
   return true;
 }
 
+function canViewBackground(bgValue) {
+  if (!bgValue) return true;
+  if (currentUserExempt) return true;
+  const key = String(bgValue).toLowerCase();
+  if (accessRules.blockedBackgroundsForEveryone.has(key)) return false;
+  if (accessRules.membersOnlyBackgrounds.has(key) && !currentUserInGuild) return false;
+  return true;
+}
+
 function reRenderOpenLists() {
   if (listControllers.mutant && !listControllers.mutant.layer.classList.contains("hidden")) {
     renderCharacterList(mutantListLayerContext(), listControllers.mutant.search?.value || "");
+  }
+  if (listControllers.bg && !listControllers.bg.layer.classList.contains("hidden")) {
+    renderBgList(listControllers.bg.search?.value || "");
   }
 }
 
@@ -500,6 +517,9 @@ async function applyDefaultBackground() {
   if (!window.mutantLoader || typeof window.mutantLoader.setBackgroundByValue !== "function") return;
   let bg = allBackgrounds.find(b => b.value === DEFAULT_BG_VALUE);
   if (!bg) bg = allBackgrounds.find(b => b.name === "Detroit Rock City");
+  if (bg && !canViewBackground(bg.value)) {
+    bg = null;
+  }
   if (bg) await window.mutantLoader.setBackgroundByValue(bg.value);
 }
 
@@ -625,7 +645,6 @@ function updateStatsButton(mutantValue) {
 
 async function selectCharacter(context, mutant) {
   if (!canViewMutant(mutant.value)) {
-    console.warn("[main] mutante restringido para este usuario:", mutant.value);
     return;
   }
   const icon = document.querySelector(`#${context}Select img`);
@@ -692,7 +711,6 @@ async function selectCharacter(context, mutant) {
         window.mutantLoader.popLoadingHold();
       }
       if (!loaded) {
-        console.error("[main] no se pudo cargar el mutante, se aborta la selección");
         return;
       }
       fxLastTick = -0.001;
@@ -808,7 +826,6 @@ function restoreRivalStand() {
 
 async function setDefaultRival(mutantValue) {
   if (!canViewMutant(mutantValue)) {
-    console.warn("[main] rival por defecto restringido, se ignora:", mutantValue);
     return;
   }
   const found = allMutants.find(m => m.value === mutantValue);
@@ -844,6 +861,7 @@ function renderBgList(query = "") {
   state.container.innerHTML = "";
   const q = normalizeText(query);
   let filtered = allBackgrounds.filter(b => b.type === currentBgFilter);
+  filtered = filtered.filter(b => canViewBackground(b.value));
   if (q) filtered = filtered.filter(b => normalizeText(b.name).includes(q));
   filtered.forEach(bg => state.container.appendChild(createBgItem(bg)));
   setTimeout(state.updateScrollUI, 50);
@@ -867,6 +885,9 @@ function closeBgList() {
 }
 
 async function selectBg(bg) {
+  if (!canViewBackground(bg.value)) {
+    return;
+  }
   closeBgList(); closeCharacterList(); closeItemList();
   clickToClose.classList.add("hidden"); scaleContainerLayer.classList.add("hidden"); hideStatic();
   if (window.mutantLoader && typeof window.mutantLoader.setBackgroundByValue === "function") {
@@ -2065,10 +2086,7 @@ function initEventListeners() {
   if (rivalSkinSelect) rivalSkinSelect.addEventListener("click", () => openItemList("rivalSkin"));
   clickToClose.addEventListener("click", closeAnyList);
   setupMutantSearch();
-  deathShaderReadyPromise = window.deathFxManager.init().then(ok => {
-    if (!ok) console.warn("[main] death shader no disponible, se usará render normal");
-    return ok;
-  });
+  deathShaderReadyPromise = window.deathFxManager.init();
   window.discordIntegration.onAuthChanged(async () => {
     await refreshAccessState();
     reRenderOpenLists();
@@ -2092,30 +2110,20 @@ function initEventListeners() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const t0 = performance.now();
-  const tlog = (label) => console.log(`[boot] ${label}: ${(performance.now() - t0).toFixed(0)}ms`);
   playerButtons.forEach(btn => setPlayerButtonEnabled(btn, false));
   window.sceneRenderer.setCameraEnabled(false);
   showLoading();
   try {
-    tlog("start");
     await Promise.all([loadOptions(), loadMutants(), loadAccessRules()]);
-    tlog("options+mutants+access");
     await refreshAccessState();
-    tlog("access-state");
     await applyLanguage();
-    tlog("language");
     await applyDefaultBackground();
-    tlog("background");
     createListController("mutant");
     createListController("skin");
     createListController("bg");
     initEventListeners();
-    tlog("listeners");
     await setDefaultRival("specimen_a_01");
-    tlog("rival");
   } finally {
     hideLoading();
-    tlog("hideLoading");
   }
 });

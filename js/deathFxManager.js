@@ -116,10 +116,8 @@ async function init() {
       );
       sourceTexture = gl.createTexture();
       initialized = true;
-      console.log("[deathFxManager] shader listo");
       return true;
     } catch (e) {
-      console.warn("[deathFxManager] init failed:", e);
       initFailed = true;
       return false;
     } finally {

@@ -22,7 +22,6 @@ function loadBackgroundImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const t = setTimeout(() => {
-      console.warn("[loader] TIMEOUT (15s) cargando fondo:", url);
       img.onload = null;
       img.onerror = null;
       img.src = "";
@@ -32,7 +31,6 @@ function loadBackgroundImage(url) {
     img.onload = () => { clearTimeout(t); resolve(img); };
     img.onerror = () => {
       clearTimeout(t);
-      console.error("[loader] FONDO no cargó:", url);
       reject(new Error("load error"));
     };
     img.src = url;
@@ -50,14 +48,11 @@ async function setBackgroundByValue(value) {
   notifyStateChange();
   try {
     const url = `https://s-beta.kobojo.com/mutants/assets/arenas/${value}.jpg`;
-    console.log("[loader] cargando fondo:", value);
     const img = await loadBackgroundImage(url);
     backgroundCache.set(value, img);
     currentBackgroundValue = value;
     window.sceneRenderer.setBackground(img);
-    console.log("[loader] fondo ok:", value);
   } catch (e) {
-    console.warn("[loader] fallo fondo", value, e.message);
     currentBackgroundValue = null;
     window.sceneRenderer.setBackground(null);
   } finally {
@@ -90,23 +85,15 @@ async function fetchText(url, timeoutMs = 15000, label = "texto") {
   const controller = new AbortController();
   const fullUrl = url + (url.indexOf("?") === -1 ? "?nocache=" + Date.now() : "");
   const tid = setTimeout(() => {
-    console.warn(`[loader] TIMEOUT (${timeoutMs}ms) ${label}:`, fullUrl);
     controller.abort();
   }, timeoutMs);
   try {
-    console.log(`[loader] fetch ${label}:`, fullUrl);
     const res = await fetch(fullUrl, { signal: controller.signal });
     if (!res.ok) {
-      console.error(`[loader] HTTP ${res.status} ${label}:`, fullUrl);
       throw new Error(`HTTP ${res.status}`);
     }
     return await res.text();
   } catch (e) {
-    if (e.name === "AbortError") {
-      console.error(`[loader] ABORTED ${label} (timeout):`, fullUrl);
-    } else {
-      console.error(`[loader] ERROR ${label}:`, fullUrl, e.message);
-    }
     throw e;
   } finally {
     clearTimeout(tid);
@@ -120,9 +107,7 @@ function loadSpritesheetImage(bitmap, skin) {
     const url = skin
       ? `https://s-beta.kobojo.com/mutants/assets/${base}_${skin}.png`
       : `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
-    console.log("[loader] cargando spritesheet:", url);
     const t = setTimeout(() => {
-      console.warn("[loader] TIMEOUT (15s) spritesheet:", url);
       img.onload = null;
       img.onerror = null;
       img.src = "";
@@ -131,12 +116,10 @@ function loadSpritesheetImage(bitmap, skin) {
     img.crossOrigin = "anonymous";
     img.onload = () => {
       clearTimeout(t);
-      console.log("[loader] spritesheet ok:", url);
       resolve(img);
     };
     img.onerror = () => {
       clearTimeout(t);
-      console.error("[loader] ERROR spritesheet:", url);
       reject(new Error("image load error"));
     };
     img.src = url;
@@ -168,7 +151,6 @@ function normalizeAnimation(name) {
 function beginLoading(label = "") {
   mutantReady = false;
   mutantLoading = true;
-  console.log("[loader] beginLoading", label);
   window.animationEngine.stopLoop();
   notifyStateChange();
 }
@@ -176,7 +158,6 @@ function beginLoading(label = "") {
 function finishLoading(success, label = "") {
   mutantReady = !!success;
   mutantLoading = false;
-  console.log("[loader] finishLoading", label, success ? "OK" : "FAILED");
   notifyStateChange();
 }
 
@@ -207,7 +188,6 @@ async function loadMutantImage(mutantValue, animName, skin) {
     finishLoading(true, `${mutantValue}/${effectiveAnim}`);
     return true;
   } catch (e) {
-    console.error("[loader] loadMutantImage FAILED:", mutantValue, effectiveAnim, e.message);
     finishLoading(false, `${mutantValue}/${effectiveAnim}`);
     return false;
   }
@@ -230,7 +210,6 @@ async function setSkin(skin) {
     finishLoading(true, `skin=${effectiveSkin}`);
     return true;
   } catch (e) {
-    console.error("[loader] setSkin FAILED:", effectiveSkin, e.message);
     window.animationEngine.startLoop();
     window.sceneRenderer.renderAll();
     finishLoading(false, `skin=${effectiveSkin}`);
@@ -273,7 +252,6 @@ async function loadStandTreeForMutant(mutantValue, skin) {
     cachedStandKey = key;
     return { tree, img };
   } catch (e) {
-    console.warn("[loader] loadStandTreeForMutant falló:", mutantValue, e.message);
     return null;
   }
 }

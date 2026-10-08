@@ -58,7 +58,6 @@ function tintDefaultAvatar(color) {
         cx.putImageData(id, 0, 0);
         resolve(c.toDataURL("image/png"));
       } catch (e) {
-        console.error("[discord] tint error:", e);
         resolve(null);
       }
     };
