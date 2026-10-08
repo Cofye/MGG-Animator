@@ -8,6 +8,52 @@ const GUILD_CACHE_KEY = 'discordGuildVerified';
 let discordGuildsCache = null;
 let checkSessionRunning = false;
 
+const AVATAR_TINT_COLORS = [
+  "#eb459e", // fuchsia
+  "#57f287", // green
+  "#fee75c", // yellow
+  "#ed4245", // red
+  "#3ba55c", // darker green
+  "#faa81a", // orange
+  "#9b59b6", // purple
+  "#1abc9c", // teal
+  "#e67e22", // carrot
+];
+
+function pickAvatarColor(userId) {
+  if (!userId) return AVATAR_TINT_COLORS[0];
+  let hash = 0;
+  const s = String(userId);
+  for (let i = 0; i < s.length; i++) {
+    hash = ((hash << 5) - hash + s.charCodeAt(i)) | 0;
+  }
+  return AVATAR_TINT_COLORS[Math.abs(hash) % AVATAR_TINT_COLORS.length];
+}
+
+function tintDefaultAvatar(color) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const c = document.createElement("canvas");
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        const cx = c.getContext("2d");
+        cx.drawImage(img, 0, 0);
+        cx.globalCompositeOperation = "multiply";
+        cx.fillStyle = color;
+        cx.fillRect(0, 0, c.width, c.height);
+        cx.globalCompositeOperation = "destination-in";
+        cx.drawImage(img, 0, 0);
+        resolve(c.toDataURL("image/png"));
+      } catch (_) { resolve(null); }
+    };
+    img.onerror = () => resolve(null);
+    img.src = "images/icons/icon_profile_default.png";
+  });
+}
+
 async function getSession() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   return session && session.user ? session : null;
@@ -184,7 +230,12 @@ async function checkDiscordSession() {
       loginWrap.classList.add('hidden');
       userWrap.classList.remove('hidden');
       const avatarImg = document.querySelector('.profileDiscord');
-      if (avatarImg && meta.avatar_url) avatarImg.src = meta.avatar_url;
+      if (avatarImg) {
+        const userId = meta.provider_id || meta.sub || session.user.id || "";
+        const color = pickAvatarColor(userId);
+        const tinted = await tintDefaultAvatar(color);
+        if (tinted) avatarImg.src = tinted;
+      }
       const nameSpan = document.querySelector('.textProfile');
       if (nameSpan) {
         nameSpan.textContent =
