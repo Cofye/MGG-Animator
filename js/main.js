@@ -1744,6 +1744,7 @@ function disableAncestorTransforms() {
     el = el.parentElement;
   }
 }
+
 function restoreAncestorTransforms() {
   for (const s of savedAncestorStyles) {
     s.el.style.removeProperty("transform");
@@ -1755,6 +1756,7 @@ function restoreAncestorTransforms() {
   }
   savedAncestorStyles = [];
 }
+
 function updateFullscreenLayout() {
   const canvas = document.getElementById("mutantCanvas");
   if (!canvas || !document.fullscreenElement) return;
@@ -1773,6 +1775,7 @@ function updateFullscreenLayout() {
   canvas.style.setProperty("max-height", "none", "important");
   canvas.style.setProperty("background-color", "#222", "important");
 }
+
 function clearFullscreenLayout() {
   const canvas = document.getElementById("mutantCanvas");
   if (!canvas) return;
@@ -1780,14 +1783,22 @@ function clearFullscreenLayout() {
     canvas.style.removeProperty(prop);
   }
 }
+
 function updateFullscreenIcon() {
   const img = btnFullscreen.querySelector("img");
   if (!img) return;
   const desired = document.fullscreenElement ? "images/icons/players/player_minimised.png" : "images/icons/players/player_fullscreen.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
+
+let lastFullscreenClick = 0;
 function setupFullscreen() {
-  btnFullscreen.addEventListener("click", async () => {
+  btnFullscreen.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const now = performance.now();
+    if (now - lastFullscreenClick < 500) return;
+    lastFullscreenClick = now;
+
     const wrapper = document.getElementById("canvasWrapper");
     if (!wrapper) return;
     try {

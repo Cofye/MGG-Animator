@@ -391,7 +391,6 @@ function onLabelMoment(moment) {
     if ((def.moment || "impact") !== moment) continue;
     const inst = createInstance(def);
     if (!inst) continue;
-
     if (inst.kind === "sprite") {
       const asset = fxSpriteCache.get(inst.name);
       if (asset && !(asset instanceof Promise)) {
@@ -407,8 +406,6 @@ function onLabelMoment(moment) {
         });
       }
     } else if (inst.kind === "fade" || inst.kind === "color") {
-      // Marcar fades/colors previos que compitan por los mismos canales.
-      // NO se eliminan: siguen tickeando para que el scrub siga coherente.
       for (const f of activeFx) {
         if (f.kind !== "fade" && f.kind !== "color") continue;
         for (const w of ["self", "target", "background"]) {
@@ -595,6 +592,7 @@ function isShaking(which) {
   }
   return null;
 }
+
 function getShakeOffset(which) {
   if (!effectsEnabled) return { x: 0, y: 0 };
   const fx = isShaking(which);
@@ -605,6 +603,7 @@ function getShakeOffset(which) {
   const decay = 1 - progress;
   return { x: Math.sin(phase) * fx.amplitude * decay, y: Math.cos(phase * 1.3) * fx.amplitude * decay };
 }
+
 function getObjectTransform(which) {
   if (!effectsEnabled) return { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 };
   const st = objectColorTransforms[which];

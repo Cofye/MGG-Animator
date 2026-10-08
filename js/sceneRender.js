@@ -208,8 +208,6 @@ function drawBackgroundTint(ctx, x, y, w, h) {
                  Math.abs(t.gMul - 1) > 0.001 ||
                  Math.abs(t.bMul - 1) > 0.001;
   const hasAdd = t.rAdd > 0.001 || t.gAdd > 0.001 || t.bAdd > 0.001;
-
-  // 1) multiplicativo (fades, tintes oscuros)
   if (hasMul) {
     ctx.save();
     ctx.globalCompositeOperation = "multiply";
@@ -217,8 +215,6 @@ function drawBackgroundTint(ctx, x, y, w, h) {
     ctx.fillRect(x, y, w, h);
     ctx.restore();
   }
-
-  // 2) aditivo (flashes) — encima del multiplicado
   if (hasAdd) {
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
@@ -231,7 +227,6 @@ function drawBackgroundTint(ctx, x, y, w, h) {
 function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anchorY, colorTransform, shakeX, shakeY) {
   const engine = window.animationEngine;
   if (!tree || !image) return;
-
   const cMul = {
     r: colorTransform ? colorTransform.rMul : 1,
     g: colorTransform ? colorTransform.gMul : 1,
@@ -242,19 +237,16 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
     g: colorTransform ? colorTransform.gAdd : 0,
     b: colorTransform ? colorTransform.bAdd : 0,
   };
-
   const useDeath =
     engine.isDying() &&
     !flipX &&
     window.deathFxManager &&
     window.deathFxManager.isInitialized();
-
   if (useDeath) {
     const b = engine.getTreeBounds(tree);
     const pad = 8;
     const w = Math.ceil(b.maxX - b.minX) + pad * 2;
     const h = Math.ceil(b.maxY - b.minY) + pad * 2;
-
     if (w > 0 && h > 0 && w < 2048 && h < 2048) {
       const off = getDeathOffscreenCanvas(w, h);
       const octx = off.getContext("2d");
@@ -264,7 +256,6 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
       octx.translate(-b.minX + pad, -b.minY + pad);
       engine.renderNode(octx, tree, true, cMul, cAdd, image);
       octx.restore();
-
       ctx.save();
       ctx.translate(anchorX + shakeX, anchorY + shakeY);
       const sx = flipX ? -1 : 1;
@@ -280,7 +271,6 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
       return;
     }
   }
-
   ctx.save();
   ctx.translate(anchorX + shakeX, anchorY + shakeY);
   const sx = flipX ? -1 : 1;
@@ -290,14 +280,14 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
 }
 
 function drawAnchorMarker(ctx, x, y, color) {
-  const r = 12;
+  const r = 7;
   ctx.save();
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.5;
   ctx.strokeStyle = color || "#00ff00";
   ctx.beginPath();
   ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.stroke();
-  const d = r * 0.65;
+  const d = r * 0.7;
   ctx.beginPath();
   ctx.moveTo(x - d, y - d);
   ctx.lineTo(x + d, y + d);
@@ -409,7 +399,15 @@ function renderAll() {
     const total = Math.max(1, Math.floor(info.tickDuration));
     const current = Math.min(total, Math.max(0, Math.floor(info.tickPosition)));
     const text = `${current}/${total}`;
+    const rect = canvas.getBoundingClientRect();
+    const cssScale = rect.width > 0 ? rect.width / canvas.width : 1;
+    const screenX = Math.max(12, rect.left + 12 * cssScale);
+    const screenY = Math.max(12, rect.top + 12 * cssScale);
+    const cbX = (screenX - rect.left) / cssScale;
+    const cbY = (screenY - rect.top) / cssScale;
     ctx.save();
+    ctx.translate(cbX, cbY);
+    ctx.scale(1 / cssScale, 1 / cssScale);
     ctx.font = "bold 22px Bahnschrift, Arial, sans-serif";
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
@@ -417,12 +415,10 @@ function renderAll() {
     const metrics = ctx.measureText(text);
     const boxW = metrics.width + padding * 2;
     const boxH = 32;
-    const boxX = 12;
-    const boxY = 12;
     ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
-    ctx.fillRect(boxX, boxY, boxW, boxH);
+    ctx.fillRect(0, 0, boxW, boxH);
     ctx.fillStyle = "#ffffff";
-    ctx.fillText(text, boxX + padding, boxY + padding - 2);
+    ctx.fillText(text, padding, padding - 2);
     ctx.restore();
   }
 }

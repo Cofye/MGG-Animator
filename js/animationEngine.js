@@ -89,6 +89,7 @@ function startBackupLoop() {
     }
   }, 1000);
 }
+
 function stopBackupLoop() {
   if (backupTimer !== null) { clearInterval(backupTimer); backupTimer = null; }
 }
@@ -440,7 +441,6 @@ function updateTick(dtSeconds) {
       animationTime = animationTime - limit;
     }
   }
-
   if (deathState.active) {
     const speed = Math.max(0.0001, currentSpeedFactor || 1);
     deathState.progress += dtSeconds / (deathState.duration / speed);
