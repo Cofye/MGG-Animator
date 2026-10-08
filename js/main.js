@@ -760,11 +760,24 @@ async function selectCharacter(context, mutant) {
       }
     }
   } else if (context === "rival") {
-    await loadRivalData(mutant.value);
-    const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || "") : null;
-    selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allRivalSkins[0] || null;
-    updateRivalSkinButton();
-    await loadRivalStand(mutant.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
+    const wasPaused = window.animationEngine.isPaused();
+    window.mutantLoader.pushLoadingHold();
+    window.animationEngine.pause();
+    window.soundManager.stopAllSounds();                      // ← NUEVO
+    try {
+      await loadRivalData(mutant.value);
+      const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || null) : null;
+      selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allRivalSkins[0] || null;
+      updateRivalSkinButton();
+      await loadRivalStand(mutant.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
+    } finally {
+      window.mutantLoader.popLoadingHold();
+      if (!wasPaused) {
+        const tick = window.animationEngine.getInfo().tickPosition || 0;
+        playResumeSoundForTick(tick);                         // ← NUEVO
+        window.animationEngine.play();
+      }
+    }
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
   }
@@ -1019,7 +1032,20 @@ async function selectRivalSkin(skin) {
   scaleContainerLayer.classList.add("hidden");
   hideStatic();
   if (selectedValues.rival) {
-    await loadRivalStand(selectedValues.rival, skin ? (skin.value || "") : "");
+    const wasPaused = window.animationEngine.isPaused();
+    window.mutantLoader.pushLoadingHold();
+    window.animationEngine.pause();
+    window.soundManager.stopAllSounds();                    // ← NUEVO
+    try {
+      await loadRivalStand(selectedValues.rival, skin ? (skin.value || "") : "");
+    } finally {
+      window.mutantLoader.popLoadingHold();
+      if (!wasPaused) {
+        const tick = window.animationEngine.getInfo().tickPosition || 0;
+        playResumeSoundForTick(tick);                       // ← NUEVO
+        window.animationEngine.play();
+      }
+    }
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
   }
@@ -1081,6 +1107,19 @@ function closeItemList() {
   itemListMode = null;
 }
 
+function snapshotSoundAt(tick) {
+  if (!soundSchedule || soundSchedule.length === 0) return null;
+  let best = null;
+  for (const s of soundSchedule) {
+    if (s.tick <= tick && (!best || s.tick > best.tick)) best = s;
+  }
+  if (!best) return null;
+  const offset = (tick - best.tick) / 30;
+  const buffer = window.soundManager.getSoundBuffer(best.name);
+  if (!buffer || offset >= buffer.duration) return null;
+  return { name: best.name, offset };
+}
+
 async function selectSkin(skin) {
   selectedSkin = skin;
   updateSkinButton();
@@ -1088,18 +1127,43 @@ async function selectSkin(skin) {
   clickToClose.classList.add("hidden");
   scaleContainerLayer.classList.add("hidden");
   hideStatic();
-  if (window.mutantLoader && typeof window.mutantLoader.setSkin === "function") {
+
+  if (!window.mutantLoader || typeof window.mutantLoader.setSkin !== "function") return;
+
+  const wasPaused = window.animationEngine.isPaused();
+  const savedTick = window.animationEngine.getInfo().tickPosition || 0;
+
+  window.mutantLoader.pushLoadingHold();
+  window.animationEngine.pause();
+  window.soundManager.stopAllSounds();
+  updatePlayButtonIcon();
+
+  try {
     await window.mutantLoader.setSkin(skin.value || "");
+
+    const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+    if (ATTACK_PATTERN.test(anim) && selectedValues.mutant) {
+      const standAssets = await window.mutantLoader.loadStandTreeForMutant(
+        selectedValues.mutant,
+        skin.value || ""
+      );
+      window._standAssets = standAssets;
+      // Solo actualizamos el bitmap del tail, sin tocar soundSchedule/fxLastTick
+      if (standAssets) {
+        window.animationEngine.updateAttackTailAssets(standAssets.tree, standAssets.image);
+      }
+    }
+  } finally {
+    window.mutantLoader.popLoadingHold();
   }
-  const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
-  if (ATTACK_PATTERN.test(anim) && selectedValues.mutant) {
-    const standAssets = await window.mutantLoader.loadStandTreeForMutant(
-      selectedValues.mutant,
-      skin.value || ""
-    );
-    window._standAssets = standAssets;
-    buildTransportSchedule();
+
+  if (!wasPaused) {
+    playResumeSoundForTick(savedTick);
+    window.animationEngine.play();
+    fxLastTick = savedTick;
+    lastSeenTick = savedTick;
   }
+  updatePlayButtonIcon();
 }
 
 async function selectAnimation(anim) {
@@ -1781,7 +1845,12 @@ function buildTransportSchedule() {
 }
 
 function buildSoundSchedule() {
-  soundSchedule = window.animationEngine.scanAnimationSounds() || [];
+  const animValue = selectedAnimation ? (selectedAnimation.value || "") : "";
+  if (DEATH_PATTERN.test(animValue)) {
+    soundSchedule = [{ tick: 0, name: "mutant_death" }];
+  } else {
+    soundSchedule = window.animationEngine.scanAnimationSounds() || [];
+  }
   updateSoundButtonState();
 }
 

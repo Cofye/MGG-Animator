@@ -29,36 +29,44 @@ let postImage = null;
 let postStartTick = -1;
 let tailEndTick = -1;
 
-let deathState = { active: false, progress: 0, duration: 1.2, fireColor: [1, 1, 1, 1] };
+let deathState = {
+  active: false,
+  progress: 0,        // progreso visual del shader (0→1 en deathState.duration segundos)
+  elapsed: 0,         // segundos transcurridos desde el inicio (para reset)
+  duration: 1.2,      // duración del shader
+  fireColor: [1, 1, 1, 1]
+};
 let deathSplatterTree = null;
 let deathSplatterImage = null;
 
 function startDeath(specimenCode) {
   deathState.active = true;
   deathState.progress = 0;
+  deathState.elapsed = 0;
   deathState.specimenCode = specimenCode;
   deathState.fireColor = window.deathFxManager.getGeneColor(specimenCode);
-  window.soundManager.playSound('mutant_death');
+  triggerRender();
+}
+
+function stopDeath() {
+  deathState.active = false;
+  deathState.progress = 0;
+  deathState.elapsed = 0;
+  deathSplatterTree = null;
+  deathSplatterImage = null;
   triggerRender();
 }
 
 function isDying() { return deathState.active; }
 function getDeathProgress() { return deathState.progress; }
 function getDeathFireColor() { return deathState.fireColor; }
-function stopDeath() {
-  deathState.active = false;
-  deathState.progress = 0;
-  deathSplatterTree = null;
-  deathSplatterImage = null;
-  triggerRender();
-}
 
 function setDeathSplatter(tree, image) {
   deathSplatterTree = tree || null;
   deathSplatterImage = image || null;
   if (deathSplatterTree) {
     resetNodeState(deathSplatterTree, true);
-    deathSplatterTree.loopEnabled = false;
+    forceLoopDisabled(deathSplatterTree);
     spriteUpdate(deathSplatterTree, 0);
   }
 }
@@ -126,6 +134,16 @@ function setAttackSpeedMultiplier(m) {
   attackSpeedMultiplier = Number.isFinite(n) && n > 0 ? n : 1;
 }
 function getAttackSpeedMultiplier() { return attackSpeedMultiplier; }
+
+function updateAttackTailAssets(tree, image) {
+  if (tailEndTick <= 0) return;   // no hay tail activo, nada que actualizar
+  postTree = tree || null;
+  postImage = image || null;
+  if (postTree) {
+    resetNodeState(postTree, true);
+    spriteUpdate(postTree, 0);
+  }
+}
 
 function setAttackTail(endTick, tree, img, startTick) {
   tailEndTick = endTick > 0 ? endTick : -1;
@@ -443,10 +461,20 @@ function updateTick(dtSeconds) {
   }
   if (deathState.active) {
     const speed = Math.max(0.0001, currentSpeedFactor || 1);
-    deathState.progress += dtSeconds / (deathState.duration / speed);
-    if (deathState.progress >= 1) {
+    const shaderSeconds = Math.max(0.0001, deathState.duration / speed);
+
+    if (deathState.progress < 1) {
+      deathState.progress = Math.min(1, deathState.progress + dtSeconds / shaderSeconds);
+    }
+    deathState.elapsed += dtSeconds * speed;
+
+    const totalTicks = getDeathTickDuration();
+    const totalSeconds = totalTicks / UNIVERSAL_FPS;
+
+    if (deathState.elapsed >= totalSeconds) {
       if (autoRestart) {
         deathState.progress = 0;
+        deathState.elapsed = 0;
         animationTime = 0;
         resetNodeState(animationTree, true);
         if (rivalTree) resetNodeState(rivalTree, true);
@@ -459,11 +487,11 @@ function updateTick(dtSeconds) {
         transportOffsetY = 0;
         if (deathSplatterTree) {
           resetNodeState(deathSplatterTree, true);
+          forceLoopDisabled(deathSplatterTree);
           spriteUpdate(deathSplatterTree, 0);
         }
-        window.soundManager.playSound('mutant_death');
       } else {
-        deathState.progress = 1;
+        deathState.elapsed = totalSeconds;
       }
     }
   }
@@ -476,7 +504,14 @@ function updateTick(dtSeconds) {
     spriteUpdate(postTree, normalDt);
   }
   if (deathState.active && deathSplatterTree) {
-    spriteUpdate(deathSplatterTree, normalDt);
+    // Congela el splatter si ya llegó al último frame
+    const splatDone =
+      deathSplatterTree.currentFrame >= deathSplatterTree.totalFrames - 1 &&
+      deathSplatterTree.frameCounter >= deathSplatterTree.framerate - 1 &&
+      !deathSplatterTree.loopEnabled;
+    if (!splatDone) {
+      spriteUpdate(deathSplatterTree, normalDt);
+    }
   }
 }
 
@@ -730,6 +765,16 @@ function forceLoopEnabled(node) {
   }
 }
 
+function forceLoopDisabled(node) {
+  if (!node) return;
+  if (node.type === "Sprite") {
+    node.loopEnabled = false;
+    for (const c of node.children) forceLoopDisabled(c);
+  } else if (node.type === "Composite") {
+    if (node.innerSprite) forceLoopDisabled(node.innerSprite);
+  }
+}
+
 function resetRuntime() {
   animationTime = 0;
   accumulatorMs = 0;
@@ -837,7 +882,11 @@ function restoreTick(tick) {
     let t = Math.trunc(tick);
     if (t < 0) t = 0;
     if (t >= total) t = total - 1;
-    deathState.progress = total > 0 ? t / total : 0;
+
+    deathState.elapsed = t / UNIVERSAL_FPS;
+    const shaderSeconds = Math.max(0.0001, deathState.duration);
+    deathState.progress = Math.min(1, deathState.elapsed / shaderSeconds);
+
     if (precomputedSnapshots && precomputedTotalTicks > 0) {
       const standTotal = precomputedTotalTicks;
       let st = t % standTotal;
@@ -856,7 +905,7 @@ function restoreTick(tick) {
     }
     if (deathSplatterTree) {
       resetNodeState(deathSplatterTree, true);
-      deathSplatterTree.loopEnabled = false;
+      forceLoopDisabled(deathSplatterTree);
       spriteUpdate(deathSplatterTree, t / UNIVERSAL_FPS);
     }
     triggerRender();
@@ -1024,13 +1073,21 @@ function getDeathTickDuration() {
       splatTicks += getFrameTickDuration(deathSplatterTree, i);
     }
   }
-  return Math.max(shaderTicks, splatTicks, 1);
+  let soundTicks = 0;
+  const sm = window.soundManager;
+  if (sm && sm.getSoundBuffer) {
+    const buf = sm.getSoundBuffer('mutant_death');
+    if (buf && !(buf instanceof Promise)) {
+      soundTicks = Math.ceil(buf.duration * UNIVERSAL_FPS);
+    }
+  }
+  return Math.max(shaderTicks, splatTicks, soundTicks, 1);
 }
 
 function getInfo() {
   if (deathState.active) {
     const total = getDeathTickDuration();
-    const pos = deathState.progress * total;
+    const pos = deathState.elapsed * UNIVERSAL_FPS;
     return {
       currentFrame: animationTree ? Math.max(0, animationTree.currentFrame) : 0,
       totalFrames: animationTree ? animationTree.totalFrames : 0,
@@ -1160,7 +1217,7 @@ window.animationEngine = {
   getLoadedImage: () => loadedImage,
   getRivalImage: () => rivalImage,
   getRenderTree, getRenderImage,
-  setAttackTail, clearAttackTail, getTailEndTick,
+  setAttackTail, clearAttackTail, getTailEndTick, updateAttackTailAssets,
   setRivalVisible, isRivalVisible: () => rivalVisible,
   startLoop, stopLoop, play, pause, togglePause, isPaused,
   setSpeed, setAttackSpeedMultiplier, getAttackSpeedMultiplier,
