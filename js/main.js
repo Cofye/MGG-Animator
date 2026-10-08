@@ -39,6 +39,20 @@ const listControllers = {};
 const MID_WATERMARK_PATH = "images/ui/logo_manu.png";
 const MID_WATERMARK_OPACITY = 0.25;
 const MID_WATERMARK_WIDTH_RATIO = 1.0;
+const DEATH_PATTERN = /^death/i;
+
+function extractGeneFromSpecimen(specimenCode) {
+  const m = String(specimenCode || "").match(/_([A-Fa-f])/);
+  return m ? m[1].toUpperCase() : "A";
+}
+
+async function loadDeathSplatterFor(gene) {
+  const name = `fx_splatter_${gene}`;
+  const asset = await window.fxManager.loadSpriteFxAsset(name);
+  if (!asset) return null;
+  const tree = window.fxManager.cloneTree(asset.tree);
+  return { tree, image: asset.img };
+}
 
 const BG_BUTTONS = [
   { id: "btnCampaign", type: "bg_cmp" },
@@ -303,6 +317,7 @@ document.addEventListener("mousemove", (e) => {
     state.updateScrollUI();
   }
 });
+
 document.addEventListener("mouseup", () => {
   for (const state of Object.values(listControllers)) {
     if (state.dragging) { state.dragging = false; document.body.style.userSelect = ""; }
@@ -348,6 +363,7 @@ async function loadAvailableLanguages() {
   renderLangMenu();
   updateFlagLang();
 }
+
 function renderLangMenu() {
   langLayer.innerHTML = "";
   availableLangs.forEach(lang => {
@@ -358,11 +374,13 @@ function renderLangMenu() {
     langLayer.appendChild(item);
   });
 }
+
 function updateFlagLang() {
   const selected = availableLangs.find(l => l.value === currentLang);
   const flagImg = document.querySelector("#btnLang img.flag");
   if (selected && flagImg) flagImg.src = selected.image;
 }
+
 function toggleLangMenu(show) {
   if (show) {
     langLayer.classList.remove("hidden"); clickToClose.classList.remove("hidden");
@@ -372,6 +390,7 @@ function toggleLangMenu(show) {
     scaleContainerLayer.classList.add("hidden"); hideStatic();
   }
 }
+
 async function selectLanguage(langCode) {
   toggleLangMenu(false);
   showLoading();
@@ -387,6 +406,7 @@ async function selectLanguage(langCode) {
   if (!listControllers.bg?.layer.classList.contains("hidden")) renderBgList();
   hideLoading();
 }
+
 async function applyLanguage() {
   const langsMap = await loadLangsFile();
   document.querySelectorAll("[data-lang]").forEach(el => {
@@ -398,20 +418,24 @@ async function applyLanguage() {
     } else if (value) el.textContent = value;
   });
 }
+
 async function loadMutants() {
   const parsed = await parseCustomTXT(`data/characters.txt?nocache=${Date.now()}`, currentLang);
   allMutants = parsed.filter(p => p.type && p.type.startsWith("default"));
 }
+
 async function loadBackgrounds() {
   const parsed = await parseCustomTXT(`data/options.txt?nocache=${Date.now()}`, currentLang);
   allBackgrounds = parsed.filter(p => p.type && p.type.startsWith("bg_"));
 }
+
 async function applyDefaultBackground() {
   if (!window.mutantLoader || typeof window.mutantLoader.setBackgroundByValue !== "function") return;
   let bg = allBackgrounds.find(b => b.value === DEFAULT_BG_VALUE);
   if (!bg) bg = allBackgrounds.find(b => b.name === "Detroit Rock City");
   if (bg) await window.mutantLoader.setBackgroundByValue(bg.value);
 }
+
 async function reloadMutantNames() {
   const parsed = await parseCustomTXT(`data/characters.txt?nocache=${Date.now()}`, currentLang);
   allMutants = parsed.filter(p => p.type && p.type.startsWith("default"));
@@ -431,6 +455,7 @@ async function reloadMutantNames() {
     if (found) document.querySelector("#rivalSelect span").textContent = found.name;
   }
 }
+
 async function loadMutantData(mutantValue) {
   allSkins = [];
   allAnimations = [];
@@ -441,6 +466,7 @@ async function loadMutantData(mutantValue) {
     allAnimations = parsed.filter(p => p.type === "animation");
   } catch { allSkins = []; allAnimations = []; }
 }
+
 function mutantListLayerContext() { return listControllers.mutant?.layer.getAttribute("data-context") || "mutant"; }
 
 function renderCharacterList(context = "mutant", searchQuery = "") {
@@ -462,6 +488,7 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   });
   setTimeout(state.updateScrollUI, 50);
 }
+
 function setupMutantSearch() {
   const state = listControllers.mutant;
   if (!state || !state.search) return;
@@ -470,6 +497,7 @@ function setupMutantSearch() {
     state.updateScrollUI();
   });
 }
+
 function openCharacterList(context) {
   const state = listControllers.mutant;
   if (!state) return;
@@ -478,6 +506,7 @@ function openCharacterList(context) {
   state.layer.setAttribute("data-context", context); showStatic();
   renderCharacterList(context, state.search ? state.search.value : "");
 }
+
 function closeCharacterList() {
   const state = listControllers.mutant;
   if (!state) return;
@@ -485,6 +514,7 @@ function closeCharacterList() {
   clickToClose.classList.add("hidden"); state.layer.removeAttribute("data-context");
   scaleContainerLayer.classList.add("hidden"); hideStatic();
 }
+
 function updateStatsButton(mutantValue) {
   if (!btnStats) return;
   if (!mutantValue) { btnStats.classList.add("hidden"); btnStats.setAttribute("href", ""); return; }
@@ -512,28 +542,35 @@ async function selectCharacter(context, mutant) {
     if (typeof loadMutantImage === "function") {
       const skin = selectedSkin ? (selectedSkin.value || "") : "";
       const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+      const isDeath = DEATH_PATTERN.test(anim);
       const isAttack = ATTACK_PATTERN.test(anim);
-      window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(anim));
+      const animToLoad = isDeath ? "stand" : anim;
+      window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(anim) || isDeath));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
       window.fxManager.clear();
       window.soundManager.stopAllSounds();
+      window.animationEngine.stopDeath();
       window.mutantLoader.pushLoadingHold();
       window.animationEngine.pause();
       try {
         const fxPromise = (async () => {
           const attacks = await window.fxManager.loadFxForMutant(mutant.value);
           window.fxManager.setAttacksTable(attacks);
-          window.fxManager.setCurrentAnimation(anim, attacks);
-          await window.fxManager.preloadForCurrentAttack();
+          window.fxManager.setCurrentAnimation(animToLoad, attacks);
+          if (!isDeath) await window.fxManager.preloadForCurrentAttack();
         })();
         const standPromise = isAttack
-          ? window.mutantLoader.loadStandTreeForMutant(mutant.value)
+          ? window.mutantLoader.loadStandTreeForMutant(mutant.value, skin)
+          : Promise.resolve(null);
+        const deathSoundPromise = isDeath
+          ? window.soundManager.preloadSounds(['mutant_death'])
           : Promise.resolve(null);
         const [, , standAssets] = await Promise.all([
-          loadMutantImage(mutant.value, anim, skin),
+          loadMutantImage(mutant.value, animToLoad, skin),
           fxPromise,
           standPromise,
+          deathSoundPromise,
         ]);
         window._standAssets = standAssets;
         window.animationEngine.pause();
@@ -554,6 +591,14 @@ async function selectCharacter(context, mutant) {
       enablePlayerButtons();
       buildTransportSchedule();
       applyRivalVisibility(anim);
+      if (isDeath) {
+        const gene = extractGeneFromSpecimen(mutant.value);
+        const splatter = await loadDeathSplatterFor(gene);
+        if (splatter) {
+          window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+        }
+        window.animationEngine.startDeath(mutant.value);
+      }
     }
   } else if (context === "rival") {
     await loadRivalStand(mutant.value);
@@ -586,6 +631,7 @@ async function loadRivalAnimationAssets(mutantValue, animName) {
   const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
   return { tree, img };
 }
+
 async function ensureRivalAssets(mutantValue) {
   if (!mutantValue) return null;
   if (rivalAnimationCache.has(mutantValue)) return rivalAnimationCache.get(mutantValue);
@@ -597,6 +643,7 @@ async function ensureRivalAssets(mutantValue) {
   rivalAnimationCache.set(mutantValue, assets);
   return assets;
 }
+
 async function loadRivalStand(mutantValue) {
   if (!mutantValue) {
     currentRivalStandTree = null; currentRivalStandImage = null; currentRivalAssets = null;
@@ -621,6 +668,7 @@ async function loadRivalStand(mutantValue) {
     window.animationEngine.setRivalTree(null);
   }
 }
+
 function restoreRivalStand() {
   rivalHitPlaying = false; rivalHitTicksElapsed = 0;
   if (currentRivalAssets && currentRivalAssets.stand) {
@@ -628,6 +676,7 @@ function restoreRivalStand() {
     window.animationEngine.setRivalTree(currentRivalAssets.stand.tree);
   }
 }
+
 async function setDefaultRival(mutantValue) {
   const found = allMutants.find(m => m.value === mutantValue);
   if (!found) return;
@@ -648,6 +697,7 @@ function createBgItem(bg) {
   item.addEventListener("click", () => selectBg(bg));
   return item;
 }
+
 function renderBgList(query = "") {
   const state = listControllers.bg;
   if (!state) return;
@@ -658,6 +708,7 @@ function renderBgList(query = "") {
   filtered.forEach(bg => state.container.appendChild(createBgItem(bg)));
   setTimeout(state.updateScrollUI, 50);
 }
+
 function openBgList(type) {
   const state = listControllers.bg;
   if (!state) return;
@@ -667,12 +718,14 @@ function openBgList(type) {
   state.layer.setAttribute("data-context", type); showStatic();
   renderBgList(state.search ? state.search.value : "");
 }
+
 function closeBgList() {
   const state = listControllers.bg;
   if (!state) return;
   state.bg.classList.add("hidden"); state.layer.classList.add("hidden");
   state.layer.removeAttribute("data-context");
 }
+
 async function selectBg(bg) {
   closeBgList(); closeCharacterList(); closeItemList();
   clickToClose.classList.add("hidden"); scaleContainerLayer.classList.add("hidden"); hideStatic();
@@ -680,6 +733,7 @@ async function selectBg(bg) {
     await window.mutantLoader.setBackgroundByValue(bg.value || null);
   }
 }
+
 function setupBackgroundControls() {
   const btnNone = document.getElementById("btnNone");
   if (btnNone) btnNone.addEventListener("click", async () => {
@@ -710,6 +764,7 @@ async function updateSkinButton() {
   span.removeAttribute("data-lang");
   span.textContent = selectedSkin.name;
 }
+
 async function updateAnimationButton() {
   const icon = document.querySelector("#animationSelect img");
   const span = document.querySelector("#animationSelect span");
@@ -733,6 +788,7 @@ function createSkinItem(skin) {
   item.addEventListener("click", () => selectSkin(skin));
   return item;
 }
+
 function createAnimationItem(anim) {
   const item = document.createElement("div");
   item.className = "skin-item";
@@ -740,6 +796,7 @@ function createAnimationItem(anim) {
   item.addEventListener("click", () => selectAnimation(anim));
   return item;
 }
+
 function renderItemList() {
   const state = listControllers.skin;
   if (!state || !itemListMode) return;
@@ -749,6 +806,7 @@ function renderItemList() {
   items.forEach(item => state.container.appendChild(createFn(item)));
   setTimeout(state.updateScrollUI, 50);
 }
+
 function openItemList(mode) {
   const state = listControllers.skin;
   if (!state) return;
@@ -760,6 +818,7 @@ function openItemList(mode) {
   state.layer.setAttribute("data-context", mode); showStatic();
   renderItemList();
 }
+
 function closeItemList() {
   const state = listControllers.skin;
   if (state) {
@@ -768,13 +827,25 @@ function closeItemList() {
   }
   itemListMode = null;
 }
+
 async function selectSkin(skin) {
   selectedSkin = skin;
   updateSkinButton();
   closeItemList(); closeCharacterList();
-  clickToClose.classList.add("hidden"); scaleContainerLayer.classList.add("hidden"); hideStatic();
+  clickToClose.classList.add("hidden");
+  scaleContainerLayer.classList.add("hidden");
+  hideStatic();
   if (window.mutantLoader && typeof window.mutantLoader.setSkin === "function") {
     await window.mutantLoader.setSkin(skin.value || "");
+  }
+  const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+  if (ATTACK_PATTERN.test(anim) && selectedValues.mutant) {
+    const standAssets = await window.mutantLoader.loadStandTreeForMutant(
+      selectedValues.mutant,
+      skin.value || ""
+    );
+    window._standAssets = standAssets;
+    buildTransportSchedule();
   }
 }
 
@@ -784,12 +855,16 @@ async function selectAnimation(anim) {
   closeItemList(); closeCharacterList();
   clickToClose.classList.add("hidden"); scaleContainerLayer.classList.add("hidden"); hideStatic();
   const value = anim.value || "stand";
+  const isDeath = DEATH_PATTERN.test(value);
   const isAttack = ATTACK_PATTERN.test(value);
-  window.animationEngine.setAutoRestart(loopEnabled && COMBAT_PATTERN.test(value));
+  const animToLoad = isDeath ? "stand" : value;
+  window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(value) || isDeath));
   window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
   window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
+  window.animationEngine.stopDeath();
+
   const hasMutant = !!selectedValues.mutant;
   const hasLoader = window.mutantLoader && typeof window.mutantLoader.setAnimation === "function";
   if (hasMutant && hasLoader) {
@@ -799,16 +874,23 @@ async function selectAnimation(anim) {
       const fxPromise = (async () => {
         const attacks = await window.fxManager.loadFxForMutant(selectedValues.mutant);
         window.fxManager.setAttacksTable(attacks);
-        window.fxManager.setCurrentAnimation(value, attacks);
-        await window.fxManager.preloadForCurrentAttack();
+        window.fxManager.setCurrentAnimation(animToLoad, attacks);
+        if (!isDeath) await window.fxManager.preloadForCurrentAttack();
       })();
       const standPromise = isAttack
-        ? window.mutantLoader.loadStandTreeForMutant(selectedValues.mutant)
+        ? window.mutantLoader.loadStandTreeForMutant(
+            selectedValues.mutant,
+            window.mutantLoader.getCurrentSkin()
+          )
+        : Promise.resolve(null);
+      const deathSoundPromise = isDeath
+        ? window.soundManager.preloadSounds(['mutant_death'])
         : Promise.resolve(null);
       const [_, , standAssets] = await Promise.all([
-        window.mutantLoader.setAnimation(value),
+        window.mutantLoader.setAnimation(animToLoad),
         fxPromise,
         standPromise,
+        deathSoundPromise,
       ]);
       window._standAssets = standAssets;
       window.animationEngine.pause();
@@ -821,9 +903,17 @@ async function selectAnimation(anim) {
     lastSeenTick = 0;
     window.animationEngine.play();
     updatePlayButtonIcon();
+    if (isDeath) {
+      const gene = extractGeneFromSpecimen(selectedValues.mutant);
+      const splatter = await loadDeathSplatterFor(gene);
+      if (splatter) {
+        window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+      }
+      window.animationEngine.startDeath(selectedValues.mutant);
+    }
   } else if (hasLoader) {
     window.animationEngine.pause();
-    await window.mutantLoader.setAnimation(value);
+    await window.mutantLoader.setAnimation(animToLoad);
     window.animationEngine.pause();
     buildSoundSchedule();
     await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
@@ -831,15 +921,31 @@ async function selectAnimation(anim) {
     lastSeenTick = 0;
     window.animationEngine.play();
     updatePlayButtonIcon();
+    if (isDeath && selectedValues.mutant) {
+      const gene = extractGeneFromSpecimen(selectedValues.mutant);
+      const splatter = await loadDeathSplatterFor(gene);
+      if (splatter) {
+        window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+      }
+      window.animationEngine.startDeath(selectedValues.mutant);
+    }
   } else if (hasMutant) {
     const attacks = await window.fxManager.loadFxForMutant(selectedValues.mutant);
     window.fxManager.setAttacksTable(attacks);
-    window.fxManager.setCurrentAnimation(value, attacks);
-    await window.fxManager.preloadForCurrentAttack();
+    window.fxManager.setCurrentAnimation(animToLoad, attacks);
+    if (!isDeath) await window.fxManager.preloadForCurrentAttack();
     buildSoundSchedule();
     await window.soundManager.preloadSounds(soundSchedule.map(s => s.name));
     fxLastTick = -0.001;
     lastSeenTick = 0;
+    if (isDeath) {
+      const gene = extractGeneFromSpecimen(selectedValues.mutant);
+      const splatter = await loadDeathSplatterFor(gene);
+      if (splatter) {
+        window.animationEngine.setDeathSplatter(splatter.tree, splatter.image);
+      }
+      window.animationEngine.startDeath(selectedValues.mutant);
+    }
   }
 
   buildTransportSchedule();
@@ -910,7 +1016,7 @@ function setupLoopControl() {
     loopEnabled = !loopEnabled;
     window.animationEngine.setStopAtEnd(!loopEnabled);
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
-    const isCombat = COMBAT_PATTERN.test(anim);
+    const isCombat = COMBAT_PATTERN.test(anim) || DEATH_PATTERN.test(anim);
     window.animationEngine.setAutoRestart(loopEnabled && isCombat);
     updateLoopButtonIcon();
   });
@@ -1051,6 +1157,21 @@ function updateTimelineBar() {
   playerBar.style.left = `${lineStart + ratio * range}px`;
 }
 
+function checkMomentTicks() {
+  if (!transportSchedule || !transportSchedule.moments) return;
+  const tick = window.animationEngine.getInfo().tickPosition || 0;
+  for (const name of Object.keys(transportSchedule.moments)) {
+    const list = transportSchedule.moments[name];
+    let idx = momentIdx[name] || 0;
+    while (idx < list.length && list[idx] <= tick) {
+      window.fxManager.onLabelMoment(name);
+      if (name === "impact") activateRivalHit(0);
+      idx++;
+    }
+    momentIdx[name] = idx;
+  }
+}
+
 function updateMomentIdxForTick(targetTick) {
   if (!transportSchedule || !transportSchedule.moments) return;
   for (const name of Object.keys(transportSchedule.moments)) {
@@ -1060,6 +1181,7 @@ function updateMomentIdxForTick(targetTick) {
     momentIdx[name] = idx;
   }
 }
+
 function rebuildFxForTick(targetTick) {
   window.fxManager.clear();
   if (!transportSchedule || !transportSchedule.moments) return;
@@ -1078,6 +1200,7 @@ function rebuildFxForTick(targetTick) {
   }
   if (targetTick > prevTick) window.fxManager.advanceTicks(targetTick - prevTick);
 }
+
 function restoreRivalHitForTick(targetTick) {
   const impactTicks = transportSchedule && transportSchedule.moments && transportSchedule.moments.impact;
   if (!impactTicks || impactTicks.length === 0 || !currentRivalAssets || !currentRivalAssets.hit) {
@@ -1090,23 +1213,32 @@ function restoreRivalHitForTick(targetTick) {
     if (rivalHitPlaying) { restoreRivalStand(); rivalHitPlaying = false; }
     return;
   }
-  const hitDuration = rivalHitDurationTicks || window.animationEngine.getTreeTickDuration(currentRivalAssets.hit.tree);
+  const hitDuration = window.animationEngine.getTreeTickDuration(currentRivalAssets.hit.tree);
   const elapsed = targetTick - lastImpact;
   if (elapsed < hitDuration) {
-    const hitTree = currentRivalAssets.hit.tree;
-    window.animationEngine.setRivalSpritesheet(currentRivalAssets.hit.img);
-    window.animationEngine.setRivalTree(hitTree);
-    const savedSpeed = window.animationEngine.getInfo().speed;
-    window.animationEngine.setSpeed(1);
-    window.animationEngine.spriteUpdate(hitTree, elapsed / 30);
-    window.animationEngine.setSpeed(savedSpeed);
-    rivalHitPlaying = true;
-    rivalHitTicksElapsed = elapsed;
-    rivalHitDurationTicks = hitDuration;
+    activateRivalHit(elapsed);
   } else if (rivalHitPlaying) {
     restoreRivalStand();
     rivalHitPlaying = false;
   }
+}
+
+function activateRivalHit(elapsedTicks = 0) {
+  if (!currentRivalAssets || !currentRivalAssets.hit) return;
+  const hitTree = currentRivalAssets.hit.tree;
+  const hitDur = window.animationEngine.getTreeTickDuration(hitTree);
+  window.animationEngine.setRivalSpritesheet(currentRivalAssets.hit.img);
+  window.animationEngine.setRivalTree(hitTree, false);
+  hitTree.loopEnabled = false;
+  if (elapsedTicks > 0) {
+    const savedSpeed = window.animationEngine.getInfo().speed;
+    window.animationEngine.setSpeed(1);
+    window.animationEngine.spriteUpdate(hitTree, elapsedTicks / 30);
+    window.animationEngine.setSpeed(savedSpeed);
+  }
+  rivalHitPlaying = true;
+  rivalHitTicksElapsed = elapsedTicks;
+  rivalHitDurationTicks = hitDur;
 }
 
 function applyTickToAll(targetTick, opts = {}) {
@@ -1198,9 +1330,7 @@ function endTimelineDrag() {
   playerTimeline.classList.remove("dragging");
   timelineLastFrame = -1;
   updateTimelineBar();
-
   const tick = window.animationEngine.getInfo().tickPosition || 0;
-
   if (!timelineDraggingPaused) {
     window.soundManager.stopAllSounds();
     playResumeSoundForTick(tick);
@@ -1219,38 +1349,30 @@ function setupTimeline() {
     e.preventDefault();
     startTimelineDrag(e.clientX);
   });
-
   window.addEventListener("pointermove", (e) => {
     if (timelineDragging) seekTimeline(e.clientX);
   });
-
   window.addEventListener("pointerup", () => {
     if (timelineDragging) endTimelineDrag();
   });
-
   window.addEventListener("pointercancel", () => {
     if (timelineDragging) endTimelineDrag();
   });
-
   const timelineLoop = () => {
     timelineRafId = requestAnimationFrame(timelineLoop);
     updateTimelineBar();
     updatePlayButtonIcon();
     updateTransport();
     updateRivalHitProgress();
-
     const info = window.animationEngine.getInfo();
     const tick = info.tickPosition || 0;
     const dur = info.tickDuration || 1;
-
     if (info.paused) {
       fxLastTick = tick;
       return;
     }
-
     const prevTick = fxLastTick;
     const delta = tick - prevTick;
-
     if (delta > 0.0001 && delta < 15) {
       window.fxManager.advanceTicks(delta);
       checkMomentTicks();
@@ -1258,20 +1380,16 @@ function setupTimeline() {
       fxLastTick = tick;
       return;
     }
-
     if (Math.abs(delta) < 0.0001) return;
-
     const isLoop = prevTick > tick && prevTick >= dur - 5;
     rebuildFxForTick(tick);
     updateMomentIdxForTick(tick);
-
     if (isLoop) {
       window.soundManager.stopAllSounds();
       checkSoundCrossings(-0.001, tick, null);
     } else {
       checkSoundCrossings(prevTick, tick, null);
     }
-
     fxLastTick = tick;
     lastSeenTick = tick;
   };
@@ -1313,8 +1431,6 @@ function collectLabelEntryTicks(animTree, labelName) {
 function buildTransportSchedule() {
   const engine = window.animationEngine;
   const scene = window.sceneRenderer;
-  const info = engine.getInfo();
-  const total = info.totalFrames;
   lastSeenTick = 0;
   momentIdx = {};
   fxLastTick = -0.001;
@@ -1322,12 +1438,13 @@ function buildTransportSchedule() {
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
   engine.clearAttackTail();
+  const info = engine.getInfo();
+  const total = info.totalFrames;
   if (total <= 0) { transportSchedule = null; return; }
   const animValue = selectedAnimation ? (selectedAnimation.value || "") : "";
   if (!ATTACK_PATTERN.test(animValue)) { transportSchedule = null; return; }
   const animTree = engine.getTree();
   if (!animTree) { transportSchedule = null; return; }
-
   const labels = engine.scanAnimationLabels();
   const moments = {};
   for (const labelName of Object.keys(labels)) {
@@ -1335,33 +1452,57 @@ function buildTransportSchedule() {
     if (ticks.length > 0) moments[labelName] = ticks;
   }
   for (const k of Object.keys(moments)) momentIdx[k] = 0;
-
+  const hasArrived = labels.arrived !== undefined;
+  const hasReturn = labels.return !== undefined;
+  const hasTeleport = labels.teleport !== undefined;
+  const hasBack = labels.back !== undefined;
+  const dps = engine.getDataPoints();
+  const hasDp = dps.length > 0;
   let targetDeltaX = 0;
   let hasArrivalPhase = false;
   let hasReturnPhase = false;
+  let returnIsSnap = false;
   let startTick = 0, arrivedTick = 0, returnTick = 0, backTick = 0;
-  const allDps = engine.getDataPoints();
-  const dp = allDps.length > 0 ? allDps[0] : null;
-  const hasArrived = labels.arrived !== undefined;
-  const hasReturn = labels.return !== undefined;
-  if (dp && (hasArrived || hasReturn)) {
+  if (hasDp && (hasArrived || hasReturn || hasTeleport || hasBack)) {
     hasArrivalPhase = hasArrived;
-    hasReturnPhase = hasReturn;
+    hasReturnPhase = true;
     const startFrame = labels.start !== undefined ? labels.start : 0;
     const arrivedFrame = labels.arrived !== undefined ? labels.arrived : (total - 1);
-    const returnFrame = labels.return !== undefined ? labels.return : (total - 1);
     const backFrame = labels.back !== undefined ? labels.back : (total - 1);
-    startTick = animTickAtFrame(animTree, startFrame);
+    let returnFrame;
+    let returnIsSnap;
+    if (hasReturn) {
+      returnFrame = labels.return;
+      returnIsSnap = false;
+    } else if (hasBack) {
+      returnFrame = labels.back;
+      returnIsSnap = true;
+    } else if (hasTeleport) {
+      returnFrame = labels.teleport;
+      returnIsSnap = true;
+    } else {
+      returnFrame = backFrame;
+      returnIsSnap = true;
+    }
+
+    startTick   = animTickAtFrame(animTree, startFrame);
     arrivedTick = animTickAtFrame(animTree, arrivedFrame);
-    returnTick = animTickAtFrame(animTree, returnFrame);
-    backTick = animTickAtFrame(animTree, backFrame);
+    returnTick  = animTickAtFrame(animTree, returnFrame);
+    backTick    = animTickAtFrame(animTree, backFrame);
+
+    const dp = dps[0];
     const selfCfg = scene.getCharConfig("other");
     const rivalCfg = scene.getRivalTransform();
     const dx = rivalCfg.x - selfCfg.x;
     const scale = scene.getCharacterScale("other");
     targetDeltaX = dx - (scale * dp.x);
   }
-  transportSchedule = { startTick, arrivedTick, returnTick, backTick, moments, targetDeltaX, hasArrivalPhase, hasReturnPhase };
+
+  transportSchedule = {
+    startTick, arrivedTick, returnTick, backTick,
+    moments, targetDeltaX,
+    hasArrivalPhase, hasReturnPhase, returnIsSnap
+  };
 
   const attackEnd = info.tickDuration;
   const fxEnd = window.fxManager.computeTailEndTick(moments);
@@ -1379,14 +1520,22 @@ function buildSoundSchedule() {
 
 function updateTransport() {
   if (!transportSchedule) { window.animationEngine.setTransportOffset(0, 0); return; }
-  const { startTick, arrivedTick, returnTick, backTick, targetDeltaX, hasArrivalPhase, hasReturnPhase } = transportSchedule;
+  const {
+    startTick, arrivedTick, returnTick, backTick,
+    targetDeltaX,
+    hasArrivalPhase, hasReturnPhase, returnIsSnap
+  } = transportSchedule;
   const tick = window.animationEngine.getInfo().tickPosition || 0;
   let x = 0;
   if (hasArrivalPhase && hasReturnPhase) {
     if (tick <= startTick) x = 0;
     else if (tick < arrivedTick) x = targetDeltaX * ((tick - startTick) / (arrivedTick - startTick));
     else if (tick < returnTick) x = targetDeltaX;
-    else if (tick < backTick) x = targetDeltaX * (1 - (tick - returnTick) / (backTick - returnTick));
+    else if (returnIsSnap) x = 0;
+    else if (tick < backTick) {
+      const span = backTick - returnTick;
+      x = span > 0 ? targetDeltaX * (1 - (tick - returnTick) / span) : 0;
+    }
     else x = 0;
   } else if (hasArrivalPhase) {
     if (tick <= startTick) x = 0;
@@ -1394,36 +1543,14 @@ function updateTransport() {
     else x = targetDeltaX;
   } else if (hasReturnPhase) {
     if (tick < returnTick) x = targetDeltaX;
-    else if (tick < backTick) x = targetDeltaX * (1 - (tick - returnTick) / (backTick - returnTick));
+    else if (returnIsSnap) x = 0;
+    else if (tick < backTick) {
+      const span = backTick - returnTick;
+      x = span > 0 ? targetDeltaX * (1 - (tick - returnTick) / span) : 0;
+    }
     else x = 0;
   }
   window.animationEngine.setTransportOffset(x, 0);
-}
-
-function triggerRivalHit() {
-  if (!currentRivalAssets || !currentRivalAssets.hit) return;
-  const engine = window.animationEngine;
-  engine.setRivalSpritesheet(currentRivalAssets.hit.img);
-  engine.setRivalTree(currentRivalAssets.hit.tree);
-  rivalHitPlaying = true;
-  rivalHitTicksElapsed = 0;
-  rivalHitDurationTicks = engine.getTreeTickDuration(currentRivalAssets.hit.tree);
-}
-function checkMomentTicks() {
-  if (!transportSchedule || !transportSchedule.moments) return;
-  const tick = window.animationEngine.getInfo().tickPosition || 0;
-  if (tick < lastSeenTick) for (const k of Object.keys(momentIdx)) momentIdx[k] = 0;
-  lastSeenTick = tick;
-  for (const name of Object.keys(transportSchedule.moments)) {
-    const list = transportSchedule.moments[name];
-    let idx = momentIdx[name] || 0;
-    while (idx < list.length && tick >= list[idx]) {
-      if (name === "impact" && currentRivalAssets && currentRivalAssets.hit) triggerRivalHit();
-      window.fxManager.onLabelMoment(name);
-      idx++;
-    }
-    momentIdx[name] = idx;
-  }
 }
 
 async function loadOptions() {
@@ -1719,6 +1846,9 @@ function initEventListeners() {
     return filtered;
   }, createBgItem);
   setupMutantSearch();
+  window.deathFxManager.init().then(ok => {
+    if (!ok) console.warn("[main] death shader no disponible, se usará render normal");
+  });
   if (window.mutantLoader && typeof window.mutantLoader.subscribeState === "function") {
     window.mutantLoader.subscribeState((loading) => {
       if (loading) canvasLoad.classList.remove("hidden");

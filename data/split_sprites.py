@@ -19,6 +19,7 @@ ANIMATIONS_BLOCK = [
     "animation;#attack2;&&/images/icons/animations/animation_attack2.png;attack2",
     "animation;#attack2p;&&/images/icons/animations/animation_attack2p.png;attack2p",
     "animation;#hit;&&/images/icons/animations/animation_hit.png;hit",
+    "animation;#death;&&/images/icons/animations/animation_death.png;death",
 ]
 
 IGNORED_SKINS = {'gachaboss', 'boss'}

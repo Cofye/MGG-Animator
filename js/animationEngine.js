@@ -22,14 +22,51 @@ let DEBUG_BOUNDS_COLOR = "#00ff00";
 let transportOffsetX = 0;
 let transportOffsetY = 0;
 let renderCallback = null;
-
 let precomputedSnapshots = null;
 let precomputedTotalTicks = 0;
-
 let postTree = null;
 let postImage = null;
 let postStartTick = -1;
 let tailEndTick = -1;
+
+let deathState = { active: false, progress: 0, duration: 1.2, fireColor: [1, 1, 1, 1] };
+let deathSplatterTree = null;
+let deathSplatterImage = null;
+
+function startDeath(specimenCode) {
+  deathState.active = true;
+  deathState.progress = 0;
+  deathState.specimenCode = specimenCode;
+  deathState.fireColor = window.deathFxManager.getGeneColor(specimenCode);
+  window.soundManager.playSound('mutant_death');
+  triggerRender();
+}
+
+function isDying() { return deathState.active; }
+function getDeathProgress() { return deathState.progress; }
+function getDeathFireColor() { return deathState.fireColor; }
+function stopDeath() {
+  deathState.active = false;
+  deathState.progress = 0;
+  deathSplatterTree = null;
+  deathSplatterImage = null;
+  triggerRender();
+}
+
+function setDeathSplatter(tree, image) {
+  deathSplatterTree = tree || null;
+  deathSplatterImage = image || null;
+  if (deathSplatterTree) {
+    resetNodeState(deathSplatterTree, true);
+    deathSplatterTree.loopEnabled = false;
+    spriteUpdate(deathSplatterTree, 0);
+  }
+}
+
+function getDeathSplatter() {
+  if (!deathSplatterTree || !deathSplatterImage) return null;
+  return { tree: deathSplatterTree, image: deathSplatterImage };
+}
 
 const tintCache = new Map();
 let backupTimer = null;
@@ -68,6 +105,7 @@ function setStopAtEnd(v) { stopAtEnd = !!v; }
 function getStopAtEnd() { return stopAtEnd; }
 
 function isAtEnd() {
+  if (deathState.active) return deathState.progress >= 1;
   if (!animationTree) return false;
   const limit = tailEndTick > 0 ? tailEndTick : (precomputedSnapshots ? precomputedTotalTicks : animationTree.totalFrames);
   return animationTime >= limit - 1;
@@ -105,14 +143,17 @@ function clearAttackTail() {
   postImage = null;
   postStartTick = -1;
 }
+
 function getRenderTree() {
   if (postTree && postStartTick >= 0 && animationTime >= postStartTick) return postTree;
   return animationTree;
 }
+
 function getRenderImage() {
   if (postImage && postStartTick >= 0 && animationTime >= postStartTick) return postImage;
   return loadedImage;
 }
+
 function getTailEndTick() { return tailEndTick; }
 
 function setFrame(node, newFrame) {
@@ -121,6 +162,7 @@ function setFrame(node, newFrame) {
   node.frameTicksElapsed = 0;
   return true;
 }
+
 function forceFrame(node, frame) {
   setFrame(node, frame);
   node.delayCounter = 0;
@@ -370,27 +412,71 @@ function updateTick(dtSeconds) {
   animationTime += tickDelta;
   const limit = tailEndTick > 0 ? tailEndTick : precomputedTotalTicks;
   if (limit > 0 && animationTime >= limit) {
-    animationTime = 0;
-    resetNodeState(animationTree, true);
-    if (rivalTree) resetNodeState(rivalTree, true);
-    if (postTree) resetNodeState(postTree, true);
-    spriteUpdate(animationTree, 0);
-    if (rivalTree) spriteUpdate(rivalTree, 0);
-    if (postTree) spriteUpdate(postTree, 0);
-    accumulatorMs = 0;
-    transportOffsetX = 0;
-    transportOffsetY = 0;
-    if (!autoRestart) {
+    if (autoRestart) {
+      animationTime = 0;
+      resetNodeState(animationTree, true);
+      if (rivalTree) resetNodeState(rivalTree, true);
+      if (postTree) resetNodeState(postTree, true);
+      spriteUpdate(animationTree, 0);
+      if (rivalTree) spriteUpdate(rivalTree, 0);
+      if (postTree) spriteUpdate(postTree, 0);
+      accumulatorMs = 0;
+      transportOffsetX = 0;
+      transportOffsetY = 0;
+    } else if (stopAtEnd) {
+      animationTime = 0;
+      resetNodeState(animationTree, true);
+      if (rivalTree) resetNodeState(rivalTree, true);
+      if (postTree) resetNodeState(postTree, true);
+      spriteUpdate(animationTree, 0);
+      if (rivalTree) spriteUpdate(rivalTree, 0);
+      if (postTree) spriteUpdate(postTree, 0);
+      accumulatorMs = 0;
+      transportOffsetX = 0;
+      transportOffsetY = 0;
       paused = true;
       return;
+    } else {
+      animationTime = animationTime - limit;
     }
   }
+
+  if (deathState.active) {
+    const speed = Math.max(0.0001, currentSpeedFactor || 1);
+    deathState.progress += dtSeconds / (deathState.duration / speed);
+    if (deathState.progress >= 1) {
+      if (autoRestart) {
+        deathState.progress = 0;
+        animationTime = 0;
+        resetNodeState(animationTree, true);
+        if (rivalTree) resetNodeState(rivalTree, true);
+        if (postTree) resetNodeState(postTree, true);
+        spriteUpdate(animationTree, 0);
+        if (rivalTree) spriteUpdate(rivalTree, 0);
+        if (postTree) spriteUpdate(postTree, 0);
+        accumulatorMs = 0;
+        transportOffsetX = 0;
+        transportOffsetY = 0;
+        if (deathSplatterTree) {
+          resetNodeState(deathSplatterTree, true);
+          spriteUpdate(deathSplatterTree, 0);
+        }
+        window.soundManager.playSound('mutant_death');
+      } else {
+        deathState.progress = 1;
+      }
+    }
+  }
+
   const attackDt = dtSeconds * currentSpeedFactor * attackSpeedMultiplier;
   const normalDt = dtSeconds * currentSpeedFactor;
   spriteUpdate(animationTree, attackDt);
-  if (rivalVisible && rivalTree) spriteUpdate(rivalTree, normalDt);
+  if (rivalVisible && rivalTree) spriteUpdate(rivalTree, attackDt);
   if (postTree && postStartTick >= 0 && animationTime >= postStartTick) {
     spriteUpdate(postTree, normalDt);
+  }
+  if (deathState.active && deathSplatterTree) {
+    spriteUpdate(deathSplatterTree, normalDt);
   }
 }
 
@@ -604,6 +690,7 @@ function startLoop() {
   accumulatorMs = 0;
   loopId = requestAnimationFrame(mainLoop);
 }
+
 function stopLoop() {
   loopRunning = false;
   if (loopId !== null) { cancelAnimationFrame(loopId); loopId = null; }
@@ -745,6 +832,43 @@ function precomputeTimeline() {
 
 function restoreTick(tick) {
   if (!animationTree) return;
+
+  if (deathState.active) {
+    const total = getDeathTickDuration();
+    let t = Math.trunc(tick);
+    if (t < 0) t = 0;
+    if (t >= total) t = total - 1;
+    deathState.progress = total > 0 ? t / total : 0;
+
+    // Posicionar el stand con los snapshots
+    if (precomputedSnapshots && precomputedTotalTicks > 0) {
+      const standTotal = precomputedTotalTicks;
+      let st = t % standTotal;
+      if (st < 0) st += standTotal;
+      const snap = precomputedSnapshots[st];
+      if (snap) restoreTreeState(animationTree, snap.tree);
+      animationTime = st;
+    } else {
+      resetNodeState(animationTree);
+      const savedSpeed = currentSpeedFactor;
+      currentSpeedFactor = 1;
+      spriteUpdate(animationTree, t / UNIVERSAL_FPS);
+      currentSpeedFactor = savedSpeed;
+      refreshComposites(animationTree);
+      animationTime = t;
+    }
+
+    // Posicionar el splatter (one-shot desde 0)
+    if (deathSplatterTree) {
+      resetNodeState(deathSplatterTree, true);
+      deathSplatterTree.loopEnabled = false;
+      spriteUpdate(deathSplatterTree, t / UNIVERSAL_FPS);
+    }
+
+    triggerRender();
+    return;
+  }
+
   let t = Math.trunc(tick);
   if (t < 0) t = 0;
   if (precomputedSnapshots && precomputedTotalTicks > 0) {
@@ -767,6 +891,7 @@ function restoreTick(tick) {
 }
 
 function setSpritesheet(image) { loadedImage = image || null; tintCache.clear(); }
+
 function setTree(root) {
   animationTree = root || null;
   paused = false;
@@ -775,7 +900,9 @@ function setTree(root) {
   if (animationTree) { precomputeTimeline(); resetRuntime(); }
   if (animationTree && !loopRunning) startLoop();
 }
+
 function setRivalSpritesheet(image) { rivalImage = image || null; tintCache.clear(); }
+
 function setRivalTree(root, loop = true) {
   rivalTree = root || null;
   if (rivalTree) {
@@ -785,7 +912,9 @@ function setRivalTree(root, loop = true) {
   }
 }
 function setRivalVisible(v) { rivalVisible = !!v; triggerRender(); }
+
 function setTransportOffset(x, y) { transportOffsetX = Number(x) || 0; transportOffsetY = Number(y) || 0; }
+
 function getTransportOffset() { return { x: transportOffsetX, y: transportOffsetY }; }
 
 function getDataPoint(name) {
@@ -793,6 +922,7 @@ function getDataPoint(name) {
   const dp = animationTree.dataPoints.find(d => d.name === name);
   return dp ? { x: dp.x, y: dp.y, name: dp.name } : null;
 }
+
 function getDataPoints() {
   if (!animationTree || !animationTree.dataPoints) return [];
   return animationTree.dataPoints.map(d => ({ x: d.x, y: d.y, name: d.name }));
@@ -886,7 +1016,32 @@ function getTickPosition(node) {
   return acc + inFrame;
 }
 
+function getDeathTickDuration() {
+  const shaderTicks = Math.max(1, Math.round((deathState.duration || 1.7) * UNIVERSAL_FPS));
+  let splatTicks = 0;
+  if (deathSplatterTree && deathSplatterTree.frames) {
+    for (let i = 0; i < deathSplatterTree.frames.length; i++) {
+      splatTicks += getFrameTickDuration(deathSplatterTree, i);
+    }
+  }
+  return Math.max(shaderTicks, splatTicks, 1);
+}
+
 function getInfo() {
+  if (deathState.active) {
+    const total = getDeathTickDuration();
+    const pos = deathState.progress * total;
+    return {
+      currentFrame: animationTree ? Math.max(0, animationTree.currentFrame) : 0,
+      totalFrames: animationTree ? animationTree.totalFrames : 0,
+      tickPosition: pos,
+      tickDuration: total,
+      delayCounter: animationTree ? animationTree.delayCounter : 0,
+      paused,
+      speed: currentSpeedFactor,
+      ticks: pos,
+    };
+  }
   if (!animationTree) {
     return { currentFrame: 0, totalFrames: 0, tickPosition: 0, tickDuration: 1, paused, speed: currentSpeedFactor };
   }
@@ -898,43 +1053,102 @@ function getInfo() {
     delayCounter: animationTree.delayCounter,
     paused,
     speed: currentSpeedFactor,
-    ticks: animationTime
+    ticks: animationTime,
   };
 }
 
 function setShowHidden(v) { DEBUG_SHOW_HIDDEN = !!v; triggerRender(); }
+
 function setShowBounds(v) { DEBUG_SHOW_BOUNDS = !!v; triggerRender(); }
+
 function setBoundsColor(c) { DEBUG_BOUNDS_COLOR = normalizeHexColor(c); triggerRender(); }
 
-function computeTreeBounds(node, offsetX, offsetY, acc) {
+function matIdentity() { return [1, 0, 0, 1, 0, 0]; }
+
+function matMul(m1, m2) {
+  return [
+    m1[0]*m2[0] + m1[2]*m2[1],
+    m1[1]*m2[0] + m1[3]*m2[1],
+    m1[0]*m2[2] + m1[2]*m2[3],
+    m1[1]*m2[2] + m1[3]*m2[3],
+    m1[0]*m2[4] + m1[2]*m2[5] + m1[4],
+    m1[1]*m2[4] + m1[3]*m2[5] + m1[5],
+  ];
+}
+
+function matComposite(node) {
+  const cos = Math.cos(node.angle || 0);
+  const sin = Math.sin(node.angle || 0);
+  const sx = node.scaleX != null ? node.scaleX : 1;
+  const sy = node.scaleY != null ? node.scaleY : 1;
+  return [cos * sx, sin * sx, -sin * sy, cos * sy, node.x || 0, node.y || 0];
+}
+
+function matImage(img) {
+  return [img.a, img.b, img.c, img.d, img.dstX, img.dstY];
+}
+
+function matApply(m, x, y) {
+  return [m[0]*x + m[2]*y + m[4], m[1]*x + m[3]*y + m[5]];
+}
+
+function expandBoundsByImage(acc, m, img) {
+  const pts = [
+    matApply(m, 0, 0),
+    matApply(m, img.width, 0),
+    matApply(m, 0, img.height),
+    matApply(m, img.width, img.height),
+  ];
+  for (const [x, y] of pts) {
+    if (!acc.any) {
+      acc.minX = acc.maxX = x;
+      acc.minY = acc.maxY = y;
+      acc.any = true;
+    } else {
+      if (x < acc.minX) acc.minX = x;
+      if (x > acc.maxX) acc.maxX = x;
+      if (y < acc.minY) acc.minY = y;
+      if (y > acc.maxY) acc.maxY = y;
+    }
+  }
+}
+
+function computeTreeBoundsAccurate(node, parentMatrix, acc) {
   if (!node) return acc;
+
   if (node.type === "Composite") {
-    const nx = offsetX + (node.x || 0);
-    const ny = offsetY + (node.y || 0);
-    if (node.innerSprite) computeTreeBounds(node.innerSprite, nx, ny, acc);
+    if (node.visible === false) return acc;
+    const m = matMul(parentMatrix, matComposite(node));
+    if (node.innerSprite) computeTreeBoundsAccurate(node.innerSprite, m, acc);
     return acc;
   }
-  const addImg = (img) => {
-    if (!img) return;
-    const x1 = offsetX + img.dstX, y1 = offsetY + img.dstY;
-    const x2 = x1 + img.width, y2 = y1 + img.height;
-    if (!acc.any) { acc.minX = x1; acc.minY = y1; acc.maxX = x2; acc.maxY = y2; acc.any = true; }
-    else {
-      if (x1 < acc.minX) acc.minX = x1;
-      if (y1 < acc.minY) acc.minY = y1;
-      if (x2 > acc.maxX) acc.maxX = x2;
-      if (y2 > acc.maxY) acc.maxY = y2;
+
+  if (node.type === "Sprite") {
+    if (node.images) {
+      for (const img of node.images) {
+        if (img.visible === false) continue;
+        expandBoundsByImage(acc, matMul(parentMatrix, matImage(img)), img);
+      }
     }
-  };
-  if (node.images) node.images.forEach(addImg);
-  if (node.currentFrame >= 0 && node.frames && node.frames[node.currentFrame]) node.frames[node.currentFrame].images.forEach(addImg);
-  if (node.children) for (const child of node.children) computeTreeBounds(child, offsetX, offsetY, acc);
+    if (node.currentFrame >= 0 && node.frames && node.frames[node.currentFrame]) {
+      for (const img of node.frames[node.currentFrame].images) {
+        if (img.visible === false) continue;
+        expandBoundsByImage(acc, matMul(parentMatrix, matImage(img)), img);
+      }
+    }
+    for (const child of node.children || []) {
+      computeTreeBoundsAccurate(child, parentMatrix, acc);
+    }
+    return acc;
+  }
+
   return acc;
 }
 
 function getTreeBounds(node) {
   const acc = { minX: 0, minY: 0, maxX: 0, maxY: 0, any: false };
-  computeTreeBounds(node, 0, 0, acc);
+  if (!node) return { minX: -80, minY: -300, maxX: 80, maxY: 0 };
+  computeTreeBoundsAccurate(node, matIdentity(), acc);
   if (!acc.any) return { minX: -80, minY: -300, maxX: 80, maxY: 0 };
   return { minX: acc.minX, minY: acc.minY, maxX: acc.maxX, maxY: acc.maxY };
 }
@@ -960,4 +1174,8 @@ window.animationEngine = {
   setShowHidden, setShowBounds, setBoundsColor,
   renderNode, setRenderCallback, getTreeBounds,
   spriteUpdate, resetNodeState, precomputeTimeline, restoreTick, scanAnimationSounds,
+  startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,
+  setDeathSplatter, getDeathSplatter,
+  startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,
+  setDeathSplatter, getDeathSplatter, getDeathTickDuration,
 };

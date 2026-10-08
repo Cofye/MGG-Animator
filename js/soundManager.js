@@ -111,6 +111,7 @@ function stopAllSounds() {
 }
 
 function pauseAllSounds() { stopAllSounds(); }
+
 function resumeAllSounds() {}
 
 function setPlaybackRate(r) {

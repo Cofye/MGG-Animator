@@ -10,22 +10,31 @@ let mutantLoading = false;
 let stateListeners = [];
 let cachedBackground = null;
 let externalLoadingCount = 0;
-
 let backgroundLoading = false;
 let currentBackgroundValue = null;
-const backgroundCache = new Map();
-
 let cachedStandTree = null;
 let cachedStandImage = null;
-let cachedStandMutant = null;
+let cachedStandKey = null;
+
+const backgroundCache = new Map();
 
 function loadBackgroundImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const t = setTimeout(() => { img.onload = null; img.onerror = null; img.src = ""; reject(new Error("timeout")); }, 15000);
+    const t = setTimeout(() => {
+      console.warn("[loader] TIMEOUT (15s) cargando fondo:", url);
+      img.onload = null;
+      img.onerror = null;
+      img.src = "";
+      reject(new Error("timeout"));
+    }, 15000);
     img.crossOrigin = "anonymous";
     img.onload = () => { clearTimeout(t); resolve(img); };
-    img.onerror = () => { clearTimeout(t); reject(new Error()); };
+    img.onerror = () => {
+      clearTimeout(t);
+      console.error("[loader] FONDO no cargó:", url);
+      reject(new Error("load error"));
+    };
     img.src = url;
   });
 }
@@ -41,11 +50,14 @@ async function setBackgroundByValue(value) {
   notifyStateChange();
   try {
     const url = `https://s-beta.kobojo.com/mutants/assets/arenas/${value}.jpg`;
+    console.log("[loader] cargando fondo:", value);
     const img = await loadBackgroundImage(url);
     backgroundCache.set(value, img);
     currentBackgroundValue = value;
     window.sceneRenderer.setBackground(img);
-  } catch (_) {
+    console.log("[loader] fondo ok:", value);
+  } catch (e) {
+    console.warn("[loader] fallo fondo", value, e.message);
     currentBackgroundValue = null;
     window.sceneRenderer.setBackground(null);
   } finally {
@@ -74,28 +86,60 @@ function subscribeState(cb) {
   try { cb(mutantLoading || externalLoadingCount > 0, mutantReady); } catch (_) {}
 }
 
-async function fetchText(url) {
+async function fetchText(url, timeoutMs = 15000, label = "texto") {
   const controller = new AbortController();
-  const tid = setTimeout(() => controller.abort(), 15000);
+  const fullUrl = url + (url.indexOf("?") === -1 ? "?nocache=" + Date.now() : "");
+  const tid = setTimeout(() => {
+    console.warn(`[loader] TIMEOUT (${timeoutMs}ms) ${label}:`, fullUrl);
+    controller.abort();
+  }, timeoutMs);
   try {
-    const fullUrl = url + (url.indexOf("?") === -1 ? "?nocache=" + Date.now() : "");
+    console.log(`[loader] fetch ${label}:`, fullUrl);
     const res = await fetch(fullUrl, { signal: controller.signal });
-    if (!res.ok) throw new Error();
+    if (!res.ok) {
+      console.error(`[loader] HTTP ${res.status} ${label}:`, fullUrl);
+      throw new Error(`HTTP ${res.status}`);
+    }
     return await res.text();
-  } finally { clearTimeout(tid); }
+  } catch (e) {
+    if (e.name === "AbortError") {
+      console.error(`[loader] ABORTED ${label} (timeout):`, fullUrl);
+    } else {
+      console.error(`[loader] ERROR ${label}:`, fullUrl, e.message);
+    }
+    throw e;
+  } finally {
+    clearTimeout(tid);
+  }
 }
 
 function loadSpritesheetImage(bitmap, skin) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const t = setTimeout(() => { img.onload = null; img.onerror = null; img.src = ""; reject(new Error("timeout")); }, 15000);
-    img.crossOrigin = "anonymous";
     const base = bitmap.replace(/\.png$/i, "");
-    img.src = skin
+    const url = skin
       ? `https://s-beta.kobojo.com/mutants/assets/${base}_${skin}.png`
       : `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
-    img.onload = () => { clearTimeout(t); resolve(img); };
-    img.onerror = () => { clearTimeout(t); reject(new Error()); };
+    console.log("[loader] cargando spritesheet:", url);
+    const t = setTimeout(() => {
+      console.warn("[loader] TIMEOUT (15s) spritesheet:", url);
+      img.onload = null;
+      img.onerror = null;
+      img.src = "";
+      reject(new Error("timeout"));
+    }, 15000);
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      clearTimeout(t);
+      console.log("[loader] spritesheet ok:", url);
+      resolve(img);
+    };
+    img.onerror = () => {
+      clearTimeout(t);
+      console.error("[loader] ERROR spritesheet:", url);
+      reject(new Error("image load error"));
+    };
+    img.src = url;
   });
 }
 
@@ -120,30 +164,32 @@ function normalizeAnimation(name) {
   return s || (currentAnimationName || "stand");
 }
 
-function beginLoading() {
+function beginLoading(label = "") {
   mutantReady = false;
   mutantLoading = true;
+  console.log("[loader] beginLoading", label);
   window.animationEngine.stopLoop();
   window.sceneRenderer.clearCanvas();
   notifyStateChange();
 }
-function finishLoading(success) {
+function finishLoading(success, label = "") {
   mutantReady = !!success;
   mutantLoading = false;
+  console.log("[loader] finishLoading", label, success ? "OK" : "FAILED");
   notifyStateChange();
 }
 
 async function loadMutantImage(mutantValue, animName, skin) {
   if (!mutantValue) return;
-  beginLoading();
   const effectiveAnim = normalizeAnimation(animName);
   const effectiveSkin = normalizeSkin(skin);
+  beginLoading(`${mutantValue}/${effectiveAnim} skin=${effectiveSkin || "(none)"}`);
   const xmlPath = `data/mutants/${mutantValue}/${effectiveAnim}.xml`;
   try {
-    const txt = await fetchText(xmlPath);
+    const txt = await fetchText(xmlPath, 15000, "mutant XML");
     const xml = new DOMParser().parseFromString(txt, "application/xml");
     const spriteEl = xml.querySelector("Sprite");
-    if (!spriteEl) throw new Error();
+    if (!spriteEl) throw new Error("XML sin <Sprite>");
     const bitmap = spriteEl.getAttribute("bitmap") || "";
     currentMutantCode = mutantValue;
     currentAnimationName = effectiveAnim;
@@ -156,27 +202,32 @@ async function loadMutantImage(mutantValue, animName, skin) {
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.setTree(tree);
     window.animationEngine.pause();
-    finishLoading(true);
-  } catch (_) {
-    finishLoading(false);
+    finishLoading(true, `${mutantValue}/${effectiveAnim}`);
+  } catch (e) {
+    console.error("[loader] loadMutantImage FAILED:", mutantValue, effectiveAnim, e.message);
+    finishLoading(false, `${mutantValue}/${effectiveAnim}`);
   }
 }
 
 async function setSkin(skin) {
   if (!currentSpriteElement) return;
-  beginLoading();
   const effectiveSkin = skin === undefined || skin === null ? "" : String(skin).trim();
+  beginLoading(`skin=${effectiveSkin || "(none)"}`);
   try {
     const img = await loadSpritesheetImage(currentBitmap, effectiveSkin);
     window.animationEngine.setSpritesheet(img);
     currentSkinName = effectiveSkin;
+    cachedStandKey = null;
+    cachedStandTree = null;
+    cachedStandImage = null;
     window.animationEngine.startLoop();
     window.sceneRenderer.renderAll();
-    finishLoading(true);
-  } catch (_) {
+    finishLoading(true, `skin=${effectiveSkin}`);
+  } catch (e) {
+    console.error("[loader] setSkin FAILED:", effectiveSkin, e.message);
     window.animationEngine.startLoop();
     window.sceneRenderer.renderAll();
-    finishLoading(false);
+    finishLoading(false, `skin=${effectiveSkin}`);
   }
 }
 
@@ -184,33 +235,42 @@ async function setAnimation(animName) {
   if (!currentMutantCode) return;
   await loadMutantImage(currentMutantCode, animName, currentSkinName);
 }
+
 async function reload() {
   if (!currentMutantCode) return;
   await loadMutantImage(currentMutantCode, currentAnimationName, currentSkinName);
 }
 
-async function loadStandTreeForMutant(mutantValue) {
+async function loadStandTreeForMutant(mutantValue, skin) {
   if (!mutantValue) return null;
-  if (cachedStandTree && cachedStandMutant === mutantValue) {
+  const effectiveSkin = (skin === undefined || skin === null)
+    ? (currentSkinName || "")
+    : String(skin).trim();
+  const key = `${mutantValue}|${effectiveSkin}`;
+  if (cachedStandTree && cachedStandKey === key) {
     return { tree: cachedStandTree, image: cachedStandImage };
   }
   try {
     const xmlPath = `data/mutants/${mutantValue}/stand.xml`;
-    const txt = await fetchText(xmlPath);
+    const txt = await fetchText(xmlPath, 15000, "stand XML");
     const xml = new DOMParser().parseFromString(txt, "application/xml");
     const spriteEl = xml.querySelector("Sprite");
     if (!spriteEl) return null;
     const bitmap = spriteEl.getAttribute("bitmap") || "";
-    const img = await loadSpritesheetImage(bitmap, currentSkinName);
+    const img = await loadSpritesheetImage(bitmap, effectiveSkin);   // ← usa effectiveSkin
     const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
     window.animationEngine.resetNodeState(tree, true);
     window.animationEngine.spriteUpdate(tree, 0);
     cachedStandTree = tree;
     cachedStandImage = img;
-    cachedStandMutant = mutantValue;
-    return { tree, image: img };
-  } catch (_) { return null; }
+    cachedStandKey = key;
+    return { tree, img };
+  } catch (e) {
+    console.warn("[loader] loadStandTreeForMutant falló:", mutantValue, e.message);
+    return null;
+  }
 }
+
 function isReady() { return mutantReady; }
 function isLoading() { return mutantLoading || externalLoadingCount > 0; }
 function getAvailableSkins() { return availableSkins.slice(); }

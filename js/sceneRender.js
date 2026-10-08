@@ -1,6 +1,5 @@
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 8;
-
 const ARENA_W = 1195;
 const ARENA_H = 672;
 const FLOOR_Y = 252;
@@ -22,6 +21,14 @@ let midLayerImage = null;
 let midLayerOpacity = 0.25;
 let midLayerWidthRatio = 1.0;
 let includeMidLayer = false;
+
+let deathOffscreen = null;
+function getDeathOffscreenCanvas(w, h) {
+  if (!deathOffscreen) deathOffscreen = document.createElement("canvas");
+  if (deathOffscreen.width !== w) deathOffscreen.width = w;
+  if (deathOffscreen.height !== h) deathOffscreen.height = h;
+  return deathOffscreen;
+}
 
 function ensureCameraInit() {
   const canvas = document.getElementById("mutantCanvas");
@@ -185,19 +192,25 @@ function drawMidLayer(ctx) {
 function drawBackgroundTint(ctx, x, y, w, h) {
   const t = window.fxManager?.getObjectTransform?.("background");
   if (!t) return;
+  const hasMul = Math.abs(t.rMul - 1) > 0.001 ||
+                 Math.abs(t.gMul - 1) > 0.001 ||
+                 Math.abs(t.bMul - 1) > 0.001;
   const hasAdd = t.rAdd > 0.001 || t.gAdd > 0.001 || t.bAdd > 0.001;
-  const hasMul = Math.abs(t.rMul - 1) > 0.001 || Math.abs(t.gMul - 1) > 0.001 || Math.abs(t.bMul - 1) > 0.001;
-  if (hasAdd) {
-    ctx.save();
-    ctx.globalCompositeOperation = "lighter";
-    ctx.fillStyle = `rgb(${(t.rAdd * 255) | 0},${(t.gAdd * 255) | 0},${(t.bAdd * 255) | 0})`;
-    ctx.fillRect(x, y, w, h);
-    ctx.restore();
-  }
+
+  // 1) multiplicativo (fades, tintes oscuros)
   if (hasMul) {
     ctx.save();
     ctx.globalCompositeOperation = "multiply";
     ctx.fillStyle = `rgb(${(t.rMul * 255) | 0},${(t.gMul * 255) | 0},${(t.bMul * 255) | 0})`;
+    ctx.fillRect(x, y, w, h);
+    ctx.restore();
+  }
+
+  // 2) aditivo (flashes) — encima del multiplicado
+  if (hasAdd) {
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.fillStyle = `rgb(${(t.rAdd * 255) | 0},${(t.gAdd * 255) | 0},${(t.bAdd * 255) | 0})`;
     ctx.fillRect(x, y, w, h);
     ctx.restore();
   }
@@ -206,6 +219,7 @@ function drawBackgroundTint(ctx, x, y, w, h) {
 function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anchorY, colorTransform, shakeX, shakeY) {
   const engine = window.animationEngine;
   if (!tree || !image) return;
+
   const cMul = {
     r: colorTransform ? colorTransform.rMul : 1,
     g: colorTransform ? colorTransform.gMul : 1,
@@ -216,6 +230,45 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
     g: colorTransform ? colorTransform.gAdd : 0,
     b: colorTransform ? colorTransform.bAdd : 0,
   };
+
+  const useDeath =
+    engine.isDying() &&
+    !flipX &&
+    window.deathFxManager &&
+    window.deathFxManager.isInitialized();
+
+  if (useDeath) {
+    const b = engine.getTreeBounds(tree);
+    const pad = 8;
+    const w = Math.ceil(b.maxX - b.minX) + pad * 2;
+    const h = Math.ceil(b.maxY - b.minY) + pad * 2;
+
+    if (w > 0 && h > 0 && w < 2048 && h < 2048) {
+      const off = getDeathOffscreenCanvas(w, h);
+      const octx = off.getContext("2d");
+      octx.setTransform(1, 0, 0, 1, 0, 0);
+      octx.clearRect(0, 0, w, h);
+      octx.save();
+      octx.translate(-b.minX + pad, -b.minY + pad);
+      engine.renderNode(octx, tree, true, cMul, cAdd, image);
+      octx.restore();
+
+      ctx.save();
+      ctx.translate(anchorX + shakeX, anchorY + shakeY);
+      const sx = flipX ? -1 : 1;
+      ctx.scale(sx * scale, scale);
+      ctx.translate(b.minX - pad, b.minY - pad);
+      window.deathFxManager.applyToCanvas(
+        ctx,
+        off,
+        engine.getDeathProgress(),
+        engine.getDeathFireColor()
+      );
+      ctx.restore();
+      return;
+    }
+  }
+
   ctx.save();
   ctx.translate(anchorX + shakeX, anchorY + shakeY);
   const sx = flipX ? -1 : 1;
@@ -270,6 +323,21 @@ function renderAll() {
       rivalConfig.flipX, rivalAnchorX, rivalAnchorY,
       targetTransform, targShake.x, targShake.y
     );
+  }
+
+  if (engine.isDying()) {
+    const splatter = engine.getDeathSplatter();
+    if (splatter) {
+      ctx.save();
+      ctx.translate(selfAnchorX, selfAnchorY);
+      ctx.scale(attackerScale, attackerScale);
+      engine.renderNode(
+        ctx, splatter.tree, true,
+        { r: 1, g: 1, b: 1 }, { r: 0, g: 0, b: 0 },
+        splatter.image
+      );
+      ctx.restore();
+    }
   }
 
   if (animTree) {

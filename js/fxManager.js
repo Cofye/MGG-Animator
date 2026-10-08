@@ -106,6 +106,7 @@ function computeTreeDuration(tree) {
   for (const f of tree.frames) totalTicks += fr + (f.delay || 0);
   return Math.max(0.1, totalTicks / 30);
 }
+
 function getTreeTotalTicks(node) {
   if (!node || node.type !== "Sprite" || !node.frames) return 1;
   const fr = Math.max(1, node.framerate || 1);
@@ -390,6 +391,7 @@ function onLabelMoment(moment) {
     if ((def.moment || "impact") !== moment) continue;
     const inst = createInstance(def);
     if (!inst) continue;
+
     if (inst.kind === "sprite") {
       const asset = fxSpriteCache.get(inst.name);
       if (asset && !(asset instanceof Promise)) {
@@ -403,6 +405,15 @@ function onLabelMoment(moment) {
           const cycleDur = computeTreeDuration(a.tree);
           for (const p of inst.particles) { p.tree = cloneTree(a.tree); p.cycleDuration = cycleDur; }
         });
+      }
+    } else if (inst.kind === "fade" || inst.kind === "color") {
+      // Marcar fades/colors previos que compitan por los mismos canales.
+      // NO se eliminan: siguen tickeando para que el scrub siga coherente.
+      for (const f of activeFx) {
+        if (f.kind !== "fade" && f.kind !== "color") continue;
+        for (const w of ["self", "target", "background"]) {
+          if (inst.def.applyOn[w] && f.def.applyOn[w]) { f.superseded = true; break; }
+        }
       }
     }
     activeFx.push(inst);
@@ -464,13 +475,15 @@ function update(dtSeconds) {
         }
       }
       const p = Math.min(1, fx.t / fx.duration);
-      for (const which of ["self", "target", "background"]) {
-        if (!fx.def.applyOn[which]) continue;
-        const cap = fx.capturedMap[which];
-        const st = objectColorTransforms[which];
-        st.rMul = cap.rMul + (fx.color.r - cap.rMul) * p;
-        st.gMul = cap.gMul + (fx.color.g - cap.gMul) * p;
-        st.bMul = cap.bMul + (fx.color.b - cap.bMul) * p;
+      if (!fx.superseded) {
+        for (const which of ["self", "target", "background"]) {
+          if (!fx.def.applyOn[which]) continue;
+          const cap = fx.capturedMap[which];
+          const st = objectColorTransforms[which];
+          st.rMul = cap.rMul + (fx.color.r - cap.rMul) * p;
+          st.gMul = cap.gMul + (fx.color.g - cap.gMul) * p;
+          st.bMul = cap.bMul + (fx.color.b - cap.bMul) * p;
+        }
       }
       if (fx.t < fx.duration) survivors.push(fx);
       continue;
@@ -547,14 +560,11 @@ function drawSpriteFx(ctx, fx, positions) {
     useCenter = true;
   }
   if (!bounds) return;
-
   const base = getSpritePosition(bounds, fx.position);
   const center = fx.asset.center || { cx: 0, cy: 0 };
-
   let sx = fx.def.applyOn.self ? -1 : 1;
   if (fx.mirrorX) sx = -sx;
   const sy = fx.mirrorY ? -1 : 1;
-
   ctx.save();
   applyBlendMode(ctx, fx.blendmode);
   for (const p of fx.particles) {
@@ -610,4 +620,6 @@ window.fxManager = {
   computeTailEndTick,
   getActiveCount: () => activeFx.length,
   setEffectsEnabled, isEffectsEnabled,
+  loadSpriteFxAsset,
+  cloneTree,
 };
