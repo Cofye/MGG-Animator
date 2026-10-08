@@ -1172,6 +1172,8 @@ window.animationEngine = {
   getInfo, getTime: () => animationTime,
   getTreeTickDuration: getTotalTickDuration,
   setShowHidden, setShowBounds, setBoundsColor,
+  getShowBounds: () => DEBUG_SHOW_BOUNDS,
+  getBoundsColor: () => DEBUG_BOUNDS_COLOR,
   renderNode, setRenderCallback, getTreeBounds,
   spriteUpdate, resetNodeState, precomputeTimeline, restoreTick, scanAnimationSounds,
   startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,

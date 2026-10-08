@@ -237,6 +237,7 @@ async function setupDebugControls() {
   const btnShowRival = document.getElementById("btnShowRival");
   const colorPicker = document.getElementById("colorPicker");
   const btnEffects = document.getElementById("btnEffects");
+  const btnFrames = document.getElementById("btnFrames");
   if (!btnBounds || !btnColor || !colorPicker) return;
   let boundsEnabled = false;
   let currentColor = colorPicker.value || "#00ff00";
@@ -246,6 +247,9 @@ async function setupDebugControls() {
   if (btnShowRival) updateToggleIcon(btnShowRival, showRivalEnabled);
   if (btnWatermark) updateToggleIcon(btnWatermark, watermarkEnabled);
   if (btnEffects) { window.fxManager.setEffectsEnabled(true); updateToggleIcon(btnEffects, true); }
+  let framesEnabled = false;
+  if (btnFrames) updateToggleIcon(btnFrames, framesEnabled);
+  window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
   const colorImg = btnColor.querySelector("img");
   const colorTexture = await loadColorTexture();
   if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
@@ -267,6 +271,11 @@ async function setupDebugControls() {
     window.fxManager.setEffectsEnabled(next);
     updateToggleIcon(btnEffects, next);
     window.sceneRenderer.renderAll();
+  });
+  if (btnFrames) btnFrames.addEventListener("click", () => {
+    framesEnabled = !framesEnabled;
+    window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
+    updateToggleIcon(btnFrames, framesEnabled);
   });
   if (btnWatermark) btnWatermark.addEventListener("click", async () => {
     if (!await window.discordIntegration.requireGuildMembership()) return;

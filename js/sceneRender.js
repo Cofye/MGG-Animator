@@ -28,6 +28,12 @@ function setCharacterVisible(v) {
   renderAll();
 }
 
+let frameCounterEnabled = true;
+function setFrameCounterEnabled(v) {
+  frameCounterEnabled = !!v;
+  renderAll();
+}
+
 let deathOffscreen = null;
 function getDeathOffscreenCanvas(w, h) {
   if (!deathOffscreen) deathOffscreen = document.createElement("canvas");
@@ -283,6 +289,24 @@ function renderCharacterWithEffects(ctx, tree, image, scale, flipX, anchorX, anc
   ctx.restore();
 }
 
+function drawAnchorMarker(ctx, x, y, color) {
+  const r = 12;
+  ctx.save();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = color || "#00ff00";
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.stroke();
+  const d = r * 0.65;
+  ctx.beginPath();
+  ctx.moveTo(x - d, y - d);
+  ctx.lineTo(x + d, y + d);
+  ctx.moveTo(x + d, y - d);
+  ctx.lineTo(x - d, y + d);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function renderAll() {
   const canvas = document.getElementById("mutantCanvas");
   if (!canvas) return;
@@ -371,8 +395,36 @@ function renderAll() {
       },
       background: { x: bgX, y: bgY, w: bgW, h: bgH },
     });
+    if (engine.getShowBounds && engine.getShowBounds()) {
+      const color = engine.getBoundsColor ? engine.getBoundsColor() : "#00ff00";
+      drawAnchorMarker(ctx, selfAnchorX, selfAnchorY, color);
+      if (engine.isRivalVisible() && rivalTree) {
+        drawAnchorMarker(ctx, rivalAnchorX, rivalAnchorY, color);
+      }
+    }
   }
   ctx.restore();
+  if (frameCounterEnabled) {
+    const info = engine.getInfo();
+    const total = Math.max(1, Math.floor(info.tickDuration));
+    const current = Math.min(total, Math.max(0, Math.floor(info.tickPosition)));
+    const text = `${current}/${total}`;
+    ctx.save();
+    ctx.font = "bold 22px Bahnschrift, Arial, sans-serif";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    const padding = 8;
+    const metrics = ctx.measureText(text);
+    const boxW = metrics.width + padding * 2;
+    const boxH = 32;
+    const boxX = 12;
+    const boxY = 12;
+    ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
+    ctx.fillRect(boxX, boxY, boxW, boxH);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(text, boxX + padding, boxY + padding - 2);
+    ctx.restore();
+  }
 }
 
 function clearCanvas() {
@@ -399,6 +451,7 @@ window.sceneRenderer = {
   setIncludeMidLayer,
   setCameraEnabled,
   setCharacterVisible,
+  setFrameCounterEnabled,
   renderAll,
   clearCanvas,
   getScaleFromPositionY,
