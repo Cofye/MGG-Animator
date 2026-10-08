@@ -31,6 +31,7 @@ const playerLine = document.getElementById("playerLine");
 const playerBar = document.getElementById("playerBar");
 const btnSound = document.getElementById("btnSound");
 const btnScreenshot = document.getElementById("btnScreenshot");
+const btnDelete = document.getElementById("btnDelete");
 const COMBAT_PATTERN = /^(attack|hit)/i;
 const ATTACK_PATTERN = /^attack/i;
 const ATTACK_SPEED_MULTIPLIER = 1.5;
@@ -390,18 +391,6 @@ document.addEventListener("mouseup", () => {
   }
 });
 
-function setupListSearch(name, getFilteredItems, renderOne) {
-  const state = listControllers[name];
-  if (!state || !state.search) return;
-  state.search.addEventListener("input", () => {
-    const q = normalizeText(state.search.value);
-    const items = getFilteredItems(q);
-    state.container.innerHTML = "";
-    items.forEach(item => state.container.appendChild(renderOne(item)));
-    state.updateScrollUI();
-  });
-}
-
 function activateMenuButton(btn) {
   btn_menu.forEach(b => { b.classList.remove("active"); b.setAttribute("aria-pressed", "false"); });
   btn.classList.add("active"); btn.setAttribute("aria-pressed", "true");
@@ -559,10 +548,29 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
 function setupMutantSearch() {
   const state = listControllers.mutant;
   if (!state || !state.search) return;
+  const btnDeleteImg = btnDelete ? btnDelete.querySelector("img") : null;
+  const updateSearchIcon = () => {
+    if (!btnDeleteImg) return;
+    const hasText = state.search.value.length > 0;
+    const desired = hasText ? "images/icons/icon_delete.png" : "images/icons/icon_search.png";
+    if (btnDeleteImg.src.indexOf(desired) === -1) btnDeleteImg.src = desired;
+  };
   state.search.addEventListener("input", () => {
     renderCharacterList(mutantListLayerContext(), state.search.value);
     state.updateScrollUI();
+    updateSearchIcon();
   });
+  if (btnDelete) {
+    btnDelete.addEventListener("click", () => {
+      if (state.search.value.length === 0) return;
+      state.search.value = "";
+      renderCharacterList(mutantListLayerContext(), "");
+      state.updateScrollUI();
+      updateSearchIcon();
+      state.search.focus();
+    });
+  }
+  updateSearchIcon();
 }
 
 function openCharacterList(context) {
@@ -785,7 +793,6 @@ function createBgItem(bg) {
   item.className = "bg-item";
   item.innerHTML = `
     <div class="bg">
-      <img class="bg_bg" src="images/ui/bg_background.png">
       <img class="bg_icon" src="${bg.image}">
     </div>
     <span class="text">${bg.name}</span>`;
@@ -1959,11 +1966,6 @@ function initEventListeners() {
   skinSelect.addEventListener("click", () => openItemList("skin"));
   animationSelect.addEventListener("click", () => openItemList("animation"));
   clickToClose.addEventListener("click", closeAnyList);
-  setupListSearch("bg", (q) => {
-    let filtered = allBackgrounds.filter(b => b.type === currentBgFilter);
-    if (q) filtered = filtered.filter(b => normalizeText(b.name).includes(q));
-    return filtered;
-  }, createBgItem);
   setupMutantSearch();
   deathShaderReadyPromise = window.deathFxManager.init().then(ok => {
     if (!ok) console.warn("[main] death shader no disponible, se usará render normal");

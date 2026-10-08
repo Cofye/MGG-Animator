@@ -417,8 +417,8 @@ body::before {
   position: absolute;
   z-index: 8;
   height: 100%;
-  -webkit-mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/discord_profile_alpha.png");
-  mask-image: url("https://cofye.github.io/MGG-Animator/images/ui/discord_profile_alpha.png");
+  -webkit-mask-image: url("../images/ui/discord_profile_alpha.png");
+  mask-image: url("../images/ui/discord_profile_alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
 }
@@ -1104,6 +1104,13 @@ body::before {
 #mutantListLayer.hidden {
   display: none;
 }
+.btnDelete {
+  position: absolute;
+  top: 73px;
+  right: 60px;
+  height: 48px;
+  width: 48px;
+}
 #mutantSearch {
   width: 555px;
   height: 78.5px;
@@ -1268,7 +1275,6 @@ body::before {
 .skin-item:hover {
   background: rgba(255,255,255,0.1);
 }
-
 .skinListContainer {
   margin-top: 41.5px;
   max-height: 555px;
@@ -1435,33 +1441,15 @@ body::before {
 }
 #bgListLayer {
   position: absolute;
-  top: 370px;
+  top: 280px;
   left: 1195px;
   width: 590px;
-  height: 559.4px;
+  height: 639.4px;
   overflow-y: auto;
   z-index: 4;
-} 
+}
 #bgListLayer.hidden {
   display: none;
-}
-#bgSearch {
-  width: 555px;
-  height: 78.5px;
-  font-size: 40px;
-  border-width: 5px;
-  border-color: #000;
-  border-radius: 20px;
-  position: absolute;
-  margin-left: -615px;
-  margin-top: 53px;
-  padding-left: 15px;
-  text-align: left;
-  font-family: 'Bahnschrift', sans-serif;
-  font-stretch: semi-condensed;
-  font-style: normal;
-  font-weight: 700;
-  color:#666666;
 }
 .bg-item {
   display: flex;
@@ -1478,13 +1466,10 @@ body::before {
 .bg_icon {
   width: 82.27px;
   height: 82.71px;
+  object-fit: cover;
+  object-position: top center;
   margin-top: 2px;
   margin-left: 2px;
-  position: absolute;
-}
-.bg_bg {
-  width: 88.63px;
-  height: 85.45px;
   position: absolute;
 }
 .bg-item span {
@@ -1495,20 +1480,19 @@ body::before {
 .bg-item:hover {
   background: rgba(255,255,255,0.1);
 }
-
-#bgListContainer {
+.bgListContainer {
   margin-top: 41.5px;
-  max-height: 475px;
+  max-height: 555px;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.bgListContainer:not(:has(> :nth-child(6))) {
+.bgListContainer:not(:has(> :nth-child(7))) {
   margin-top: 0px;
-  max-height: 555px;
-  height: 555px;
+  max-height: 639.4px;
+  height: 639.4px;
 }
-#bgListContainer::-webkit-scrollbar {
+.bgListContainer::-webkit-scrollbar {
   display: none;
 }
 /* SCROLL MUTANTES */
