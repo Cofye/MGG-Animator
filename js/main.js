@@ -131,7 +131,6 @@ const MAX_BOOT_ATTEMPTS = 3;
 function startBootWatchdog() {
   const attempts = parseInt(sessionStorage.getItem(BOOT_ATTEMPT_KEY) || "0", 10);
   if (attempts >= MAX_BOOT_ATTEMPTS) {
-    // Ya reintentamos lo suficiente; no seguir recargando en bucle.
     return null;
   }
   return setTimeout(() => {
@@ -695,6 +694,7 @@ async function selectCharacter(context, mutant) {
       const isDeath = DEATH_PATTERN.test(anim);
       const isAttack = ATTACK_PATTERN.test(anim);
       const animToLoad = isDeath ? "stand" : anim;
+      window.fxManager.setFxSkin(skin);
       window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(anim) || isDeath));
       window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
       window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
@@ -763,7 +763,7 @@ async function selectCharacter(context, mutant) {
     const wasPaused = window.animationEngine.isPaused();
     window.mutantLoader.pushLoadingHold();
     window.animationEngine.pause();
-    window.soundManager.stopAllSounds();                      // ← NUEVO
+    window.soundManager.stopAllSounds();
     try {
       await loadRivalData(mutant.value);
       const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || null) : null;
@@ -774,7 +774,7 @@ async function selectCharacter(context, mutant) {
       window.mutantLoader.popLoadingHold();
       if (!wasPaused) {
         const tick = window.animationEngine.getInfo().tickPosition || 0;
-        playResumeSoundForTick(tick);                         // ← NUEVO
+        playResumeSoundForTick(tick);
         window.animationEngine.play();
       }
     }
@@ -797,7 +797,7 @@ async function loadRivalAnimationAssets(mutantValue, animName, skin) {
   const bitmap = spriteEl.getAttribute("bitmap") || "";
   const base = bitmap.replace(/\.png$/i, "");
   const skinSuffix = skin ? `_${skin}` : "";
-  const url = `https://s-beta.kobojo.com/mutants/assets/${base}${skinSuffix}.png`;
+  const url = `../data/sprites/${base}${skinSuffix}.png`;
   const img = await new Promise((resolve, reject) => {
     const i = new Image();
     i.crossOrigin = "anonymous";
@@ -1035,14 +1035,14 @@ async function selectRivalSkin(skin) {
     const wasPaused = window.animationEngine.isPaused();
     window.mutantLoader.pushLoadingHold();
     window.animationEngine.pause();
-    window.soundManager.stopAllSounds();                    // ← NUEVO
+    window.soundManager.stopAllSounds();
     try {
       await loadRivalStand(selectedValues.rival, skin ? (skin.value || "") : "");
     } finally {
       window.mutantLoader.popLoadingHold();
       if (!wasPaused) {
         const tick = window.animationEngine.getInfo().tickPosition || 0;
-        playResumeSoundForTick(tick);                       // ← NUEVO
+        playResumeSoundForTick(tick);
         window.animationEngine.play();
       }
     }
@@ -1123,24 +1123,20 @@ function snapshotSoundAt(tick) {
 async function selectSkin(skin) {
   selectedSkin = skin;
   updateSkinButton();
+  window.fxManager.setFxSkin(skin ? (skin.value || "") : "");
   closeItemList(); closeCharacterList();
   clickToClose.classList.add("hidden");
   scaleContainerLayer.classList.add("hidden");
   hideStatic();
-
   if (!window.mutantLoader || typeof window.mutantLoader.setSkin !== "function") return;
-
   const wasPaused = window.animationEngine.isPaused();
   const savedTick = window.animationEngine.getInfo().tickPosition || 0;
-
   window.mutantLoader.pushLoadingHold();
   window.animationEngine.pause();
   window.soundManager.stopAllSounds();
   updatePlayButtonIcon();
-
   try {
     await window.mutantLoader.setSkin(skin.value || "");
-
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     if (ATTACK_PATTERN.test(anim) && selectedValues.mutant) {
       const standAssets = await window.mutantLoader.loadStandTreeForMutant(
@@ -1148,7 +1144,6 @@ async function selectSkin(skin) {
         skin.value || ""
       );
       window._standAssets = standAssets;
-      // Solo actualizamos el bitmap del tail, sin tocar soundSchedule/fxLastTick
       if (standAssets) {
         window.animationEngine.updateAttackTailAssets(standAssets.tree, standAssets.image);
       }
@@ -1156,7 +1151,6 @@ async function selectSkin(skin) {
   } finally {
     window.mutantLoader.popLoadingHold();
   }
-
   if (!wasPaused) {
     playResumeSoundForTick(savedTick);
     window.animationEngine.play();
@@ -1175,14 +1169,12 @@ async function selectAnimation(anim) {
   const isDeath = DEATH_PATTERN.test(value);
   const isAttack = ATTACK_PATTERN.test(value);
   const animToLoad = isDeath ? "stand" : value;
-
   window.animationEngine.setAutoRestart(loopEnabled && (COMBAT_PATTERN.test(value) || isDeath));
   window.sceneRenderer.setCharMode(isAttack ? "other" : "stand");
   window.animationEngine.setAttackSpeedMultiplier(isAttack ? ATTACK_SPEED_MULTIPLIER : 1);
   window.fxManager.clear();
   window.soundManager.stopAllSounds();
   window.animationEngine.stopDeath();
-
   const hasMutant = !!selectedValues.mutant;
   const hasLoader = window.mutantLoader && typeof window.mutantLoader.setAnimation === "function";
   if (hasMutant && hasLoader) {
@@ -1999,13 +1991,10 @@ function moveTimelineIntoFullscreen() {
   const timeline = document.getElementById("playerTimeline");
   if (!wrapper || !timeline) return;
   if (timeline.parentElement === wrapper) return;
-
   timelinePlaceholder = document.createComment("playerTimeline-home");
   timeline.parentNode.insertBefore(timelinePlaceholder, timeline);
-
   wrapper.appendChild(timeline);
   timeline.classList.add("in-fullscreen");
-
   requestAnimationFrame(() => {
     updateTimelineBar();
   });
@@ -2014,12 +2003,10 @@ function moveTimelineIntoFullscreen() {
 function moveTimelineBack() {
   const timeline = document.getElementById("playerTimeline");
   if (!timeline || !timelinePlaceholder) return;
-
   timeline.classList.remove("in-fullscreen");
   timelinePlaceholder.parentNode.insertBefore(timeline, timelinePlaceholder);
   timelinePlaceholder.parentNode.removeChild(timelinePlaceholder);
   timelinePlaceholder = null;
-
   requestAnimationFrame(() => {
     updateTimelineBar();
   });
@@ -2076,22 +2063,17 @@ function setupFullscreen() {
 
 function setupFullscreenKeyboard() {
   window.addEventListener("keydown", (e) => {
-    // Solo en modo pantalla completa
     if (!document.fullscreenElement) return;
-
-    // Ignora si el foco está en un campo de texto editable
     const t = e.target;
     const tag = (t && t.tagName) || "";
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
-
     if (e.code === "Space" || e.key === " ") {
-      e.preventDefault();               // evita scroll
+      e.preventDefault();
       if (!btnPlay.disabled) btnPlay.click();
       return;
     }
-
     if (e.code === "ArrowRight") {
-      e.preventDefault();               // evita scroll horizontal
+      e.preventDefault();
       if (btnForward.disabled) return;
       if (!window.animationEngine.isPaused()) {
         window.animationEngine.pause();
@@ -2168,11 +2150,13 @@ function loadMidWatermark() {
     img.src = MID_WATERMARK_PATH;
   });
 }
+
 async function updateMidWatermark() {
   const img = await loadMidWatermark();
   if (!img) return;
   window.sceneRenderer.setMidLayerImage(img, MID_WATERMARK_OPACITY, MID_WATERMARK_WIDTH_RATIO);
 }
+
 function loadWatermark() {
   if (watermarkImage) return Promise.resolve(watermarkImage);
   return new Promise((resolve) => {
@@ -2183,6 +2167,7 @@ function loadWatermark() {
     img.src = "images/ui/logo_manu.png";
   });
 }
+
 function setupScreenshot() {
   const canvas = document.getElementById("mutantCanvas");
   if (!btnScreenshot || !canvas) return;
@@ -2295,11 +2280,9 @@ function initEventListeners() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const watchdogId = startBootWatchdog();
-
   playerButtons.forEach(btn => setPlayerButtonEnabled(btn, false));
   window.sceneRenderer.setCameraEnabled(false);
   showLoading();
-
   let bootOk = false;
   try {
     await Promise.all([loadOptions(), loadMutants(), loadAccessRules()]);

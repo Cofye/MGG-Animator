@@ -4,8 +4,59 @@ const fxSpriteCache = new Map();
 let currentAttacks = null;
 let activeFx = [];
 let effectsEnabled = true;
+let currentFxSkin = "";
+
+function setFxSkin(skin) {
+  const n = (skin === undefined || skin === null) ? "" : String(skin).trim();
+  if (n === currentFxSkin) return;
+  currentFxSkin = n;
+  for (const fx of activeFx) {
+    if (fx.kind !== "sprite") continue;
+    fx.skin = n;
+    const states = fx.particles.map(p => ({
+      started: p.started,
+      done: p.done,
+      playTime: p.playTime,
+      cyclesDone: p.cyclesDone,
+      elapsed: p.elapsed,
+    }));
+    const applyAsset = (asset) => {
+      if (!asset) return;
+      if (fx.skin !== n) return;
+      fx.asset = asset;
+      const cycleDur = computeTreeDuration(asset.tree);
+      for (let i = 0; i < fx.particles.length; i++) {
+        const p = fx.particles[i];
+        const st = states[i];
+        p.tree = cloneTree(asset.tree);
+        p.cycleDuration = cycleDur;
+        p.started = st.started;
+        p.done = st.done;
+        p.playTime = st.playTime;
+        p.cyclesDone = st.cyclesDone;
+        p.elapsed = st.elapsed;
+        if (st.started && !st.done && st.playTime > 0) {
+          const elapsedInCycle = st.playTime - st.cyclesDone * cycleDur;
+          if (elapsedInCycle > 0) {
+            window.animationEngine.spriteUpdate(p.tree, elapsedInCycle);
+          }
+        }
+      }
+    };
+    const cacheKey = `${fx.name}|${n}`;
+    const cached = fxSpriteCache.get(cacheKey);
+    if (cached && !(cached instanceof Promise)) {
+      applyAsset(cached);
+    } else {
+      loadSpriteFxAsset(fx.name, n).then(applyAsset);
+    }
+  }
+}
+
+function getFxSkin() { return currentFxSkin; }
 
 function setEffectsEnabled(v) { effectsEnabled = !!v; }
+
 function isEffectsEnabled() { return effectsEnabled; }
 
 const objectColorTransforms = {
@@ -245,7 +296,7 @@ async function loadFxForMutant(mutantValue) {
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), 15000);
-      const url = `data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
+      const url = `../data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
       const res = await fetch(url, { signal: controller.signal });
       clearTimeout(tid);
       if (!res.ok) throw new Error();
@@ -291,14 +342,20 @@ function computeTailEndTick(moments) {
   return maxEnd;
 }
 
-async function loadSpriteFxAsset(name) {
+async function loadSpriteFxAsset(name, skin) {
   if (!name) return null;
-  if (fxSpriteCache.has(name)) return fxSpriteCache.get(name);
+  const requestedSkin = (skin === undefined) ? currentFxSkin : skin;
+  const normalizedSkin = (requestedSkin === undefined || requestedSkin === null)
+    ? "" : String(requestedSkin).trim();
+  const cacheKey = `${name}|${normalizedSkin}`;
+
+  if (fxSpriteCache.has(cacheKey)) return fxSpriteCache.get(cacheKey);
+
   const promise = (async () => {
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), 15000);
-      const xmlUrl = `data/fx/${name}.xml?nocache=${Date.now()}`;
+      const xmlUrl = `../data/fx/${name}.xml?nocache=${Date.now()}`;
       const res = await fetch(xmlUrl, { signal: controller.signal });
       clearTimeout(tid);
       if (!res.ok) throw new Error();
@@ -306,25 +363,48 @@ async function loadSpriteFxAsset(name) {
       const doc = new DOMParser().parseFromString(txt, "application/xml");
       const spriteEl = doc.querySelector("Sprite");
       if (!spriteEl) throw new Error();
+
       const bitmap = spriteEl.getAttribute("bitmap") || "";
       const base = bitmap.replace(/\.png$/i, "");
-      const imgUrl = `https://s-beta.kobojo.com/mutants/assets/${base}.png`;
-      const img = await new Promise((res, rej) => {
+      const availableSkins = new Set();
+      for (const c of spriteEl.children) {
+        if (c.tagName === "Skin") {
+          const t = (c.textContent || "").trim();
+          if (t) availableSkins.add(t);
+        }
+      }
+      const useSkin = (normalizedSkin && availableSkins.has(normalizedSkin))
+        ? normalizedSkin : "";
+      const tryLoad = (url) => new Promise((resolve, reject) => {
         const i = new Image();
-        const t = setTimeout(() => { i.onload = null; i.onerror = null; i.src = ""; rej(new Error("timeout")); }, 15000);
+        const t = setTimeout(() => {
+          i.onload = null; i.onerror = null; i.src = "";
+          reject(new Error("timeout"));
+        }, 15000);
         i.crossOrigin = "anonymous";
-        i.onload = () => { clearTimeout(t); res(i); };
-        i.onerror = () => { clearTimeout(t); rej(new Error()); };
-        i.src = imgUrl;
+        i.onload = () => { clearTimeout(t); resolve(i); };
+        i.onerror = () => { clearTimeout(t); reject(new Error()); };
+        i.src = url;
       });
+      const spriteDir = "../data/sprites/";
+      let img = null;
+      if (useSkin) {
+        try {
+          img = await tryLoad(`${spriteDir}${base}_${useSkin}.png`);
+        } catch (_) {
+          img = await tryLoad(`${spriteDir}${base}.png`);
+        }
+      } else {
+        img = await tryLoad(`${spriteDir}${base}.png`);
+      }
       const tree = window.xmlParser.parseSpriteElement(spriteEl, 1);
       const center = computeSpriteVisualCenter(tree, img);
-      return { img, tree, center };
+      return { img, tree, center, availableSkins };
     } catch (_) { return null; }
   })();
-  fxSpriteCache.set(name, promise);
+  fxSpriteCache.set(cacheKey, promise);
   const asset = await promise;
-  fxSpriteCache.set(name, asset);
+  fxSpriteCache.set(cacheKey, asset);
   return asset;
 }
 
@@ -380,6 +460,7 @@ function createInstance(def) {
       alpha: def.colorTransform ? def.colorTransform.alpha : 1, asset: null,
       mirrorX: tr.mirrorX === true,
       mirrorY: tr.mirrorY === true,
+      skin: currentFxSkin,
     };
   }
   return null;
@@ -392,13 +473,15 @@ function onLabelMoment(moment) {
     const inst = createInstance(def);
     if (!inst) continue;
     if (inst.kind === "sprite") {
-      const asset = fxSpriteCache.get(inst.name);
+      const skin = inst.skin || "";
+      const cacheKey = `${inst.name}|${skin}`;
+      const asset = fxSpriteCache.get(cacheKey);
       if (asset && !(asset instanceof Promise)) {
         inst.asset = asset;
         const cycleDur = computeTreeDuration(asset.tree);
         for (const p of inst.particles) { p.tree = cloneTree(asset.tree); p.cycleDuration = cycleDur; }
       } else {
-        loadSpriteFxAsset(inst.name).then(a => {
+        loadSpriteFxAsset(inst.name, skin).then(a => {
           if (!a) return;
           inst.asset = a;
           const cycleDur = computeTreeDuration(a.tree);
@@ -621,4 +704,5 @@ window.fxManager = {
   setEffectsEnabled, isEffectsEnabled,
   loadSpriteFxAsset,
   cloneTree,
+  setFxSkin, getFxSkin,
 };

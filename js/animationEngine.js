@@ -31,9 +31,9 @@ let tailEndTick = -1;
 
 let deathState = {
   active: false,
-  progress: 0,        // progreso visual del shader (0→1 en deathState.duration segundos)
-  elapsed: 0,         // segundos transcurridos desde el inicio (para reset)
-  duration: 1.2,      // duración del shader
+  progress: 0,
+  elapsed: 0,
+  duration: 1.2,
   fireColor: [1, 1, 1, 1]
 };
 let deathSplatterTree = null;
@@ -136,7 +136,7 @@ function setAttackSpeedMultiplier(m) {
 function getAttackSpeedMultiplier() { return attackSpeedMultiplier; }
 
 function updateAttackTailAssets(tree, image) {
-  if (tailEndTick <= 0) return;   // no hay tail activo, nada que actualizar
+  if (tailEndTick <= 0) return;
   postTree = tree || null;
   postImage = image || null;
   if (postTree) {
@@ -504,7 +504,6 @@ function updateTick(dtSeconds) {
     spriteUpdate(postTree, normalDt);
   }
   if (deathState.active && deathSplatterTree) {
-    // Congela el splatter si ya llegó al último frame
     const splatDone =
       deathSplatterTree.currentFrame >= deathSplatterTree.totalFrames - 1 &&
       deathSplatterTree.frameCounter >= deathSplatterTree.framerate - 1 &&
