@@ -635,9 +635,10 @@ function computeBoundsFast(node, offsetX, offsetY, acc) {
 
 function renderSpriteWithBlur(ctx, node, parentVisible, cMul, cAdd, sourceImage, blur) {
   const acc = { minX: 0, minY: 0, maxX: 0, maxY: 0, any: false };
-  computeBoundsFast(node, 0, 0, acc);
+  computeTreeBoundsAccurate(node, matIdentity(), acc);
   if (!acc.any) return;
-  const pad = Math.ceil(Math.max(blur.x, blur.y)) + 4;
+  const maxBlur = Math.max(blur.x, blur.y);
+  const pad = Math.ceil(maxBlur) + 8;
   const w = Math.ceil(acc.maxX - acc.minX) + pad * 2;
   const h = Math.ceil(acc.maxY - acc.minY) + pad * 2;
   if (w <= 0 || h <= 0) return;
@@ -654,7 +655,6 @@ function renderSpriteWithBlur(ctx, node, parentVisible, cMul, cAdd, sourceImage,
   octx.restore();
   const ox = acc.minX - pad;
   const oy = acc.minY - pad;
-  const maxBlur = Math.max(blur.x, blur.y);
   const N = Math.max(6, Math.min(16, Math.ceil(maxBlur / 3)));
   const stepAlpha = 1 / N;
   ctx.save();
