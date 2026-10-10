@@ -140,7 +140,6 @@ function parseSpriteElement(el, parentTotalFrames) {
     images,
     children,
     dataPoints,
-
     frameAccumulator: 0,
     frameCounter: 0,
     currentFrame: -1,
