@@ -2233,12 +2233,41 @@ function setupScreenshot() {
           octx.drawImage(logo, out.width - targetW - margin, out.height - targetH - margin, targetW, targetH);
         }
       }
-      const dataUrl = out.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = dataUrl; link.download = `${filename}.png`;
-      document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      const blob = await new Promise(resolve => out.toBlob(resolve, "image/png"));
+      if (!blob) return;
+      await saveBlobWithPicker(blob, `${filename}.png`);
     } catch (_) {}
   });
+}
+
+async function saveBlobWithPicker(blob, suggestedName) {
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName,
+        types: [{
+          description: "Imagen PNG",
+          accept: { "image/png": [".png"] },
+        }],
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      return true;
+    } catch (err) {
+      if (err && err.name === "AbortError") return false;
+      console.warn("[screenshot] showSaveFilePicker falló, fallback a download:", err);
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = suggestedName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return true;
 }
 
 function setupGeneFilters() {
