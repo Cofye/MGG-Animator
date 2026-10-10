@@ -797,7 +797,7 @@ async function loadRivalAnimationAssets(mutantValue, animName, skin) {
   const bitmap = spriteEl.getAttribute("bitmap") || "";
   const base = bitmap.replace(/\.png$/i, "");
   const skinSuffix = skin ? `_${skin}` : "";
-  const url = `../data/sprites/${base}${skinSuffix}.png`;
+  const url = `data/sprites/${base}${skinSuffix}.png`;
   const img = await new Promise((resolve, reject) => {
     const i = new Image();
     i.crossOrigin = "anonymous";
