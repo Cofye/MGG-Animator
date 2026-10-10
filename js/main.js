@@ -238,11 +238,43 @@ function hideLoading() {
   if (sc) sc.classList.remove("hidden");
 }
 
-function normalizeText(text) {
+function normalizeKeepDigits(text) {
   return String(text || "")
     .replace(/\\n/g, " ").replace(/\\r/g, " ").replace(/\\t/g, " ")
-    .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[.,;:!?¿¡'"`´]/g, "").replace(/\s+/g, " ").trim();
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,;:!?¿¡'"`´]/g, "")
+    .replace(/[-\u2010-\u2015_\s]+/g, "");
+}
+
+const CHAR_TO_DIGIT = { e: "3", o: "0", a: "4", i: "1" };
+
+function buildSearchRegex(query) {
+  const q = normalizeKeepDigits(query);
+  let pattern = "";
+  for (const ch of q) {
+    if (CHAR_TO_DIGIT[ch]) {
+      pattern += `(?:${ch}|${CHAR_TO_DIGIT[ch]})`;
+    } else if (/[.*+?^${}()|[\]\\]/.test(ch)) {
+      pattern += "\\" + ch;
+    } else {
+      pattern += ch;
+    }
+  }
+  return pattern;
+}
+
+function filterByQuery(items, query, getName) {
+  if (!query) return items;
+  const q = normalizeKeepDigits(query);
+  if (!q) return items;
+  let re;
+  try {
+    re = new RegExp(buildSearchRegex(query));
+  } catch (_) {
+    return items.filter(it => normalizeKeepDigits(getName(it)).includes(q));
+  }
+  return items.filter(it => re.test(normalizeKeepDigits(getName(it))));
 }
 
 function loadColorTexture() {
@@ -602,10 +634,7 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   const filter = currentFilters[context];
   let filtered = allMutants.filter(m => m.type === filter || filter === "default_");
   filtered = filtered.filter(m => canViewMutant(m.value));
-  if (searchQuery) {
-    const q = normalizeText(searchQuery);
-    filtered = filtered.filter(m => normalizeText(m.name).includes(q));
-  }
+  filtered = filterByQuery(filtered, searchQuery, m => m.name);
   filtered.forEach(mutant => {
     const item = document.createElement("div");
     item.className = "mutant-item";
@@ -899,10 +928,9 @@ function renderBgList(query = "") {
   const state = listControllers.bg;
   if (!state) return;
   state.container.innerHTML = "";
-  const q = normalizeText(query);
   let filtered = allBackgrounds.filter(b => b.type === currentBgFilter);
   filtered = filtered.filter(b => canViewBackground(b.value));
-  if (q) filtered = filtered.filter(b => normalizeText(b.name).includes(q));
+  filtered = filterByQuery(filtered, query, b => b.name);
   filtered.forEach(bg => state.container.appendChild(createBgItem(bg)));
   setTimeout(state.updateScrollUI, 50);
 }
@@ -1922,6 +1950,7 @@ function updateRivalHitProgress() {
 }
 
 function disableAncestorTransforms() {
+  if (savedAncestorStyles.length > 0) return;
   savedAncestorStyles = [];
   const wrapper = document.getElementById("canvasWrapper");
   if (!wrapper) return;
@@ -1929,7 +1958,12 @@ function disableAncestorTransforms() {
   while (el && el !== document.documentElement) {
     const computed = getComputedStyle(el).transform;
     if (computed && computed !== "none") {
-      savedAncestorStyles.push({ el, transform: el.style.transform, left: el.style.left, top: el.style.top });
+      savedAncestorStyles.push({
+        el,
+        transform: el.style.transform,
+        left: el.style.left,
+        top: el.style.top
+      });
       el.style.setProperty("transform", "none", "important");
       el.style.setProperty("left", "0", "important");
       el.style.setProperty("top", "0", "important");
@@ -1995,9 +2029,7 @@ function moveTimelineIntoFullscreen() {
   timeline.parentNode.insertBefore(timelinePlaceholder, timeline);
   wrapper.appendChild(timeline);
   timeline.classList.add("in-fullscreen");
-  requestAnimationFrame(() => {
-    updateTimelineBar();
-  });
+  requestAnimationFrame(() => requestAnimationFrame(updateTimelineBar));
 }
 
 function moveTimelineBack() {
@@ -2013,6 +2045,7 @@ function moveTimelineBack() {
 }
 
 let fullscreenLocked = false;
+let fullscreenLockTimer = null;
 
 function setupFullscreen() {
   btnFullscreen.addEventListener("click", async (e) => {
@@ -2020,25 +2053,28 @@ function setupFullscreen() {
     e.preventDefault();
     if (fullscreenLocked) return;
     fullscreenLocked = true;
-    setTimeout(() => { fullscreenLocked = false; }, 600);
+    clearTimeout(fullscreenLockTimer);
+    fullscreenLockTimer = setTimeout(() => { fullscreenLocked = false; }, 1200);
     const wrapper = document.getElementById("canvasWrapper");
     if (!wrapper) { fullscreenLocked = false; return; }
     try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else await wrapper.requestFullscreen();
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        disableAncestorTransforms();
+        await wrapper.requestFullscreen();
+      }
     } catch (_) {
+      restoreAncestorTransforms();
       fullscreenLocked = false;
-      moveTimelineBack();
     }
   });
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
-      disableAncestorTransforms();
-      updateFullscreenLayout();
-      moveTimelineIntoFullscreen();
       requestAnimationFrame(() => {
         updateFullscreenLayout();
-        updateTimelineBar();
+        moveTimelineIntoFullscreen();
+        requestAnimationFrame(updateTimelineBar);
       });
     } else {
       moveTimelineBack();

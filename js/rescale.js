@@ -8,17 +8,14 @@ function scaleSite() {
   const container = document.getElementById("scale-container");
   const containerLayer = document.getElementById("scale-container-layer");
   if (!container || !containerLayer) return;
-
   const w = window.innerWidth;
   const h = window.innerHeight;
   const scale = getBaseScale();
   currentScale = scale;
-
   const scaledW = 1920 * scale;
   const scaledH = 1080 * scale;
   const offsetX = (w - scaledW) / 2;
   const offsetY = (h - scaledH) / 2;
-
   for (const el of [container, containerLayer]) {
     el.style.transform = `scale(${scale})`;
     el.style.transformOrigin = "top left";
@@ -26,7 +23,6 @@ function scaleSite() {
     el.style.left = `${offsetX}px`;
     el.style.top = `${offsetY}px`;
   }
-
   document.body.style.margin = "0";
   document.body.style.width = `${w}px`;
   document.body.style.height = `${h}px`;
@@ -35,7 +31,6 @@ function scaleSite() {
 function scaleCover() {
   const container = document.getElementById("cover-container");
   if (!container) return;
-
   const w = window.innerWidth;
   const h = window.innerHeight;
   const scale = Math.max(w / 1920, h / 1080);
@@ -43,7 +38,6 @@ function scaleCover() {
   const scaledH = 1080 * scale;
   const offsetX = (w - scaledW) / 2;
   const offsetY = (h - scaledH) / 2;
-
   container.style.transform = `scale(${scale})`;
   container.style.transformOrigin = "top left";
   container.style.position = "fixed";
