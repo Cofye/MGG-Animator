@@ -2204,6 +2204,8 @@ function loadWatermark() {
   });
 }
 
+const SCREENSHOT_JPEG_QUALITY = 0.9;
+
 function setupScreenshot() {
   const canvas = document.getElementById("mutantCanvas");
   if (!btnScreenshot || !canvas) return;
@@ -2211,33 +2213,85 @@ function setupScreenshot() {
   loadWatermark(); loadMidWatermark();
   btnScreenshot.addEventListener("click", async () => {
     if (!selectedValues.mutant) return;
-    let filename = "screenshot";
+    let baseName = "screenshot";
     const found = allMutants.find(m => m.value === selectedValues.mutant);
-    filename = (found && found.name) ? found.name : selectedValues.mutant;
-    filename = filename.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
+    baseName = (found && found.name) ? found.name : selectedValues.mutant;
+    baseName = baseName.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
+    if (!baseName) baseName = "screenshot";
+    const filename = getVersionedFilename(baseName, ".jpg");
+    const SCALE = 3;
+    const origW = canvas.width;
+    const origH = canvas.height;
+    const wasPaused = window.animationEngine.isPaused();
+    window.animationEngine.pause();
+    const prevVisibility = canvas.style.visibility;
+    canvas.style.visibility = "hidden";
+    let blob = null;
     try {
+      window.sceneRenderer.resizeCanvasTo(origW * SCALE, origH * SCALE);
       const out = document.createElement("canvas");
-      out.width = canvas.width; out.height = canvas.height;
+      out.width = canvas.width;
+      out.height = canvas.height;
       const octx = out.getContext("2d");
+      octx.fillStyle = "#000";
+      octx.fillRect(0, 0, out.width, out.height);
       const session = await window.discordIntegration.getSession();
       const showMidLayer = !session;
-      if (showMidLayer) { window.sceneRenderer.setIncludeMidLayer(true); window.sceneRenderer.renderAll(); }
+      if (showMidLayer) {
+        window.sceneRenderer.setIncludeMidLayer(true);
+        window.sceneRenderer.renderAll();
+      }
       octx.drawImage(canvas, 0, 0);
-      if (showMidLayer) { window.sceneRenderer.setIncludeMidLayer(false); window.sceneRenderer.renderAll(); }
+      if (showMidLayer) {
+        window.sceneRenderer.setIncludeMidLayer(false);
+        window.sceneRenderer.renderAll();
+      }
       if (watermarkEnabled) {
         const logo = watermarkImage || await loadWatermark();
         if (logo && logo.complete && logo.naturalWidth > 0) {
           const targetW = Math.round(out.width * 0.2);
           const targetH = Math.round(logo.naturalHeight * (targetW / logo.naturalWidth));
           const margin = Math.round(out.width * 0.02);
-          octx.drawImage(logo, out.width - targetW - margin, out.height - targetH - margin, targetW, targetH);
+          octx.drawImage(
+            logo,
+            out.width - targetW - margin,
+            out.height - targetH - margin,
+            targetW, targetH
+          );
         }
       }
-      const blob = await new Promise(resolve => out.toBlob(resolve, "image/png"));
-      if (!blob) return;
-      await saveBlobWithPicker(blob, `${filename}.png`);
-    } catch (_) {}
+      blob = await new Promise(resolve =>
+        out.toBlob(resolve, "image/jpeg", SCREENSHOT_JPEG_QUALITY)
+      );
+    } finally {
+      window.sceneRenderer.resizeCanvasTo(origW, origH);
+      canvas.style.visibility = prevVisibility || "";
+      if (!wasPaused) window.animationEngine.play();
+    }
+    if (!blob) return;
+    downloadBlob(blob, filename);
   });
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function getVersionedFilename(baseName, ext) {
+  const key = `screenshotCount_${baseName}${ext}`;
+  let count = parseInt(localStorage.getItem(key) || "0", 10);
+  if (!Number.isFinite(count) || count < 0) count = 0;
+  count++;
+  try { localStorage.setItem(key, String(count)); } catch (_) {}
+  if (count === 1) return `${baseName}${ext}`;
+  return `${baseName} (${count - 1})${ext}`;
 }
 
 async function saveBlobWithPicker(blob, suggestedName) {

@@ -366,6 +366,26 @@ function renderAll() {
         selfTransform, selfShake.x, selfShake.y
       );
     }
+    const fxScale = canvas.width / 1020;
+    window.fxManager?.render?.(ctx, {
+      self: {
+        x: selfAnchorX - 100 * fxScale,
+        y: selfAnchorY - 300 * fxScale,
+        w: 200 * fxScale,
+        h: 300 * fxScale,
+        scale: attackerScale,
+        flipX: false,
+      },
+      target: {
+        x: rivalAnchorX - 100 * fxScale,
+        y: rivalAnchorY - 300 * fxScale,
+        w: 200 * fxScale,
+        h: 300 * fxScale,
+        scale: rivalScale,
+        flipX: rivalConfig.flipX,
+      },
+      background: { x: bgX, y: bgY, w: bgW, h: bgH },
+    });
     window.fxManager?.render?.(ctx, {
       self: {
         x: selfAnchorX - 100,
@@ -431,6 +451,38 @@ function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function resizeCanvasTo(width, height) {
+  const canvas = document.getElementById("mutantCanvas");
+  if (!canvas) return;
+  const oldW = canvas.width || 1;
+  const oldH = canvas.height || 1;
+  if (width === oldW && height === oldH) return;
+  const ratioW = width / oldW;
+  const ratioH = height / oldH;
+  const ratio = Math.min(ratioW, ratioH);
+  canvas.width = width;
+  canvas.height = height;
+  bgX *= ratioW; bgY *= ratioH;
+  bgW *= ratioW; bgH *= ratioH;
+  cameraX *= ratioW; cameraY *= ratioH;
+  for (const mode in charConfigs) {
+    if (!charConfigs[mode]) continue;
+    charConfigs[mode].x *= ratioW;
+    charConfigs[mode].y *= ratioH;
+    charConfigs[mode].scale *= ratio;
+  }
+  rivalConfig.x *= ratioW;
+  rivalConfig.y *= ratioH;
+  rivalConfig.scale *= ratio;
+  const engine = window.animationEngine;
+  if (engine) {
+    const off = engine.getTransportOffset();
+    engine.setTransportOffset(off.x * ratioW, off.y * ratioH);
+  }
+  clampCamera();
+  renderAll();
+}
+
 window.sceneRenderer = {
   setBackground,
   resetCamera,
@@ -453,6 +505,7 @@ window.sceneRenderer = {
   getScaleFromPositionY,
   getCharacterScale,
   getWorldY,
+  resizeCanvasTo,
 };
 
 window.animationEngine.setRenderCallback(renderAll);
