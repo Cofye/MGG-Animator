@@ -853,30 +853,23 @@ function precomputeTimeline() {
   autoRestart = false;
   stopAtEnd = false;
   paused = false;
-
   const savedSnapshots = precomputedSnapshots;
   const savedTotalTicks = precomputedTotalTicks;
   precomputedSnapshots = null;
   precomputedTotalTicks = 0;
-
   try {
     resetNodeState(animationTree);
     spriteUpdate(animationTree, 0);
-
-    // Calcular baseTotal directamente desde los frames, sin pasar por
-    // getTotalTickDuration (que devolvería el valor stale).
     let baseTotal = 0;
     for (let i = 0; i < animationTree.frames.length; i++) {
       baseTotal += getFrameTickDuration(animationTree, i);
     }
     baseTotal = Math.max(1, baseTotal);
-
     const MAX_SNAPSHOTS = 2000;
     const MAX_ITER = Math.min(MAX_SNAPSHOTS, baseTotal + 200);
     const snapshots = new Array(MAX_ITER);
     let length = 0;
     snapshots[length++] = { tree: captureTreeState(animationTree) };
-
     const randBackup = Math.random;
     let seed = 0x12345678;
     Math.random = function () {
@@ -895,7 +888,6 @@ function precomputeTimeline() {
     snapshots.length = length;
     precomputedSnapshots = snapshots;
     precomputedTotalTicks = length - 1;
-
     resetNodeState(animationTree);
     spriteUpdate(animationTree, 0);
   } catch (e) {

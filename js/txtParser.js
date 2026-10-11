@@ -59,7 +59,7 @@ async function loadLocalisation(lang) {
   }
   if (localisationPromises[key]) return localisationPromises[key];
   localisationPromises[key] = (async () => {
-    const url = `https://s-beta.kobojo.com/mutants/gameconfig/localisation_${key}.txt`;
+    const url = `data/gameconfig/localisation_${key}.txt`;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         const text = await fetchTextFile(url, 10000);

@@ -2081,7 +2081,7 @@ let fullscreenLockTimer = null;
 
 function setupFullscreen() {
   btnFullscreen.addEventListener("pointerdown", async (e) => {
-    if (e.button !== 0) return;         // sólo botón izquierdo
+    if (e.button !== 0) return;
     e.stopPropagation();
     e.preventDefault();
     if (fullscreenLocked) return;
@@ -2104,13 +2104,10 @@ function setupFullscreen() {
       fullscreenLocked = false;
     }
   });
-
-  // Evitar el click fantasma residual que Chrome re-dispatcha dentro del wrapper
   btnFullscreen.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
   });
-
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
       requestAnimationFrame(() => {
@@ -2133,11 +2130,9 @@ function setupFullscreen() {
     updateFullscreenIcon();
     updateTimelineBar();
   });
-
   window.addEventListener("resize", () => {
     if (document.fullscreenElement) updateFullscreenLayout();
   });
-
   updateFullscreenIcon();
 }
 
@@ -2162,7 +2157,6 @@ function setupFullscreenKeyboard() {
       stepTimeline(1);
       return;
     }
-
     if (e.code === "ArrowLeft") {
       e.preventDefault();
       if (btnBack.disabled) return;
