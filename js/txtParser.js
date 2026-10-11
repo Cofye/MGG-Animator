@@ -105,7 +105,7 @@ async function parseCustomTXT(path, lang = currentLang) {
     name = sanitizeText(name);
     let image = imageRaw.trim();
     if (image.startsWith("$$")) {
-      image = "https://s-beta.kobojo.com/mutants/assets/" + image.slice(2);
+      image = "https://s-ak.kobojo.com/mutants/assets/" + image.slice(2);
     } else if (image.startsWith("&&")) {
       image = "." + image.slice(2);
     }

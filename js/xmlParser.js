@@ -173,7 +173,7 @@ function parseCompositeElement(el, parentTotalFrames, parentAutoLoop) {
       break;
     }
   }
-  const needsUpdate = keys.length >= 2 || (keys.length === 1 && keys[0].frame > 0);
+  const hasMultipleKeys = keys.length >= 2;
   return {
     type: "Composite",
     keys,
@@ -181,9 +181,8 @@ function parseCompositeElement(el, parentTotalFrames, parentAutoLoop) {
     totalFrames: parentTotalFrames,
     synch,
     hasColorChange,
+    hasMultipleKeys,
     autoLoop: !!parentAutoLoop,
-    needsUpdate,
-    firstKeyFrame: keys.length ? keys[0].frame : 0,
     x: 0, y: 0, angle: 0, scaleX: 1, scaleY: 1,
     colorMul: { r: 1, g: 1, b: 1 },
     colorAdd: { r: 0, g: 0, b: 0 },
@@ -191,7 +190,8 @@ function parseCompositeElement(el, parentTotalFrames, parentAutoLoop) {
     visible: true,
     prevKey: null,
     nextKey: null,
-    cachedFrame: -1
+    cachedParentInt: -1,
+    drawThisFrame: true
   };
 }
 

@@ -70,7 +70,9 @@ const playerButtons = [btnPlay, btnBack, btnForward, btnStop, btnSpeed, btnLoop,
 
 let deathShaderReadyPromise = null;
 let availableLangs = [];
-let currentLang = localStorage.getItem("selectedLang") || "en";
+let currentLang = localStorage.getItem("selectedLang")
+  || (navigator.language || "en").toLowerCase().split("-")[0]
+  || "en";
 let currentScale = 1;
 let allMutants = [];
 let currentFilters = { mutant: "default_", rival: "default_" };
@@ -1909,11 +1911,41 @@ function updateTransport() {
   window.animationEngine.setTransportOffset(x, 0);
 }
 
+function pickAvailableLanguage(availableCodes, preferred) {
+  if (!availableCodes || availableCodes.length === 0) return preferred || "en";
+  const codes = availableCodes.map(c => String(c).toLowerCase());
+  const stored = (localStorage.getItem("selectedLang") || "").toLowerCase();
+  if (stored && codes.includes(stored)) return stored;
+  const navLangs = (navigator.languages && navigator.languages.length)
+    ? navigator.languages
+    : [navigator.language || "en"];
+  for (const raw of navLangs) {
+    if (!raw) continue;
+    const tag = String(raw).toLowerCase();
+    if (codes.includes(tag)) return tag;
+    const base = tag.split("-")[0];
+    if (codes.includes(base)) return base;
+  }
+
+  if (codes.includes("en")) return "en";
+  return codes[0];
+}
+
 async function loadOptions() {
   const parsed = await parseCustomTXT("data/options.txt", currentLang);
   availableLangs = parsed.filter(l => l.type === "langs");
   availableSpeeds = parsed.filter(p => p.type === "speed");
   allBackgrounds = parsed.filter(p => p.type && p.type.startsWith("bg_"));
+  const codes = availableLangs.map(l => l.value).filter(Boolean);
+  const detected = pickAvailableLanguage(codes, currentLang);
+  if (detected && detected !== currentLang) {
+    currentLang = detected;
+    window.currentLang = detected;
+    localStorage.setItem("selectedLang", detected);
+    await loadLocalisation(detected);
+  } else {
+    window.currentLang = currentLang;
+  }
   const idx = availableSpeeds.findIndex(s => Math.abs(parseFloat(s.value) - 1) < 0.001);
   currentSpeedIndex = idx >= 0 ? idx : 0;
   renderLangMenu();
@@ -2048,15 +2080,18 @@ let fullscreenLocked = false;
 let fullscreenLockTimer = null;
 
 function setupFullscreen() {
-  btnFullscreen.addEventListener("click", async (e) => {
+  btnFullscreen.addEventListener("pointerdown", async (e) => {
+    if (e.button !== 0) return;         // sólo botón izquierdo
     e.stopPropagation();
     e.preventDefault();
     if (fullscreenLocked) return;
     fullscreenLocked = true;
     clearTimeout(fullscreenLockTimer);
-    fullscreenLockTimer = setTimeout(() => { fullscreenLocked = false; }, 1200);
+    fullscreenLockTimer = setTimeout(() => { fullscreenLocked = false; }, 1500);
+
     const wrapper = document.getElementById("canvasWrapper");
     if (!wrapper) { fullscreenLocked = false; return; }
+
     try {
       if (document.fullscreenElement) {
         await document.exitFullscreen();
@@ -2069,6 +2104,13 @@ function setupFullscreen() {
       fullscreenLocked = false;
     }
   });
+
+  // Evitar el click fantasma residual que Chrome re-dispatcha dentro del wrapper
+  btnFullscreen.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
   document.addEventListener("fullscreenchange", () => {
     if (document.fullscreenElement) {
       requestAnimationFrame(() => {
@@ -2091,9 +2133,11 @@ function setupFullscreen() {
     updateFullscreenIcon();
     updateTimelineBar();
   });
+
   window.addEventListener("resize", () => {
     if (document.fullscreenElement) updateFullscreenLayout();
   });
+
   updateFullscreenIcon();
 }
 

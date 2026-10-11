@@ -166,6 +166,18 @@ function getTreeTotalTicks(node) {
   return Math.max(1, total);
 }
 
+function getSpriteCycleDuration(name, skin) {
+  if (!name) return null;
+  const n = (skin === undefined) ? currentFxSkin : skin;
+  const normalizedSkin = (n === undefined || n === null) ? "" : String(n).trim();
+  const cacheKey = `${name}|${normalizedSkin}`;
+  const asset = fxSpriteCache.get(cacheKey);
+  if (asset && !(asset instanceof Promise) && asset.tree) {
+    return computeTreeDuration(asset.tree);
+  }
+  return null;
+}
+
 function computeSpriteVisualCenter(tree, img) {
   if (!tree || !img) return { cx: 0, cy: 0 };
   const size = 1024;
@@ -333,8 +345,19 @@ function computeTailEndTick(moments) {
     const moment = def.moment || "impact";
     const ticks = moments[moment];
     if (!ticks || !ticks.length) continue;
-    const dur = def.duration > 0 ? def.duration : 0.4;
-    const durTicks = dur * 30;
+
+    const spawnDelay = (def.spawn && def.spawn.targetDelay) || 0;
+    let durTicks = spawnDelay * 30;
+
+    if (def.type === "sprite" && def.name) {
+      const repeatCount = def.duration > 0 ? Math.max(1, Math.floor(def.duration)) : 1;
+      const cycleSec = window.fxManager.getSpriteCycleDuration(def.name) || 0.4;
+      durTicks += repeatCount * cycleSec * 30;
+    } else {
+      const dur = def.duration > 0 ? def.duration : 0.4;
+      durTicks += dur * 30;
+    }
+
     const last = ticks[ticks.length - 1];
     const end = last + durTicks;
     if (end > maxEnd) maxEnd = end;
@@ -705,4 +728,5 @@ window.fxManager = {
   loadSpriteFxAsset,
   cloneTree,
   setFxSkin, getFxSkin,
+  getSpriteCycleDuration,
 };
