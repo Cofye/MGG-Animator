@@ -169,14 +169,9 @@ async function checkGuildMembership() {
 }
 
 async function handleDebugClick() {
-  const session = await getSession();
   const btnDebug = document.getElementById('btnDebug');
   const btnMenu = document.getElementById('btnMenu');
   if (!btnDebug || !btnMenu) return;
-  if (!session) {
-    openExclusiveLayer();
-    return;
-  }
   const isActive = btnDebug.classList.contains("active");
   document.querySelectorAll(".btn.menu").forEach(b => {
     b.classList.remove("active");
@@ -299,7 +294,7 @@ function setupDiscordAuth() {
       window.open(DISCORD_INVITE_URL, '_blank', 'noopener,noreferrer');
     });
   }
-  if (btnDebug) btnDebug.addEventListener('click', handleDebugClick);
+  bindGated(btnDebug, handleDebugClick);
   supabaseClient.auth.onAuthStateChange(() => checkDiscordSession());
   checkDiscordSession();
 }

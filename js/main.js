@@ -32,7 +32,7 @@ const playerBar = document.getElementById("playerBar");
 const btnSound = document.getElementById("btnSound");
 const btnScreenshot = document.getElementById("btnScreenshot");
 const btnDelete = document.getElementById("btnDelete");
-const RivalSkinSelect = document.getElementById("rivalSkinSelect");
+const rivalSkinSelect = document.getElementById("rivalSkinSelect");
 const COMBAT_PATTERN = /^(attack|hit)/i;
 const ATTACK_PATTERN = /^attack/i;
 const ATTACK_SPEED_MULTIPLIER = 1.5;
@@ -365,6 +365,23 @@ function updateToggleIcon(button, enabled) {
   if (icon.src.indexOf(desired) === -1) icon.src = desired;
 }
 
+function checkRequirement(el) {
+  const req = el.getAttribute("require");
+  if (!req) return Promise.resolve(true);
+  if (req === "login") return window.discordIntegration.requireLogin();
+  if (req === "join") return window.discordIntegration.requireGuildMembership();
+  return Promise.resolve(true);
+}
+
+function bindGated(el, handler) {
+  if (!el) return;
+  el.addEventListener("click", async (e) => {
+    const ok = await checkRequirement(el);
+    if (!ok) return;
+    handler(e);
+  });
+}
+
 async function setupDebugControls() {
   const btnBounds = document.getElementById("btnBounds");
   const btnColor = document.getElementById("btnColor");
@@ -390,57 +407,44 @@ async function setupDebugControls() {
   const colorImg = btnColor.querySelector("img");
   const colorTexture = await loadColorTexture();
   if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
-
-  btnBounds.addEventListener("click", () => {
+  bindGated(btnBounds, () => {
     boundsEnabled = !boundsEnabled;
     window.animationEngine.setShowBounds(boundsEnabled);
     updateToggleIcon(btnBounds, boundsEnabled);
   });
-
-  if (btnShowRival) btnShowRival.addEventListener("click", async () => {
-    if (!await window.discordIntegration.requireGuildMembership()) return;
+  bindGated(btnShowRival, () => {
     showRivalEnabled = !showRivalEnabled;
     updateToggleIcon(btnShowRival, showRivalEnabled);
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
   });
-
-if (btnMultiple) btnMultiple.addEventListener("click", async () => {
-  if (!await window.discordIntegration.requireGuildMembership()) return;
-  multipleRivalsEnabled = !multipleRivalsEnabled;
-  updateToggleIcon(btnMultiple, multipleRivalsEnabled);
-  window.sceneRenderer.setMultipleRivalsEnabled(multipleRivalsEnabled);
-  const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
-  applyRivalVisibility(anim);
-  window.sceneRenderer.renderAll();
-});
-
-  if (btnEffects) btnEffects.addEventListener("click", async () => {
-    if (!await window.discordIntegration.requireGuildMembership()) return;
+  bindGated(btnMultiple, () => {
+    multipleRivalsEnabled = !multipleRivalsEnabled;
+    updateToggleIcon(btnMultiple, multipleRivalsEnabled);
+    window.sceneRenderer.setMultipleRivalsEnabled(multipleRivalsEnabled);
+    const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+    applyRivalVisibility(anim);
+    window.sceneRenderer.renderAll();
+  });
+  bindGated(btnEffects, () => {
     const next = !window.fxManager.isEffectsEnabled();
     window.fxManager.setEffectsEnabled(next);
     updateToggleIcon(btnEffects, next);
     window.sceneRenderer.renderAll();
   });
-
-  if (btnFrames) btnFrames.addEventListener("click", () => {
+  bindGated(btnFrames, () => {
     framesEnabled = !framesEnabled;
     window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
     updateToggleIcon(btnFrames, framesEnabled);
   });
-
-  if (btnWatermark) btnWatermark.addEventListener("click", async () => {
-    if (!await window.discordIntegration.requireGuildMembership()) return;
+  bindGated(btnWatermark, () => {
     watermarkEnabled = !watermarkEnabled;
     updateToggleIcon(btnWatermark, watermarkEnabled);
   });
-
-  btnColor.addEventListener("click", async () => {
-    if (!await window.discordIntegration.requireGuildMembership()) return;
+  bindGated(btnColor, () => {
     colorPicker.value = currentColor;
     colorPicker.click();
   });
-
   colorPicker.addEventListener("input", () => {
     currentColor = colorPicker.value;
     if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
@@ -1045,8 +1049,7 @@ async function selectBg(bg) {
 
 function setupBackgroundControls() {
   const btnNone = document.getElementById("btnNone");
-  if (btnNone) btnNone.addEventListener("click", async () => {
-    if (!await window.discordIntegration.requireLogin()) return;
+  bindGated(btnNone, async () => {
     if (window.mutantLoader && typeof window.mutantLoader.setBackgroundByValue === "function") {
       await window.mutantLoader.setBackgroundByValue(null);
     }
@@ -2513,7 +2516,7 @@ function initEventListeners() {
   rivalSelect.addEventListener("click", () => openCharacterList("rival"));
   skinSelect.addEventListener("click", () => openItemList("skin"));
   animationSelect.addEventListener("click", () => openItemList("animation"));
-  if (rivalSkinSelect) rivalSkinSelect.addEventListener("click", () => openItemList("rivalSkin"));
+  bindGated(rivalSkinSelect, () => openItemList("rivalSkin"));
   clickToClose.addEventListener("click", closeAnyList);
   setupMutantSearch();
   deathShaderReadyPromise = window.deathFxManager.init();
@@ -2538,6 +2541,8 @@ function initEventListeners() {
     });
   }
 }
+
+window.bindGated = bindGated;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const watchdogId = startBootWatchdog();

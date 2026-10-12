@@ -109,7 +109,7 @@
       <button class="btn menu" id="btnCustomize" aria-pressed="false" data-target="menuCustomize">
         <span class="textBtn" data-lang="customize"></span>
       </button>
-      <button class="btn menu" id="btnDebug" aria-pressed="false" data-target="menuDebug">
+      <button class="btn menu" id="btnDebug" aria-pressed="false" data-target="menuDebug" require="login">
         <span class="textBtn" data-lang="extras"></span>
       </button>
     </div>
@@ -145,7 +145,7 @@
     <div class="menuContent hidden" id="menuCustomize">
       <div class="text sub1" data-lang="background"></div>
       <div class="menuBackgrounds">
-        <button class="btn btnBg" id="btnNone">
+        <button class="btn btnBg" id="btnNone" require="login">
           <span class="textBtn" data-lang="transparent"></span>
         </button>
         <button class="btn btnBg" id="btnCampaign">
@@ -179,7 +179,7 @@
         <span class="textList right" data-lang="select_rival"></span>
       </button>
       <div class="text sub4" data-lang="skin_rival"></div>
-      <button class="btnList" id="rivalSkinSelect">
+      <button class="btnList" id="rivalSkinSelect" require="login">
         <img class="rivalSkinIcon" src="images/icons/icon_lock.png">
         <span class="textList right"></span>
       </button>
@@ -194,11 +194,15 @@
         <img src="images/ui/circle_color.png">
       </button>
       <input type="color" id="colorPicker" value="#00ff00">
-      <button class="btn btnDebug" id="btnShowRival">
+      <button class="btn btnDebug" id="btnShowRival" require="join">
         <span class="textBtnLeft" data-lang="show-rival"></span>
         <img class="activeIcon" src="images/icons/icon_on.png">
       </button>
-      <button class="btn btnDebug" id="btnEffects">
+      <button class="btn btnDebug" id="btnMultiple" require="join">
+        <span class="textBtnLeft" data-lang="multiple"></span>
+        <img class="activeIcon" src="images/icons/icon_on.png">
+      </button>
+      <button class="btn btnDebug" id="btnEffects" require="join">
         <span class="textBtnLeft" data-lang="effects"></span>
         <img class="activeIcon" src="images/icons/icon_on.png">
       </button>
@@ -206,16 +210,11 @@
         <span class="textBtnLeft" data-lang="frame"></span>
         <img class="activeIcon" src="images/icons/icon_off.png">
       </button>
-      <button class="btn btnDebug" id="btnWatermark">
+      <button class="btn btnDebug" id="btnWatermark" require="join">
         <span class="textBtnLeft" data-lang="logo"></span>
         <img class="activeIcon" src="images/icons/icon_on.png">
       </button>
-      <button class="btn btnDebug" id="btnMultiple">
-        <span class="textBtnLeft" data-lang="multiple"></span>
-        <img class="activeIcon" src="images/icons/icon_on.png">
-      </button>
     </div>
-    
   </div>
 
 
