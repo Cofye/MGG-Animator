@@ -1923,12 +1923,12 @@ function buildTransportSchedule() {
 
     const dp = dps[0];
     const arenaScale = scene.getArenaScale();
-    const targetRivalIndex = 0;
-    const selfSlot = scene.computeFightSlotTransform(0, 1, 0);
+    const targetRivalIndex = 1;
+    const selfSlot = scene.computeFightSlotTransform(1, 3, 0);
     const rivalSlot = scene.computeFightSlotTransform(targetRivalIndex, 3, 1);
-    const selfScale = selfSlot.scale * arenaScale;
+    const hitScale = rivalSlot.scale * arenaScale;
     const dxPx = (rivalSlot.x - selfSlot.x) * arenaScale;
-    targetDeltaX = dxPx - (selfScale * dp.x);
+    targetDeltaX = dxPx - (hitScale * dp.x);
   }
 
   transportSchedule = {

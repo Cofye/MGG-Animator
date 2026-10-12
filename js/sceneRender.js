@@ -360,12 +360,7 @@ function renderAll() {
   const arenaScale = bgW / ARENA_W;
   const useArenaPositioning = (currentMode === "other");
   const playerTransform = useArenaPositioning
-    ? (() => {
-        const t = computeFightSlotTransform(0, 1, 0);
-        t.x += 100;
-        t.y += 0;
-        return t;
-      })()
+    ? computeFightSlotTransform(1, 3, 0)
     : null;
   const attackerScale = useArenaPositioning
     ? playerTransform.scale * arenaScale
@@ -480,11 +475,12 @@ function renderAll() {
         }
       }
     } else {
+      const rivalT = computeFightSlotTransform(1, 3, 1);
+      const rx = bgX + rivalT.x * arenaScale;
+      const ry = bgY + rivalT.y * arenaScale;
+      const rs = rivalT.scale * arenaScale;
+
       if (engine.isRivalVisible() && rivalTree) {
-        const rivalT = computeFightSlotTransform(0, 1, 1);
-        const rx = bgX + rivalT.x * arenaScale;
-        const ry = bgY + rivalT.y * arenaScale;
-        const rs = rivalT.scale * arenaScale;
         renderCharacterWithEffects(
           ctx, rivalTree, engine.getRivalImage(), rs,
           true, rx, ry,
@@ -522,31 +518,12 @@ function renderAll() {
           flipX: false,
         },
         target: {
-          x: rivalAnchorX - 100 * fxScale,
-          y: rivalAnchorY - 300 * fxScale,
+          x: rx - 100 * fxScale,
+          y: ry - 300 * fxScale,
           w: 200 * fxScale,
           h: 300 * fxScale,
-          scale: rivalScale,
-          flipX: rivalConfig.flipX,
-        },
-        background: bgBounds,
-      });
-      window.fxManager?.render?.(ctx, {
-        self: {
-          x: selfAnchorX - 100,
-          y: selfAnchorY - 300,
-          w: 200,
-          h: 300,
-          scale: attackerScale,
-          flipX: false,
-        },
-        target: {
-          x: rivalAnchorX - 100,
-          y: rivalAnchorY - 300,
-          w: 200,
-          h: 300,
-          scale: rivalScale,
-          flipX: rivalConfig.flipX,
+          scale: rs,
+          flipX: true,
         },
         background: bgBounds,
       });
@@ -554,7 +531,7 @@ function renderAll() {
         const color = engine.getBoundsColor ? engine.getBoundsColor() : "#00ff00";
         drawAnchorMarker(ctx, selfAnchorX, selfAnchorY, color);
         if (engine.isRivalVisible() && rivalTree) {
-          drawAnchorMarker(ctx, rivalAnchorX, rivalAnchorY, color);
+          drawAnchorMarker(ctx, rx, ry, color);
         }
       }
     }
