@@ -342,6 +342,10 @@ function setCurrentAnimation(animValue, attacks) {
   currentAttacks = { all, key, list: all[key] || null };
 }
 
+function getCurrentAttacks() {
+  return currentAttacks;
+}
+
 function setAttacksTable(table) {
   currentAttacks = table ? { all: table, key: null, list: null } : null;
 }
@@ -353,20 +357,11 @@ function computeTailEndTick(moments) {
     const moment = def.moment || "impact";
     const ticks = moments[moment];
     if (!ticks || !ticks.length) continue;
-
+    if (def.type === "sprite") continue;
     const baseDelay = (def.spawn && def.spawn.targetDelay) || 0;
-    const maxIdx = def.type === "sprite" ? Math.max(0, currentTargetCount - 1) : 0;
-    let durTicks = baseDelay * maxIdx * 30;
-
-    if (def.type === "sprite" && def.name) {
-      const repeatCount = def.duration > 0 ? Math.max(1, Math.floor(def.duration)) : 1;
-      const cycleSec = window.fxManager.getSpriteCycleDuration(def.name) || 0.4;
-      durTicks += repeatCount * cycleSec * 30;
-    } else {
-      const dur = def.duration > 0 ? def.duration : 0.4;
-      durTicks += dur * 30;
-    }
-
+    let durTicks = baseDelay * 30;
+    const dur = def.duration > 0 ? def.duration : 0.4;
+    durTicks += dur * 30;
     const last = ticks[ticks.length - 1];
     const end = last + durTicks;
     if (end > maxEnd) maxEnd = end;
@@ -761,5 +756,5 @@ window.fxManager = {
   cloneTree,
   setFxSkin, getFxSkin,
   getSpriteCycleDuration,
-  setTargetCount, getTargetCount,
+  setTargetCount, getTargetCount, getCurrentAttacks,
 };

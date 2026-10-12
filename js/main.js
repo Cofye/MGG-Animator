@@ -789,7 +789,7 @@ async function selectCharacter(context, mutant) {
     await loadMutantData(mutant.value);
     const previousSkinValue = selectedSkin ? (selectedSkin.value || "") : null;
     const previousAnimValue = selectedAnimation ? (selectedAnimation.value || "") : null;
-    selectedSkin = allSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allSkins[0] || null;
+        selectedSkin = allSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allSkins[0] || null;
     selectedAnimation = allAnimations.find(a => (a.value || "") === (previousAnimValue || "")) || allAnimations[0] || null;
     updateSkinButton();
     updateAnimationButton();
@@ -855,7 +855,7 @@ async function selectCharacter(context, mutant) {
         firstMutantLoaded = true;
       }
       enablePlayerButtons();
-      buildTransportSchedule();
+      await buildTransportSchedule();
       applyRivalVisibility(anim);
       if (isDeath) {
         if (splatterAssets) {
@@ -1375,7 +1375,7 @@ async function selectAnimation(anim) {
     }
   }
 
-  buildTransportSchedule();
+  await buildTransportSchedule();
   applyRivalVisibility(value);
 }
 
@@ -1718,13 +1718,15 @@ function playResumeSoundForTick(targetTick) {
   window.soundManager.playSoundAtOffset(best.name, offsetSeconds);
 }
 
-function computeSoundTailEndTick() {
+async function computeSoundTailEndTick() {
   if (!soundSchedule || soundSchedule.length === 0) return 0;
+  await Promise.all(soundSchedule.map(s => window.soundManager.loadSound(s.name)));
+  const attackSpeedMult = window.animationEngine.getAttackSpeedMultiplier();
   let maxEnd = 0;
   for (const s of soundSchedule) {
     const buf = window.soundManager.getSoundBuffer(s.name);
     const dur = buf ? buf.duration : 2;
-    const end = s.tick + dur * 30;
+    const end = s.tick + dur * 30 * attackSpeedMult;
     if (end > maxEnd) maxEnd = end;
   }
   return maxEnd;
@@ -1859,7 +1861,7 @@ function collectLabelEntryTicks(animTree, labelName) {
   return ticks;
 }
 
-function buildTransportSchedule() {
+async function buildTransportSchedule() {
   const engine = window.animationEngine;
   const scene = window.sceneRenderer;
   lastSeenTick = 0;
@@ -1883,6 +1885,29 @@ function buildTransportSchedule() {
     if (ticks.length > 0) moments[labelName] = ticks;
   }
   for (const k of Object.keys(moments)) momentIdx[k] = 0;
+    if (window.fxManager) {
+    const fxDefs = window.fxManager.getCurrentAttacks
+      ? window.fxManager.getCurrentAttacks()
+      : null;
+    const list = fxDefs && fxDefs.list ? fxDefs.list : null;
+    if (list) {
+      const totalTicks = info.tickDuration || animTickAtFrame(animTree, animTree.frames.length - 1);
+      const defaults = {
+        start: 0,
+        return: animTickAtFrame(animTree, animTree.frames.length - 1),
+        back: animTickAtFrame(animTree, animTree.frames.length - 1),
+        end: totalTicks,
+      };
+      for (const def of list) {
+        const m = def.moment || "impact";
+        if (moments[m] && moments[m].length > 0) continue;
+        if (defaults[m] !== undefined) {
+          moments[m] = [defaults[m]];
+          momentIdx[m] = 0;
+        }
+      }
+    }
+  }
   const hasArrived = labels.arrived !== undefined;
   const hasReturn = labels.return !== undefined;
   const hasTeleport = labels.teleport !== undefined;
@@ -1939,7 +1964,7 @@ function buildTransportSchedule() {
 
   const attackEnd = info.tickDuration;
   const fxEnd = window.fxManager.computeTailEndTick(moments);
-  const soundEnd = computeSoundTailEndTick();
+  const soundEnd = await computeSoundTailEndTick();
   const tailEnd = Math.max(attackEnd, fxEnd, soundEnd);
   if (tailEnd > attackEnd && window._standAssets) {
     engine.setAttackTail(tailEnd, window._standAssets.tree, window._standAssets.image, attackEnd);
@@ -2428,7 +2453,6 @@ async function saveBlobWithPicker(blob, suggestedName) {
       return true;
     } catch (err) {
       if (err && err.name === "AbortError") return false;
-      console.warn("[screenshot] showSaveFilePicker falló, fallback a download:", err);
     }
   }
   const url = URL.createObjectURL(blob);
