@@ -6,6 +6,14 @@ let activeFx = [];
 let effectsEnabled = true;
 let currentFxSkin = "";
 
+let currentTargetCount = 1;
+
+function setTargetCount(n) {
+  const v = Math.floor(Number(n));
+  currentTargetCount = (Number.isFinite(v) && v >= 1) ? v : 1;
+}
+function getTargetCount() { return currentTargetCount; }
+
 function setFxSkin(skin) {
   const n = (skin === undefined || skin === null) ? "" : String(skin).trim();
   if (n === currentFxSkin) return;
@@ -346,8 +354,9 @@ function computeTailEndTick(moments) {
     const ticks = moments[moment];
     if (!ticks || !ticks.length) continue;
 
-    const spawnDelay = (def.spawn && def.spawn.targetDelay) || 0;
-    let durTicks = spawnDelay * 30;
+    const baseDelay = (def.spawn && def.spawn.targetDelay) || 0;
+    const maxIdx = def.type === "sprite" ? Math.max(0, currentTargetCount - 1) : 0;
+    let durTicks = baseDelay * maxIdx * 30;
 
     if (def.type === "sprite" && def.name) {
       const repeatCount = def.duration > 0 ? Math.max(1, Math.floor(def.duration)) : 1;
@@ -473,7 +482,7 @@ function createInstance(def) {
       const scale = sMin + Math.random() * Math.max(0, sMax - sMin);
       const ox = tr.randomX ? (Math.random() - 0.5) * sp.scatterX : 0;
       const oy = tr.randomY ? (Math.random() - 0.5) * sp.scatterY : 0;
-      particles.push({ scale, ox, oy, elapsed: 0, delay: sp.targetDelay, started: false, playTime: 0, cycleDuration: 0, cyclesDone: 0, repeatCount, done: false, tree: null });
+      particles.push({ scale, ox, oy, elapsed: 0, delay: 0, started: false, playTime: 0, cycleDuration: 0, cyclesDone: 0, repeatCount, done: false, tree: null });
     }
     return {
       kind: "sprite", def, t: 0, name: def.name, particles,
@@ -493,33 +502,42 @@ function onLabelMoment(moment) {
   if (!currentAttacks || !currentAttacks.list) return;
   for (const def of currentAttacks.list) {
     if ((def.moment || "impact") !== moment) continue;
-    const inst = createInstance(def);
-    if (!inst) continue;
-    if (inst.kind === "sprite") {
-      const skin = inst.skin || "";
-      const cacheKey = `${inst.name}|${skin}`;
-      const asset = fxSpriteCache.get(cacheKey);
-      if (asset && !(asset instanceof Promise)) {
-        inst.asset = asset;
-        const cycleDur = computeTreeDuration(asset.tree);
-        for (const p of inst.particles) { p.tree = cloneTree(asset.tree); p.cycleDuration = cycleDur; }
-      } else {
-        loadSpriteFxAsset(inst.name, skin).then(a => {
+    const isSprite = def.type === "sprite";
+    const baseDelay = (def.spawn && def.spawn.targetDelay) || 0;
+    const copies = isSprite ? Math.max(1, currentTargetCount) : 1;
+    for (let ti = 0; ti < copies; ti++) {
+      const inst = createInstance(def);
+      if (!inst) continue;
+      inst.targetIndex = ti;
+      inst.spawnDelay = baseDelay * ti;
+      if (inst.kind === "sprite") {
+        const skin = inst.skin || "";
+        const cacheKey = `${inst.name}|${skin}`;
+        const applyAsset = (a) => {
           if (!a) return;
           inst.asset = a;
           const cycleDur = computeTreeDuration(a.tree);
-          for (const p of inst.particles) { p.tree = cloneTree(a.tree); p.cycleDuration = cycleDur; }
-        });
-      }
-    } else if (inst.kind === "fade" || inst.kind === "color") {
-      for (const f of activeFx) {
-        if (f.kind !== "fade" && f.kind !== "color") continue;
-        for (const w of ["self", "target", "background"]) {
-          if (inst.def.applyOn[w] && f.def.applyOn[w]) { f.superseded = true; break; }
+          for (const p of inst.particles) {
+            p.tree = cloneTree(a.tree);
+            p.cycleDuration = cycleDur;
+          }
+        };
+        const asset = fxSpriteCache.get(cacheKey);
+        if (asset && !(asset instanceof Promise)) {
+          applyAsset(asset);
+        } else {
+          loadSpriteFxAsset(inst.name, skin).then(applyAsset);
+        }
+      } else if (inst.kind === "fade" || inst.kind === "color") {
+        for (const f of activeFx) {
+          if (f.kind !== "fade" && f.kind !== "color") continue;
+          for (const w of ["self", "target", "background"]) {
+            if (inst.def.applyOn[w] && f.def.applyOn[w]) { f.superseded = true; break; }
+          }
         }
       }
+      activeFx.push(inst);
     }
-    activeFx.push(inst);
   }
 }
 
@@ -532,6 +550,7 @@ function update(dtSeconds) {
     fx.t += dtSeconds;
     if (fx.kind === "sprite") {
       let anyAlive = false;
+      const spawnDelay = fx.spawnDelay || 0;
       for (const p of fx.particles) {
         if (p.done) continue;
         if (p.tree == null) {
@@ -545,6 +564,7 @@ function update(dtSeconds) {
           if (p.elapsed <= (p.delay || 0)) { anyAlive = true; continue; }
           p.started = true;
         }
+        if (p.elapsed < spawnDelay) { anyAlive = true; continue; }
         p.playTime += dtSeconds;
         window.animationEngine.spriteUpdate(p.tree, dtSeconds);
         if (p.cycleDuration > 0 && p.playTime >= (p.cyclesDone + 1) * p.cycleDuration) {
@@ -649,29 +669,42 @@ function getSpritePosition(bounds, position) {
 }
 
 function drawSpriteFx(ctx, fx, positions) {
-  if (!fx.asset) return;
-  let bounds = null, scale = 1, useCenter = false;
-  if (fx.def.applyOn.target) {
-    bounds = positions.target;
-    scale = bounds.scale != null ? bounds.scale : 1;
-  } else if (fx.def.applyOn.self) {
-    bounds = positions.self;
-    scale = bounds.scale != null ? bounds.scale : 1;
-  } else if (fx.def.applyOn.background) {
-    bounds = positions.background;
-    scale = 1;
-    useCenter = true;
-  }
-  if (!bounds) return;
-  const base = getSpritePosition(bounds, fx.position);
+  if (!fx.asset || !positions) return;
+  const applySelf = !!fx.def.applyOn.self;
+  const applyTarget = !!fx.def.applyOn.target;
+  const applyBg = !!fx.def.applyOn.background;
+  if (!applySelf && !applyTarget && !applyBg) return;
+  const spawnDelay = fx.spawnDelay || 0;
   const center = fx.asset.center || { cx: 0, cy: 0 };
-  let sx = fx.def.applyOn.self ? -1 : 1;
-  if (fx.mirrorX) sx = -sx;
-  const sy = fx.mirrorY ? -1 : 1;
+  const copyIndex = fx.targetIndex !== undefined ? fx.targetIndex : 0;
+  const drawOnSelf = applySelf && (copyIndex === 0 || !applyTarget);
   ctx.save();
   applyBlendMode(ctx, fx.blendmode);
+  if (drawOnSelf && positions.self) {
+    drawSpriteAt(ctx, fx, positions.self, true, false, spawnDelay, center);
+  }
+  if (applyTarget && positions.target) {
+    const currentIdx = positions.target.targetIndex !== undefined
+      ? positions.target.targetIndex : 0;
+    if (copyIndex === currentIdx) {
+      drawSpriteAt(ctx, fx, positions.target, false, false, spawnDelay, center);
+    }
+  }
+  if (applyBg && positions.background) {
+    drawSpriteAt(ctx, fx, positions.background, false, true, spawnDelay, center);
+  }
+  ctx.restore();
+}
+
+function drawSpriteAt(ctx, fx, bounds, isSelf, useCenter, spawnDelay, center) {
+  const scale = useCenter ? 1 : (bounds.scale != null ? bounds.scale : 1);
+  const base = getSpritePosition(bounds, fx.position);
+  let sx = isSelf ? -1 : 1;
+  if (fx.mirrorX) sx = -sx;
+  const sy = fx.mirrorY ? -1 : 1;
   for (const p of fx.particles) {
     if (p.done || !p.tree || !p.started) continue;
+    if (p.elapsed < spawnDelay) continue;
     ctx.save();
     ctx.globalAlpha = fx.alpha;
     ctx.translate(base.x + p.ox * sx, base.y + p.oy);
@@ -680,7 +713,6 @@ function drawSpriteFx(ctx, fx, positions) {
     window.animationEngine.renderNode(ctx, p.tree, true, fx.colorMul, fx.colorAdd, fx.asset.img);
     ctx.restore();
   }
-  ctx.restore();
 }
 
 function render(ctx, positions) {
@@ -729,4 +761,5 @@ window.fxManager = {
   cloneTree,
   setFxSkin, getFxSkin,
   getSpriteCycleDuration,
+  setTargetCount, getTargetCount,
 };

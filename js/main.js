@@ -125,6 +125,61 @@ let accessRules = {
 };
 let currentUserExempt = false;
 let currentUserInGuild = false;
+let mutantAttackData = {};
+let multipleRivalsEnabled = true;
+
+function parseAttackValue(rawValue) {
+  const s = String(rawValue || "").trim();
+  if (!s) return null;
+  const parts = s.split(":");
+  const damage = parseFloat(parts[0]) || 0;
+  const isAOE = parts.slice(1).some(p => String(p).trim().toUpperCase() === "AOE");
+  return { damage, isAOE };
+}
+
+async function loadGameDefinitions() {
+  try {
+    const res = await fetch(`data/gameconfig/gamedefinitions.xml?nocache=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const xml = new DOMParser().parseFromString(text, "application/xml");
+    if (xml.querySelector("parsererror")) throw new Error("XML inválido");
+
+    const map = {};
+    const entities = xml.querySelectorAll('EntityDescriptor[category="specimen"]');
+    for (const ent of entities) {
+      const id = (ent.getAttribute("id") || "").trim().toLowerCase();
+      if (!id) continue;
+      const entry = {};
+      for (const child of ent.children) {
+        if (child.tagName !== "Tag") continue;
+        const key = (child.getAttribute("key") || "").toLowerCase();
+        if (!/^atk\d+p?$/.test(key)) continue;
+        const parsed = parseAttackValue(child.getAttribute("value"));
+        if (parsed) entry[key] = parsed;
+      }
+      if (Object.keys(entry).length > 0) map[id] = entry;
+    }
+    return map;
+  } catch (e) {
+    return {};
+  }
+}
+
+
+function getRivalCountForAnimation(animValue) {
+  if (!multipleRivalsEnabled) return 1;
+  const val = animValue || (selectedAnimation ? (selectedAnimation.value || "") : "");
+  if (!ATTACK_PATTERN.test(val)) return 1;
+  const m = val.match(/^attack(.+)$/i);
+  if (!m) return 1;
+  const tagKey = "atk" + m[1].toLowerCase();
+  const mutantValue = (selectedValues.mutant || "").toLowerCase();
+  if (!mutantValue) return 1;
+  const data = mutantAttackData[mutantValue];
+  if (!data || !data[tagKey]) return 1;
+  return data[tagKey].isAOE ? 3 : 1;
+}
 
 const BOOT_TIMEOUT_MS = 10000;
 const BOOT_ATTEMPT_KEY = "mgg_boot_attempts";
@@ -315,6 +370,7 @@ async function setupDebugControls() {
   const btnColor = document.getElementById("btnColor");
   const btnWatermark = document.getElementById("btnWatermark");
   const btnShowRival = document.getElementById("btnShowRival");
+  const btnMultiple = document.getElementById("btnMultiple");
   const colorPicker = document.getElementById("colorPicker");
   const btnEffects = document.getElementById("btnEffects");
   const btnFrames = document.getElementById("btnFrames");
@@ -326,6 +382,7 @@ async function setupDebugControls() {
   updateToggleIcon(btnBounds, boundsEnabled);
   if (btnShowRival) updateToggleIcon(btnShowRival, showRivalEnabled);
   if (btnWatermark) updateToggleIcon(btnWatermark, watermarkEnabled);
+  if (btnMultiple) updateToggleIcon(btnMultiple, multipleRivalsEnabled);
   if (btnEffects) { window.fxManager.setEffectsEnabled(true); updateToggleIcon(btnEffects, true); }
   let framesEnabled = false;
   if (btnFrames) updateToggleIcon(btnFrames, framesEnabled);
@@ -333,11 +390,13 @@ async function setupDebugControls() {
   const colorImg = btnColor.querySelector("img");
   const colorTexture = await loadColorTexture();
   if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
+
   btnBounds.addEventListener("click", () => {
     boundsEnabled = !boundsEnabled;
     window.animationEngine.setShowBounds(boundsEnabled);
     updateToggleIcon(btnBounds, boundsEnabled);
   });
+
   if (btnShowRival) btnShowRival.addEventListener("click", async () => {
     if (!await window.discordIntegration.requireGuildMembership()) return;
     showRivalEnabled = !showRivalEnabled;
@@ -345,6 +404,17 @@ async function setupDebugControls() {
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
   });
+
+if (btnMultiple) btnMultiple.addEventListener("click", async () => {
+  if (!await window.discordIntegration.requireGuildMembership()) return;
+  multipleRivalsEnabled = !multipleRivalsEnabled;
+  updateToggleIcon(btnMultiple, multipleRivalsEnabled);
+  window.sceneRenderer.setMultipleRivalsEnabled(multipleRivalsEnabled);
+  const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+  applyRivalVisibility(anim);
+  window.sceneRenderer.renderAll();
+});
+
   if (btnEffects) btnEffects.addEventListener("click", async () => {
     if (!await window.discordIntegration.requireGuildMembership()) return;
     const next = !window.fxManager.isEffectsEnabled();
@@ -352,21 +422,25 @@ async function setupDebugControls() {
     updateToggleIcon(btnEffects, next);
     window.sceneRenderer.renderAll();
   });
+
   if (btnFrames) btnFrames.addEventListener("click", () => {
     framesEnabled = !framesEnabled;
     window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
     updateToggleIcon(btnFrames, framesEnabled);
   });
+
   if (btnWatermark) btnWatermark.addEventListener("click", async () => {
     if (!await window.discordIntegration.requireGuildMembership()) return;
     watermarkEnabled = !watermarkEnabled;
     updateToggleIcon(btnWatermark, watermarkEnabled);
   });
+
   btnColor.addEventListener("click", async () => {
     if (!await window.discordIntegration.requireGuildMembership()) return;
     colorPicker.value = currentColor;
     colorPicker.click();
   });
+
   colorPicker.addEventListener("input", () => {
     currentColor = colorPicker.value;
     if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
@@ -817,6 +891,10 @@ async function selectCharacter(context, mutant) {
 function applyRivalVisibility(animValue) {
   const isAttack = ATTACK_PATTERN.test(animValue || "");
   window.animationEngine.setRivalVisible(isAttack && showRivalEnabled && !!currentRivalStandTree);
+  const count = getRivalCountForAnimation(animValue);
+  if (window.sceneRenderer.getRivalCount() !== count) {
+    window.sceneRenderer.setRivalCount(count);
+  }
 }
 
 async function loadRivalAnimationAssets(mutantValue, animName, skin) {
@@ -1844,11 +1922,13 @@ function buildTransportSchedule() {
     backTick    = animTickAtFrame(animTree, backFrame);
 
     const dp = dps[0];
-    const selfCfg = scene.getCharConfig("other");
-    const rivalCfg = scene.getRivalTransform();
-    const dx = rivalCfg.x - selfCfg.x;
-    const scale = scene.getCharacterScale("other");
-    targetDeltaX = dx - (scale * dp.x);
+    const arenaScale = scene.getArenaScale();
+    const targetRivalIndex = 0;
+    const selfSlot = scene.computeFightSlotTransform(0, 1, 0);
+    const rivalSlot = scene.computeFightSlotTransform(targetRivalIndex, 3, 1);
+    const selfScale = selfSlot.scale * arenaScale;
+    const dxPx = (rivalSlot.x - selfSlot.x) * arenaScale;
+    targetDeltaX = dxPx - (selfScale * dp.x);
   }
 
   transportSchedule = {
@@ -2442,7 +2522,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   showLoading();
   let bootOk = false;
   try {
-    await Promise.all([loadOptions(), loadMutants(), loadAccessRules()]);
+    const [, , , defsMap] = await Promise.all([
+      loadOptions(),
+      loadMutants(),
+      loadAccessRules(),
+      loadGameDefinitions(),
+    ]);
+    mutantAttackData = defsMap;
     await refreshAccessState();
     await applyLanguage();
     await applyDefaultBackground();
