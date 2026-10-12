@@ -158,11 +158,17 @@ function cloneTree(node, isRoot = true) {
   return node;
 }
 
-function computeTreeDuration(tree) {
+function computeTreeDuration(tree, ignoreHold) {
   if (!tree || tree.type !== "Sprite" || !tree.frames) return 1.0;
   const fr = Math.max(1, tree.framerate || 1);
   let totalTicks = 0;
-  for (const f of tree.frames) totalTicks += fr + (f.delay || 0);
+  const lastIdx = tree.frames.length - 1;
+  for (let i = 0; i < tree.frames.length; i++) {
+    const f = tree.frames[i];
+    const delay = f.delay || 0;
+    if (ignoreHold && i === lastIdx && delay > 300) continue;
+    totalTicks += fr + delay;
+  }
   return Math.max(0.1, totalTicks / 30);
 }
 
@@ -174,14 +180,14 @@ function getTreeTotalTicks(node) {
   return Math.max(1, total);
 }
 
-function getSpriteCycleDuration(name, skin) {
+function getSpriteCycleDuration(name, skin, ignoreHold) {
   if (!name) return null;
   const n = (skin === undefined) ? currentFxSkin : skin;
   const normalizedSkin = (n === undefined || n === null) ? "" : String(n).trim();
   const cacheKey = `${name}|${normalizedSkin}`;
   const asset = fxSpriteCache.get(cacheKey);
   if (asset && !(asset instanceof Promise) && asset.tree) {
-    return computeTreeDuration(asset.tree);
+    return computeTreeDuration(asset.tree, ignoreHold);
   }
   return null;
 }
@@ -357,11 +363,17 @@ function computeTailEndTick(moments) {
     const moment = def.moment || "impact";
     const ticks = moments[moment];
     if (!ticks || !ticks.length) continue;
-    if (def.type === "sprite") continue;
     const baseDelay = (def.spawn && def.spawn.targetDelay) || 0;
-    let durTicks = baseDelay * 30;
-    const dur = def.duration > 0 ? def.duration : 0.4;
-    durTicks += dur * 30;
+    const maxIdx = def.type === "sprite" ? Math.max(0, currentTargetCount - 1) : 0;
+    let durTicks = baseDelay * maxIdx * 30;
+    if (def.type === "sprite" && def.name) {
+      const repeatCount = def.duration > 0 ? Math.max(1, Math.floor(def.duration)) : 1;
+      const cycleSec = window.fxManager.getSpriteCycleDuration(def.name, undefined, true) || 0.4;
+      durTicks += repeatCount * cycleSec * 30;
+    } else {
+      const dur = def.duration > 0 ? def.duration : 0.4;
+      durTicks += dur * 30;
+    }
     const last = ticks[ticks.length - 1];
     const end = last + durTicks;
     if (end > maxEnd) maxEnd = end;
@@ -658,7 +670,7 @@ function applyBlendMode(ctx, mode) {
 function getSpritePosition(bounds, position) {
   if (!bounds) return { x: 0, y: 0 };
   if (position === "bottom") return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h };
-  if (position === "top") return { x: bounds.x + bounds.w / 2, y: bounds.y };
+  if (position === "top") return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h };
   if (position === "dealerimpact") return { x: bounds.x + bounds.w * 0.75, y: bounds.y + bounds.h * 0.6 };
   return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 };
 }
