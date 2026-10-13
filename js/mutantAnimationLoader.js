@@ -18,43 +18,75 @@ let cachedStandKey = null;
 
 const backgroundCache = new Map();
 
-function loadBackgroundImage(url) {
+const screenUrlCache = new Map();
+
+function loadScreenImage(value) {
+  if (!value) return Promise.resolve(null);
+  if (screenUrlCache.has(value)) return Promise.resolve(screenUrlCache.get(value));
+  const url = `https://s-beta.kobojo.com/mutants/assets/pveeventcontent/screen_${value}.jpg`;
+  return loadImageWithRetry(url, 5000, 3)
+    .then(() => { screenUrlCache.set(value, url); return url; })
+    .catch(() => { screenUrlCache.set(value, null); return null; });
+}
+
+function getScreenUrlFor(value) {
+  if (!value) return null;
+  return screenUrlCache.get(value) || null;
+}
+
+function loadImageWithRetry(url, timeoutMs = 5000, maxAttempts = 3) {
   return new Promise((resolve, reject) => {
-    const img = new Image();
-    const t = setTimeout(() => {
-      img.onload = null;
-      img.onerror = null;
-      img.src = "";
-      reject(new Error("timeout"));
-    }, 15000);
-    img.crossOrigin = "anonymous";
-    img.onload = () => { clearTimeout(t); resolve(img); };
-    img.onerror = () => {
-      clearTimeout(t);
-      reject(new Error("load error"));
+    let attempt = 0;
+    const tryLoad = () => {
+      attempt++;
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      const timer = setTimeout(() => {
+        img.onload = null;
+        img.onerror = null;
+        img.src = "";
+        if (attempt < maxAttempts) tryLoad();
+        else reject(new Error(`timeout after ${maxAttempts} attempts`));
+      }, timeoutMs);
+      img.onload = () => { clearTimeout(timer); resolve(img); };
+      img.onerror = () => {
+        clearTimeout(timer);
+        if (attempt < maxAttempts) tryLoad();
+        else reject(new Error(`load error after ${maxAttempts} attempts`));
+      };
+      img.src = url;
     };
-    img.src = url;
+    tryLoad();
   });
 }
 
+function loadBackgroundImage(url) {
+  return loadImageWithRetry(url, 5000, 3);
+}
+
 async function setBackgroundByValue(value) {
-  if (!value) { currentBackgroundValue = null; window.sceneRenderer.setBackground(null); return; }
-  if (backgroundCache.has(value)) {
-    currentBackgroundValue = value;
-    window.sceneRenderer.setBackground(backgroundCache.get(value));
+  if (!value) {
+    currentBackgroundValue = null;
+    window.sceneRenderer.setBackground(null);
+    if (typeof window.applyEventBackground === "function") window.applyEventBackground();
     return;
   }
   backgroundLoading = true;
   notifyStateChange();
   try {
-    const url = `https://s-beta.kobojo.com/mutants/assets/arenas/${value}.jpg`;
-    const img = await loadBackgroundImage(url);
-    backgroundCache.set(value, img);
+    const canvasPromise = backgroundCache.has(value)
+      ? Promise.resolve(backgroundCache.get(value))
+      : loadBackgroundImage(`https://s-beta.kobojo.com/mutants/assets/arenas/${value}.jpg`)
+          .then(img => { backgroundCache.set(value, img); return img; });
+    const screenPromise = loadScreenImage(value);
+    const [img] = await Promise.all([canvasPromise, screenPromise]);
     currentBackgroundValue = value;
     window.sceneRenderer.setBackground(img);
+    if (typeof window.applyEventBackground === "function") window.applyEventBackground();
   } catch (e) {
     currentBackgroundValue = null;
     window.sceneRenderer.setBackground(null);
+    if (typeof window.applyEventBackground === "function") window.applyEventBackground();
   } finally {
     backgroundLoading = false;
     notifyStateChange();
@@ -272,5 +304,5 @@ window.mutantLoader = {
   loadStandTreeForMutant,
   get mutantReady() { return mutantReady; },
   get mutantLoading() { return mutantLoading || externalLoadingCount > 0; },
-  setBackgroundByValue, getCurrentBackground,
+  setBackgroundByValue, getCurrentBackground, getScreenUrlFor,
 };

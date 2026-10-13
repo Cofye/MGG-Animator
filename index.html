@@ -9,6 +9,9 @@
 </head>
 
 <body>
+  <div id="bodyBgA" class="body-bg-layer"></div>
+  <div id="bodyBgB" class="body-bg-layer"></div>
+
   <div id="scale-container" class="hidden">
     <div class="logoManu">
       <button id="logoManu" data-target="infoLayer">
@@ -195,7 +198,7 @@
       </button>
       <input type="color" id="colorPicker" value="#00ff00">
       <button class="btn btnDebug" id="btnShowRival" require="join">
-        <span class="textBtnLeft" data-lang="show-rival"></span>
+        <span class="textBtnLeft" data-lang="show_rival"></span>
         <img class="activeIcon" src="images/icons/icon_on.png">
       </button>
       <button class="btn btnDebug" id="btnMultiple" require="join">
@@ -206,13 +209,25 @@
         <span class="textBtnLeft" data-lang="effects"></span>
         <img class="activeIcon" src="images/icons/icon_on.png">
       </button>
+      <button class="btn btnDebug" id="btnLights" require="join">
+        <span class="textBtnLeft" data-lang="lights"></span>
+        <img class="activeIcon" src="images/icons/icon_on.png">
+      </button>
       <button class="btn btnDebug" id="btnFrames">
         <span class="textBtnLeft" data-lang="frame"></span>
         <img class="activeIcon" src="images/icons/icon_off.png">
       </button>
-      <button class="btn btnDebug" id="btnWatermark" require="join">
-        <span class="textBtnLeft" data-lang="logo"></span>
-        <img class="activeIcon" src="images/icons/icon_on.png">
+      <button class="btn btnDebug" id="btnHiddenMutants" require="join">
+        <span class="textBtnLeft" data-lang="hidden_mt"></span>
+        <img class="activeIcon" src="images/icons/icon_off.png">
+      </button>
+      <button class="btn btnDebug" id="btnHiddenBg" require="join">
+        <span class="textBtnLeft" data-lang="hidden_bg"></span>
+        <img class="activeIcon" src="images/icons/icon_off.png">
+      </button>
+      <button class="btn btnDebug" id="btnChangeBg" require="join">
+        <span class="textBtnLeft" data-lang="change_bg"></span>
+        <img class="activeIcon" src="images/icons/icon_off.png">
       </button>
     </div>
   </div>

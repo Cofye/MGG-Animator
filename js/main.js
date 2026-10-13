@@ -98,7 +98,9 @@ let savedAncestorStyles = [];
 let cameraDragging = false;
 let cameraDragLastX = 0;
 let cameraDragLastY = 0;
-let watermarkEnabled = true;
+let showHiddenMutants = false;
+let showHiddenBg = false;
+let backgroundFromEventEnabled = false;
 let currentRivalStandTree = null;
 let currentRivalStandImage = null;
 let transportSchedule = null;
@@ -252,19 +254,29 @@ async function refreshAccessState() {
 
 function canViewMutant(mutantValue) {
   if (!mutantValue) return true;
-  if (currentUserExempt) return true;
   const key = String(mutantValue).toLowerCase();
-  if (accessRules.blockedForEveryone.has(key)) return false;
-  if (accessRules.membersOnly.has(key) && !currentUserInGuild) return false;
+  const isMembersOnly = accessRules.membersOnly.has(key);
+  const isBlockedForEveryone = accessRules.blockedForEveryone.has(key);
+  if (isMembersOnly) {
+    return currentUserInGuild || showHiddenMutants;
+  }
+  if (isBlockedForEveryone) {
+    return currentUserExempt && showHiddenMutants;
+  }
   return true;
 }
 
 function canViewBackground(bgValue) {
   if (!bgValue) return true;
-  if (currentUserExempt) return true;
   const key = String(bgValue).toLowerCase();
-  if (accessRules.blockedBackgroundsForEveryone.has(key)) return false;
-  if (accessRules.membersOnlyBackgrounds.has(key) && !currentUserInGuild) return false;
+  const isMembersOnly = accessRules.membersOnlyBackgrounds.has(key);
+  const isBlockedForEveryone = accessRules.blockedBackgroundsForEveryone.has(key);
+  if (isMembersOnly) {
+    return currentUserInGuild || showHiddenBg;
+  }
+  if (isBlockedForEveryone) {
+    return currentUserExempt && showHiddenBg;
+  }
   return true;
 }
 
@@ -382,15 +394,58 @@ function bindGated(el, handler) {
   });
 }
 
+let currentBgLayer = 0;
+
+function swapBodyBackground(url) {
+  const layers = [
+    document.getElementById("bodyBgA"),
+    document.getElementById("bodyBgB"),
+  ];
+  if (!layers[0] || !layers[1]) return;
+  const nextIdx = 1 - currentBgLayer;
+  const nextEl = layers[nextIdx];
+  const curEl = layers[currentBgLayer];
+  nextEl.style.backgroundImage = url;
+  nextEl.style.opacity = "0.5";
+  curEl.style.opacity = "0";
+  currentBgLayer = nextIdx;
+}
+
+function applyEventBackground() {
+  const bgValue = window.mutantLoader && typeof window.mutantLoader.getCurrentBackground === "function"
+    ? window.mutantLoader.getCurrentBackground()
+    : null;
+  const fallback = 'url("../images/ui/background.png")';
+  if (!backgroundFromEventEnabled || !bgValue) {
+    swapBodyBackground(fallback);
+    return;
+  }
+  const cached = window.mutantLoader && typeof window.mutantLoader.getScreenUrlFor === "function"
+    ? window.mutantLoader.getScreenUrlFor(bgValue)
+    : null;
+  if (cached) {
+    swapBodyBackground(`url("${cached}")`);
+    return;
+  }
+  const urlRaw = `https://s-beta.kobojo.com/mutants/assets/pveeventcontent/screen_${bgValue}.jpg`;
+  const testImg = new Image();
+  testImg.onload = () => swapBodyBackground(`url("${urlRaw}")`);
+  testImg.onerror = () => swapBodyBackground(fallback);
+  testImg.src = urlRaw;
+}
+
 async function setupDebugControls() {
   const btnBounds = document.getElementById("btnBounds");
   const btnColor = document.getElementById("btnColor");
-  const btnWatermark = document.getElementById("btnWatermark");
   const btnShowRival = document.getElementById("btnShowRival");
   const btnMultiple = document.getElementById("btnMultiple");
   const colorPicker = document.getElementById("colorPicker");
   const btnEffects = document.getElementById("btnEffects");
+  const btnLights = document.getElementById("btnLights");
+  const btnHiddenMutants = document.getElementById("btnHiddenMutants");
+  const btnHiddenBg = document.getElementById("btnHiddenBg");
   const btnFrames = document.getElementById("btnFrames");
+  const btnChangeBg = document.getElementById("btnChangeBg");
   if (!btnBounds || !btnColor || !colorPicker) return;
   let boundsEnabled = false;
   let currentColor = colorPicker.value || "#00ff00";
@@ -398,9 +453,17 @@ async function setupDebugControls() {
   window.animationEngine.setBoundsColor(currentColor);
   updateToggleIcon(btnBounds, boundsEnabled);
   if (btnShowRival) updateToggleIcon(btnShowRival, showRivalEnabled);
-  if (btnWatermark) updateToggleIcon(btnWatermark, watermarkEnabled);
   if (btnMultiple) updateToggleIcon(btnMultiple, multipleRivalsEnabled);
   if (btnEffects) { window.fxManager.setEffectsEnabled(true); updateToggleIcon(btnEffects, true); }
+  if (btnLights) {
+    if (typeof window.fxManager.setLightsEnabled === "function") {
+      window.fxManager.setLightsEnabled(true);
+    }
+    updateToggleIcon(btnLights, true);
+  }
+  if (btnHiddenMutants) updateToggleIcon(btnHiddenMutants, showHiddenMutants);
+  if (btnHiddenBg) updateToggleIcon(btnHiddenBg, showHiddenBg);
+  if (btnChangeBg) updateToggleIcon(btnChangeBg, backgroundFromEventEnabled);
   let framesEnabled = false;
   if (btnFrames) updateToggleIcon(btnFrames, framesEnabled);
   window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
@@ -432,18 +495,37 @@ async function setupDebugControls() {
     updateToggleIcon(btnEffects, next);
     window.sceneRenderer.renderAll();
   });
+  bindGated(btnLights, () => {
+    if (typeof window.fxManager.isLightsEnabled !== "function" ||
+        typeof window.fxManager.setLightsEnabled !== "function") return;
+    const next = !window.fxManager.isLightsEnabled();
+    window.fxManager.setLightsEnabled(next);
+    updateToggleIcon(btnLights, next);
+    window.sceneRenderer.renderAll();
+  });
+  bindGated(btnHiddenMutants, () => {
+    showHiddenMutants = !showHiddenMutants;
+    updateToggleIcon(btnHiddenMutants, showHiddenMutants);
+    reRenderOpenLists();
+  });
+  bindGated(btnHiddenBg, () => {
+    showHiddenBg = !showHiddenBg;
+    updateToggleIcon(btnHiddenBg, showHiddenBg);
+    reRenderOpenLists();
+  });
   bindGated(btnFrames, () => {
     framesEnabled = !framesEnabled;
     window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
     updateToggleIcon(btnFrames, framesEnabled);
   });
-  bindGated(btnWatermark, () => {
-    watermarkEnabled = !watermarkEnabled;
-    updateToggleIcon(btnWatermark, watermarkEnabled);
-  });
   bindGated(btnColor, () => {
     colorPicker.value = currentColor;
     colorPicker.click();
+  });
+  bindGated(btnChangeBg, () => {
+    backgroundFromEventEnabled = !backgroundFromEventEnabled;
+    updateToggleIcon(btnChangeBg, backgroundFromEventEnabled);
+    applyEventBackground();
   });
   colorPicker.addEventListener("input", () => {
     currentColor = colorPicker.value;
@@ -641,6 +723,43 @@ async function applyLanguage() {
   });
 }
 
+const THUMBNAIL_CONCURRENCY = 4;
+const preloadedThumbnails = new Set();
+let thumbnailQueueRunning = false;
+
+function preloadThumbnails() {
+  if (thumbnailQueueRunning) return;
+  const pending = allMutants
+    .map(m => m.image)
+    .filter(url => url && !preloadedThumbnails.has(url));
+  if (pending.length === 0) return;
+  thumbnailQueueRunning = true;
+  let index = 0;
+  let active = 0;
+  const next = () => {
+    while (active < THUMBNAIL_CONCURRENCY && index < pending.length) {
+      const url = pending[index++];
+      if (preloadedThumbnails.has(url)) continue;
+      preloadedThumbnails.add(url);
+      active++;
+      const img = new Image();
+      img.decoding = "async";
+      const done = () => {
+        active--;
+        if (index >= pending.length && active === 0) {
+          thumbnailQueueRunning = false;
+        } else {
+          next();
+        }
+      };
+      img.onload = done;
+      img.onerror = done;
+      img.src = url;
+    }
+  };
+  next();
+}
+
 async function loadMutants() {
   const parsed = await parseCustomTXT(`data/characters.txt?nocache=${Date.now()}`, currentLang);
   allMutants = parsed.filter(p => p.type && p.type.startsWith("default"));
@@ -756,6 +875,7 @@ function setupMutantSearch() {
 function openCharacterList(context) {
   const state = listControllers.mutant;
   if (!state) return;
+  preloadThumbnails();
   state.bg.classList.remove("hidden"); state.layer.classList.remove("hidden");
   clickToClose.classList.remove("hidden"); scaleContainerLayer.classList.remove("hidden");
   state.layer.setAttribute("data-context", context); showStatic();
@@ -1047,6 +1167,15 @@ async function selectBg(bg) {
   }
 }
 
+const bgButtonsForBlock = [];
+
+function setBgButtonsBlocked(blocked) {
+  for (const btn of bgButtonsForBlock) {
+    if (!btn) continue;
+    btn.classList.toggle("selectBlocked", blocked);
+  }
+}
+
 function setupBackgroundControls() {
   const btnNone = document.getElementById("btnNone");
   bindGated(btnNone, async () => {
@@ -1054,9 +1183,12 @@ function setupBackgroundControls() {
       await window.mutantLoader.setBackgroundByValue(null);
     }
   });
+  bgButtonsForBlock.length = 0;
+  if (btnNone) bgButtonsForBlock.push(btnNone);
   for (const { id, type } of BG_BUTTONS) {
     const btn = document.getElementById(id);
     if (!btn) continue;
+    bgButtonsForBlock.push(btn);
     btn.addEventListener("click", () => openBgList(type));
   }
 }
@@ -1499,8 +1631,7 @@ function setupPlaybackControls() {
   });
   updatePlayButtonIcon();
 }
-
-const selectButtons = [mutantSelect, rivalSelect, skinSelect, animationSelect];
+const selectButtons = [mutantSelect, rivalSelect, skinSelect, animationSelect, rivalSkinSelect];
 function setSelectButtonsBlocked(blocked) {
   selectButtons.forEach(btn => { if (!btn) return; btn.classList.toggle("selectBlocked", blocked); });
 }
@@ -2392,7 +2523,7 @@ function setupScreenshot() {
         window.sceneRenderer.setIncludeMidLayer(false);
         window.sceneRenderer.renderAll();
       }
-      if (watermarkEnabled) {
+      if (!currentUserExempt) {
         const logo = watermarkImage || await loadWatermark();
         if (logo && logo.complete && logo.naturalWidth > 0) {
           const targetW = Math.round(out.width * 0.2);
@@ -2535,6 +2666,7 @@ function initEventListeners() {
         window.animationEngine.startLoop();
       }
       setSelectButtonsBlocked(loading);
+      setBgButtonsBlocked(loading);
       updatePlayButtonIcon();
       timelineLastFrame = -1;
       updateTimelineBar();
@@ -2543,6 +2675,7 @@ function initEventListeners() {
 }
 
 window.bindGated = bindGated;
+window.applyEventBackground = applyEventBackground;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const watchdogId = startBootWatchdog();
@@ -2566,6 +2699,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     createListController("bg");
     initEventListeners();
     await setDefaultRival("specimen_a_01");
+    requestIdleCallback(() => preloadThumbnails(), { timeout: 2000 });
     bootOk = true;
   } catch (e) {
     bootOk = false;

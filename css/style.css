@@ -20,9 +20,8 @@ body {
   margin: 0;
   position: relative;
 }
-body::before {
-  content: "";
-  position: absolute;
+.body-bg-layer {
+  position: fixed;
   inset: 0;
   background-image: url("../images/ui/background.png");
   background-size: cover;
@@ -30,7 +29,9 @@ body::before {
   background-position: center center;
   background-attachment: fixed;
   opacity: 0.5;
+  transition: opacity 0.4s ease;
   z-index: -1;
+  pointer-events: none;
 }
 #scale-container {
   width: 1920px;
@@ -1637,7 +1638,7 @@ body::before {
 }
 
 .btnDebug {
-  width: 368px;
+  width: 306px;
   height: 70px;
   background-image: url("../images/ui/btn_debug.png");
   position: absolute;
@@ -1645,10 +1646,10 @@ body::before {
 
 #btnColor {
   top: -4px;
-  left: 400px;
+  left: 338px;
 }
 .activeIcon {
-  margin-left: 280px;
+  margin-left: 218px;
 }
 
 #colorPicker {
@@ -1666,14 +1667,49 @@ body::before {
   top: 114px;
 }
 #btnMultiple {
-  top: 228px;
+  top: 114px;
+  left: 342px;
 }
 #btnEffects {
-  top: 342px;
+  top: 228px;
 }
-#btnFrames {
+#btnLights {
+  top: 228px;
+  left: 342px;
+}
+#btnHiddenMutants {
   top: 456px;
 }
+#btnHiddenBg {
+  top: 456px;
+  left: 342px;
+}
+#btnFrames {
+  top: 342px;
+}
+#btnChangeBg{
+  top: 570px;
+}
 #btnWatermark {
+  top: 570px;
+  left: 342px;
+}
+
+#btn1 {
+  top: 0px;
+}
+#btn2 {
+  top: 114px;
+}
+#btn3 {
+  top: 228px;
+}
+#btn4 {
+  top: 342px;
+}
+#btn5 {
+  top: 456px;
+}
+#btn6 {
   top: 570px;
 }

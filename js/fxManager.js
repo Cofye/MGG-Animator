@@ -4,6 +4,7 @@ const fxSpriteCache = new Map();
 let currentAttacks = null;
 let activeFx = [];
 let effectsEnabled = true;
+let lightsEnabled = true;
 let currentFxSkin = "";
 
 let currentTargetCount = 1;
@@ -66,6 +67,10 @@ function getFxSkin() { return currentFxSkin; }
 function setEffectsEnabled(v) { effectsEnabled = !!v; }
 
 function isEffectsEnabled() { return effectsEnabled; }
+
+function setLightsEnabled(v) { lightsEnabled = !!v; }
+
+function isLightsEnabled() { return lightsEnabled; }
 
 const objectColorTransforms = {
   self:       { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
@@ -509,6 +514,10 @@ function onLabelMoment(moment) {
   if (!currentAttacks || !currentAttacks.list) return;
   for (const def of currentAttacks.list) {
     if ((def.moment || "impact") !== moment) continue;
+    const isLight = def.type === "flash" || def.type === "fade" || def.type === "color";
+    const isVisual = def.type === "sprite" || def.type === "move";
+    if (isLight && !lightsEnabled) continue;
+    if (isVisual && !effectsEnabled) continue;
     const isSprite = def.type === "sprite";
     const baseDelay = (def.spawn && def.spawn.targetDelay) || 0;
     const copies = isSprite ? Math.max(1, currentTargetCount) : 1;
@@ -750,7 +759,7 @@ function getShakeOffset(which) {
 }
 
 function getObjectTransform(which) {
-  if (!effectsEnabled) return { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 };
+  if (!lightsEnabled) return { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 };
   const st = objectColorTransforms[which];
   if (!st) return null;
   return { rMul: st.rMul, gMul: st.gMul, bMul: st.bMul, rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd };
@@ -769,4 +778,6 @@ window.fxManager = {
   setFxSkin, getFxSkin,
   getSpriteCycleDuration,
   setTargetCount, getTargetCount, getCurrentAttacks,
+  setEffectsEnabled, isEffectsEnabled,
+  setLightsEnabled, isLightsEnabled,
 };
