@@ -416,14 +416,11 @@ function compositeUpdate(node, parentFramePos, dtSeconds) {
       node.nextKey = next;
     }
   }
-
   node.drawThisFrame = newDrawThisFrame;
   if (!newDrawThisFrame) return;
-
   if (!oldDrawThisFrame && !node.synch && node.innerSprite) {
     forceFrame(node.innerSprite, 0);
   }
-
   if (node.innerSprite) {
     if (node.synch) {
       const inner = node.innerSprite;
@@ -475,15 +472,12 @@ function updateTick(dtSeconds) {
   if (deathState.active) {
     const speed = Math.max(0.0001, currentSpeedFactor || 1);
     const shaderSeconds = Math.max(0.0001, deathState.duration / speed);
-
     if (deathState.progress < 1) {
       deathState.progress = Math.min(1, deathState.progress + dtSeconds / shaderSeconds);
     }
     deathState.elapsed += dtSeconds * speed;
-
     const totalTicks = getDeathTickDuration();
     const totalSeconds = totalTicks / UNIVERSAL_FPS;
-
     if (deathState.elapsed >= totalSeconds) {
       if (autoRestart) {
         deathState.progress = 0;
@@ -508,7 +502,6 @@ function updateTick(dtSeconds) {
       }
     }
   }
-
   const attackDt = dtSeconds * currentSpeedFactor * attackSpeedMultiplier;
   const normalDt = dtSeconds * currentSpeedFactor;
   spriteUpdate(animationTree, attackDt);
@@ -583,7 +576,6 @@ function drawImageElement(ctx, img, rMul, gMul, bMul, rAdd, gAdd, bAdd, sourceIm
   ctx.translate(img.dstX, img.dstY);
   ctx.transform(img.a, img.b, img.c, img.d, 0, 0);
   if (img.alpha !== 1) ctx.globalAlpha *= img.alpha;
-  if (hidden) ctx.globalAlpha *= 0.5;
   const tinted = getTintedSource(img, rMul, gMul, bMul, rAdd, gAdd, bAdd, sourceImage);
   if (tinted) ctx.drawImage(tinted, 0, 0, img.width, img.height);
   else ctx.drawImage(sourceImage, img.srcX, img.srcY, img.width, img.height, 0, 0, img.width, img.height);
@@ -618,32 +610,6 @@ function getFrameBlur(node) {
   if (!found) return null;
   if (bx <= 0.5 && by <= 0.5) return null;
   return { x: bx, y: by };
-}
-
-function computeBoundsFast(node, offsetX, offsetY, acc) {
-  if (!node) return acc;
-  if (node.type === "Composite") {
-    const nx = offsetX + (node.x || 0);
-    const ny = offsetY + (node.y || 0);
-    if (node.innerSprite) computeBoundsFast(node.innerSprite, nx, ny, acc);
-    return acc;
-  }
-  const addImg = (img) => {
-    if (!img) return;
-    const x1 = offsetX + img.dstX, y1 = offsetY + img.dstY;
-    const x2 = x1 + img.width, y2 = y1 + img.height;
-    if (!acc.any) { acc.minX = x1; acc.minY = y1; acc.maxX = x2; acc.maxY = y2; acc.any = true; }
-    else {
-      if (x1 < acc.minX) acc.minX = x1;
-      if (y1 < acc.minY) acc.minY = y1;
-      if (x2 > acc.maxX) acc.maxX = x2;
-      if (y2 > acc.maxY) acc.maxY = y2;
-    }
-  };
-  if (node.images) node.images.forEach(addImg);
-  if (node.currentFrame >= 0 && node.frames && node.frames[node.currentFrame]) node.frames[node.currentFrame].images.forEach(addImg);
-  if (node.children) for (const child of node.children) computeBoundsFast(child, offsetX, offsetY, acc);
-  return acc;
 }
 
 function renderSpriteWithBlur(ctx, node, parentVisible, cMul, cAdd, sourceImage, blur) {
@@ -695,9 +661,7 @@ function renderNode(ctx, node, parentVisible, cMul, cAdd, sourceImage, skipBlur)
     ctx.rotate(node.angle);
     ctx.scale(node.scaleX, node.scaleY);
     if (node.alpha !== 1) ctx.globalAlpha *= node.alpha;
-    if (!isVisible) ctx.globalAlpha *= 0.5;
-    if (node.innerSprite) renderNode(ctx, node.innerSprite, true, nMul, nAdd, sourceImage, skipBlur);
-    ctx.restore();
+    if (node.innerSprite) renderNode(ctx, node.innerSprite, true, nMul, nAdd, sourceImage, skipBlur);    ctx.restore();
     return;
   }
   if (!parentVisible && !DEBUG_SHOW_HIDDEN) return;
@@ -706,7 +670,6 @@ function renderNode(ctx, node, parentVisible, cMul, cAdd, sourceImage, skipBlur)
     if (blur) { renderSpriteWithBlur(ctx, node, parentVisible, cMul, cAdd, sourceImage, blur); return; }
   }
   const savedAlpha = ctx.globalAlpha;
-  if (!parentVisible && DEBUG_SHOW_HIDDEN) ctx.globalAlpha *= 0.5;
   for (const img of node.images) drawImageElement(ctx, img, cMul.r, cMul.g, cMul.b, cAdd.r, cAdd.g, cAdd.b, sourceImage);
   if (node.currentFrame >= 0 && node.frames[node.currentFrame]) {
     for (const img of node.frames[node.currentFrame].images) drawImageElement(ctx, img, cMul.r, cMul.g, cMul.b, cAdd.r, cAdd.g, cAdd.b, sourceImage);
@@ -761,7 +724,6 @@ function resetNodeState(node, startAtZero = false) {
     node.colorAdd = { r: 0, g: 0, b: 0 };
     node.alpha = 1; node.visible = true;
     node.prevKey = null; node.nextKey = null;
-    node.cachedFrame = -1;
     node.drawThisFrame = true;
   }
   if (node.children) for (const c of node.children) resetNodeState(c, startAtZero);
@@ -1262,8 +1224,6 @@ window.animationEngine = {
   getBoundsColor: () => DEBUG_BOUNDS_COLOR,
   renderNode, setRenderCallback, getTreeBounds,
   spriteUpdate, resetNodeState, precomputeTimeline, restoreTick, scanAnimationSounds,
-  startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,
-  setDeathSplatter, getDeathSplatter,
   startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,
   setDeathSplatter, getDeathSplatter, getDeathTickDuration,
 };

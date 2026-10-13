@@ -407,7 +407,6 @@ async function loadSpriteFxAsset(name, skin) {
       const doc = new DOMParser().parseFromString(txt, "application/xml");
       const spriteEl = doc.querySelector("Sprite");
       if (!spriteEl) throw new Error();
-
       const bitmap = spriteEl.getAttribute("bitmap") || "";
       const base = bitmap.replace(/\.png$/i, "");
       const availableSkins = new Set();
@@ -778,6 +777,5 @@ window.fxManager = {
   setFxSkin, getFxSkin,
   getSpriteCycleDuration,
   setTargetCount, getTargetCount, getCurrentAttacks,
-  setEffectsEnabled, isEffectsEnabled,
   setLightsEnabled, isLightsEnabled,
 };

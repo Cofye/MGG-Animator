@@ -190,7 +190,6 @@ function parseCompositeElement(el, parentTotalFrames, parentAutoLoop) {
     visible: true,
     prevKey: null,
     nextKey: null,
-    cachedParentInt: -1,
     drawThisFrame: true
   };
 }

@@ -146,7 +146,6 @@ async function loadGameDefinitions() {
     const text = await res.text();
     const xml = new DOMParser().parseFromString(text, "application/xml");
     if (xml.querySelector("parsererror")) throw new Error("XML inválido");
-
     const map = {};
     const entities = xml.querySelectorAll('EntityDescriptor[category="specimen"]');
     for (const ent of entities) {
@@ -293,6 +292,7 @@ document.querySelectorAll("button:not([type])").forEach(btn => btn.setAttribute(
 
 function showStatic() { coverContainer.classList.remove("hidden"); clickBlocker.classList.remove("hidden"); }
 function hideStatic() { coverContainer.classList.add("hidden"); clickBlocker.classList.add("hidden"); }
+
 function showLoading() {
   loadingScreen.classList.remove("hidden");
   scaleContainerLayer.classList.remove("hidden");
@@ -659,13 +659,6 @@ function setupInfoPopups() {
   infoClose.addEventListener("click", () => {
     scaleContainerLayer.classList.add("hidden"); infoLayer.classList.add("hidden"); hideStatic();
   });
-}
-
-async function loadAvailableLanguages() {
-  const langs = await parseCustomTXT("data/options.txt", currentLang);
-  availableLangs = langs.filter(l => l.type === "langs");
-  renderLangMenu();
-  updateFlagLang();
 }
 
 function renderLangMenu() {
@@ -1350,19 +1343,6 @@ function closeItemList() {
   itemListMode = null;
 }
 
-function snapshotSoundAt(tick) {
-  if (!soundSchedule || soundSchedule.length === 0) return null;
-  let best = null;
-  for (const s of soundSchedule) {
-    if (s.tick <= tick && (!best || s.tick > best.tick)) best = s;
-  }
-  if (!best) return null;
-  const offset = (tick - best.tick) / 30;
-  const buffer = window.soundManager.getSoundBuffer(best.name);
-  if (!buffer || offset >= buffer.duration) return null;
-  return { name: best.name, offset };
-}
-
 async function selectSkin(skin) {
   selectedSkin = skin;
   updateSkinButton();
@@ -1593,7 +1573,6 @@ function setupPlaybackControls() {
   btnPlay.addEventListener("click", () => {
     const wasPaused = window.animationEngine.isPaused();
     const info = window.animationEngine.getInfo();
-
     if (wasPaused) {
       const tick = info.tickPosition || 0;
       if (window.animationEngine.isAtEnd() || tick < 0.5) {
@@ -1631,7 +1610,9 @@ function setupPlaybackControls() {
   });
   updatePlayButtonIcon();
 }
+
 const selectButtons = [mutantSelect, rivalSelect, skinSelect, animationSelect, rivalSkinSelect];
+
 function setSelectButtonsBlocked(blocked) {
   selectButtons.forEach(btn => { if (!btn) return; btn.classList.toggle("selectBlocked", blocked); });
 }
@@ -2074,12 +2055,10 @@ async function buildTransportSchedule() {
       returnFrame = backFrame;
       returnIsSnap = true;
     }
-
     startTick   = animTickAtFrame(animTree, startFrame);
     arrivedTick = animTickAtFrame(animTree, arrivedFrame);
     returnTick  = animTickAtFrame(animTree, returnFrame);
     backTick    = animTickAtFrame(animTree, backFrame);
-
     const dp = dps[0];
     const arenaScale = scene.getArenaScale();
     const targetRivalIndex = 1;
@@ -2089,13 +2068,11 @@ async function buildTransportSchedule() {
     const dxPx = (rivalSlot.x - selfSlot.x) * arenaScale;
     targetDeltaX = dxPx - (hitScale * dp.x);
   }
-
   transportSchedule = {
     startTick, arrivedTick, returnTick, backTick,
     moments, targetDeltaX,
     hasArrivalPhase, hasReturnPhase, returnIsSnap
   };
-
   const attackEnd = info.tickDuration;
   const fxEnd = window.fxManager.computeTailEndTick(moments);
   const soundEnd = await computeSoundTailEndTick();
@@ -2327,10 +2304,8 @@ function setupFullscreen() {
     fullscreenLocked = true;
     clearTimeout(fullscreenLockTimer);
     fullscreenLockTimer = setTimeout(() => { fullscreenLocked = false; }, 1500);
-
     const wrapper = document.getElementById("canvasWrapper");
     if (!wrapper) { fullscreenLocked = false; return; }
-
     try {
       if (document.fullscreenElement) {
         await document.exitFullscreen();
@@ -2569,35 +2544,6 @@ function getVersionedFilename(baseName, ext) {
   try { localStorage.setItem(key, String(count)); } catch (_) {}
   if (count === 1) return `${baseName}${ext}`;
   return `${baseName} (${count - 1})${ext}`;
-}
-
-async function saveBlobWithPicker(blob, suggestedName) {
-  if (window.showSaveFilePicker) {
-    try {
-      const handle = await window.showSaveFilePicker({
-        suggestedName,
-        types: [{
-          description: "Imagen PNG",
-          accept: { "image/png": [".png"] },
-        }],
-      });
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      await writable.close();
-      return true;
-    } catch (err) {
-      if (err && err.name === "AbortError") return false;
-    }
-  }
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = suggestedName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  return true;
 }
 
 function setupGeneFilters() {
