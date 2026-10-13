@@ -415,7 +415,7 @@ function applyEventBackground() {
   const bgValue = window.mutantLoader && typeof window.mutantLoader.getCurrentBackground === "function"
     ? window.mutantLoader.getCurrentBackground()
     : null;
-  const fallback = 'url("../images/ui/background.png")';
+  const fallback = 'url("images/ui/background.png")';
   if (!backgroundFromEventEnabled || !bgValue) {
     swapBodyBackground(fallback);
     return;
