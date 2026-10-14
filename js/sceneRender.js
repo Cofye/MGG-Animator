@@ -4,11 +4,31 @@ const ARENA_W = 1195;
 const ARENA_H = 672;
 const SLOT_C2 = { r: 2.7, g: 0.8, b: 11.0, a: 18.0 };
 const SLOT_C3 = { r: 2.3, g: 312.0, b: 220.0, a: 55.0 };
+const REFERENCE_HEIGHT = 672;
+
 let rivalCount = 1;
+let charConfigs = {
+  stand: { x: 0, y: 0, scale: 0.80 },
+  other: { x: -300, y: 0, scale: 0.60 }
+};
+let currentMode = "stand";
+let rivalConfig = { x: 300, y: 0, flipX: true, flipY: false, scale: 0.60 };
+let backgroundImage = null;
+let bgX = 0, bgY = 0, bgW = 0, bgH = 0;
+let cameraZoom = 1;
+let cameraX = 0;
+let cameraY = 0;
+let cameraEnabled = false;
+let midLayerImage = null;
+let midLayerOpacity = 0.25;
+let midLayerWidthRatio = 1.0;
+let includeMidLayer = false;
+let characterVisible = true;
 
 function setMultipleRivalsEnabled(v) {
   multipleRivalsEnabled = !!v;
 }
+
 function isMultipleRivalsEnabled() {
   return multipleRivalsEnabled;
 }
@@ -34,26 +54,7 @@ function setRivalCount(n) {
 }
 
 function getRivalCount() { return rivalCount; }
-const REFERENCE_HEIGHT = 672;
 
-let charConfigs = {
-  stand: { x: 0, y: 0, scale: 0.80 },
-  other: { x: -300, y: 0, scale: 0.60 }
-};
-let currentMode = "stand";
-let rivalConfig = { x: 300, y: 0, flipX: true, flipY: false, scale: 0.60 };
-let backgroundImage = null;
-let bgX = 0, bgY = 0, bgW = 0, bgH = 0;
-let cameraZoom = 1;
-let cameraX = 0;
-let cameraY = 0;
-let cameraEnabled = false;
-let midLayerImage = null;
-let midLayerOpacity = 0.25;
-let midLayerWidthRatio = 1.0;
-let includeMidLayer = false;
-
-let characterVisible = true;
 function setCharacterVisible(v) {
   characterVisible = !!v;
   renderAll();

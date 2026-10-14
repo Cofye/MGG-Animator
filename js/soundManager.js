@@ -1,13 +1,14 @@
 const soundBufferCache = new Map();
+const SOUND_LEVEL_GAINS = [0, 1/9, 4/9, 1];
+const activeSources = new Set();
+const MASTER_GAIN = 0.7;
+
 let audioCtx = null;
 let masterGain = null;
-const SOUND_LEVEL_GAINS = [0, 1/9, 4/9, 1];
 let soundLevel = 3;
 let soundDirection = -1;
 let soundVolume = SOUND_LEVEL_GAINS[soundLevel];
 let playbackRate = 1;
-const activeSources = new Set();
-const MASTER_GAIN = 0.7;
 
 function ensureAudioCtx() {
   if (!audioCtx) {
@@ -97,10 +98,6 @@ function setSoundVolume(v) {
   if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
 }
 
-function getSoundLevel() { return soundLevel; }
-
-function getSoundVolume() { return soundVolume; }
-
 function cycleSoundVolume() {
   if (soundLevel === 0) soundDirection = 1;
   else if (soundLevel === 3) soundDirection = -1;
@@ -110,10 +107,6 @@ function cycleSoundVolume() {
   if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
   return soundVolume;
 }
-
-function setSoundEnabled(v) { setSoundVolume(v ? 1 : 0); }
-
-function isSoundEnabled() { return soundVolume > 0; }
 
 function getSoundBuffer(name) {
   const cached = soundBufferCache.get(name);
@@ -126,15 +119,18 @@ function stopAllSounds() {
   activeSources.clear();
 }
 
-function pauseAllSounds() { stopAllSounds(); }
-
-function resumeAllSounds() {}
-
 function setPlaybackRate(r) {
   const n = Number(r);
   playbackRate = Number.isFinite(n) && n > 0 ? n : 1;
   for (const src of activeSources) { try { src.playbackRate.value = playbackRate; } catch (_) {} }
 }
+
+function setSoundEnabled(v) { setSoundVolume(v ? 1 : 0); }
+function getSoundLevel() { return soundLevel; }
+function getSoundVolume() { return soundVolume; }
+function isSoundEnabled() { return soundVolume > 0; }
+function pauseAllSounds() { stopAllSounds(); }
+function resumeAllSounds() {}
 function getPlaybackRate() { return playbackRate; }
 
 window.soundManager = {

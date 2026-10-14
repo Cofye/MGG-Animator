@@ -1,19 +1,22 @@
 const fxCache = new Map();
 const fxSpriteCache = new Map();
+const objectColorTransforms = {
+  self:       { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
+  target:     { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
+  background: { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
+};
 
 let currentAttacks = null;
 let activeFx = [];
 let effectsEnabled = true;
 let lightsEnabled = true;
 let currentFxSkin = "";
-
 let currentTargetCount = 1;
 
 function setTargetCount(n) {
   const v = Math.floor(Number(n));
   currentTargetCount = (Number.isFinite(v) && v >= 1) ? v : 1;
 }
-function getTargetCount() { return currentTargetCount; }
 
 function setFxSkin(skin) {
   const n = (skin === undefined || skin === null) ? "" : String(skin).trim();
@@ -61,22 +64,6 @@ function setFxSkin(skin) {
     }
   }
 }
-
-function getFxSkin() { return currentFxSkin; }
-
-function setEffectsEnabled(v) { effectsEnabled = !!v; }
-
-function isEffectsEnabled() { return effectsEnabled; }
-
-function setLightsEnabled(v) { lightsEnabled = !!v; }
-
-function isLightsEnabled() { return lightsEnabled; }
-
-const objectColorTransforms = {
-  self:       { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
-  target:     { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
-  background: { rMul: 1, gMul: 1, bMul: 1, rAdd: 0, gAdd: 0, bAdd: 0 },
-};
 
 function resetColorTransforms() {
   for (const k of ["self", "target", "background"]) {
@@ -353,10 +340,6 @@ function setCurrentAnimation(animValue, attacks) {
   currentAttacks = { all, key, list: all[key] || null };
 }
 
-function getCurrentAttacks() {
-  return currentAttacks;
-}
-
 function setAttacksTable(table) {
   currentAttacks = table ? { all: table, key: null, list: null } : null;
 }
@@ -392,9 +375,7 @@ async function loadSpriteFxAsset(name, skin) {
   const normalizedSkin = (requestedSkin === undefined || requestedSkin === null)
     ? "" : String(requestedSkin).trim();
   const cacheKey = `${name}|${normalizedSkin}`;
-
   if (fxSpriteCache.has(cacheKey)) return fxSpriteCache.get(cacheKey);
-
   const promise = (async () => {
     try {
       const controller = new AbortController();
@@ -763,6 +744,14 @@ function getObjectTransform(which) {
   if (!st) return null;
   return { rMul: st.rMul, gMul: st.gMul, bMul: st.bMul, rAdd: st.rAdd, gAdd: st.gAdd, bAdd: st.bAdd };
 }
+
+function getTargetCount() { return currentTargetCount; }
+function getFxSkin() { return currentFxSkin; }
+function setEffectsEnabled(v) { effectsEnabled = !!v; }
+function isEffectsEnabled() { return effectsEnabled; }
+function setLightsEnabled(v) { lightsEnabled = !!v; }
+function isLightsEnabled() { return lightsEnabled; }
+function getCurrentAttacks() { return currentAttacks; }
 
 window.fxManager = {
   loadFxForMutant, setAttacksTable, setCurrentAnimation, onLabelMoment,

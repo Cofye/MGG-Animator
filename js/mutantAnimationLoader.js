@@ -1,4 +1,6 @@
-const BACKGROUND_URL = "https://s-beta.kobojo.com/mutants/assets/arenas/detroit_01.jpg";
+const backgroundCache = new Map();
+const screenUrlCache = new Map();
+
 let currentMutantCode = "";
 let currentAnimationName = "stand";
 let currentSkinName = "";
@@ -8,17 +10,12 @@ let currentSpriteElement = null;
 let mutantReady = false;
 let mutantLoading = false;
 let stateListeners = [];
-let cachedBackground = null;
 let externalLoadingCount = 0;
 let backgroundLoading = false;
 let currentBackgroundValue = null;
 let cachedStandTree = null;
 let cachedStandImage = null;
 let cachedStandKey = null;
-
-const backgroundCache = new Map();
-
-const screenUrlCache = new Map();
 
 function loadScreenImage(value) {
   if (!value) return Promise.resolve(null);
@@ -60,10 +57,6 @@ function loadImageWithRetry(url, timeoutMs = 5000, maxAttempts = 3) {
   });
 }
 
-function loadBackgroundImage(url) {
-  return loadImageWithRetry(url, 5000, 3);
-}
-
 async function setBackgroundByValue(value) {
   if (!value) {
     currentBackgroundValue = null;
@@ -91,14 +84,6 @@ async function setBackgroundByValue(value) {
     backgroundLoading = false;
     notifyStateChange();
   }
-}
-
-function getCurrentBackground() { return currentBackgroundValue; }
-
-async function ensureBackground() {
-  if (cachedBackground) return cachedBackground;
-  cachedBackground = await loadBackgroundImage(BACKGROUND_URL);
-  return cachedBackground;
 }
 
 function notifyStateChange() {
@@ -288,6 +273,8 @@ async function loadStandTreeForMutant(mutantValue, skin) {
   }
 }
 
+function getCurrentBackground() { return currentBackgroundValue; }
+function loadBackgroundImage(url) { return loadImageWithRetry(url, 5000, 3); }
 function isReady() { return mutantReady; }
 function isLoading() { return mutantLoading || externalLoadingCount > 0; }
 function getAvailableSkins() { return availableSkins.slice(); }
