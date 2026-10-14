@@ -495,20 +495,20 @@ async function selectRivalSkin(skin) {
 
 function getHashMutantValue() {
   const hash = String(window.location.hash || "");
-  if (!hash) return null;
-  const m = hash.match(/[#&]mutant=([^&]+)/i);
-  if (!m) return null;
+  if (!hash || hash.length <= 1) return null;
+  const raw = hash.slice(1);
+  if (!raw) return null;
   try {
-    return decodeURIComponent(m[1]);
+    return decodeURIComponent(raw);
   } catch (_) {
-    return m[1];
+    return raw;
   }
 }
 
 function updateHashForMutant(mutantValue) {
   if (!mutantValue) return;
   const stripped = String(mutantValue).replace(/^specimen_/i, "");
-  const desired = `#mutant=${stripped}`;
+  const desired = `#${stripped}`;
   if (window.location.hash === desired) return;
   history.replaceState(null, "", desired);
 }

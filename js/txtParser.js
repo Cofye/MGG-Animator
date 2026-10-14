@@ -1,5 +1,6 @@
 let langsCache = {};
 let localisationCache = {};
+let localisationPromises = {};
 
 function sanitizeText(text) {
   if (text == null) return "";
@@ -49,8 +50,6 @@ async function loadLangsFile() {
   })();
   return langsPromise;
 }
-
-let localisationPromises = {};
 
 async function loadLocalisation(lang) {
   const key = lang || currentLang;
