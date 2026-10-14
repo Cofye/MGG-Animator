@@ -8,7 +8,7 @@ const REFERENCE_HEIGHT = 672;
 
 let rivalCount = 1;
 let charConfigs = {
-  stand: { x: 0, y: 0, scale: 0.80 },
+  stand: { x: 0, y: 0, scale: 1.10 },
   other: { x: -300, y: 0, scale: 0.60 }
 };
 let currentMode = "stand";

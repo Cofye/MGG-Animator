@@ -257,7 +257,7 @@ body {
 #mutantCanvas {
   position: absolute;
   width: 990px;
-  height: 515px;
+  height: 556.87px;
   margin-top: 215px;
   margin-left: 90px;
   background-color: #222;
@@ -299,7 +299,7 @@ body {
 }
 .canvasStatic {
   width: 990px;
-  height: 515px;
+  height: 556.87px;
   margin-top: 215px;
   margin-left: 90px;
   z-index: 3;
@@ -549,12 +549,13 @@ body {
   height: 30px;
   position: absolute;
   left: 1020px;
-  top: 675px;
+  top: 715px;
   z-index: 3;
 }
 .playerTimeline {
   position: absolute;
   left: 50%;
+  top: 10px;
   transform: translateX(-50%);
   width: 900px;
   height: 20px;
@@ -595,40 +596,40 @@ body {
 }
 #btnPlay {
   position: absolute;
-  top: 42.5px;
+  top: 47.5px;
 }
 #btnBack {
   position: absolute;
-  top: 42.5px;
+  top: 47.5px;
   left: 236.5px;
 }
 #btnForward {
   position: absolute;
-  top: 42.5px;
+  top: 47.5px;
   left: 472.5px;
 }
 #btnStop {
   position: absolute;
-  top: 42.5px;
+  top: 47.5px;
   left: 709px;
 }
 #btnSpeed {
   position: absolute;
-  top: 125px;
+  top: 130px;
 }
 #btnLoop {
   position: absolute;
-  top: 125px;
+  top: 130px;
   left: 236.5px;
 }
 #btnSound {
   position: absolute;
-  top: 125px;
+  top: 130px;
   left: 472.5px;
 }
 #btnScreenshot {
   position: absolute;
-  top: 125px;
+  top: 130px;
   left: 709px;
 }
 
@@ -637,7 +638,7 @@ body {
   height: 70px;
   width: 210px;
   left: 100px;
-  top: 635px;
+  top: 685px;
   background-image: url("../images/ui/btn_stats.png");
   z-index: 99;
   position: absolute;
