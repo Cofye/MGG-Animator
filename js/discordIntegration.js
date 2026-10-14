@@ -4,6 +4,7 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 const DISCORD_INVITE_URL = 'https://discord.gg/manuelleweyt-691138101367668736';
 const DISCORD_GUILD_ID = '691138101367668736';
 const GUILD_CACHE_KEY = 'discordGuildVerified';
+const GUILD_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
 let discordGuildsCache = null;
 let checkSessionRunning = false;
@@ -142,28 +143,51 @@ async function requireGuildMembership() {
     openExclusiveLayer();
     return false;
   }
-  if (localStorage.getItem(GUILD_CACHE_KEY) === 'true') return true;
+  const cached = readGuildCache();
+  if (cached === true) return true;
   if (session.provider_token) {
     discordGuildsCache = await fetchDiscordGuilds(session.provider_token);
-    if (isInGuild(discordGuildsCache)) {
-      localStorage.setItem(GUILD_CACHE_KEY, 'true');
-      return true;
-    }
+    const inGuild = isInGuild(discordGuildsCache);
+    writeGuildCache(inGuild);
+    if (inGuild) return true;
   }
   openJoinLayer();
   return false;
 }
 
-async function checkGuildMembership() {
+function writeGuildCache(ok) {
+  try {
+    localStorage.setItem(GUILD_CACHE_KEY, JSON.stringify({ ok: !!ok, at: Date.now() }));
+  } catch (_) {}
+}
+
+function readGuildCache() {
+  try {
+    const raw = localStorage.getItem(GUILD_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.ok !== "boolean") return null;
+    if (typeof parsed.at !== "number") return null;
+    if (Date.now() - parsed.at > GUILD_CACHE_TTL_MS) return null;
+    return parsed.ok;
+  } catch (_) {
+    return null;
+  }
+}
+
+async function checkGuildMembership(force = false) {
   const session = await getSession();
   if (!session) return false;
-  if (localStorage.getItem(GUILD_CACHE_KEY) === 'true') return true;
+  if (!force) {
+    const cached = readGuildCache();
+    if (cached === true) return true;
+    if (cached === false) return false;
+  }
   if (session.provider_token) {
     const guilds = await fetchDiscordGuilds(session.provider_token);
-    if (isInGuild(guilds)) {
-      localStorage.setItem(GUILD_CACHE_KEY, 'true');
-      return true;
-    }
+    const inGuild = isInGuild(guilds);
+    writeGuildCache(inGuild);
+    return inGuild;
   }
   return false;
 }
@@ -257,11 +281,7 @@ async function checkDiscordSession() {
       }
       if (!discordGuildsCache && session.provider_token) {
         discordGuildsCache = await fetchDiscordGuilds(session.provider_token);
-        if (isInGuild(discordGuildsCache)) {
-          localStorage.setItem(GUILD_CACHE_KEY, 'true');
-        } else {
-          localStorage.removeItem(GUILD_CACHE_KEY);
-        }
+        writeGuildCache(isInGuild(discordGuildsCache));
       }
     } else {
       loginWrap.classList.remove('hidden');
@@ -308,6 +328,8 @@ window.discordIntegration = {
   requireLogin,
   requireGuildMembership,
   checkGuildMembership,
+  checkGuildMembershipForced: () => checkGuildMembership(true),
+  clearGuildCache: () => { try { localStorage.removeItem(GUILD_CACHE_KEY); } catch (_) {} },
   setupDiscordAuth,
   setupUserDropdown,
   checkDiscordSession,

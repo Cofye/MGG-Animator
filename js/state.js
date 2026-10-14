@@ -141,15 +141,22 @@ function loadPersistedDebugState() {
 }
 
 function savePersistedDebugState() {
+  const prevRaw = localStorage.getItem(DEBUG_STATE_KEY);
+  let prev = {};
+  try { prev = prevRaw ? JSON.parse(prevRaw) : {}; } catch (_) { prev = {}; }
+
+  const preserveGuildFlags = !currentUserInGuild;
+
   const data = {
-    showRivalEnabled,
-    multipleRivalsEnabled,
-    showHiddenMutants,
-    showHiddenBg,
-    backgroundFromEventEnabled,
-    effectsEnabled: window.fxManager.isEffectsEnabled(),
-    lightsEnabled: typeof window.fxManager.isLightsEnabled === "function"
-      ? window.fxManager.isLightsEnabled() : true,
+    showRivalEnabled: preserveGuildFlags ? prev.showRivalEnabled : showRivalEnabled,
+    multipleRivalsEnabled: preserveGuildFlags ? prev.multipleRivalsEnabled : multipleRivalsEnabled,
+    showHiddenMutants: preserveGuildFlags ? prev.showHiddenMutants : showHiddenMutants,
+    showHiddenBg: preserveGuildFlags ? prev.showHiddenBg : showHiddenBg,
+    backgroundFromEventEnabled: preserveGuildFlags ? prev.backgroundFromEventEnabled : backgroundFromEventEnabled,
+    effectsEnabled: preserveGuildFlags ? prev.effectsEnabled : window.fxManager.isEffectsEnabled(),
+    lightsEnabled: preserveGuildFlags
+      ? prev.lightsEnabled
+      : (typeof window.fxManager.isLightsEnabled === "function" ? window.fxManager.isLightsEnabled() : true),
     framesEnabled: window.sceneRenderer.isFrameCounterEnabled(),
     boundsEnabled: window.animationEngine.getShowBounds(),
     boundsColor: window.animationEngine.getBoundsColor(),

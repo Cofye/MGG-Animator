@@ -95,7 +95,7 @@ async function loadAccessRules() {
   }
 }
 
-async function refreshAccessState() {
+async function refreshAccessState(force = false) {
   currentUserExempt = false;
   currentUserInGuild = false;
   const session = await window.discordIntegration.getSession();
@@ -106,7 +106,9 @@ async function refreshAccessState() {
     currentUserInGuild = true;
     return;
   }
-  currentUserInGuild = await window.discordIntegration.checkGuildMembership();
+  currentUserInGuild = force
+    ? await window.discordIntegration.checkGuildMembershipForced()
+    : await window.discordIntegration.checkGuildMembership();
 }
 
 function canViewMutant(mutantValue) {
@@ -348,6 +350,7 @@ function initEventListeners() {
   window.discordIntegration.onAuthChanged(async () => {
     await refreshAccessState();
     reRenderOpenLists();
+    if (typeof refreshDebugControls === "function") refreshDebugControls();
   });
   window.addEventListener("hashchange", () => { applyHashMutant(); });
   if (window.mutantLoader && typeof window.mutantLoader.subscribeState === "function") {
@@ -367,6 +370,25 @@ function initEventListeners() {
       updateTimelineBar();
     });
   }
+  let revalidating = false;
+  const revalidateAccess = async () => {
+    if (revalidating) return;
+    revalidating = true;
+    try {
+      const session = await window.discordIntegration.getSession();
+      if (!session) return;
+      await refreshAccessState(true);
+      reRenderOpenLists();
+      if (typeof refreshDebugControls === "function") refreshDebugControls();
+      window.sceneRenderer.renderAll();
+    } finally {
+      revalidating = false;
+    }
+  };
+  window.addEventListener("focus", revalidateAccess);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) revalidateAccess();
+  });
 }
 
 function showStatic() { coverContainer.classList.remove("hidden"); clickBlocker.classList.remove("hidden"); }

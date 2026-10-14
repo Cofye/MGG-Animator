@@ -177,3 +177,39 @@ async function setupDebugControls() {
   });
   if (backgroundFromEventEnabled) applyEventBackground();
 }
+
+function refreshDebugControls() {
+  const btnShowRival = document.getElementById("btnShowRival");
+  const btnMultiple = document.getElementById("btnMultiple");
+  const btnEffects = document.getElementById("btnEffects");
+  const btnLights = document.getElementById("btnLights");
+  const btnHiddenMutants = document.getElementById("btnHiddenMutants");
+  const btnHiddenBg = document.getElementById("btnHiddenBg");
+  const btnChangeBg = document.getElementById("btnChangeBg");
+  if (!currentUserInGuild) {
+    showRivalEnabled = true;
+    multipleRivalsEnabled = true;
+    showHiddenMutants = false;
+    showHiddenBg = false;
+    backgroundFromEventEnabled = false;
+    window.fxManager.setEffectsEnabled(true);
+    if (typeof window.fxManager.setLightsEnabled === "function") {
+      window.fxManager.setLightsEnabled(true);
+    }
+    window.sceneRenderer.setMultipleRivalsEnabled(true);
+    applyEventBackground();
+    const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
+    applyRivalVisibility(anim);
+    reRenderOpenLists();
+    window.sceneRenderer.renderAll();
+  }
+  if (btnShowRival) updateToggleIcon(btnShowRival, showRivalEnabled);
+  if (btnMultiple) updateToggleIcon(btnMultiple, multipleRivalsEnabled);
+  if (btnEffects) updateToggleIcon(btnEffects, window.fxManager.isEffectsEnabled());
+  if (btnLights && typeof window.fxManager.isLightsEnabled === "function") {
+    updateToggleIcon(btnLights, window.fxManager.isLightsEnabled());
+  }
+  if (btnHiddenMutants) updateToggleIcon(btnHiddenMutants, showHiddenMutants);
+  if (btnHiddenBg) updateToggleIcon(btnHiddenBg, showHiddenBg);
+  if (btnChangeBg) updateToggleIcon(btnChangeBg, backgroundFromEventEnabled);
+}
