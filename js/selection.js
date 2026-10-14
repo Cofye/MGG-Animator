@@ -60,7 +60,10 @@ async function selectCharacter(context, mutant) {
   icon.src = mutant.image;
   text.textContent = mutant.name;
   selectedValues[context] = mutant.value;
-  if (context === "mutant") updateStatsButton(mutant.value);
+  if (context === "mutant") {
+    updateStatsButton(mutant.value);
+    updateHashForMutant(mutant.value);
+  }
   closeCharacterList();
   if (context === "mutant") {
     await loadMutantData(mutant.value);
@@ -500,6 +503,14 @@ function getHashMutantValue() {
   } catch (_) {
     return m[1];
   }
+}
+
+function updateHashForMutant(mutantValue) {
+  if (!mutantValue) return;
+  const stripped = String(mutantValue).replace(/^specimen_/i, "");
+  const desired = `#mutant=${stripped}`;
+  if (window.location.hash === desired) return;
+  history.replaceState(null, "", desired);
 }
 
 function findMutantByValue(value) {
