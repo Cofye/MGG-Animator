@@ -404,56 +404,6 @@ disabled-pt;Desativado
 disabled-ru;Выключено
 disabled-tr;Devre dışı
 
-pause-de;Pause
-pause-en;Pause
-pause-es;Pausar
-pause-fr;Pause
-pause-it;Pausa
-pause-nl;Pauze
-pause-pt;Pausar
-pause-ru;Пауза
-pause-tr;Duraklat
-
-resume-de;Fortsetzen
-resume-en;Resume
-resume-es;Reanudar
-resume-fr;Reprendre
-resume-it;Riprendi
-resume-nl;Hervatten
-resume-pt;Retomar
-resume-ru;Продолжить
-resume-tr;Sürdür
-
-reload-de;Neustart
-reload-en;Restart
-reload-es;Reiniciar
-reload-fr;Redémarrer
-reload-it;Riavvia
-reload-nl;Herstarten
-reload-pt;Reiniciar
-reload-ru;Перезапустить
-reload-tr;Yeniden başlat
-
-loop-de;Schleife
-loop-en;Loop
-loop-es;Bucle
-loop-fr;Boucle
-loop-it;Ciclo
-loop-nl;Lus
-loop-pt;Loop
-loop-ru;Цикл
-loop-tr;Döngü
-
-sound-de;Ton
-sound-en;Sound
-sound-es;Sonido
-sound-fr;Son
-sound-it;Suono
-sound-nl;Geluid
-sound-pt;Som
-sound-ru;Звук
-sound-tr;Ses
-
 transparent-de;Transparent
 transparent-en;Transparent
 transparent-es;Transparente
@@ -474,15 +424,15 @@ frame-pt;Ver frames
 frame-ru;Показать кадры
 frame-tr;Kareleri göster
 
-bounding-de;Begrenzungsrahmen
-bounding-en;Bounding box
-bounding-es;Caja delimitadora
-bounding-fr;Boîte englobante
-bounding-it;Riquadro di delimitazione
-bounding-nl;Kader
-bounding-pt;Caixa delimitadora
-bounding-ru;Границы
-bounding-tr;Sınır kutusu
+bounds-de;Begrenzungsrahmen
+bounds-en;Bounding box
+bounds-es;Caja delimitadora
+bounds-fr;Boîte englobante
+bounds-it;Riquadro di delimitazione
+bounds-nl;Kader
+bounds-pt;Caixa delimitadora
+bounds-ru;Границы
+bounds-tr;Sınır kutusu
 
 show_rival-de;Rivalen anzeigen
 show_rival-en;Show Rival
@@ -562,7 +512,150 @@ change_bg-it;Sfondo dinamico
 change_bg-nl;Dynamische achtergrond
 change_bg-pt;Fundo dinâmico
 change_bg-ru;Динамический фон
-change_bg-tr;Dinamik Arka Plan
+change_bg-tr;Dinamik Arka Plans
+
+
+
+//TOOLTIPS
+play_tooltip-de;Pausieren/Fortsetzen
+play_tooltip-en;Pause/Resume
+play_tooltip-es;Pausar/Reanudar
+play_tooltip-fr;Pause/Reprendre
+play_tooltip-it;Pausa/Riprendi
+play_tooltip-nl;Pauzeren/Hervatten
+play_tooltip-pt;Pausar/Retomar
+play_tooltip-ru;Пауза/Продолжить
+play_tooltip-tr;Duraklat/Sürdür
+
+back_tooltip-de;1 Frame zurück
+back_tooltip-en;Go back 1 frame
+back_tooltip-es;Retroceder 1 frame
+back_tooltip-fr;Reculer d’une image
+back_tooltip-it;Indietro di 1 fotogramma
+back_tooltip-nl;1 frame terug
+back_tooltip-pt;Voltar 1 frame
+back_tooltip-ru;На 1 кадр назад
+back_tooltip-tr;1 kare geri
+
+forward_tooltip-de;1 Frame vor
+forward_tooltip-en;Advance 1 frame
+forward_tooltip-es;Avanzar 1 frame
+forward_tooltip-fr;Avancer d’une image
+forward_tooltip-it;Avanti di 1 fotogramma
+forward_tooltip-nl;1 frame vooruit
+forward_tooltip-pt;Avançar 1 frame
+forward_tooltip-ru;На 1 кадр вперёд
+forward_tooltip-tr;1 kare ileri
+
+stop_tooltip-de;Anhalten
+stop_tooltip-en;Stop
+stop_tooltip-es;Detener
+stop_tooltip-fr;Arrêter
+stop_tooltip-it;Ferma
+stop_tooltip-nl;Stoppen
+stop_tooltip-pt;Parar
+stop_tooltip-ru;Остановить
+stop_tooltip-tr;Durdur
+
+speed_tooltip-de;Geschwindigkeit
+speed_tooltip-en;Speed
+speed_tooltip-es;Velocidad
+speed_tooltip-fr;Vitesse
+speed_tooltip-it;Velocità
+speed_tooltip-nl;Snelheid
+speed_tooltip-pt;Velocidade
+speed_tooltip-ru;Скорость
+speed_tooltip-tr;Hız
+
+loop_tooltip-de;Schleife
+loop_tooltip-en;Loop
+loop_tooltip-es;Bucle
+loop_tooltip-fr;Boucle
+loop_tooltip-it;Ciclo
+loop_tooltip-nl;Herhalen
+loop_tooltip-pt;Repetição
+loop_tooltip-ru;Зацикливание
+loop_tooltip-tr;Döngü
+
+sound_tooltip-de;Lautstärke
+sound_tooltip-en;Volume
+sound_tooltip-es;Volumen
+sound_tooltip-fr;Volume
+sound_tooltip-it;Volume
+sound_tooltip-nl;Volume
+sound_tooltip-pt;Volume
+sound_tooltip-ru;Громкость
+sound_tooltip-tr;Ses seviyesi
+
+screenshot_tooltip-de;Screenshot aufnehmen
+screenshot_tooltip-en;Take screenshot
+screenshot_tooltip-es;Tomar captura
+screenshot_tooltip-fr;Prendre une capture d’écran
+screenshot_tooltip-it;Cattura schermata
+screenshot_tooltip-nl;Screenshot maken
+screenshot_tooltip-pt;Tirar captura de tela
+screenshot_tooltip-ru;Сделать скриншот
+screenshot_tooltip-tr;Ekran görüntüsü al
+
+bounds_tooltip-de;Begrenzungsrahmen der Mutantenteile und Effekte (Farbe mit der runden Schaltfläche rechts ändern)
+bounds_tooltip-en;Bounding boxes for mutant parts and effects (change the color with the circular button on the right)
+bounds_tooltip-es;Cuadros delimitadores de las partes del mutante y efectos (cambia el color con el botón circular de la derecha)
+bounds_tooltip-fr;Boîtes englobantes des parties du mutant et des effets (changer la couleur avec le bouton rond à droite)
+bounds_tooltip-it;Riquadri di delimitazione delle parti del mutante e degli effetti (cambia il colore con il pulsante rotondo a destra)
+bounds_tooltip-nl;Kaders rond mutantonderdelen en effecten (verander de kleur met de ronde knop rechts)
+bounds_tooltip-pt;Caixas delimitadoras das partes do mutante e dos efeitos (altere a cor com o botão circular à direita)
+bounds_tooltip-ru;Ограничивающие рамки частей мутанта и эффектов (изменить цвет с помощью круглой кнопки справа)
+bounds_tooltip-tr;Mutant parçalarının ve efektlerin sınırlayıcı kutuları (rengi sağdaki yuvarlak düğmeyle değiştirin)
+
+effects_tooltip-de;Angriffseffekte
+effects_tooltip-en;Attack effects
+effects_tooltip-es;Efectos de ataques
+effects_tooltip-fr;Effets des attaques
+effects_tooltip-it;Effetti degli attacchi
+effects_tooltip-nl;Aanvalseffecten
+effects_tooltip-pt;Efeitos de ataque
+effects_tooltip-ru;Эффекты атак
+effects_tooltip-tr;Saldırı efektleri
+
+lights_tooltip-de;Beleuchtungseffekte von Angriffen
+lights_tooltip-en;Attack lighting effects
+lights_tooltip-es;Efectos de iluminación de ataques
+lights_tooltip-fr;Effets d’éclairage des attaques
+lights_tooltip-it;Effetti di illuminazione degli attacchi
+lights_tooltip-nl;Belichtingseffecten van aanvallen
+lights_tooltip-pt;Efeitos de iluminação dos ataques
+lights_tooltip-ru;Эффекты освещения атак
+lights_tooltip-tr;Saldırıların aydınlatma efektleri
+
+hidden_mt_tooltip-de;Neue Mutanten und bisher unveröffentlichte Skins
+hidden_mt_tooltip-en;New mutants and unreleased skins
+hidden_mt_tooltip-es;Mutantes nuevos y skins inéditas
+hidden_mt_tooltip-fr;Nouveaux mutants et skins inédits
+hidden_mt_tooltip-it;Nuovi mutanti e skin inedite
+hidden_mt_tooltip-nl;Nieuwe mutanten en niet eerder verschenen skins
+hidden_mt_tooltip-pt;Novos mutantes e skins inéditas
+hidden_mt_tooltip-ru;Новые мутанты и ранее не выпускавшиеся скины
+hidden_mt_tooltip-tr;Yeni mutantlar ve daha önce yayımlanmamış kostümler
+
+hidden_bg_tooltip-de;Neue Hintergründe und Varianten
+hidden_bg_tooltip-en;New backgrounds and variants
+hidden_bg_tooltip-es;Fondos nuevos y variantes
+hidden_bg_tooltip-fr;Nouveaux arrière-plans et variantes
+hidden_bg_tooltip-it;Nuovi sfondi e varianti
+hidden_bg_tooltip-nl;Nieuwe achtergronden en varianten
+hidden_bg_tooltip-pt;Novos fundos e variantes
+hidden_bg_tooltip-ru;Новые фоны и варианты
+hidden_bg_tooltip-tr;Yeni arka planlar ve varyantlar
+
+change_bg_tooltip-de;Seitenhintergrund an den Arenahintergrund anpassen (im Kampagnenmodus nicht verfügbar)
+change_bg_tooltip-en;Change the page background to match the arena background (not available in Campaign mode)
+change_bg_tooltip-es;Cambiar el fondo de la página de acuerdo al fondo del escenario (no disponible para campaña)
+change_bg_tooltip-fr;Adapter l’arrière-plan de la page à celui de l’arène (indisponible en mode Campagne)
+change_bg_tooltip-it;Adattare lo sfondo della pagina a quello dell’arena (non disponibile in modalità Campagna)
+change_bg_tooltip-nl;De achtergrond van de pagina aanpassen aan die van de arena (niet beschikbaar in de campagnemodus)
+change_bg_tooltip-pt;Alterar o fundo da página para corresponder ao fundo da arena (indisponível no modo Campanha)
+change_bg_tooltip-ru;Изменять фон страницы в соответствии с фоном арены (недоступно в режиме кампании)
+change_bg_tooltip-tr;Sayfa arka planını arena arka planına göre değiştir (Kampanya modunda kullanılamaz)
 
 
 //CATEGORÍA
