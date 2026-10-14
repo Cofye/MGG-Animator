@@ -66,29 +66,40 @@ async function setupDebugControls() {
   const btnFrames = document.getElementById("btnFrames");
   const btnChangeBg = document.getElementById("btnChangeBg");
   if (!btnBounds || !btnColor || !colorPicker) return;
-  let boundsEnabled = false;
-  let currentColor = colorPicker.value || "#00ff00";
+  const persisted = loadPersistedDebugState() || {};
+  const canUseGuildToggles = currentUserInGuild;
+  if (canUseGuildToggles) {
+    if (typeof persisted.showRivalEnabled === "boolean") showRivalEnabled = persisted.showRivalEnabled;
+    if (typeof persisted.multipleRivalsEnabled === "boolean") multipleRivalsEnabled = persisted.multipleRivalsEnabled;
+    if (typeof persisted.showHiddenMutants === "boolean") showHiddenMutants = persisted.showHiddenMutants;
+    if (typeof persisted.showHiddenBg === "boolean") showHiddenBg = persisted.showHiddenBg;
+    if (typeof persisted.backgroundFromEventEnabled === "boolean") backgroundFromEventEnabled = persisted.backgroundFromEventEnabled;
+  }
+  const effectsEnabled = (canUseGuildToggles && typeof persisted.effectsEnabled === "boolean")
+    ? persisted.effectsEnabled : true;
+  const lightsEnabled = (canUseGuildToggles && typeof persisted.lightsEnabled === "boolean")
+    ? persisted.lightsEnabled : true;
+  window.fxManager.setEffectsEnabled(effectsEnabled);
+  if (typeof window.fxManager.setLightsEnabled === "function") {
+    window.fxManager.setLightsEnabled(lightsEnabled);
+  }
+  let boundsEnabled = typeof persisted.boundsEnabled === "boolean" ? persisted.boundsEnabled : false;
+  let currentColor = typeof persisted.boundsColor === "string"
+    ? persisted.boundsColor
+    : (colorPicker.value || "#00ff00");
+  let framesEnabled = typeof persisted.framesEnabled === "boolean" ? persisted.framesEnabled : false;
   window.animationEngine.setShowBounds(boundsEnabled);
   window.animationEngine.setBoundsColor(currentColor);
+  window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
   updateToggleIcon(btnBounds, boundsEnabled);
   if (btnShowRival) updateToggleIcon(btnShowRival, showRivalEnabled);
   if (btnMultiple) updateToggleIcon(btnMultiple, multipleRivalsEnabled);
-  if (btnEffects) {
-    window.fxManager.setEffectsEnabled(true);
-    updateToggleIcon(btnEffects, true);
-  }
-  if (btnLights) {
-    if (typeof window.fxManager.setLightsEnabled === "function") {
-      window.fxManager.setLightsEnabled(true);
-    }
-    updateToggleIcon(btnLights, true);
-  }
+  if (btnEffects) updateToggleIcon(btnEffects, effectsEnabled);
+  if (btnLights) updateToggleIcon(btnLights, lightsEnabled);
   if (btnHiddenMutants) updateToggleIcon(btnHiddenMutants, showHiddenMutants);
   if (btnHiddenBg) updateToggleIcon(btnHiddenBg, showHiddenBg);
   if (btnChangeBg) updateToggleIcon(btnChangeBg, backgroundFromEventEnabled);
-  let framesEnabled = false;
   if (btnFrames) updateToggleIcon(btnFrames, framesEnabled);
-  window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
   const colorImg = btnColor.querySelector("img");
   const colorTexture = await loadColorTexture();
   if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
@@ -96,12 +107,14 @@ async function setupDebugControls() {
     boundsEnabled = !boundsEnabled;
     window.animationEngine.setShowBounds(boundsEnabled);
     updateToggleIcon(btnBounds, boundsEnabled);
+    savePersistedDebugState();
   });
   bindGated(btnShowRival, () => {
     showRivalEnabled = !showRivalEnabled;
     updateToggleIcon(btnShowRival, showRivalEnabled);
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
+    savePersistedDebugState();
   });
   bindGated(btnMultiple, () => {
     multipleRivalsEnabled = !multipleRivalsEnabled;
@@ -110,12 +123,14 @@ async function setupDebugControls() {
     const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
     applyRivalVisibility(anim);
     window.sceneRenderer.renderAll();
+    savePersistedDebugState();
   });
   bindGated(btnEffects, () => {
     const next = !window.fxManager.isEffectsEnabled();
     window.fxManager.setEffectsEnabled(next);
     updateToggleIcon(btnEffects, next);
     window.sceneRenderer.renderAll();
+    savePersistedDebugState();
   });
   bindGated(btnLights, () => {
     if (typeof window.fxManager.isLightsEnabled !== "function" ||
@@ -124,21 +139,25 @@ async function setupDebugControls() {
     window.fxManager.setLightsEnabled(next);
     updateToggleIcon(btnLights, next);
     window.sceneRenderer.renderAll();
+    savePersistedDebugState();
   });
   bindGated(btnHiddenMutants, () => {
     showHiddenMutants = !showHiddenMutants;
     updateToggleIcon(btnHiddenMutants, showHiddenMutants);
     reRenderOpenLists();
+    savePersistedDebugState();
   });
   bindGated(btnHiddenBg, () => {
     showHiddenBg = !showHiddenBg;
     updateToggleIcon(btnHiddenBg, showHiddenBg);
     reRenderOpenLists();
+    savePersistedDebugState();
   });
   bindGated(btnFrames, () => {
     framesEnabled = !framesEnabled;
     window.sceneRenderer.setFrameCounterEnabled(framesEnabled);
     updateToggleIcon(btnFrames, framesEnabled);
+    savePersistedDebugState();
   });
   bindGated(btnColor, () => {
     colorPicker.value = currentColor;
@@ -148,10 +167,13 @@ async function setupDebugControls() {
     backgroundFromEventEnabled = !backgroundFromEventEnabled;
     updateToggleIcon(btnChangeBg, backgroundFromEventEnabled);
     applyEventBackground();
+    savePersistedDebugState();
   });
   colorPicker.addEventListener("input", () => {
     currentColor = colorPicker.value;
     if (colorTexture && colorImg) colorImg.src = tintTexture(colorTexture, currentColor);
     window.animationEngine.setBoundsColor(currentColor);
+    savePersistedDebugState();
   });
+  if (backgroundFromEventEnabled) applyEventBackground();
 }

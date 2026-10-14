@@ -274,10 +274,10 @@ function renderItemList() {
     items = allAnimations;
     createFn = createAnimationItem;
   } else if (itemListMode === "rivalSkin") {
-    items = allRivalSkins;
+    items = allRivalSkins.filter(s => canViewSkin(selectedValues.rival, s.value || ""));
     createFn = createRivalSkinItem;
   } else {
-    items = allSkins;
+    items = allSkins.filter(s => canViewSkin(selectedValues.mutant, s.value || ""));
     createFn = createSkinItem;
   }
   items.forEach(item => state.container.appendChild(createFn(item)));

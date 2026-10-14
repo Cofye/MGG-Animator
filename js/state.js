@@ -70,6 +70,7 @@ const playerButtons = [
   btnPlay, btnBack, btnForward, btnStop,
   btnSpeed, btnLoop, btnSound, btnScreenshot
 ];
+const DEBUG_STATE_KEY = "debugState";
 
 let deathShaderReadyPromise = null;
 let availableLangs = [];
@@ -130,3 +131,28 @@ let thumbnailQueueRunning = false;
 let currentBgLayer = 0;
 let fullscreenLocked = false;
 let fullscreenLockTimer = null;
+
+function loadPersistedDebugState() {
+  try {
+    const raw = localStorage.getItem(DEBUG_STATE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (_) { return null; }
+}
+
+function savePersistedDebugState() {
+  const data = {
+    showRivalEnabled,
+    multipleRivalsEnabled,
+    showHiddenMutants,
+    showHiddenBg,
+    backgroundFromEventEnabled,
+    effectsEnabled: window.fxManager.isEffectsEnabled(),
+    lightsEnabled: typeof window.fxManager.isLightsEnabled === "function"
+      ? window.fxManager.isLightsEnabled() : true,
+    framesEnabled: window.sceneRenderer.isFrameCounterEnabled(),
+    boundsEnabled: window.animationEngine.getShowBounds(),
+    boundsColor: window.animationEngine.getBoundsColor(),
+  };
+  try { localStorage.setItem(DEBUG_STATE_KEY, JSON.stringify(data)); } catch (_) {}
+}

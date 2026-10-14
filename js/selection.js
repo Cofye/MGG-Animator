@@ -69,7 +69,8 @@ async function selectCharacter(context, mutant) {
     await loadMutantData(mutant.value);
     const previousSkinValue = selectedSkin ? (selectedSkin.value || "") : null;
     const previousAnimValue = selectedAnimation ? (selectedAnimation.value || "") : null;
-    selectedSkin = allSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allSkins[0] || null;
+    const availableSkins = allSkins.filter(s => canViewSkin(mutant.value, s.value || ""));
+    selectedSkin = availableSkins.find(s => (s.value || "") === (previousSkinValue || "")) || availableSkins[0] || null;
     selectedAnimation = allAnimations.find(a => (a.value || "") === (previousAnimValue || "")) || allAnimations[0] || null;
     updateSkinButton();
     updateAnimationButton();
@@ -150,8 +151,8 @@ async function selectCharacter(context, mutant) {
     try {
       await loadRivalData(mutant.value);
       const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || null) : null;
-      selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || allRivalSkins[0] || null;
-      updateRivalSkinButton();
+      const availableRivalSkins = allRivalSkins.filter(s => canViewSkin(mutant.value, s.value || ""));
+      selectedRivalSkin = availableRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || availableRivalSkins[0] || null;      updateRivalSkinButton();
       await loadRivalStand(mutant.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
     } finally {
       window.mutantLoader.popLoadingHold();
@@ -261,7 +262,11 @@ async function setDefaultRival(mutantValue) {
   if (text) text.textContent = found.name;
   selectedValues.rival = found.value;
   await loadRivalData(found.value);
-  selectedRivalSkin = allRivalSkins[0] || null;
+  const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || "") : null;
+  const availableRivalSkins = allRivalSkins.filter(s => canViewSkin(found.value, s.value || ""));
+  selectedRivalSkin = availableRivalSkins.find(s => (s.value || "") === (previousSkinValue || ""))
+    || availableRivalSkins[0]
+    || null;
   updateRivalSkinButton();
   await loadRivalStand(found.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
   const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
@@ -317,6 +322,8 @@ async function updateRivalSkinButton() {
 }
 
 async function selectSkin(skin) {
+  const skinValue = skin ? (skin.value || "") : "";
+  if (!canViewSkin(selectedValues.mutant, skinValue)) return;
   selectedSkin = skin;
   updateSkinButton();
   window.fxManager.setFxSkin(skin ? (skin.value || "") : "");
@@ -467,6 +474,8 @@ async function selectAnimation(anim) {
 }
 
 async function selectRivalSkin(skin) {
+  const skinValue = skin ? (skin.value || "") : "";
+  if (!canViewSkin(selectedValues.rival, skinValue)) return;
   selectedRivalSkin = skin;
   updateRivalSkinButton();
   closeItemList(); closeCharacterList();

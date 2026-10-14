@@ -65,12 +65,16 @@ function getDiscordUserId(session) {
   return meta.provider_id || meta.sub || session.user.id || null;
 }
 
+function normalizeAccessKey(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
 async function loadAccessRules() {
   try {
     const res = await fetch(`data/access.json?nocache=${Date.now()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    const normalizeList = (arr) => new Set((arr || []).map(s => String(s).toLowerCase()));
+    const normalizeList = (arr) => new Set((arr || []).map(normalizeAccessKey).filter(Boolean));
     accessRules.exemptUserIds = new Set(
       (data.exemptUsers || data.exemptUserIds || [])
         .map(u => typeof u === "string" ? u : String(u.id))
@@ -107,16 +111,23 @@ async function refreshAccessState() {
 
 function canViewMutant(mutantValue) {
   if (!mutantValue) return true;
-  const key = String(mutantValue).toLowerCase();
+  const key = normalizeAccessKey(mutantValue);
   const isMembersOnly = accessRules.membersOnly.has(key);
   const isBlockedForEveryone = accessRules.blockedForEveryone.has(key);
-  if (isMembersOnly) {
-    return currentUserInGuild || showHiddenMutants;
-  }
-  if (isBlockedForEveryone) {
-    return currentUserExempt && showHiddenMutants;
-  }
+  if (isMembersOnly) return currentUserInGuild || showHiddenMutants;
+  if (isBlockedForEveryone) return currentUserExempt && showHiddenMutants;
   return true;
+}
+
+function canViewSkin(mutantValue, skinValue) {
+  if (!mutantValue) return true;
+  if (!skinValue) return canViewMutant(mutantValue);
+  const composite = normalizeAccessKey(mutantValue + "_" + skinValue);
+  const isMembersOnly = accessRules.membersOnly.has(composite);
+  const isBlockedForEveryone = accessRules.blockedForEveryone.has(composite);
+  if (isMembersOnly) return currentUserInGuild || showHiddenMutants;
+  if (isBlockedForEveryone) return currentUserExempt && showHiddenMutants;
+  return canViewMutant(mutantValue);
 }
 
 function canViewBackground(bgValue) {
@@ -239,9 +250,9 @@ async function reloadMutantNames() {
     await loadMutantData(selectedValues.mutant);
     const skinVal = selectedSkin ? selectedSkin.value : null;
     const animVal = selectedAnimation ? selectedAnimation.value : null;
-    selectedSkin = allSkins.find(s => (s.value || "") === (skinVal || "")) || allSkins[0] || null;
-    selectedAnimation = allAnimations.find(a => (a.value || "") === (animVal || "")) || allAnimations[0] || null;
-    updateSkinButton();
+    const availableSkins = allSkins.filter(s => canViewSkin(selectedValues.mutant, s.value || ""));
+    selectedSkin = availableSkins.find(s => (s.value || "") === (skinVal || "")) || availableSkins[0] || null;
+    selectedAnimation = allAnimations.find(a => (a.value || "") === (animVal || "")) || allAnimations[0] || null;    updateSkinButton();
     updateAnimationButton();
   }
   if (selectedValues.rival) {

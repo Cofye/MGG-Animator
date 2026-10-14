@@ -1,14 +1,29 @@
 const soundBufferCache = new Map();
-const SOUND_LEVEL_GAINS = [0, 1/9, 4/9, 1];
 const activeSources = new Set();
 const MASTER_GAIN = 0.7;
+const SOUND_LEVEL_GAINS = [0, 1/9, 4/9, 1];
+const SOUND_LEVEL_KEY = "soundLevel";
 
 let audioCtx = null;
 let masterGain = null;
-let soundLevel = 3;
+let playbackRate = 1;
+let soundLevel = loadPersistedSoundLevel();
 let soundDirection = -1;
 let soundVolume = SOUND_LEVEL_GAINS[soundLevel];
-let playbackRate = 1;
+
+function loadPersistedSoundLevel() {
+  try {
+    const raw = localStorage.getItem(SOUND_LEVEL_KEY);
+    if (raw === null) return 3;
+    const n = parseInt(raw, 10);
+    if (Number.isFinite(n) && n >= 0 && n <= 3) return n;
+  } catch (_) {}
+  return 3;
+}
+
+function persistSoundLevel() {
+  try { localStorage.setItem(SOUND_LEVEL_KEY, String(soundLevel)); } catch (_) {}
+}
 
 function ensureAudioCtx() {
   if (!audioCtx) {
@@ -105,6 +120,7 @@ function cycleSoundVolume() {
   soundVolume = SOUND_LEVEL_GAINS[soundLevel];
   const ctx = ensureAudioCtx();
   if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
+  persistSoundLevel();
   return soundVolume;
 }
 
@@ -123,6 +139,21 @@ function setPlaybackRate(r) {
   const n = Number(r);
   playbackRate = Number.isFinite(n) && n > 0 ? n : 1;
   for (const src of activeSources) { try { src.playbackRate.value = playbackRate; } catch (_) {} }
+}
+
+function setSoundVolume(v) {
+  const n = Number(v);
+  soundVolume = Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 1;
+  let bestLevel = 0;
+  let bestDist = Infinity;
+  for (let i = 0; i < SOUND_LEVEL_GAINS.length; i++) {
+    const d = Math.abs(SOUND_LEVEL_GAINS[i] - soundVolume);
+    if (d < bestDist) { bestDist = d; bestLevel = i; }
+  }
+  soundLevel = bestLevel;
+  const ctx = ensureAudioCtx();
+  if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
+  persistSoundLevel();
 }
 
 function setSoundEnabled(v) { setSoundVolume(v ? 1 : 0); }

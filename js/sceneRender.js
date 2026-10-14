@@ -24,6 +24,7 @@ let midLayerOpacity = 0.25;
 let midLayerWidthRatio = 1.0;
 let includeMidLayer = false;
 let characterVisible = true;
+let frameCounterEnabled = true;
 
 function setMultipleRivalsEnabled(v) {
   multipleRivalsEnabled = !!v;
@@ -60,10 +61,13 @@ function setCharacterVisible(v) {
   renderAll();
 }
 
-let frameCounterEnabled = true;
 function setFrameCounterEnabled(v) {
   frameCounterEnabled = !!v;
   renderAll();
+}
+
+function isFrameCounterEnabled() {
+  return frameCounterEnabled;
 }
 
 let deathOffscreen = null;
@@ -626,6 +630,7 @@ window.sceneRenderer = {
   getRivalCount,
   setMultipleRivalsEnabled,
   isMultipleRivalsEnabled,
+  isFrameCounterEnabled,
 };
 
 window.animationEngine.setRenderCallback(renderAll);
