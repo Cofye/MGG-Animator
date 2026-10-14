@@ -5,11 +5,11 @@ let localisationPromises = {};
 function sanitizeText(text) {
   if (text == null) return "";
   return String(text)
-    .replace(/\\n/g, "")
     .replace(/\\r/g, "")
     .replace(/\\t/g, "")
-    .replace(/[\r\n\t]+/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/\\n/g, "\n")
+    .replace(/[ \t]+/g, " ")
+    .replace(/ *\n */g, "\n")
     .trim();
 }
 

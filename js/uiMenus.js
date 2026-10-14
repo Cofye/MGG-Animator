@@ -411,72 +411,282 @@ function loadWatermark() {
   });
 }
 
+const SCREENSHOT_PREVIEW_WIDTH = 480;
+const SCREENSHOT_SD_SCALE = 1;
+const SCREENSHOT_UHD_SCALE = 2;
+
+let screenshotAssets = null;
+let screenshotLocked = false;
+let screenshotWasPaused = false;
+
+const SCREENSHOT_BLOCK_DEFS = [
+  {
+    container: "screenshotLeft",
+    tier: "guest",
+    preview: "sdWithMark",
+    imgClass: "imgHd",
+    langKey: "hd_text",
+    btnId: "btnDownloadSdMark",
+    btnLang: "Download",
+    action: "download",
+    assetKey: "sdWithMark",
+    fileSuffix: "_SD",
+  },
+  {
+    container: "screenshotLeft",
+    tier: "user,member",
+    preview: "sdNoMark",
+    imgClass: "imgHd",
+    langKey: "hd2_text",
+    btnId: "btnDownloadSdNoMark",
+    btnLang: "Download",
+    action: "download",
+    assetKey: "sdNoMark",
+    fileSuffix: "_SD",
+  },
+  {
+    container: "screenshotRight",
+    tier: "guest",
+    preview: "sdNoMark",
+    imgClass: "imgHd",
+    langKey: "hd2_text",
+    btnId: "btnJoinSs",
+    btnLang: "join_dc",
+    action: "join",
+  },
+  {
+    container: "screenshotRight",
+    tier: "user",
+    preview: "uhdNoMark",
+    imgClass: "img4k",
+    langKey: "4k_text",
+    btnId: "btnExclusiveSs",
+    btnLang: "signin_dc",
+    action: "exclusive",
+  },
+  {
+    container: "screenshotRight",
+    tier: "member",
+    preview: "uhdNoMark",
+    imgClass: "img4k",
+    langKey: "4k_text",
+    btnId: "btnDownload4k",
+    btnLang: "Download",
+    action: "download",
+    assetKey: "uhdNoMark",
+    fileSuffix: "_4K",
+  },
+];
+
+let screenshotBlocks = [];
+
+function getScreenshotTier(session, inGuild) {
+  if (!session) return "guest";
+  if (!inGuild) return "user";
+  return "member";
+}
+
+function downscaleCanvasTo(src, targetW) {
+  const targetH = Math.round(targetW * src.height / src.width);
+  const dst = document.createElement("canvas");
+  dst.width = targetW;
+  dst.height = targetH;
+  const dctx = dst.getContext("2d");
+  dctx.imageSmoothingEnabled = true;
+  dctx.imageSmoothingQuality = "high";
+  dctx.drawImage(src, 0, 0, targetW, targetH);
+  return dst;
+}
+
+async function renderScreenshotAtScale(scale, includeMidLayer, includeCornerWatermark) {
+  const canvas = document.getElementById("mutantCanvas");
+  const origW = canvas.width;
+  const origH = canvas.height;
+  window.sceneRenderer.resizeCanvasTo(Math.round(origW * scale), Math.round(origH * scale));
+  const out = document.createElement("canvas");
+  out.width = canvas.width;
+  out.height = canvas.height;
+  const octx = out.getContext("2d");
+  octx.fillStyle = "#000";
+  octx.fillRect(0, 0, out.width, out.height);
+  if (includeMidLayer) {
+    window.sceneRenderer.setIncludeMidLayer(true);
+    window.sceneRenderer.renderAll();
+  }
+  octx.drawImage(canvas, 0, 0);
+  if (includeMidLayer) {
+    window.sceneRenderer.setIncludeMidLayer(false);
+    window.sceneRenderer.renderAll();
+  }
+  if (includeCornerWatermark) {
+    const logo = watermarkImage || await loadWatermark();
+    if (logo && logo.complete && logo.naturalWidth > 0) {
+      const targetW = Math.round(out.width * 0.2);
+      const targetH = Math.round(logo.naturalHeight * (targetW / logo.naturalWidth));
+      const margin = Math.round(out.width * 0.02);
+      octx.drawImage(logo, out.width - targetW - margin, out.height - targetH - margin, targetW, targetH);
+    }
+  }
+  window.sceneRenderer.resizeCanvasTo(origW, origH);
+  return out;
+}
+
+async function generateScreenshotAssets() {
+  const canvas = document.getElementById("mutantCanvas");
+  const prevVis = canvas.style.visibility;
+  canvas.style.visibility = "hidden";
+  try {
+    const session = await window.discordIntegration.getSession();
+    const includeCorner = !currentUserExempt;
+    const includeMidLayer = !session && !currentUserExempt;
+    const sdMark = await renderScreenshotAtScale(SCREENSHOT_SD_SCALE, includeMidLayer, includeCorner);
+    const sdNoMark = await renderScreenshotAtScale(SCREENSHOT_SD_SCALE, false, includeCorner);
+    const uhdNoMark = await renderScreenshotAtScale(SCREENSHOT_UHD_SCALE, false, includeCorner);
+    return {
+      previews: {
+        sdWithMark: downscaleCanvasTo(sdMark, SCREENSHOT_PREVIEW_WIDTH),
+        sdNoMark: downscaleCanvasTo(sdNoMark, SCREENSHOT_PREVIEW_WIDTH),
+        uhdNoMark: downscaleCanvasTo(uhdNoMark, SCREENSHOT_PREVIEW_WIDTH),
+      },
+      originals: {
+        sdWithMark: sdMark,
+        sdNoMark: sdNoMark,
+        uhdNoMark: uhdNoMark,
+      },
+    };
+  } finally {
+    canvas.style.visibility = prevVis || "";
+  }
+}
+
+function buildScreenshotBlocks() {
+  const root = document.getElementById("screenshotLayer");
+  if (!root) return;
+  screenshotBlocks = [];
+  for (const def of SCREENSHOT_BLOCK_DEFS) {
+    const container = document.getElementById(def.container);
+    if (!container) continue;
+    const img = document.createElement("img");
+    img.className = def.imgClass;
+    img.setAttribute("data-ss-preview", def.preview);
+    img.alt = "";
+    const span = document.createElement("span");
+    span.className = "screenshotText";
+    span.setAttribute("data-lang", def.langKey);
+    const btn = document.createElement("button");
+    btn.className = "btn download";
+    btn.id = def.btnId;
+    btn.setAttribute("aria-pressed", "true");
+    const btnSpan = document.createElement("span");
+    btnSpan.className = "textBtn";
+    btnSpan.setAttribute("data-lang", def.btnLang);
+    btn.appendChild(btnSpan);
+    container.appendChild(img);
+    container.appendChild(span);
+    container.appendChild(btn);
+    const block = { def, img, span, btn };
+    screenshotBlocks.push(block);
+  }
+  applyLanguage();
+}
+
+function populateScreenshotPreviews(previews) {
+  for (const block of screenshotBlocks) {
+    const canvas = previews[block.def.preview];
+    if (!canvas) { block.img.removeAttribute("src"); continue; }
+    block.img.src = canvas.toDataURL("image/jpeg", 0.7);
+  }
+}
+
+function applyScreenshotTier(tier) {
+  for (const block of screenshotBlocks) {
+    const tiers = block.def.tier.split(",").map(s => s.trim());
+    const show = tiers.includes(tier);
+    const display = show ? "" : "none";
+    block.img.style.display = display;
+    block.span.style.display = display;
+    block.btn.style.display = display;
+  }
+}
+
+async function downloadScreenshotCanvas(canvas, baseName, suffix, ext) {
+  const filename = getVersionedFilename(baseName + suffix, ext);
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", SCREENSHOT_JPEG_QUALITY));
+  if (!blob) return;
+  downloadBlob(blob, filename);
+}
+
+function screenshotBaseName() {
+  const found = allMutants.find(m => m.value === selectedValues.mutant);
+  let base = (found && found.name) ? found.name : selectedValues.mutant;
+  base = base.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
+  return base || "screenshot";
+}
+
 function setupScreenshot() {
   const canvas = document.getElementById("mutantCanvas");
-  if (!btnScreenshot || !canvas) return;
+  const layer = document.getElementById("screenshotLayer");
+  const closeBtn = document.getElementById("screenshotClose");
+  if (!btnScreenshot || !canvas || !layer) return;
   canvas.addEventListener("contextmenu", (e) => e.preventDefault());
   loadWatermark();
   loadMidWatermark();
-  btnScreenshot.addEventListener("click", async () => {
-    if (!selectedValues.mutant) return;
-    let baseName = "screenshot";
-    const found = allMutants.find(m => m.value === selectedValues.mutant);
-    baseName = (found && found.name) ? found.name : selectedValues.mutant;
-    baseName = baseName.replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ").trim();
-    if (!baseName) baseName = "screenshot";
-    const filename = getVersionedFilename(baseName, ".jpg");
-    const SCALE = 3;
-    const origW = canvas.width;
-    const origH = canvas.height;
-    const wasPaused = window.animationEngine.isPaused();
+  buildScreenshotBlocks();
+  for (const block of screenshotBlocks) {
+    block.btn.addEventListener("click", () => {
+      const action = block.def.action;
+      if (action === "join") {
+        if (typeof openJoinLayer === "function") openJoinLayer();
+        return;
+      }
+      if (action === "exclusive") {
+        if (typeof openExclusiveLayer === "function") openExclusiveLayer();
+        return;
+      }
+      if (action === "download") {
+        if (!screenshotAssets) return;
+        const asset = screenshotAssets.originals[block.def.assetKey];
+        if (!asset) return;
+        downloadScreenshotCanvas(asset, screenshotBaseName(), block.def.fileSuffix, ".jpg");
+      }
+    });
+  }
+  async function openModal() {
+    if (screenshotLocked || !selectedValues.mutant) return;
+    screenshotLocked = true;
+    btnScreenshot.disabled = true;
+    screenshotWasPaused = window.animationEngine.isPaused();
     window.animationEngine.pause();
-    const prevVisibility = canvas.style.visibility;
-    canvas.style.visibility = "hidden";
-    let blob = null;
+    if (!screenshotWasPaused) await window.soundManager.pauseAllSounds();
+    scaleContainerLayer.classList.remove("hidden");
+    layer.classList.remove("hidden");
+    showStatic();
     try {
-      window.sceneRenderer.resizeCanvasTo(origW * SCALE, origH * SCALE);
-      const out = document.createElement("canvas");
-      out.width = canvas.width;
-      out.height = canvas.height;
-      const octx = out.getContext("2d");
-      octx.fillStyle = "#000";
-      octx.fillRect(0, 0, out.width, out.height);
       const session = await window.discordIntegration.getSession();
-      const showMidLayer = !session;
-      if (showMidLayer) {
-        window.sceneRenderer.setIncludeMidLayer(true);
-        window.sceneRenderer.renderAll();
-      }
-      octx.drawImage(canvas, 0, 0);
-      if (showMidLayer) {
-        window.sceneRenderer.setIncludeMidLayer(false);
-        window.sceneRenderer.renderAll();
-      }
-      if (!currentUserExempt) {
-        const logo = watermarkImage || await loadWatermark();
-        if (logo && logo.complete && logo.naturalWidth > 0) {
-          const targetW = Math.round(out.width * 0.2);
-          const targetH = Math.round(logo.naturalHeight * (targetW / logo.naturalWidth));
-          const margin = Math.round(out.width * 0.02);
-          octx.drawImage(
-            logo,
-            out.width - targetW - margin,
-            out.height - targetH - margin,
-            targetW, targetH
-          );
-        }
-      }
-      blob = await new Promise(resolve =>
-        out.toBlob(resolve, "image/jpeg", SCREENSHOT_JPEG_QUALITY)
-      );
+      const tier = getScreenshotTier(session, currentUserInGuild);
+      applyScreenshotTier(tier);
+      screenshotAssets = await generateScreenshotAssets();
+      populateScreenshotPreviews(screenshotAssets.previews);
+    } catch (e) {
+      console.error("screenshot generation failed", e);
     } finally {
-      window.sceneRenderer.resizeCanvasTo(origW, origH);
-      canvas.style.visibility = prevVisibility || "";
-      if (!wasPaused) window.animationEngine.play();
+      screenshotLocked = false;
+      btnScreenshot.disabled = false;
     }
-    if (!blob) return;
-    downloadBlob(blob, filename);
-  });
+  }
+  async function closeModal() {
+    if (layer.classList.contains("hidden")) return;
+    layer.classList.add("hidden");
+    scaleContainerLayer.classList.add("hidden");
+    hideStatic();
+    screenshotAssets = null;
+    if (!screenshotWasPaused) {
+      await window.soundManager.resumeAllSounds();
+      window.animationEngine.play();
+    }
+  }
+  btnScreenshot.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
 }
 
 function downloadBlob(blob, filename) {

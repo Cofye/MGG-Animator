@@ -128,7 +128,7 @@ body {
   cursor: pointer;
   position: absolute;
   display: flex;
-  justify-content:left;
+  justify-content: left;
   align-items: center;
   transition: filter 0.2s;
 }
@@ -850,14 +850,14 @@ body {
 }
 
 /* MENU INFO */
-#infoLayer {
+.infoLayer {
   top: 162.5px;
   left: 390px;
   position: absolute;
   z-index: 6;
   filter: drop-shadow(0 0 10px #000);
 }
-#infoClose {
+.infoClose {
   width: 109px;
   height: 90px;
   top: -21px;
@@ -1712,4 +1712,68 @@ body {
 }
 #btn6 {
   top: 570px;
+}
+
+.screenshotContainer {
+  height: 500px;
+  width: 450px;
+  position: absolute;
+  top: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.screenshotLeft {
+  left: 80px;
+}
+.screenshotRight {
+  right: 80px;
+}
+
+.imgHd {
+  position: absolute;
+  width: 337.5px;
+  height: 190px;
+  top: 63px;
+}
+.img4k {
+  position: absolute;
+  width: 450px;
+  height: 253px;
+}
+.screenshotText {
+  position: absolute;
+  top: 300px;
+  text-align: center;
+  font-family: 'Bahnschrift', sans-serif;
+  font-stretch: semi-condensed;
+  font-weight: 700;
+  transform: scale(2.34, 3.25);
+  display: block;
+  letter-spacing: -0.5px;
+  color: #000;
+  transform-origin: center;
+  white-space: pre-line;
+}
+.download {
+  position: absolute;
+  width: 230px;
+  height: 70px;
+  background-image: url("../images/ui/btn_purple.png");
+  bottom: 0px;
+}
+#btnJoinSs {
+  position: absolute;
+  width: 350px;
+  height: 70px;
+  background-image: url("../images/ui/btn_discord.png");
+  bottom: 0px;
+}
+#btnExclusiveSs {
+  position: absolute;
+  width: 350px;
+  height: 70px;
+  background-image: url("../images/ui/btn_discord.png");
+  bottom: 0px;
 }

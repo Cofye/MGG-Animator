@@ -36,7 +36,7 @@ function ensureAudioCtx() {
       masterGain.connect(audioCtx.destination);
     } catch (_) { audioCtx = null; return null; }
   }
-  if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+  if (audioCtx.state === "suspended" && !soundsPaused) audioCtx.resume().catch(() => {});
   return audioCtx;
 }
 
@@ -71,7 +71,8 @@ async function preloadSounds(names) {
   ]);
 }
 
-function playBuffer(buffer, name, offsetSeconds = 0) {
+function playBuffer(buffer, name, offsetSeconds = 0, when = 0) {
+  if (soundsPaused) return;
   const ctx = ensureAudioCtx();
   if (!ctx) return;
   const source = ctx.createBufferSource();
@@ -79,25 +80,27 @@ function playBuffer(buffer, name, offsetSeconds = 0) {
   source.playbackRate.value = playbackRate;
   source.connect(masterGain);
   try {
-    source.start(0, offsetSeconds);
-    source._soundInfo = { name, buffer, startedAt: ctx.currentTime - offsetSeconds / playbackRate };
+    const startAt = when > 0 ? Math.max(when, ctx.currentTime) : 0;
+    source.start(startAt, offsetSeconds);
+    const scheduledAt = startAt > 0 ? startAt : ctx.currentTime;
+    source._soundInfo = { name, buffer, startedAt: scheduledAt - offsetSeconds / playbackRate };
     activeSources.add(source);
     source.onended = () => activeSources.delete(source);
   } catch (_) {}
 }
 
-function playSound(name, offsetSeconds = 0) {
+function playSound(name, offsetSeconds = 0, when = 0) {
   if (!name) return;
   const cached = soundBufferCache.get(name);
   if (cached instanceof Promise) {
-    cached.then(buffer => { if (buffer) playBuffer(buffer, name, offsetSeconds); });
+    cached.then(buffer => { if (buffer) playBuffer(buffer, name, offsetSeconds, when); });
     return;
   }
   if (!cached) return;
-  playBuffer(cached, name, offsetSeconds);
+  playBuffer(cached, name, offsetSeconds, when);
 }
 
-function playSoundAtOffset(name, offsetSeconds) { playSound(name, offsetSeconds); }
+function playSoundAtOffset(name, offsetSeconds, when = 0) { playSound(name, offsetSeconds, when); }
 
 function setSoundVolume(v) {
   const n = Number(v);
@@ -130,10 +133,54 @@ function getSoundBuffer(name) {
   return cached;
 }
 
+let soundsPaused = false;
+let audioNeedsRestart = false;
+let pendingSuspend = null;
+let pendingResume = null;
+
 function stopAllSounds() {
+  soundsPaused = false;
+  audioNeedsRestart = true;
+  pendingSuspend = null;
+  pendingResume = null;
+  const ctx = audioCtx;
+  if (ctx && ctx.state === "suspended") ctx.resume().catch(() => {});
   for (const src of activeSources) { try { src.stop(); } catch (_) {} }
   activeSources.clear();
 }
+
+function pauseAllSounds() {
+  soundsPaused = true;
+  audioNeedsRestart = false;
+  const ctx = audioCtx;
+  if (!ctx || ctx.state === "suspended") {
+    pendingSuspend = Promise.resolve();
+    return pendingSuspend;
+  }
+  pendingSuspend = ctx.suspend().catch(() => {});
+  return pendingSuspend;
+}
+
+function resumeAllSounds() {
+  soundsPaused = false;
+  audioNeedsRestart = false;
+  const ctx = audioCtx;
+  if (!ctx) return Promise.resolve();
+  const doResume = () => {
+    if (ctx.state === "running") return Promise.resolve();
+    pendingResume = ctx.resume().catch(() => {});
+    return pendingResume;
+  };
+  if (pendingSuspend) {
+    const s = pendingSuspend;
+    pendingSuspend = null;
+    return s.then(doResume);
+  }
+  return doResume();
+}
+
+function needsAudioRestart() { return audioNeedsRestart; }
+function clearAudioRestart() { audioNeedsRestart = false; }
 
 function setPlaybackRate(r) {
   const n = Number(r);
@@ -160,8 +207,6 @@ function setSoundEnabled(v) { setSoundVolume(v ? 1 : 0); }
 function getSoundLevel() { return soundLevel; }
 function getSoundVolume() { return soundVolume; }
 function isSoundEnabled() { return soundVolume > 0; }
-function pauseAllSounds() { stopAllSounds(); }
-function resumeAllSounds() {}
 function getPlaybackRate() { return playbackRate; }
 
 window.soundManager = {
@@ -172,4 +217,6 @@ window.soundManager = {
   getSoundLevel,
   setPlaybackRate, getPlaybackRate,
   getSoundBuffer, playSoundAtOffset,
+  needsAudioRestart, clearAudioRestart,
+  getAudioContext: () => ensureAudioCtx(),
 };

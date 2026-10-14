@@ -192,7 +192,8 @@ function playResumeSoundForTick(targetTick) {
   }
   if (!best) return;
   const elapsedTicks = targetTick - best.tick;
-  const offsetSeconds = elapsedTicks / 30;
+  const attackMult = window.animationEngine.getAttackSpeedMultiplier();
+  const offsetSeconds = elapsedTicks / (30 * attackMult);
   const buffer = window.soundManager.getSoundBuffer(best.name);
   if (!buffer) return;
   if (offsetSeconds >= buffer.duration) return;

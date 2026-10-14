@@ -74,7 +74,7 @@ function setupLoopControl() {
 }
 
 function setupPlaybackControls() {
-  btnPlay.addEventListener("click", () => {
+  btnPlay.addEventListener("click", async () => {
     const wasPaused = window.animationEngine.isPaused();
     const info = window.animationEngine.getInfo();
     if (wasPaused) {
@@ -84,16 +84,24 @@ function setupPlaybackControls() {
         fxLastTick = 0;
         lastSeenTick = 0;
         momentIdx = {};
+        await window.soundManager.resumeAllSounds();
         playResumeSoundForTick(0);
+        window.soundManager.clearAudioRestart();
+      } else if (window.soundManager.needsAudioRestart()) {
+        fxLastTick = tick;
+        lastSeenTick = tick;
+        await window.soundManager.resumeAllSounds();
+        playResumeSoundForTick(tick);
+        window.soundManager.clearAudioRestart();
       } else {
         fxLastTick = tick;
         lastSeenTick = tick;
-        playResumeSoundForTick(tick);
+        await window.soundManager.resumeAllSounds();
       }
       window.animationEngine.play();
     } else {
       window.animationEngine.pause();
-      window.soundManager.stopAllSounds();
+      window.soundManager.pauseAllSounds();
     }
     updatePlayButtonIcon();
   });

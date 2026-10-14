@@ -58,11 +58,18 @@ function endTimelineDrag() {
   const tick = window.animationEngine.getInfo().tickPosition || 0;
   if (!timelineDraggingPaused) {
     window.soundManager.stopAllSounds();
-    playResumeSoundForTick(tick);
-    window.animationEngine.play();
-    fxLastTick = tick;
-    lastSeenTick = tick;
-    updatePlayButtonIcon();
+    const ctx = window.soundManager.getAudioContext();
+    const lookaheadMs = 30;
+    const lookaheadSec = lookaheadMs / 1000;
+    const when = ctx ? ctx.currentTime + lookaheadSec : 0;
+    playResumeSoundForTick(tick, when);
+    window.animationEngine.pause();
+    setTimeout(() => {
+      window.animationEngine.play();
+      fxLastTick = tick;
+      lastSeenTick = tick;
+      updatePlayButtonIcon();
+    }, lookaheadMs);
   } else {
     fxLastTick = tick;
     lastSeenTick = tick;
