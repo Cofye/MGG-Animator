@@ -412,8 +412,8 @@ function loadWatermark() {
 }
 
 const SCREENSHOT_PREVIEW_WIDTH = 480;
-const SCREENSHOT_SD_SCALE = 1;
-const SCREENSHOT_UHD_SCALE = 2;
+const SCREENSHOT_HD_SCALE = 1;
+const SCREENSHOT_UHD_SCALE = 3;
 
 let screenshotAssets = null;
 let screenshotLocked = false;
@@ -423,31 +423,31 @@ const SCREENSHOT_BLOCK_DEFS = [
   {
     container: "screenshotLeft",
     tier: "guest",
-    preview: "sdWithMark",
+    preview: "hdWithMark",
     imgClass: "imgHd",
     langKey: "hd_text",
-    btnId: "btnDownloadSdMark",
+    btnId: "btnDownloadHdMark",
     btnLang: "Download",
     action: "download",
-    assetKey: "sdWithMark",
-    fileSuffix: "_SD",
+    assetKey: "hdWithMark",
+    fileSuffix: "_HD",
   },
   {
     container: "screenshotLeft",
     tier: "user,member",
-    preview: "sdNoMark",
+    preview: "hdNoMark",
     imgClass: "imgHd",
     langKey: "hd2_text",
-    btnId: "btnDownloadSdNoMark",
+    btnId: "btnDownloadHdNoMark",
     btnLang: "Download",
     action: "download",
-    assetKey: "sdNoMark",
-    fileSuffix: "_SD",
+    assetKey: "hdNoMark",
+    fileSuffix: "_HD",
   },
   {
     container: "screenshotRight",
     tier: "guest",
-    preview: "sdNoMark",
+    preview: "hdNoMark",
     imgClass: "imgHd",
     langKey: "hd2_text",
     btnId: "btnJoinSs",
@@ -539,18 +539,18 @@ async function generateScreenshotAssets() {
     const session = await window.discordIntegration.getSession();
     const includeCorner = !currentUserExempt;
     const includeMidLayer = !session && !currentUserExempt;
-    const sdMark = await renderScreenshotAtScale(SCREENSHOT_SD_SCALE, includeMidLayer, includeCorner);
-    const sdNoMark = await renderScreenshotAtScale(SCREENSHOT_SD_SCALE, false, includeCorner);
+    const hdMark = await renderScreenshotAtScale(SCREENSHOT_HD_SCALE, includeMidLayer, includeCorner);
+    const hdNoMark = await renderScreenshotAtScale(SCREENSHOT_HD_SCALE, false, includeCorner);
     const uhdNoMark = await renderScreenshotAtScale(SCREENSHOT_UHD_SCALE, false, includeCorner);
     return {
       previews: {
-        sdWithMark: downscaleCanvasTo(sdMark, SCREENSHOT_PREVIEW_WIDTH),
-        sdNoMark: downscaleCanvasTo(sdNoMark, SCREENSHOT_PREVIEW_WIDTH),
+        hdWithMark: downscaleCanvasTo(hdMark, SCREENSHOT_PREVIEW_WIDTH),
+        hdNoMark: downscaleCanvasTo(hdNoMark, SCREENSHOT_PREVIEW_WIDTH),
         uhdNoMark: downscaleCanvasTo(uhdNoMark, SCREENSHOT_PREVIEW_WIDTH),
       },
       originals: {
-        sdWithMark: sdMark,
-        sdNoMark: sdNoMark,
+        hdWithMark: hdMark,
+        hdNoMark: hdNoMark,
         uhdNoMark: uhdNoMark,
       },
     };
