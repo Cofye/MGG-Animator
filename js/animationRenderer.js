@@ -1,4 +1,6 @@
 const tintCache = new Map();
+const MAX_TINT_CACHE_PIXELS = 8 * 1024 * 1024;
+let tintCachePixels = 0;
 
 let DEBUG_SHOW_HIDDEN = false;
 let DEBUG_SHOW_BOUNDS = false;
@@ -35,7 +37,12 @@ function getTintedSource(img, rMul, gMul, bMul, rAdd, gAdd, bAdd, sourceImage) {
   const key = (sourceImage.src || "") + "|" + [
     img.srcX, img.srcY, img.width, img.height, rMul, gMul, bMul, rAdd, gAdd, bAdd
   ].join("|");
-  if (tintCache.has(key)) return tintCache.get(key);
+  if (tintCache.has(key)) {
+    const cached = tintCache.get(key);
+    tintCache.delete(key);
+    tintCache.set(key, cached);
+    return cached;
+  }
   const c = document.createElement("canvas");
   c.width = Math.max(1, Math.ceil(img.width));
   c.height = Math.max(1, Math.ceil(img.height));
@@ -49,7 +56,17 @@ function getTintedSource(img, rMul, gMul, bMul, rAdd, gAdd, bAdd, sourceImage) {
     d[i + 2] = Math.max(0, Math.min(255, (d[i + 2] / 255 * bMul + bAdd) * 255));
   }
   cx.putImageData(id, 0, 0);
-  tintCache.set(key, c);
+  const pixelCount = c.width * c.height;
+  if (pixelCount <= MAX_TINT_CACHE_PIXELS) {
+    while (tintCachePixels + pixelCount > MAX_TINT_CACHE_PIXELS) {
+      const oldest = tintCache.keys().next().value;
+      const evicted = tintCache.get(oldest);
+      tintCache.delete(oldest);
+      tintCachePixels -= evicted.width * evicted.height;
+    }
+    tintCache.set(key, c);
+    tintCachePixels += pixelCount;
+  }
   return c;
 }
 
@@ -256,7 +273,10 @@ function setShowBounds(v) { DEBUG_SHOW_BOUNDS = !!v; }
 function getShowBounds() { return DEBUG_SHOW_BOUNDS; }
 function setBoundsColor(c) { DEBUG_BOUNDS_COLOR = normalizeHexColor(c); }
 function getBoundsColor() { return DEBUG_BOUNDS_COLOR; }
-function clearTintCache() { tintCache.clear(); }
+function clearTintCache() {
+  tintCache.clear();
+  tintCachePixels = 0;
+}
 
 window.animationRenderer = {
   renderNode,

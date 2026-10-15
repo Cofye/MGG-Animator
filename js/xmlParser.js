@@ -174,9 +174,16 @@ function parseCompositeElement(el, parentTotalFrames, parentAutoLoop) {
     }
   }
   const hasMultipleKeys = keys.length >= 2;
+  const loopSourceKey = keys.length > 0
+    ? (parentAutoLoop ? keys[0] : keys[keys.length - 1])
+    : null;
+  const loopKey = loopSourceKey
+    ? { ...loopSourceKey, frame: parentTotalFrames }
+    : null;
   return {
     type: "Composite",
     keys,
+    loopKey,
     innerSprite,
     totalFrames: parentTotalFrames,
     synch,

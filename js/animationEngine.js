@@ -373,22 +373,27 @@ function compositeUpdate(node, parentFramePos, dtSeconds) {
       node.nextKey = keys[0];
       newDrawThisFrame = false;
     } else {
-      let prev = null, next = null;
-      for (const k of keys) {
-        if (k.frame <= parentFramePos && (!prev || k.frame > prev.frame)) prev = k;
-        if (k.frame >= parentFramePos && !next) next = k;
+      let low = 0;
+      let high = keys.length;
+      while (low < high) {
+        const mid = (low + high) >>> 1;
+        if (keys[mid].frame < parentFramePos) low = mid + 1;
+        else high = mid;
       }
-      if (!prev) prev = keys[0];
-      if (!next) {
-        const srcKey = node.autoLoop ? keys[0] : keys[keys.length - 1];
-        next = {
-          frame: node.totalFrames,
-          x: srcKey.x, y: srcKey.y, angle: srcKey.angle,
-          scaleX: srcKey.scaleX, scaleY: srcKey.scaleY,
-          rMul: srcKey.rMul, gMul: srcKey.gMul, bMul: srcKey.bMul,
-          rAdd: srcKey.rAdd, gAdd: srcKey.gAdd, bAdd: srcKey.bAdd,
-          alpha: srcKey.alpha, visible: srcKey.visible
-        };
+      const next = low < keys.length ? keys[low] : node.loopKey;
+      let prev = keys[0];
+      if (low < keys.length && keys[low].frame === parentFramePos) {
+        prev = keys[low];
+      } else if (low > 0) {
+        const prevFrame = keys[low - 1].frame;
+        let first = 0;
+        let last = low;
+        while (first < last) {
+          const mid = (first + last) >>> 1;
+          if (keys[mid].frame < prevFrame) first = mid + 1;
+          else last = mid;
+        }
+        prev = keys[first];
       }
       const span = next.frame - prev.frame;
       const t = span > 0 ? Math.min((parentFramePos - prev.frame) / span, 1) : 0;
@@ -951,9 +956,6 @@ function getInfo() {
   };
 }
 
-function setShowHidden(v) { DEBUG_SHOW_HIDDEN = !!v; triggerRender(); }
-function setShowBounds(v) { DEBUG_SHOW_BOUNDS = !!v; triggerRender(); }
-function setBoundsColor(c) { DEBUG_BOUNDS_COLOR = normalizeHexColor(c); triggerRender(); }
 function setShowHidden(v) { window.animationRenderer.setShowHidden(v); triggerRender(); }
 function setShowBounds(v) { window.animationRenderer.setShowBounds(v); triggerRender(); }
 function setBoundsColor(c) { window.animationRenderer.setBoundsColor(c); triggerRender(); }
@@ -981,8 +983,8 @@ window.animationEngine = {
   getInfo, getTime: () => animationTime,
   getTreeTickDuration: getTotalTickDuration,
   setShowHidden, setShowBounds, setBoundsColor,
-  getShowBounds: () => DEBUG_SHOW_BOUNDS,
-  getBoundsColor: () => DEBUG_BOUNDS_COLOR,
+  getShowBounds,
+  getBoundsColor,
   renderNode, setRenderCallback, getTreeBounds,
   spriteUpdate, resetNodeState, precomputeTimeline, restoreTick, scanAnimationSounds,
   startDeath, stopDeath, isDying, getDeathProgress, getDeathFireColor,

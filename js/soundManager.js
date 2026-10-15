@@ -46,15 +46,19 @@ async function loadSound(name) {
   const promise = (async () => {
     const ctx = ensureAudioCtx();
     if (!ctx) return null;
+    let timeoutId = null;
     try {
       const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 15000);
+      timeoutId = setTimeout(() => controller.abort(), 15000);
       const res = await fetch(`data/sounds/${name}.wav`, { signal: controller.signal });
-      clearTimeout(tid);
       if (!res.ok) return null;
       const ab = await res.arrayBuffer();
       return await ctx.decodeAudioData(ab);
-    } catch (_) { return null; }
+    } catch (_) {
+      return null;
+    } finally {
+      clearTimeout(timeoutId);
+    }
   })();
   soundBufferCache.set(name, promise);
   const parsed = await promise;
@@ -101,20 +105,6 @@ function playSound(name, offsetSeconds = 0, when = 0) {
 }
 
 function playSoundAtOffset(name, offsetSeconds, when = 0) { playSound(name, offsetSeconds, when); }
-
-function setSoundVolume(v) {
-  const n = Number(v);
-  soundVolume = Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 1;
-  let bestLevel = 0;
-  let bestDist = Infinity;
-  for (let i = 0; i < SOUND_LEVEL_GAINS.length; i++) {
-    const d = Math.abs(SOUND_LEVEL_GAINS[i] - soundVolume);
-    if (d < bestDist) { bestDist = d; bestLevel = i; }
-  }
-  soundLevel = bestLevel;
-  const ctx = ensureAudioCtx();
-  if (ctx && masterGain) masterGain.gain.value = MASTER_GAIN * soundVolume;
-}
 
 function cycleSoundVolume() {
   if (soundLevel === 0) soundDirection = 1;

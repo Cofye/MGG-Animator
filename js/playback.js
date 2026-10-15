@@ -154,13 +154,6 @@ function enablePlayerButtons() {
   updateSoundButtonState();
 }
 
-async function loadAvailableSpeeds() {
-  const parsed = await parseCustomTXT("data/options.txt", currentLang);
-  availableSpeeds = parsed.filter(p => p.type === "speed");
-  const idx = availableSpeeds.findIndex(s => parseFloat(s.value) === 1);
-  currentSpeedIndex = idx >= 0 ? idx : 0;
-}
-
 function applyCurrentSpeed() {
   if (availableSpeeds.length === 0) return;
   const speed = availableSpeeds[currentSpeedIndex];

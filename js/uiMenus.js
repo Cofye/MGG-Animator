@@ -127,7 +127,6 @@ function applyEventBackground() {
 
 function setupGeneFilters() {
   document.querySelectorAll(".geneFilter").forEach(group => {
-    const groupKey = group.id.replace("Filter", "");
     group.querySelectorAll(".btnGene").forEach(btn => {
       btn.addEventListener("click", () => {
         group.querySelectorAll(".btnGene").forEach(b => {
@@ -136,7 +135,6 @@ function setupGeneFilters() {
         });
         btn.classList.add("active");
         btn.setAttribute("aria-pressed", "true");
-        selectedGenes[groupKey] = btn.dataset.value;
       });
     });
   });

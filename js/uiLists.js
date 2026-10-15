@@ -120,6 +120,7 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   let filtered = allMutants.filter(m => m.type === filter || filter === "default_");
   filtered = filtered.filter(m => canViewMutant(m.value));
   filtered = filterByQuery(filtered, searchQuery, m => m.name);
+  const fragment = document.createDocumentFragment();
   filtered.forEach(mutant => {
     const item = document.createElement("div");
     item.className = "mutant-item";
@@ -132,8 +133,9 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
     <span class="text">${mutant.name}</span>
     `;
     item.addEventListener("click", () => selectCharacter(context, mutant));
-    state.container.appendChild(item);
+    fragment.appendChild(item);
   });
+  state.container.appendChild(fragment);
   setTimeout(state.updateScrollUI, 50);
 }
 
@@ -204,7 +206,9 @@ function renderBgList(query = "") {
   let filtered = allBackgrounds.filter(b => b.type === currentBgFilter);
   filtered = filtered.filter(b => canViewBackground(b.value));
   filtered = filterByQuery(filtered, query, b => b.name);
-  filtered.forEach(bg => state.container.appendChild(createBgItem(bg)));
+  const fragment = document.createDocumentFragment();
+  filtered.forEach(bg => fragment.appendChild(createBgItem(bg)));
+  state.container.appendChild(fragment);
   setTimeout(state.updateScrollUI, 50);
 }
 
@@ -286,7 +290,9 @@ function renderItemList() {
     items = allSkins.filter(s => canViewSkin(selectedValues.mutant, s.value || ""));
     createFn = createSkinItem;
   }
-  items.forEach(item => state.container.appendChild(createFn(item)));
+  const fragment = document.createDocumentFragment();
+  items.forEach(item => fragment.appendChild(createFn(item)));
+  state.container.appendChild(fragment);
   setTimeout(state.updateScrollUI, 50);
 }
 

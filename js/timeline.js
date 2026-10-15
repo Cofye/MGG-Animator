@@ -90,19 +90,30 @@ function setupTimeline() {
   window.addEventListener("pointercancel", () => {
     if (timelineDragging) endTimelineDrag();
   });
+  let wasPaused = null;
+  let lastPausedTick = null;
   const timelineLoop = () => {
-    timelineRafId = requestAnimationFrame(timelineLoop);
-    updateTimelineBar();
-    updatePlayButtonIcon();
-    updateTransport();
-    updateRivalHitProgress();
+    requestAnimationFrame(timelineLoop);
     const info = window.animationEngine.getInfo();
     const tick = info.tickPosition || 0;
     const dur = info.tickDuration || 1;
     if (info.paused) {
+      if (wasPaused !== true || tick !== lastPausedTick) {
+        updateTimelineBar();
+        updatePlayButtonIcon();
+        updateTransport();
+        updateRivalHitProgress();
+      }
       fxLastTick = tick;
+      wasPaused = true;
+      lastPausedTick = tick;
       return;
     }
+    wasPaused = false;
+    updateTimelineBar();
+    updatePlayButtonIcon();
+    updateTransport();
+    updateRivalHitProgress();
     const prevTick = fxLastTick;
     const delta = tick - prevTick;
     if (delta > 0.0001 && delta < 15) {
