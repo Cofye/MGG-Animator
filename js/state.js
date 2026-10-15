@@ -55,6 +55,9 @@ const accessRules = {
   membersOnly: new Set(),
   blockedBackgroundsForEveryone: new Set(),
   membersOnlyBackgrounds: new Set(),
+  newMutants: new Set(),
+  newSkins: new Set(),
+  newBackgrounds: new Set(),
 };
 const BG_BUTTONS = [
   { id: "btnCampaign", type: "bg_cmp" },

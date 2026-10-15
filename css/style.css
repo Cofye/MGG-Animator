@@ -1183,12 +1183,12 @@ body {
 #mutantListLayer {
   position: absolute;
   top: 370px;
-  left: 1195px;
-  width: 590px;
+  left: 1155px;
+  width: 630px;
   height: 559.4px;
   overflow-y: auto;
   z-index: 4;
-} 
+}
 #mutantListLayer.hidden {
   display: none;
 }
@@ -1233,18 +1233,19 @@ body {
   width: 82.27px;
   height: 82.71px;
   margin-top: 2px;
-  margin-left: 2px;
+  margin-left: 42px;
   position: absolute;
 }
 .mutant_bg {
   width: 88.63px;
   height: 85.45px;
+  margin-left: 40px;
   position: absolute;
 }
 .mutant-item span {
   transform: scale(2.2, 3.2);
   margin-top: -35px;
-  margin-left: 35px;
+  margin-left: 75px;
 }
 .mutant-item:hover {
   background: rgba(255,255,255,0.1);
@@ -1326,11 +1327,12 @@ body {
 #skinListLayer {
   position: absolute;
   top: 280px;
-  left: 1195px;
-  width: 590px;
+  left: 1155px;
+  width: 630px;
   height: 639.4px;
   overflow-y: auto;
   z-index: 4;
+  
 } 
 .skin-item {
   display: flex;
@@ -1347,10 +1349,11 @@ body {
 .skin_icon {
   height: 82.71px;
   margin-top: 5px;
-  margin-left: -5px;
+  margin-left: 35px;
   position: absolute;
 }
 .skin_bg {
+  left: 40px;
   width: 88.63px;
   height: 85.45px;
   position: absolute;
@@ -1358,7 +1361,7 @@ body {
 .skin-item span {
   transform: scale(2.2, 3.2);
   margin-top: -35px;
-  margin-left: 35px;
+  margin-left: 75px;
 }
 .skin-item:hover {
   background: rgba(255,255,255,0.1);
@@ -1518,7 +1521,7 @@ body {
   cursor: grabbing;
 }
 
-/* MENU MUTANTES */
+/* MENU FONDOS */
 #bgListBg{
   width: 650px;
   height: 730px;
@@ -1530,8 +1533,8 @@ body {
 #bgListLayer {
   position: absolute;
   top: 280px;
-  left: 1195px;
-  width: 590px;
+  left: 1155px;
+  width: 630px;
   height: 639.4px;
   overflow-y: auto;
   z-index: 4;
@@ -1557,13 +1560,13 @@ body {
   object-fit: cover;
   object-position: top center;
   margin-top: 2px;
-  margin-left: 2px;
+  margin-left: 42px;
   position: absolute;
 }
 .bg-item span {
   transform: scale(2.2, 3.2);
   margin-top: -35px;
-  margin-left: 35px;
+  margin-left: 75px;
 }
 .bg-item:hover {
   background: rgba(255,255,255,0.1);
@@ -1811,4 +1814,18 @@ body {
   height: 70px;
   background-image: url("../images/ui/btn_discord.png");
   bottom: 0px;
+}
+.tag {
+  margin-top: -35px;
+  margin-left: -70px;
+  height: 70px;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(0.92);
+  }
 }

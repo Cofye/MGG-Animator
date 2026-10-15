@@ -128,6 +128,7 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
       <img class="mutant_bg" src="images/ui/mutant_background.png">
       <img class="mutant_icon" src="${mutant.image}">
     </div>
+    ${accessRules.newMutants.has(normalizeAccessKey(mutant.value)) ? '<img class="tag" src="images/ui/tag_new.png">' : ""}
     <span class="text">${mutant.name}</span>
     `;
     item.addEventListener("click", () => selectCharacter(context, mutant));
@@ -189,6 +190,7 @@ function createBgItem(bg) {
     <div class="bg">
       <img class="bg_icon" src="${bg.image}">
     </div>
+    ${accessRules.newBackgrounds.has(normalizeAccessKey(bg.value)) ? '<img class="tag" src="images/ui/tag_new.png">' : ""}
     <span class="text">${bg.name}</span>
     `;
   item.addEventListener("click", () => selectBg(bg));
@@ -226,11 +228,13 @@ function closeBgList() {
 function createSkinItem(skin) {
   const item = document.createElement("div");
   item.className = "skin-item";
+  const skinKey = normalizeAccessKey(`${selectedValues.mutant}_${skin.value || ""}`);
   item.innerHTML = `
     <div class="skin">
       <img class="skin_bg" src="images/ui/skin_background.png">
       <img class="skin_icon" src="${skin.image}">
     </div>
+    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_skin.png">' : ""}
     <span class="text">${skin.name}</span>`;
   item.addEventListener("click", () => selectSkin(skin));
   return item;
@@ -239,11 +243,13 @@ function createSkinItem(skin) {
 function createRivalSkinItem(skin) {
   const item = document.createElement("div");
   item.className = "skin-item";
+  const skinKey = normalizeAccessKey(`${selectedValues.rival}_${skin.value || ""}`);
   item.innerHTML = `
     <div class="skin">
       <img class="skin_bg" src="images/ui/skin_background.png">
       <img class="skin_icon" src="${skin.image}">
     </div>
+    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_skin.png">' : ""}
     <span class="text">${skin.name}</span>
     `;
   item.addEventListener("click", () => selectRivalSkin(skin));

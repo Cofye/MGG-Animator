@@ -84,14 +84,18 @@ async function loadAccessRules() {
     accessRules.membersOnly = normalizeList(data.membersOnly);
     accessRules.blockedBackgroundsForEveryone = normalizeList(data.blockedBackgroundsForEveryone);
     accessRules.membersOnlyBackgrounds = normalizeList(data.membersOnlyBackgrounds);
+    accessRules.newMutants = normalizeList(data.newMutants);
+    accessRules.newSkins = normalizeList(data.newSkins);
+    accessRules.newBackgrounds = normalizeList(data.newBackgrounds);
   } catch (e) {
-    accessRules = {
-      exemptUserIds: new Set(),
-      blockedForEveryone: new Set(),
-      membersOnly: new Set(),
-      blockedBackgroundsForEveryone: new Set(),
-      membersOnlyBackgrounds: new Set(),
-    };
+    accessRules.exemptUserIds = new Set();
+    accessRules.blockedForEveryone = new Set();
+    accessRules.membersOnly = new Set();
+    accessRules.blockedBackgroundsForEveryone = new Set();
+    accessRules.membersOnlyBackgrounds = new Set();
+    accessRules.newMutants = new Set();
+    accessRules.newSkins = new Set();
+    accessRules.newBackgrounds = new Set();
   }
 }
 
