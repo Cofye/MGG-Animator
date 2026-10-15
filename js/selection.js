@@ -201,7 +201,7 @@ async function loadRivalAnimationAssets(mutantValue, animName, skin) {
   const bitmap = spriteEl.getAttribute("bitmap") || "";
   const base = bitmap.replace(/\.png$/i, "");
   const skinSuffix = skin ? `_${skin}` : "";
-  const url = `data/sprites/${base}${skinSuffix}.png`;
+  const url = `images/sprites/${base}${skinSuffix}.png`;
   const img = await new Promise((resolve, reject) => {
     const i = new Image();
     i.crossOrigin = "anonymous";
@@ -295,7 +295,7 @@ async function updateSkinButton() {
   const span = document.querySelector("#skinSelect span");
   if (!icon || !span) return;
   if (!selectedSkin) {
-    icon.src = "images/icons/icon_cancel.png";
+    icon.src = "images/ui/icons/icon_cancel.png";
     span.setAttribute("data-lang", "none");
     const langsMap = await loadLangsFile();
     span.textContent = langsMap[`none-${currentLang}`] || langsMap["none"] || "";
@@ -311,7 +311,7 @@ async function updateAnimationButton() {
   const span = document.querySelector("#animationSelect span");
   if (!icon || !span) return;
   if (!selectedAnimation) {
-    icon.src = "images/icons/icon_cancel.png";
+    icon.src = "images/ui/icons/icon_cancel.png";
     span.setAttribute("data-lang", "none");
     const langsMap = await loadLangsFile();
     span.textContent = langsMap[`none-${currentLang}`] || langsMap["none"] || "";
@@ -327,7 +327,7 @@ async function updateRivalSkinButton() {
   const span = document.querySelector("#rivalSkinSelect span");
   if (!icon || !span) return;
   if (!selectedRivalSkin) {
-    icon.src = "images/icons/icon_cancel.png";
+    icon.src = "images/ui/icons/icon_cancel.png";
     span.setAttribute("data-lang", "none");
     const langsMap = await loadLangsFile();
     span.textContent = langsMap[`none-${currentLang}`] || langsMap["none"] || "";

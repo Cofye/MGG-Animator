@@ -146,7 +146,7 @@ function setupMutantSearch() {
   const updateSearchIcon = () => {
     if (!btnDeleteImg) return;
     const hasText = state.search.value.length > 0;
-    const desired = hasText ? "images/icons/icon_delete.png" : "images/icons/icon_search.png";
+    const desired = hasText ? "images/ui/icons/icon_delete.png" : "images/ui/icons/icon_search.png";
     if (btnDeleteImg.src.indexOf(desired) === -1) btnDeleteImg.src = desired;
   };
   state.search.addEventListener("input", () => {

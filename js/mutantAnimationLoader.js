@@ -122,8 +122,8 @@ function loadSpritesheetImage(bitmap, skin) {
     const img = new Image();
     const base = bitmap.replace(/\.png$/i, "");
     const url = skin
-      ? `data/sprites/${base}_${skin}.png`
-      : `data/sprites/${base}.png`;
+      ? `images/sprites/${base}_${skin}.png`
+      : `images/sprites/${base}.png`;
     const t = setTimeout(() => {
       img.onload = null;
       img.onerror = null;

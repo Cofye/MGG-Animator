@@ -216,8 +216,8 @@ function updateFullscreenIcon() {
   const img = btnFullscreen.querySelector("img");
   if (!img) return;
   const desired = document.fullscreenElement
-    ? "images/icons/players/player_minimised.png"
-    : "images/icons/players/player_fullscreen.png";
+    ? "images/ui/icons/players/player_minimised.png"
+    : "images/ui/icons/players/player_fullscreen.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 

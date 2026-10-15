@@ -410,7 +410,7 @@ async function loadSpriteFxAsset(name, skin) {
         i.onerror = () => { clearTimeout(t); reject(new Error()); };
         i.src = url;
       });
-      const spriteDir = "data/sprites/";
+      const spriteDir = "images/sprites/";
       let img = null;
       if (useSkin) {
         try {

@@ -25,7 +25,7 @@ function tintTexture(baseImg, color) {
 function updateToggleIcon(button, enabled) {
   const icon = button.querySelector(".activeIcon");
   if (!icon) return;
-  const desired = enabled ? "images/icons/icon_on.png" : "images/icons/icon_off.png";
+  const desired = enabled ? "images/ui/icons/icon_on.png" : "images/ui/icons/icon_off.png";
   if (icon.src.indexOf(desired) === -1) icon.src = desired;
 }
 
