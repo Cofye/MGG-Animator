@@ -86,6 +86,9 @@ async function loadAccessRules() {
     accessRules.membersOnlyBackgrounds = normalizeList(data.membersOnlyBackgrounds);
     accessRules.newMutants = normalizeList(data.newMutants);
     accessRules.newSkins = normalizeList(data.newSkins);
+    accessRules.newSkinEntries = Array.isArray(data.newSkins)
+      ? data.newSkins.filter(skin => typeof skin === "string")
+      : [];
     accessRules.newBackgrounds = normalizeList(data.newBackgrounds);
   } catch (e) {
     accessRules.exemptUserIds = new Set();
@@ -95,6 +98,7 @@ async function loadAccessRules() {
     accessRules.membersOnlyBackgrounds = new Set();
     accessRules.newMutants = new Set();
     accessRules.newSkins = new Set();
+    accessRules.newSkinEntries = [];
     accessRules.newBackgrounds = new Set();
   }
 }
@@ -134,6 +138,18 @@ function canViewSkin(mutantValue, skinValue) {
   if (isMembersOnly) return currentUserInGuild || showHiddenMutants;
   if (isBlockedForEveryone) return currentUserExempt && showHiddenMutants;
   return canViewMutant(mutantValue);
+}
+
+function hasVisibleNewSkin(mutantValue) {
+  const prefix = `${mutantValue}_`.toLowerCase();
+  return accessRules.newSkinEntries.some(skin => {
+    const entry = skin.toLowerCase();
+    if (!entry.startsWith(prefix) || entry.length === prefix.length) return false;
+    const key = normalizeAccessKey(skin);
+    const isRestricted = accessRules.blockedForEveryone.has(key) || accessRules.membersOnly.has(key);
+    if (isRestricted && !showHiddenMutants) return false;
+    return canViewSkin(mutantValue, skin.slice(prefix.length));
+  });
 }
 
 function canViewBackground(bgValue) {

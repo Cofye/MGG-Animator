@@ -124,12 +124,19 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   filtered.forEach(mutant => {
     const item = document.createElement("div");
     item.className = "mutant-item";
+    const tags = [];
+    if (accessRules.newMutants.has(normalizeAccessKey(mutant.value))) {
+      tags.push('<img class="tag" src="images/ui/tag_new.png">');
+    }
+    if (hasVisibleNewSkin(mutant.value)) {
+      tags.push('<img class="tag" src="images/ui/tag_skin.png">');
+    }
     item.innerHTML = `
     <div class="mutant">
       <img class="mutant_bg" src="images/ui/mutant_background.png">
       <img class="mutant_icon" src="${mutant.image}">
     </div>
-    ${accessRules.newMutants.has(normalizeAccessKey(mutant.value)) ? '<img class="tag" src="images/ui/tag_new.png">' : ""}
+    ${tags.length ? `<div class="mutant-tags${tags.length > 1 ? " multiple" : ""}">${tags.join("")}</div>` : ""}
     <span class="text">${mutant.name}</span>
     `;
     item.addEventListener("click", () => selectCharacter(context, mutant));
@@ -238,7 +245,7 @@ function createSkinItem(skin) {
       <img class="skin_bg" src="images/ui/skin_background.png">
       <img class="skin_icon" src="${skin.image}">
     </div>
-    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_skin.png">' : ""}
+    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_new.png">' : ""}
     <span class="text">${skin.name}</span>`;
   item.addEventListener("click", () => selectSkin(skin));
   return item;
@@ -253,7 +260,7 @@ function createRivalSkinItem(skin) {
       <img class="skin_bg" src="images/ui/skin_background.png">
       <img class="skin_icon" src="${skin.image}">
     </div>
-    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_skin.png">' : ""}
+    ${accessRules.newSkins.has(skinKey) ? '<img class="tag" src="images/ui/tag_new.png">' : ""}
     <span class="text">${skin.name}</span>
     `;
   item.addEventListener("click", () => selectRivalSkin(skin));

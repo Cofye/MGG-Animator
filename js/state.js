@@ -57,6 +57,7 @@ const accessRules = {
   membersOnlyBackgrounds: new Set(),
   newMutants: new Set(),
   newSkins: new Set(),
+  newSkinEntries: [],
   newBackgrounds: new Set(),
 };
 const BG_BUTTONS = [

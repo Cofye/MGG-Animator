@@ -76,7 +76,7 @@ body {
 }
 .tooltip {
   position: absolute;
-  bottom: 50%;
+  bottom: 40px;
   transform: translateY(0%);
   margin-left: 8px;
   padding: 6px 12px;
@@ -1820,6 +1820,26 @@ body {
   margin-left: -70px;
   height: 70px;
   animation: pulse 1s infinite;
+}
+.mutant-tags {
+  position: relative;
+  flex: 0 0 70px;
+  width: 70px;
+  height: 70px;
+  margin-top: -35px;
+  margin-left: -70px;
+}
+.mutant-tags .tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+.mutant-tags.multiple .tag {
+  height: 50px;
+}
+.mutant-tags.multiple .tag + .tag {
+  left: 35px;
 }
 @keyframes pulse {
   0%, 100% {
