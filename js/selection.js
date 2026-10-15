@@ -53,6 +53,19 @@ function updateStatsButton(mutantValue) {
   btnStats.classList.remove("hidden");
 }
 
+function updateMutantThumbnail(context) {
+  const mutantValue = selectedValues[context];
+  const mutant = allMutants.find(m => m.value === mutantValue);
+  const icon = document.querySelector(`#${context}Select .${context === "mutant" ? "mutantIcon" : "rivalIcon"}`);
+  if (!mutant || !mutant.image || !icon) return;
+
+  const skin = context === "mutant" ? selectedSkin : selectedRivalSkin;
+  const skinValue = skin ? (skin.value || "") : "";
+  icon.src = skinValue
+    ? mutant.image.replace(/\.png$/i, `_${skinValue}.png`)
+    : mutant.image;
+}
+
 async function selectCharacter(context, mutant) {
   if (!canViewMutant(mutant.value)) return;
   const icon = document.querySelector(`#${context}Select img`);
@@ -72,6 +85,7 @@ async function selectCharacter(context, mutant) {
     const availableSkins = allSkins.filter(s => canViewSkin(mutant.value, s.value || ""));
     selectedSkin = availableSkins.find(s => (s.value || "") === (previousSkinValue || "")) || availableSkins[0] || null;
     selectedAnimation = allAnimations.find(a => (a.value || "") === (previousAnimValue || "")) || allAnimations[0] || null;
+    updateMutantThumbnail(context);
     updateSkinButton();
     updateAnimationButton();
     if (typeof loadMutantImage === "function") {
@@ -152,7 +166,9 @@ async function selectCharacter(context, mutant) {
       await loadRivalData(mutant.value);
       const previousSkinValue = selectedRivalSkin ? (selectedRivalSkin.value || null) : null;
       const availableRivalSkins = allRivalSkins.filter(s => canViewSkin(mutant.value, s.value || ""));
-      selectedRivalSkin = availableRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || availableRivalSkins[0] || null;      updateRivalSkinButton();
+      selectedRivalSkin = availableRivalSkins.find(s => (s.value || "") === (previousSkinValue || "")) || availableRivalSkins[0] || null;
+      updateMutantThumbnail(context);
+      updateRivalSkinButton();
       await loadRivalStand(mutant.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
     } finally {
       window.mutantLoader.popLoadingHold();
@@ -267,6 +283,7 @@ async function setDefaultRival(mutantValue) {
   selectedRivalSkin = availableRivalSkins.find(s => (s.value || "") === (previousSkinValue || ""))
     || availableRivalSkins[0]
     || null;
+  updateMutantThumbnail("rival");
   updateRivalSkinButton();
   await loadRivalStand(found.value, selectedRivalSkin ? (selectedRivalSkin.value || "") : "");
   const anim = selectedAnimation ? (selectedAnimation.value || "stand") : "stand";
@@ -325,6 +342,7 @@ async function selectSkin(skin) {
   const skinValue = skin ? (skin.value || "") : "";
   if (!canViewSkin(selectedValues.mutant, skinValue)) return;
   selectedSkin = skin;
+  updateMutantThumbnail("mutant");
   updateSkinButton();
   window.fxManager.setFxSkin(skin ? (skin.value || "") : "");
   closeItemList(); closeCharacterList();
@@ -477,6 +495,7 @@ async function selectRivalSkin(skin) {
   const skinValue = skin ? (skin.value || "") : "";
   if (!canViewSkin(selectedValues.rival, skinValue)) return;
   selectedRivalSkin = skin;
+  updateMutantThumbnail("rival");
   updateRivalSkinButton();
   closeItemList(); closeCharacterList();
   clickToClose.classList.add("hidden");

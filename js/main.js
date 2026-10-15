@@ -258,7 +258,9 @@ async function reloadMutantNames() {
     const animVal = selectedAnimation ? selectedAnimation.value : null;
     const availableSkins = allSkins.filter(s => canViewSkin(selectedValues.mutant, s.value || ""));
     selectedSkin = availableSkins.find(s => (s.value || "") === (skinVal || "")) || availableSkins[0] || null;
-    selectedAnimation = allAnimations.find(a => (a.value || "") === (animVal || "")) || allAnimations[0] || null;    updateSkinButton();
+    selectedAnimation = allAnimations.find(a => (a.value || "") === (animVal || "")) || allAnimations[0] || null;
+    updateMutantThumbnail("mutant");
+    updateSkinButton();
     updateAnimationButton();
   }
   if (selectedValues.rival) {
@@ -267,6 +269,7 @@ async function reloadMutantNames() {
     await loadRivalData(selectedValues.rival);
     const skinVal = selectedRivalSkin ? (selectedRivalSkin.value || "") : null;
     selectedRivalSkin = allRivalSkins.find(s => (s.value || "") === (skinVal || "")) || allRivalSkins[0] || null;
+    updateMutantThumbnail("rival");
     updateRivalSkinButton();
   }
 }
