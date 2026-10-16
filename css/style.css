@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Bahnschrift';
-  src: url('../fonts/bahnschrift.ttf') format('truetype');
+  src: url('/fonts/bahnschrift.ttf') format('truetype');
   font-stretch: semi-condensed;
 }
 
@@ -23,7 +23,7 @@ body {
 .body-bg-layer {
   position: fixed;
   inset: 0;
-  background-image: url("../images/ui/background.png");
+  background-image: url("/images/ui/background.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -105,11 +105,11 @@ body {
 .btnPlayer {
   width: 190px;
   height: 70px;
-  background-image: url("../images/ui/btn_purple_small.png");
+  background-image: url("/images/ui/btn_purple_small.png");
   position: absolute;
 }
 .btnPlayer:active {
-  background-image: url("../images/ui/btn_gray_small.png");
+  background-image: url("/images/ui/btn_gray_small.png");
 }
 .btnPlayerOff {
   width: 190px;
@@ -123,7 +123,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../images/ui/btn_purple_small_off.png");
+  background-image: url("/images/ui/btn_purple_small_off.png");
   position: absolute;
 }
 .btnGene {
@@ -445,7 +445,7 @@ body {
   z-index: 4;
   border-style: solid;
   border-width: 0 0 0 30.5px;
-  border-image-source: url("../images/ui/btn_discord_arrow.png");
+  border-image-source: url("/images/ui/btn_discord_arrow.png");
   border-image-slice: 0 0 0 30.5 fill;
   border-image-repeat: stretch;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -459,8 +459,8 @@ body {
   position: absolute;
   z-index: 8;
   height: 100%;
-  -webkit-mask-image: url("../images/ui/discord_profile_alpha.png");
-  mask-image: url("../images/ui/discord_profile_alpha.png");
+  -webkit-mask-image: url("/images/ui/discord_profile_alpha.png");
+  mask-image: url("/images/ui/discord_profile_alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
 }
@@ -524,7 +524,7 @@ body {
   box-sizing: content-box;
   border-style: solid;
   border-width: 0 0 0 30.5px;
-  border-image-source: url("../images/ui/btn_discord_arrow.png");
+  border-image-source: url("/images/ui/btn_discord_arrow.png");
   border-image-slice: 0 0 0 30.5 fill;
   border-image-repeat: stretch;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -667,13 +667,13 @@ body {
   width: 210px;
   left: 100px;
   top: 685px;
-  background-image: url("../images/ui/btn_stats.png");
+  background-image: url("/images/ui/btn_stats.png");
   z-index: 99;
   position: absolute;
   transition: filter .2s ease, transform .15s ease, background-image .2s ease;
 }
 #btnStats:hover {
-  background-image: url("../images/ui/btn_m3guide.png");
+  background-image: url("/images/ui/btn_m3guide.png");
   filter: drop-shadow(0 0 10px #abef0c);
   transform: translateX(-15px);
 }
@@ -684,7 +684,7 @@ body {
 #btnMutant {
   width: 230px;
   height: 70px;
-  background-image: url("../images/ui/btn_purple.png");
+  background-image: url("/images/ui/btn_purple.png");
   position: absolute;
   left: 1110px;
   top: 230px;
@@ -692,7 +692,7 @@ body {
 #btnCustomize {
   width: 230px;
   height: 70px;
-  background-image: url("../images/ui/btn_purple.png");
+  background-image: url("/images/ui/btn_purple.png");
   position: absolute;
   left: 1355px;
   top: 230px;
@@ -700,19 +700,19 @@ body {
 #btnDebug {
   width: 230px;
   height: 70px;
-  background-image: url("../images/ui/btn_gold.png");
+  background-image: url("/images/ui/btn_gold.png");
   position: absolute;
   left: 1600px;
   top: 230px;
 }
 .btn.active#btnMutant {
-  background-image: url("../images/ui/btn_gray.png");
+  background-image: url("/images/ui/btn_gray.png");
 }
 .btn.active#btnCustomize {
-  background-image: url("../images/ui/btn_gray.png");
+  background-image: url("/images/ui/btn_gray.png");
 }
 .btn.active#btnDebug {
-  background-image: url("../images/ui/btn_gray.png");
+  background-image: url("/images/ui/btn_gray.png");
 }
 
 .btnDebug {
@@ -756,31 +756,31 @@ body {
   z-index: 3;
 }
 #geneAll {
-  background-image: url("../images/ui/icons/gene_all.png");
+  background-image: url("/images/ui/icons/gene_all.png");
   margin-left: 17px;
 }
 #geneA {
-  background-image: url("../images/ui/icons/gene_a.png");
+  background-image: url("/images/ui/icons/gene_a.png");
   margin-left: 107px;
 }
 #geneB  {
-  background-image: url("../images/ui/icons/gene_b.png");
+  background-image: url("/images/ui/icons/gene_b.png");
   margin-left: 196.5px;
 }
 #geneC {
-  background-image: url("../images/ui/icons/gene_c.png");
+  background-image: url("/images/ui/icons/gene_c.png");
   margin-left: 286.5px;
 }
 #geneD {
-  background-image: url("../images/ui/icons/gene_d.png");
+  background-image: url("/images/ui/icons/gene_d.png");
   margin-left: 376px;
 }
 #geneE {
-  background-image: url("../images/ui/icons/gene_e.png");
+  background-image: url("/images/ui/icons/gene_e.png");
   margin-left: 466px;
 }
 #geneF {
-  background-image: url("../images/ui/icons/gene_f.png");
+  background-image: url("/images/ui/icons/gene_f.png");
   margin-left: 556.5px;
 }
 #mutantFilter {
@@ -793,35 +793,35 @@ body {
   height: 100px;
   margin-top: 210px;
   margin-left: 50px;
-  background-image: url("../images/ui/slot_mutant.png");
+  background-image: url("/images/ui/slot_mutant.png");
 }
 #skinSelect {
   width: 600px;
   height: 100px;
   margin-top: 375px;
   margin-left: 50px;
-  background-image: url("../images/ui/slot_skin.png");
+  background-image: url("/images/ui/slot_skin.png");
 }
 #animationSelect {
   width: 600px;
   height: 100px;
   margin-top: 540px;
   margin-left: 50px;
-  background-image: url("../images/ui/slot_animation.png");
+  background-image: url("/images/ui/slot_animation.png");
 }
 #rivalSelect {
   width: 600px;
   height: 100px;
   margin-top: 375.5px;
   margin-left: 50px;
-  background-image: url("../images/ui/slot_rival.png");
+  background-image: url("/images/ui/slot_rival.png");
 }
 #rivalSkinSelect {
   width: 600px;
   height: 100px;
   margin-top: 540px;
   margin-left: 50px;
-  background-image: url("../images/ui/slot_rival_skin.png");
+  background-image: url("/images/ui/slot_rival_skin.png");
 }
 
 /*  FONDOS */
@@ -838,47 +838,47 @@ body {
   position: absolute;
 }
 #btnNone {
-  background-image: url("../images/ui/btn_bg_none.png");
+  background-image: url("/images/ui/btn_bg_none.png");
   top: 0px;
   left: 0px;
 }
 #btnCampaign {
-  background-image: url("../images/ui/btn_bg_campaign.png");
+  background-image: url("/images/ui/btn_bg_campaign.png");
   top: 0px;
   left: 220px;
 }
 #btnPve {
-  background-image: url("../images/ui/btn_bg_pve.png");
+  background-image: url("/images/ui/btn_bg_pve.png");
   top: 0px;
   left: 439px;
 }
 #btnRaid {
-  background-image: url("../images/ui/btn_bg_raid.png");
+  background-image: url("/images/ui/btn_bg_raid.png");
   top: 98px;
   left: 0px;
 }
 #btnValentines {
-  background-image: url("../images/ui/btn_bg_valentines.png");
+  background-image: url("/images/ui/btn_bg_valentines.png");
   top: 98px;
   left: 220px;
 }
 #btnEaster {
-  background-image: url("../images/ui/btn_bg_easter.png");
+  background-image: url("/images/ui/btn_bg_easter.png");
   top: 98px;
   left: 439px;
 }
 #btnAnniversary {
-  background-image: url("../images/ui/btn_bg_anniversary.png");
+  background-image: url("/images/ui/btn_bg_anniversary.png");
   top: 195px;
   left: 0px;
 }
 #btnHalloween {
-  background-image: url("../images/ui/btn_bg_halloween.png");
+  background-image: url("/images/ui/btn_bg_halloween.png");
   top: 195px;
   left: 220px;
 }
 #btnXmas {
-  background-image: url("../images/ui/btn_bg_xmas.png");
+  background-image: url("/images/ui/btn_bg_xmas.png");
   top: 195px;
   left: 439px;
 }
@@ -943,16 +943,16 @@ body {
   background-color: #000;
 }
 .iconYt {
-  -webkit-mask-image: url("../images/ui/youtube.svg");
-  mask-image: url("../images/ui/youtube.svg");
+  -webkit-mask-image: url("/images/ui/youtube.svg");
+  mask-image: url("/images/ui/youtube.svg");
 }
 .iconFb {
-  -webkit-mask-image: url("../images/ui/facebook.svg");
-  mask-image: url("../images/ui/facebook.svg");
+  -webkit-mask-image: url("/images/ui/facebook.svg");
+  mask-image: url("/images/ui/facebook.svg");
 }
 .iconDc {
-  -webkit-mask-image: url("../images/ui/discord.svg");
-  mask-image: url("../images/ui/discord.svg");
+  -webkit-mask-image: url("/images/ui/discord.svg");
+  mask-image: url("/images/ui/discord.svg");
 }
 .iconTt {
   position: relative;
@@ -969,8 +969,8 @@ body {
   position: absolute;
   inset: 0;
   background-color: #000;
-  -webkit-mask: url("../images/ui/tiktok.svg") center / contain no-repeat;
-          mask: url("../images/ui/tiktok.svg") center / contain no-repeat;
+  -webkit-mask: url("/images/ui/tiktok.svg") center / contain no-repeat;
+          mask: url("/images/ui/tiktok.svg") center / contain no-repeat;
 }
 .social:hover {
   transform: translateY(-15px);
@@ -1039,7 +1039,7 @@ body {
 #btnJoin {
   width: 350px;
   height: 70px;
-  background-image: url("../images/ui/btn_discord.png");
+  background-image: url("/images/ui/btn_discord.png");
   position: absolute;
   left: 450px;
   top: 290px;
@@ -1085,7 +1085,7 @@ body {
 #btnExclusive {
   width: 350px;
   height: 70px;
-  background-image: url("../images/ui/btn_discord.png");
+  background-image: url("/images/ui/btn_discord.png");
   position: absolute;
   left: 180px;
   top: 290px;
@@ -1129,16 +1129,16 @@ body {
 .mutantIcon {
   width: 105.7px;
   height: 105.7px;
-  -webkit-mask-image: url("../images/ui/alpha.png");
-  mask-image: url("../images/ui/alpha.png");
+  -webkit-mask-image: url("/images/ui/alpha.png");
+  mask-image: url("/images/ui/alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
 }
 .rivalIcon {
   width: 105.7px;
   height: 105.7px;
-  -webkit-mask-image: url("../images/ui/alpha.png");
-  mask-image: url("../images/ui/alpha.png");
+  -webkit-mask-image: url("/images/ui/alpha.png");
+  mask-image: url("/images/ui/alpha.png");
   mask-size: cover;
   -webkit-mask-size: cover;
   transform: scaleX(-1);
@@ -1312,7 +1312,7 @@ body {
   height: 45px;
   cursor: grab;
   z-index: 6;
-  border-image-source: url("../images/ui/scroll_vertical.png");
+  border-image-source: url("/images/ui/scroll_vertical.png");
   border-image-slice: 9 0 10 0 fill;
   border-image-width: 17px 0 25px 0;
   border-image-repeat: stretch;
@@ -1632,7 +1632,7 @@ body {
   height: 45px;
   cursor: grab;
   z-index: 6;
-  border-image-source: url("../images/ui/scroll_vertical.png");
+  border-image-source: url("/images/ui/scroll_vertical.png");
   border-image-slice: 9 0 10 0 fill;
   border-image-width: 17px 0 25px 0;
   border-image-repeat: stretch;
@@ -1688,7 +1688,7 @@ body {
 .btnDebug {
   width: 306px;
   height: 70px;
-  background-image: url("../images/ui/btn_debug.png");
+  background-image: url("/images/ui/btn_debug.png");
   position: absolute;
 }
 
@@ -1808,21 +1808,21 @@ body {
   position: absolute;
   width: 230px;
   height: 70px;
-  background-image: url("../images/ui/btn_purple.png");
+  background-image: url("/images/ui/btn_purple.png");
   bottom: 0px;
 }
 #btnJoinSs {
   position: absolute;
   width: 350px;
   height: 70px;
-  background-image: url("../images/ui/btn_discord.png");
+  background-image: url("/images/ui/btn_discord.png");
   bottom: 0px;
 }
 #btnSignInSs {
   position: absolute;
   width: 350px;
   height: 70px;
-  background-image: url("../images/ui/btn_discord.png");
+  background-image: url("/images/ui/btn_discord.png");
   bottom: 0px;
 }
 .tag {
