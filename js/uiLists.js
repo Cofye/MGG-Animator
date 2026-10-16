@@ -124,6 +124,9 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
   filtered.forEach(mutant => {
     const item = document.createElement("div");
     item.className = "mutant-item";
+    const genes = String(mutant.value || "").match(/^specimen_([a-f])([a-f])?_/i);
+    const gene1 = genes && genes[1];
+    const gene2 = genes && genes[2];
     const tags = [];
     if (accessRules.newMutants.has(normalizeAccessKey(mutant.value))) {
       tags.push('<img class="tag" src="images/ui/tag_new.png">');
@@ -135,6 +138,8 @@ function renderCharacterList(context = "mutant", searchQuery = "") {
     <div class="mutant">
       <img class="mutant_bg" src="images/ui/mutant_background.png">
       <img class="mutant_icon" src="${mutant.image}">
+      ${gene1 ? `<img class="gene1" src="images/ui/icons/gene_${gene1.toLowerCase()}.png">` : ""}
+      ${gene2 ? `<img class="gene2" src="images/ui/icons/gene_${gene2.toLowerCase()}.png">` : ""}
     </div>
     ${tags.length ? `<div class="mutant-tags${tags.length > 1 ? " multiple" : ""}">${tags.join("")}</div>` : ""}
     <span class="text">${mutant.name}</span>
