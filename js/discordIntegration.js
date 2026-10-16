@@ -63,7 +63,7 @@ function tintDefaultAvatar(color) {
       }
     };
     img.onerror = () => resolve(null);
-    img.src = "images/ui/icons/icon_profile_default.png";
+    img.src = "/images/ui/icons/icon_profile_default.png";
   });
 }
 

@@ -64,7 +64,7 @@ function loadNoiseTexture() {
       resolve(tex);
     };
     img.onerror = () => reject(new Error("Noise image load error"));
-    img.src = "data/fx/shaders/noise.jpg";
+    img.src = "/data/fx/shaders/noise.jpg";
   });
 }
 
@@ -84,8 +84,8 @@ async function init() {
       });
       if (!gl) throw new Error("WebGL no disponible");
       const [vsSrc, fsSrc, noiseTex] = await Promise.all([
-        fetch("data/fx/shaders/death.vert").then((r) => r.text()),
-        fetch("data/fx/shaders/death.frag").then((r) => r.text()),
+        fetch("/data/fx/shaders/death.vert").then((r) => r.text()),
+        fetch("/data/fx/shaders/death.frag").then((r) => r.text()),
         loadNoiseTexture(),
       ]);
       const vs = compileShader(gl.VERTEX_SHADER, vsSrc);

@@ -50,7 +50,7 @@ async function loadSound(name) {
     try {
       const controller = new AbortController();
       timeoutId = setTimeout(() => controller.abort(), 15000);
-      const res = await fetch(`sounds/${name}.wav`, { signal: controller.signal });
+      const res = await fetch(`/sounds/${name}.wav`, { signal: controller.signal });
       if (!res.ok) return null;
       const ab = await res.arrayBuffer();
       return await ctx.decodeAudioData(ab);

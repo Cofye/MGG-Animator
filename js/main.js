@@ -14,7 +14,7 @@ function parseAttackValue(rawValue) {
 
 async function loadGameDefinitions() {
   try {
-    const res = await fetch(`data/gameconfig/gamedefinitions.xml?nocache=${Date.now()}`);
+    const res = await fetch(`/data/gameconfig/gamedefinitions.xml?nocache=${Date.now()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     const xml = new DOMParser().parseFromString(text, "application/xml");
@@ -71,7 +71,7 @@ function normalizeAccessKey(s) {
 
 async function loadAccessRules() {
   try {
-    const res = await fetch(`data/access.json?nocache=${Date.now()}`);
+    const res = await fetch(`/data/access.json?nocache=${Date.now()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const normalizeList = (arr) => new Set((arr || []).map(normalizeAccessKey).filter(Boolean));
@@ -244,12 +244,12 @@ function bindGated(el, handler) {
 }
 
 async function loadMutants() {
-  const parsed = await parseCustomTXT(`data/characters.txt?nocache=${Date.now()}`, currentLang);
+  const parsed = await parseCustomTXT(`/data/characters.txt?nocache=${Date.now()}`, currentLang);
   allMutants = parsed.filter(p => p.type && p.type.startsWith("default"));
 }
 
 async function loadBackgrounds() {
-  const parsed = await parseCustomTXT(`data/options.txt?nocache=${Date.now()}`, currentLang);
+  const parsed = await parseCustomTXT(`/data/options.txt?nocache=${Date.now()}`, currentLang);
   allBackgrounds = parsed.filter(p => p.type && p.type.startsWith("bg_"));
 }
 
@@ -264,7 +264,7 @@ async function applyDefaultBackground() {
 }
 
 async function reloadMutantNames() {
-  const parsed = await parseCustomTXT(`data/characters.txt?nocache=${Date.now()}`, currentLang);
+  const parsed = await parseCustomTXT(`/data/characters.txt?nocache=${Date.now()}`, currentLang);
   allMutants = parsed.filter(p => p.type && p.type.startsWith("default"));
   if (selectedValues.mutant) {
     const found = allMutants.find(m => m.value === selectedValues.mutant);
@@ -301,40 +301,12 @@ async function selectBg(bg) {
   }
 }
 
-function pickAvailableLanguage(availableCodes, preferred) {
-  if (!availableCodes || availableCodes.length === 0) return preferred || "en";
-  const codes = availableCodes.map(c => String(c).toLowerCase());
-  const stored = (localStorage.getItem("selectedLang") || "").toLowerCase();
-  if (stored && codes.includes(stored)) return stored;
-  const navLangs = (navigator.languages && navigator.languages.length)
-    ? navigator.languages
-    : [navigator.language || "en"];
-  for (const raw of navLangs) {
-    if (!raw) continue;
-    const tag = String(raw).toLowerCase();
-    if (codes.includes(tag)) return tag;
-    const base = tag.split("-")[0];
-    if (codes.includes(base)) return base;
-  }
-  if (codes.includes("en")) return "en";
-  return codes[0];
-}
-
 async function loadOptions() {
-  const parsed = await parseCustomTXT("data/options.txt", currentLang);
+  const parsed = await parseCustomTXT("/data/options.txt", currentLang);
   availableLangs = parsed.filter(l => l.type === "langs");
   availableSpeeds = parsed.filter(p => p.type === "speed");
   allBackgrounds = parsed.filter(p => p.type && p.type.startsWith("bg_"));
-  const codes = availableLangs.map(l => l.value).filter(Boolean);
-  const detected = pickAvailableLanguage(codes, currentLang);
-  if (detected && detected !== currentLang) {
-    currentLang = detected;
-    window.currentLang = detected;
-    localStorage.setItem("selectedLang", detected);
-    await loadLocalisation(detected);
-  } else {
-    window.currentLang = currentLang;
-  }
+  window.currentLang = currentLang;
   const idx = availableSpeeds.findIndex(s => Math.abs(parseFloat(s.value) - 1) < 0.001);
   currentSpeedIndex = idx >= 0 ? idx : 0;
   renderLangMenu();

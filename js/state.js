@@ -37,7 +37,7 @@ const COMBAT_PATTERN = /^(attack|hit)/i;
 const ATTACK_PATTERN = /^attack/i;
 const ATTACK_SPEED_MULTIPLIER = 1.5;
 const DEATH_PATTERN = /^death/i;
-const MID_WATERMARK_PATH = "images/ui/logo_manu.png";
+const MID_WATERMARK_PATH = "/images/ui/logo_manu.png";
 const MID_WATERMARK_OPACITY = 0.25;
 const MID_WATERMARK_WIDTH_RATIO = 1.0;
 const THUMBNAIL_CONCURRENCY = 4;
@@ -78,9 +78,7 @@ const DEBUG_STATE_KEY = "debugState";
 
 let deathShaderReadyPromise = null;
 let availableLangs = [];
-let currentLang = localStorage.getItem("selectedLang")
-  || (navigator.language || "en").toLowerCase().split("-")[0]
-  || "en";
+let currentLang = (document.documentElement.lang || "en").trim().toLowerCase().split("-")[0] || "en";
 let currentScale = 1;
 let allMutants = [];
 let currentFilters = { mutant: "default_", rival: "default_" };

@@ -314,7 +314,7 @@ async function loadFxForMutant(mutantValue) {
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), 15000);
-      const url = `data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
+      const url = `/data/mutants/${mutantValue}/fx.xml?nocache=${Date.now()}`;
       const res = await fetch(url, { signal: controller.signal });
       clearTimeout(tid);
       if (!res.ok) throw new Error();
@@ -380,7 +380,7 @@ async function loadSpriteFxAsset(name, skin) {
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), 15000);
-      const xmlUrl = `data/fx/${name}.xml?nocache=${Date.now()}`;
+      const xmlUrl = `/data/fx/${name}.xml?nocache=${Date.now()}`;
       const res = await fetch(xmlUrl, { signal: controller.signal });
       clearTimeout(tid);
       if (!res.ok) throw new Error();
@@ -410,7 +410,7 @@ async function loadSpriteFxAsset(name, skin) {
         i.onerror = () => { clearTimeout(t); reject(new Error()); };
         i.src = url;
       });
-      const spriteDir = "images/sprites/";
+      const spriteDir = "/images/sprites/";
       let img = null;
       if (useSkin) {
         try {

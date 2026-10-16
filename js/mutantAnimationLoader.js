@@ -122,8 +122,8 @@ function loadSpritesheetImage(bitmap, skin) {
     const img = new Image();
     const base = bitmap.replace(/\.png$/i, "");
     const url = skin
-      ? `images/sprites/${base}_${skin}.png`
-      : `images/sprites/${base}.png`;
+      ? `/images/sprites/${base}_${skin}.png`
+      : `/images/sprites/${base}.png`;
     const t = setTimeout(() => {
       img.onload = null;
       img.onerror = null;
@@ -183,7 +183,7 @@ async function loadMutantImage(mutantValue, animName, skin) {
   const effectiveAnim = normalizeAnimation(animName);
   const effectiveSkin = normalizeSkin(skin);
   beginLoading(`${mutantValue}/${effectiveAnim} skin=${effectiveSkin || "(none)"}`);
-  const xmlPath = `data/mutants/${mutantValue}/${effectiveAnim}.xml`;
+  const xmlPath = `/data/mutants/${mutantValue}/${effectiveAnim}.xml`;
   try {
     const txt = await fetchText(xmlPath, 15000, "mutant XML");
     const xml = new DOMParser().parseFromString(txt, "application/xml");
@@ -254,7 +254,7 @@ async function loadStandTreeForMutant(mutantValue, skin) {
     return { tree: cachedStandTree, image: cachedStandImage };
   }
   try {
-    const xmlPath = `data/mutants/${mutantValue}/stand.xml`;
+    const xmlPath = `/data/mutants/${mutantValue}/stand.xml`;
     const txt = await fetchText(xmlPath, 15000, "stand XML");
     const xml = new DOMParser().parseFromString(txt, "application/xml");
     const spriteEl = xml.querySelector("Sprite");

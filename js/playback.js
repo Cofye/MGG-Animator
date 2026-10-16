@@ -2,8 +2,8 @@ function updatePlayButtonIcon() {
   const img = btnPlay.querySelector("img");
   if (!img) return;
   const desired = window.animationEngine.isPaused()
-    ? "images/ui/icons/players/player_play.png"
-    : "images/ui/icons/players/player_pause.png";
+    ? "/images/ui/icons/players/player_play.png"
+    : "/images/ui/icons/players/player_pause.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 
@@ -11,8 +11,8 @@ function updateLoopButtonIcon() {
   const img = btnLoop.querySelector("img");
   if (!img) return;
   const desired = loopEnabled
-    ? "images/ui/icons/players/player_loop.png"
-    : "images/ui/icons/players/player_noloop.png";
+    ? "/images/ui/icons/players/player_loop.png"
+    : "/images/ui/icons/players/player_noloop.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 
@@ -24,7 +24,7 @@ function updateSoundButtonIcon() {
              : level === 2 ? "player_sound_2.png"
              : level === 1 ? "player_sound_1.png"
              : "player_sound_off.png";
-  const desired = `images/ui/icons/players/${name}`;
+  const desired = `/images/ui/icons/players/${name}`;
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 

@@ -29,6 +29,7 @@ function setupInfoPopups() {
 function renderLangMenu() {
   langLayer.innerHTML = "";
   availableLangs.forEach(lang => {
+    if (!getLanguagePageUrl(lang.value)) return;
     const item = document.createElement("div");
     item.className = "lang-item";
     item.innerHTML = `<img src="${lang.image}" class="lang-flag"><span class="lang-name">${lang.name}</span>`;
@@ -57,20 +58,31 @@ function toggleLangMenu(show) {
   }
 }
 
-async function selectLanguage(langCode) {
+function getLanguagePageUrl(langCode) {
+  const code = String(langCode || "").trim().toLowerCase();
+  const languagePage = Array.from(document.querySelectorAll('link[rel="alternate"][hreflang]'))
+    .find(link => (link.getAttribute("hreflang") || "").trim().toLowerCase() === code);
+  if (!languagePage) return null;
+
+  const pageUrl = new URL(languagePage.href, window.location.href);
+  const targetUrl = new URL(pageUrl.pathname, window.location.origin);
+  targetUrl.search = window.location.search;
+  targetUrl.hash = window.location.hash;
+  return targetUrl;
+}
+
+function selectLanguage(langCode) {
+  const targetUrl = getLanguagePageUrl(langCode);
+  if (!targetUrl) {
+    console.error(`No se encontró un destino hreflang para el idioma "${langCode}".`);
+    toggleLangMenu(false);
+    return;
+  }
+
   toggleLangMenu(false);
-  showLoading();
-  currentLang = langCode;
-  localStorage.setItem("selectedLang", langCode);
-  window.currentLang = langCode;
-  updateFlagLang();
-  await applyLanguage();
-  await reloadMutantNames();
-  await loadBackgrounds();
-  if (!listControllers.mutant?.layer.classList.contains("hidden")) renderCharacterList(mutantListLayerContext());
-  if (!listControllers.skin?.layer.classList.contains("hidden")) renderItemList();
-  if (!listControllers.bg?.layer.classList.contains("hidden")) renderBgList();
-  hideLoading();
+  if (targetUrl.href !== window.location.href) {
+    window.location.assign(targetUrl.href);
+  }
 }
 
 async function applyLanguage() {
@@ -106,7 +118,7 @@ function applyEventBackground() {
   const bgValue = window.mutantLoader && typeof window.mutantLoader.getCurrentBackground === "function"
     ? window.mutantLoader.getCurrentBackground()
     : null;
-  const fallback = 'url("images/ui/background.png")';
+  const fallback = 'url("/images/ui/background.png")';
   if (!backgroundFromEventEnabled || !bgValue) {
     swapBodyBackground(fallback);
     return;
@@ -216,8 +228,8 @@ function updateFullscreenIcon() {
   const img = btnFullscreen.querySelector("img");
   if (!img) return;
   const desired = document.fullscreenElement
-    ? "images/ui/icons/players/player_minimised.png"
-    : "images/ui/icons/players/player_fullscreen.png";
+    ? "/images/ui/icons/players/player_minimised.png"
+    : "/images/ui/icons/players/player_fullscreen.png";
   if (img.src.indexOf(desired) === -1) img.src = desired;
 }
 
@@ -405,7 +417,7 @@ function loadWatermark() {
     img.crossOrigin = "anonymous";
     img.onload = () => { watermarkImage = img; resolve(img); };
     img.onerror = () => resolve(null);
-    img.src = "images/ui/logo_manu.png";
+    img.src = "/images/ui/logo_manu.png";
   });
 }
 

@@ -42,7 +42,7 @@ async function loadLangsFile() {
   if (langsPromise) return langsPromise;
   langsPromise = (async () => {
     try {
-      const text = await fetchTextFile("data/langs.txt");
+      const text = await fetchTextFile("/data/langs.txt");
       langsCache = parseSimpleTXT(text);
     } catch (_) { langsCache = {}; }
     langsPromise = null;
@@ -58,7 +58,7 @@ async function loadLocalisation(lang) {
   }
   if (localisationPromises[key]) return localisationPromises[key];
   localisationPromises[key] = (async () => {
-    const url = `data/gameconfig/localisation_${key}.txt`;
+    const url = `/data/gameconfig/localisation_${key}.txt`;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         const text = await fetchTextFile(url, 10000);
@@ -106,7 +106,7 @@ async function parseCustomTXT(path, lang = currentLang) {
     if (image.startsWith("$$")) {
       image = "https://s-ak.kobojo.com/mutants/assets/" + image.slice(2);
     } else if (image.startsWith("&&")) {
-      image = "." + image.slice(2);
+      image = image.slice(2);
     }
     let value = valueRaw.trim();
     if (value.includes("§")) {
