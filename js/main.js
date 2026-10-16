@@ -154,7 +154,7 @@ function hasVisibleNewSkin(mutantValue) {
 
 function canViewBackground(bgValue) {
   if (!bgValue) return true;
-  const key = String(bgValue).toLowerCase();
+  const key = normalizeAccessKey(bgValue);
   const isMembersOnly = accessRules.membersOnlyBackgrounds.has(key);
   const isBlockedForEveryone = accessRules.blockedBackgroundsForEveryone.has(key);
   if (isMembersOnly) {

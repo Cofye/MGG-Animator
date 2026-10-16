@@ -221,6 +221,10 @@ function signInWithDiscord() {
   });
 }
 
+function openDiscordInvite() {
+  window.open(DISCORD_INVITE_URL, '_blank', 'noopener,noreferrer');
+}
+
 function setupUserDropdown() {
   const userWrap = document.querySelector('.btnDiscordUser');
   const btnUser = document.getElementById('btnDiscordUser');
@@ -310,9 +314,7 @@ function setupDiscordAuth() {
   if (joinClose) joinClose.addEventListener('click', closeJoinLayer);
   if (btnExclusive) btnExclusive.addEventListener('click', () => signInWithDiscord());
   if (btnJoin) {
-    btnJoin.addEventListener('click', () => {
-      window.open(DISCORD_INVITE_URL, '_blank', 'noopener,noreferrer');
-    });
+    btnJoin.addEventListener('click', openDiscordInvite);
   }
   bindGated(btnDebug, handleDebugClick);
   supabaseClient.auth.onAuthStateChange(() => checkDiscordSession());
@@ -336,5 +338,6 @@ window.discordIntegration = {
   closeExclusiveLayer,
   closeJoinLayer,
   signInWithDiscord,
+  openDiscordInvite,
   onAuthChanged
 };

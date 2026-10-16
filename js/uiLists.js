@@ -38,7 +38,12 @@ function createListController(name) {
   container.parentElement.appendChild(down);
   container.parentElement.appendChild(line);
   container.parentElement.appendChild(thumb);
-  const state = { name, container, bg, layer, search, up, down, line, thumb, dragging: false, startY: 0, startScroll: 0 };
+  const state = {
+    name, container, bg, layer, search, up, down, line, thumb,
+    dragging: false, startY: 0, startScroll: 0,
+    itemDragging: false, itemPointerId: null, itemStartY: 0, itemStartScroll: 0,
+    itemDragTarget: null, suppressClickTarget: null, suppressClickTimeout: null
+  };
   state.updateScrollUI = () => {
     line.classList.remove("hidden");
     const trackHeight = line.offsetHeight;
@@ -82,6 +87,57 @@ function createListController(name) {
     state.dragging = true; state.startY = e.clientY; state.startScroll = container.scrollTop;
     document.body.style.userSelect = "none"; e.preventDefault();
   });
+  container.style.touchAction = "none";
+  container.addEventListener("dragstart", e => e.preventDefault());
+  container.addEventListener("pointerdown", e => {
+    if (!e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
+    state.itemDragging = true;
+    state.itemPointerId = e.pointerId;
+    state.itemStartY = e.clientY;
+    state.itemStartScroll = container.scrollTop;
+    state.itemDragTarget = e.target instanceof Element
+      ? e.target.closest(".mutant-item, .skin-item, .bg-item")
+      : null;
+    state.itemDidMove = false;
+  });
+  document.addEventListener("pointermove", e => {
+    if (!state.itemDragging || e.pointerId !== state.itemPointerId) return;
+    const deltaY = e.clientY - state.itemStartY;
+    if (!state.itemDidMove && Math.abs(deltaY) < 6) return;
+    state.itemDidMove = true;
+    e.preventDefault();
+    document.body.style.userSelect = "none";
+    container.scrollTop = Math.max(
+      0,
+      Math.min(container.scrollHeight - container.clientHeight, state.itemStartScroll - deltaY / currentScale)
+    );
+    state.updateScrollUI();
+  });
+  const finishItemDrag = e => {
+    if (!state.itemDragging || e.pointerId !== state.itemPointerId) return;
+    state.itemDragging = false;
+    state.itemPointerId = null;
+    document.body.style.userSelect = "";
+    if (state.itemDidMove && state.itemDragTarget) {
+      state.suppressClickTarget = state.itemDragTarget;
+      clearTimeout(state.suppressClickTimeout);
+      state.suppressClickTimeout = setTimeout(() => {
+        state.suppressClickTarget = null;
+      }, 400);
+    }
+    state.itemDragTarget = null;
+    state.itemDidMove = false;
+  };
+  document.addEventListener("pointerup", finishItemDrag);
+  document.addEventListener("pointercancel", finishItemDrag);
+  container.addEventListener("click", e => {
+    if (!state.suppressClickTarget || !(e.target instanceof Element)) return;
+    if (e.target.closest(".mutant-item, .skin-item, .bg-item") !== state.suppressClickTarget) return;
+    clearTimeout(state.suppressClickTimeout);
+    state.suppressClickTarget = null;
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
   container.addEventListener("scroll", state.updateScrollUI);
   container.addEventListener("wheel", () => setTimeout(state.updateScrollUI, 50));
   listControllers[name] = state;

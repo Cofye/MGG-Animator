@@ -448,9 +448,9 @@ const SCREENSHOT_BLOCK_DEFS = [
     preview: "hdNoMark",
     imgClass: "imgHd",
     langKey: "hd2_text",
-    btnId: "btnJoinSs",
-    btnLang: "join_dc",
-    action: "join",
+    btnId: "btnSignInSs",
+    btnLang: "signin_dc",
+    action: "exclusive",
   },
   {
     container: "screenshotRight",
@@ -458,9 +458,9 @@ const SCREENSHOT_BLOCK_DEFS = [
     preview: "uhdNoMark",
     imgClass: "img4k",
     langKey: "4k_text",
-    btnId: "btnExclusiveSs",
-    btnLang: "signin_dc",
-    action: "exclusive",
+    btnId: "btnJoinSs",
+    btnLang: "join_dc",
+    action: "join",
   },
   {
     container: "screenshotRight",
@@ -634,11 +634,11 @@ function setupScreenshot() {
     block.btn.addEventListener("click", () => {
       const action = block.def.action;
       if (action === "join") {
-        if (typeof openJoinLayer === "function") openJoinLayer();
+        window.discordIntegration.openDiscordInvite();
         return;
       }
       if (action === "exclusive") {
-        if (typeof openExclusiveLayer === "function") openExclusiveLayer();
+        window.discordIntegration.signInWithDiscord();
         return;
       }
       if (action === "download") {
@@ -661,6 +661,7 @@ function setupScreenshot() {
     showStatic();
     try {
       const session = await window.discordIntegration.getSession();
+      await refreshAccessState();
       const tier = getScreenshotTier(session, currentUserInGuild);
       applyScreenshotTier(tier);
       screenshotAssets = await generateScreenshotAssets();

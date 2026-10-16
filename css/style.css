@@ -76,8 +76,7 @@ body {
 }
 .tooltip {
   position: absolute;
-  bottom: 40px;
-  transform: translateY(0%);
+  transform: translateY(0px);
   margin-left: 8px;
   padding: 6px 12px;
   background-color: #D9E1E2;
@@ -90,7 +89,6 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s ease, transform 0.15s ease;
-  z-index: 100;
   font-family: 'Bahnschrift', sans-serif;
   font-stretch: semi-condensed;
   font-weight: 700;
@@ -98,10 +96,11 @@ body {
   letter-spacing: -0.5px;
   color: #000;
   transform-origin: center;
+  bottom: 20%;
 }
 .btn:hover .tooltip {
   opacity: 1;
-  transform: translateY(-50%);
+  transform: translateY(-60px);
 }
 .btnPlayer {
   width: 190px;
@@ -1819,7 +1818,7 @@ body {
   background-image: url("../images/ui/btn_discord.png");
   bottom: 0px;
 }
-#btnExclusiveSs {
+#btnSignInSs {
   position: absolute;
   width: 350px;
   height: 70px;
