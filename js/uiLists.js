@@ -330,11 +330,11 @@ function createRivalSkinItem(skin) {
 
 function createAnimationItem(anim) {
   const item = document.createElement("div");
-  item.className = "skin-item";
+  item.className = "animation-item";
   item.innerHTML = `
-    <div class="skin">
-      <img class="skin_bg" src="/images/ui/animation_background.png">
-      <img class="skin_icon" src="${anim.image}">
+    <div class="animation">
+      <img class="animation_bg" src="/images/ui/animation_background.png">
+      <img class="animation_icon" src="${anim.image}">
     </div>
     <span class="text">${anim.name}</span>
     `;

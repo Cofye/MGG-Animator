@@ -1146,28 +1146,28 @@ body {
   left: 485px;
 }
 .skinIcon {
-  width: 122px;
-  height: 101px;
+  width: 150px;
   background-size: cover;
   background-position: center;
-  left: -1px;
+  left: -15px;
   position: absolute;
+  pointer-events: none;
 }
 .rivalSkinIcon {
-  width: 122px;
-  height: 101px;
+  width: 150px;
   background-size: cover;
   background-position: center;
-  left: 480px;
+  left: 465px;
   position: absolute;
+  pointer-events: none;
 }
 .animationIcon {
-  width: 121px;
-  height: 100px;
+  width: 150px;
   background-size: cover;
   background-position: center;
-  left: -1px;
+  left: -15px;
   position: absolute;
+  pointer-events: none;
 }
 
 /* MENU MUTANTES */
@@ -1357,8 +1357,8 @@ body {
   position: relative;
 }
 .skin_icon {
-  height: 82.71px;
-  margin-top: 5px;
+  width: 100px;
+  margin-top: -5px;
   margin-left: 35px;
   position: absolute;
 }
@@ -1463,11 +1463,13 @@ body {
   position: relative;
 }
 .animation_icon {
-  height: 82.71px;
-  margin-top: 2px;
+  width: 135px;
+  margin-top: -25px;
+  margin-left: 17.5px;
   position: absolute;
 }
 .animation_bg {
+  left: 40px;
   width: 88.63px;
   height: 85.45px;
   position: absolute;
@@ -1475,7 +1477,7 @@ body {
 .animation-item span {
   transform: scale(2.2, 3.2);
   margin-top: -35px;
-  margin-left: 35px;
+  margin-left: 75px;
 }
 .animation-item:hover {
   background: rgba(255,255,255,0.1);
